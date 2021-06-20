@@ -30,12 +30,13 @@ const createVideo = async (video: IVideo) => {
 
 const updateVideo = async (video: IVideo) => {
   return Query(
-    `UPDATE videos SET name_of_video=?, url_to_video=?, url_to_looped_video=?, curriculum_level WHERE id=?`,
+    `UPDATE videos SET name_of_video=?, url_to_video=?, url_to_looped_video=?, curriculum_level=? WHERE id=?`,
     [
       video.name_of_video,
       video.url_to_video,
       video.url_to_looped_video,
       video.curriculum_level,
+      video.id,
     ]
   );
 };

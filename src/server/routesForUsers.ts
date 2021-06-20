@@ -19,8 +19,10 @@ router.get("/:id?", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    console.log(req.body);
     res.json(await db.users.createUser(req.body));
   } catch (error) {
+    console.log(req.body);
     console.log(error);
     res.sendStatus(500);
   }

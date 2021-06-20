@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   try {
-    res.json(await db.personal_info.createPerson(req.body));
+    res.json(await db.personal_info.updatePerson(req.body));
   } catch (error) {
     console.log(error);
     console.log("somethings messing up here");

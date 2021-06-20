@@ -1,6 +1,14 @@
 import { Query } from "./index";
 import { IUser } from "../../types";
 
+// export interface IUser {
+//   id: number;
+//   email: string;
+//   password: string;
+//   role: string;
+//   date_created: Date;
+// }
+
 const all = async () => {
   return Query("SELECT * from users");
 };

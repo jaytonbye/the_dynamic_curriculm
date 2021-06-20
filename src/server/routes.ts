@@ -12,7 +12,7 @@ router.get("/api/hello", (req, res, next) => {
 
 router.use("/users", routesForUsers);
 router.use("/personal_info", routesForPersonal_info);
-router.use("videos", routesForVideos);
+router.use("/videos", routesForVideos);
 router.use("/grades", routesForGrades);
 
 export default router;

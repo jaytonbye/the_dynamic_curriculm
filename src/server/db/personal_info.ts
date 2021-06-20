@@ -25,13 +25,13 @@ const createPerson = async (person: IPerson) => {
 
 const updatePerson = async (person: IPerson) => {
   return Query(
-    `UPDATE personal_info SET first_name=?, last_name=?, notes=?, user_id=?`,
+    `UPDATE personal_info SET first_name=?, last_name=?, notes=? WHERE user_id=?`,
     [person.first_name, person.last_name, person.notes, person.user_id]
   );
 };
 
 const deletePerson = async (id: number) => {
-  return Query(`DELETE FROM personal WHERE id=?`, [id]);
+  return Query(`DELETE FROM personal_info WHERE id=?`, [id]);
 };
 
 export default {
