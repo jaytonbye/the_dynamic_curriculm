@@ -45,10 +45,15 @@ const deleteVideo = async (id: number) => {
   return Query(`DELETE FROM videos WHERE id=?`, [id]);
 };
 
+const deleteCorrespondingGrades = async (id: number) => {
+  return Query("DELETE FROM grades WHERE video_id=?", [id]);
+};
+
 export default {
   all,
   singleVideo,
   createVideo,
   updateVideo,
   deleteVideo,
+  deleteCorrespondingGrades,
 };

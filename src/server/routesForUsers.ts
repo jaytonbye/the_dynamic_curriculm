@@ -41,7 +41,12 @@ router.put("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   let id = Number(req.params.id);
   try {
-    res.json(await db.users.deleteUser(id));
+    await db.users.deleteCorrespondingGrades(id);
+    await db.users.deleteCorrespondingPersonal_info(id);
+    await db.users.deleteUser(id);
+    res.json(
+      "hopefully deleted users after deleting corresponding personal_info and grades"
+    );
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

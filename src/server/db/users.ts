@@ -1,5 +1,6 @@
 import { Query } from "./index";
 import { IUser } from "../../types";
+import personal_info from "./personal_info";
 
 // export interface IUser {
 //   id: number;
@@ -38,10 +39,24 @@ const deleteUser = async (id: number) => {
   return Query(`DELETE FROM users WHERE id=?`, [id]);
 };
 
+const deleteCorrespondingPersonal_info = async (id: number) => {
+  return Query("DELETE FROM personal_info WHERE user_id=?", [id]);
+};
+const deleteCorrespondingGrades = async (id: number) => {
+  return Query(
+    //"DELETE FROM grades WHERE (coach_user_id=?) OR (student_user_id=?)",
+    //I don't think it makes sesne to delete grades, even if we delete a coach (therefore I won't delete coaches). Perhaps this shouldn't have been a foreign key?
+    "DELETE FROM grades WHERE student_user_id=?",
+    [id, id]
+  );
+};
+
 export default {
   all,
   singleUser,
   createUser,
   updateUser,
   deleteUser,
+  deleteCorrespondingGrades,
+  deleteCorrespondingPersonal_info,
 };

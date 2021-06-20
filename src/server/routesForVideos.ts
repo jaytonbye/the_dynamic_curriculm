@@ -39,7 +39,9 @@ router.put("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   let id = Number(req.params.id);
   try {
-    res.json(await db.videos.deleteVideo(id));
+    await db.videos.deleteCorrespondingGrades(id);
+    await db.videos.deleteVideo(id);
+    res.json("did I delete them both?");
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
