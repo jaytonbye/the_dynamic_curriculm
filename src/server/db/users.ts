@@ -10,10 +10,11 @@ const singleUser = async (id: number) => {
 };
 
 const createUser = async (user: IUser) => {
-  return Query(
-    `INSERT INTO users (id, email, password, role) VALUES (?,?,?,?)`,
-    [user.id, user.email, user.password, user.role]
-  );
+  return Query(`INSERT INTO users (email, password, role) VALUES (?,?,?)`, [
+    user.email,
+    user.password,
+    user.role,
+  ]);
 };
 
 const updateUser = async (user: IUser) => {

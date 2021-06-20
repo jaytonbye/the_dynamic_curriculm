@@ -8,7 +8,7 @@ export interface IUser {
 }
 
 // for table personal_info
-export interface Iperson {
+export interface IPerson {
   id: number;
   first_name: string;
   last_name: string;
@@ -18,7 +18,7 @@ export interface Iperson {
 }
 
 //for table grades
-export interface Igrade {
+export interface IGrade {
   id: number;
   video_id: number;
   coach_user_id: number;
@@ -29,7 +29,7 @@ export interface Igrade {
 }
 
 //for table videos
-export interface Ivideo {
+export interface IVideo {
   id: number;
   name_of_video: string;
   url_to_video: string;
