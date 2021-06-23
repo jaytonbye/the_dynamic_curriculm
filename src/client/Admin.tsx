@@ -5,6 +5,8 @@ function Admin() {
   const [moveUrl, setMoveUrl] = React.useState("");
   const [moveLoopedUrl, setMoveLoopedUrl] = React.useState("");
   const [curriculumLevel, setCurriculumLevel] = React.useState("");
+  const [numberForOrdering, setNumberForOrdering] = React.useState("");
+  const [moves, setMoves] = React.useState([]);
 
   const onMoveNameChange = (event: any) => {
     setMoveName(event.target.value);
@@ -18,6 +20,9 @@ function Admin() {
   const onCurriculumLevelChange = (event: any) => {
     setCurriculumLevel(event.target.value);
   };
+  const onNumberForOrderingChange = (event: any) => {
+    setNumberForOrdering(event.target.value);
+  };
 
   const onSubmitMove = () => {
     const requestOptions = {
@@ -27,14 +32,73 @@ function Admin() {
         name_of_video: moveName,
         url_to_video: moveUrl,
         url_to_looped_video: moveLoopedUrl,
+        number_for_ordering: numberForOrdering,
         curriculum_level: curriculumLevel,
+        // Is there a way I can use type checking here?
+        //Would it have made more sense to use identical variables here? I believe I can then write name_of_video by itself instead of name_of_video: name_of_video. Is this correct?
+      }),
+    };
+    fetch("http://localhost:3000/api/videos", requestOptions).then((res) => {
+      if (res.ok) {
+        alert("Video added");
+      } else {
+        alert("it didn't work!");
+      }
+    });
+  };
+
+  const onEditMove = (id) => {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name_of_video: moveName,
+        url_to_video: moveUrl,
+        url_to_looped_video: moveLoopedUrl,
+        number_for_ordering: numberForOrdering,
+        curriculum_level: curriculumLevel,
+        id: id,
         // Is there a way I can use type checking here?
       }),
     };
-    fetch("http://localhost:3000/api/videos", requestOptions);
-    alert("video submitted"); //this will currently run even if the submission fails.
-    // is there a simple way to automatically navigate to the homepage after the alert?
+    fetch(`http://localhost:3000/api/videos/`, requestOptions).then((res) => {
+      if (res.ok) {
+        alert("Video updated!");
+        window.location.reload();
+      } else {
+        alert("it didn't work!");
+      }
+    });
   };
+
+  const onDeleteMove = (id) => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: id, //check to see if this can just be id
+      }),
+    };
+    fetch(`http://localhost:3000/api/videos/${id}`, requestOptions).then(
+      (res) => {
+        if (res.ok) {
+          alert("Video deleted");
+          window.location.reload();
+        } else {
+          alert("it didn't work!");
+        }
+      }
+    );
+  };
+
+  //gets us all of the moves in all levels.
+  React.useEffect(() => {
+    fetch("http://localhost:3000/api/videos")
+      .then((res) => res.json())
+      .then((results) => {
+        setMoves(results);
+      });
+  }, []);
 
   return (
     <>
@@ -51,6 +115,9 @@ function Admin() {
         </label>
         <input type="text" onChange={onMoveLoopedUrlChange} />
         <br />
+        <label htmlFor="">Number for ordering:</label>
+        <input type="number" onChange={onNumberForOrderingChange} />
+        <br />
         <label htmlFor="">Insert into curriculum level: </label>
         <input type="number" onChange={onCurriculumLevelChange} />
         <br />
@@ -62,6 +129,55 @@ function Admin() {
           Submit New Move
         </button>
       </form>
+      <h2>Complete Curriculum</h2>
+      <h3>
+        Because I'm a lazy hacker, use the above input fields if you want to
+        make an update to one of the videos below
+      </h3>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Move Id</th>
+            <th>Number for ordering</th>
+            <th>Level</th>
+            <th>Move name</th>
+            <th>Url to video</th>
+            <th>Url to looped video</th>
+            <th>Points Available</th>
+            <th>Buttons</th>
+          </tr>
+        </thead>
+        <tbody>
+          {moves.map((move) => {
+            return (
+              <tr>
+                <td>{move.id}</td>
+                <td>{move.number_for_ordering}</td>
+                <td>{move.curriculum_level}</td>
+                <td>{move.name_of_video}</td>
+                <td>{move.url_to_video}</td>
+                <td>{move.url_to_looped_video}</td>
+                <td>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => onEditMove(move.id)}
+                  >
+                    Submit Update
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => onDeleteMove(move.id)}
+                  >
+                    Delete!
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 }

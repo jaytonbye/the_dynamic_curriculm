@@ -5,11 +5,14 @@ import { IVideo } from "../../types";
 //   name_of_video: string;
 //   url_to_video: string;
 //   url_to_looped_video: string;
+//   number_for_ordering
 //   curriculum_level: number;
 //   date_created: Date;
 
 const all = async () => {
-  return Query("SELECT * from videos");
+  return Query(
+    "SELECT * from videos ORDER BY curriculum_level ASC, number_for_ordering ASC"
+  );
 };
 
 const singleVideo = async (id: number) => {
@@ -18,11 +21,12 @@ const singleVideo = async (id: number) => {
 
 const createVideo = async (video: IVideo) => {
   return Query(
-    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, curriculum_level) VALUES (?,?,?,?)`,
+    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level) VALUES (?,?,?,?,?)`,
     [
       video.name_of_video,
       video.url_to_video,
       video.url_to_looped_video,
+      video.number_for_ordering,
       video.curriculum_level,
     ]
   );
@@ -30,11 +34,12 @@ const createVideo = async (video: IVideo) => {
 
 const updateVideo = async (video: IVideo) => {
   return Query(
-    `UPDATE videos SET name_of_video=?, url_to_video=?, url_to_looped_video=?, curriculum_level=? WHERE id=?`,
+    `UPDATE videos SET name_of_video=?, url_to_video=?, url_to_looped_video=?, number_for_ordering=?, curriculum_level=? WHERE id=?`,
     [
       video.name_of_video,
       video.url_to_video,
       video.url_to_looped_video,
+      video.number_for_ordering,
       video.curriculum_level,
       video.id,
     ]
@@ -49,6 +54,12 @@ const deleteCorrespondingGrades = async (id: number) => {
   return Query("DELETE FROM grades WHERE video_id=?", [id]);
 };
 
+const getNumberOfVideosInEachLevel = async () => {
+  return Query(
+    "SELECT COUNT(*) as total_videos, curriculum_level FROM videos GROUP BY curriculum_level;"
+  );
+};
+
 export default {
   all,
   singleVideo,
@@ -56,4 +67,5 @@ export default {
   updateVideo,
   deleteVideo,
   deleteCorrespondingGrades,
+  getNumberOfVideosInEachLevel,
 };

@@ -1,8 +1,14 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+
+//why am I not using typing here?
 
 function SingleLevel() {
   const [moves, setMoves] = React.useState([]);
 
+  let { level } = useParams();
+
+  //gets us all of the moves in all levels.
   React.useEffect(() => {
     fetch("http://localhost:3000/api/videos")
       .then((res) => res.json())
@@ -10,12 +16,12 @@ function SingleLevel() {
         setMoves(results);
       });
   }, []);
-  console.log(moves);
+
   return (
     <>
       <h1>
-        this is a single instance of a level, we are using level 1 until we can
-        code for each level
+        You are currently viewing level {level} of the Dynamic Wrestling
+        Curriculum
       </h1>
 
       <table className="table">
@@ -30,16 +36,15 @@ function SingleLevel() {
         </thead>
         <tbody>
           {moves.map((move) => {
-            console.log(move.curriculum_level);
-            if (move.curriculum_level === 1) {
+            if (move.curriculum_level === Number(level)) {
               return (
                 <tr>
-                  <td>yo</td>
+                  <td>{move.name_of_video}</td>
                   <td>
                     <iframe
                       width="560"
                       height="315"
-                      src="https://www.youtube.com/embed/ZcbTLaB8Tfw"
+                      src={`https://www.youtube.com/embed/${move.url_to_video}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>
@@ -48,7 +53,7 @@ function SingleLevel() {
                     <iframe
                       width="560"
                       height="315"
-                      src="https://www.youtube.com/embed/Y44pa2CGplc"
+                      src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>

@@ -34,6 +34,7 @@ export interface IVideo {
   name_of_video: string;
   url_to_video: string;
   url_to_looped_video: string;
+  number_for_ordering: number;
   curriculum_level: number;
   date_created: Date;
 }
