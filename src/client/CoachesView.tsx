@@ -3,18 +3,28 @@ import WrestlersView from "./WrestlersView";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [personal_info, setPersonalInfo] = React.useState([]);
-  const [wrestler1, setWrestler1] = React.useState("");
-  const [wrestler2, setWrestler2] = React.useState("");
-  const [wrestler1Details, setWrestler1Details] = React.useState({});
-  const [wrestler2Details, setWrestlerDetails] = React.useState({});
+  const [wrestler1Id, setWrestler1Id] = React.useState({});
+  const [wrestler2Id, setWrestler2Id] = React.useState({});
   const [moves, setMoves] = React.useState([]);
-  const [level, setLevel] = React.useState();
+  const [level, setLevel] = React.useState(); //should I initialize this with null?
+  const [
+    gradesForWrestler1OnCurrentLevel,
+    setGradesForWrestler1OnCurrentLevel,
+  ] = React.useState({});
+  const [
+    gradesForWrestler2OnCurrentLevel,
+    setGradesForWrestler2OnCurrentLevel,
+  ] = React.useState({});
 
   const onWrestler1Change = (event: any) => {
-    setWrestler1(event.target.value);
+    setWrestler1Id(event.target.value);
   };
   const onWrestler2Change = (event: any) => {
-    setWrestler2(event.target.value);
+    setWrestler2Id(event.target.value);
+  };
+
+  const onLevelChange = (event: any) => {
+    setLevel(event.target.value);
   };
 
   //gets all of the user_profiles
@@ -35,6 +45,22 @@ const CoachesView = (props: CoachesViewProps) => {
       });
   }, []);
 
+  let getGradesForWrestler1 = () => {
+    fetch(
+      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/${wrestler1Id}&${level}`
+    )
+      .then((res) => res.json())
+      .then((results) => {
+        setGradesForWrestler1OnCurrentLevel(results);
+      });
+    fetch(
+      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/${wrestler2Id}&${level}`
+    )
+      .then((res) => res.json())
+      .then((results) => {
+        setGradesForWrestler2OnCurrentLevel(results);
+      });
+  };
   return (
     <>
       <h1>coaches' view</h1>
@@ -43,9 +69,9 @@ const CoachesView = (props: CoachesViewProps) => {
       <datalist id="wrestler1List">
         {personal_info.map((wrestler) => {
           return (
-            <option
-              value={wrestler.first_name + " " + wrestler.last_name}
-            ></option>
+            <option value={wrestler.user_id}>
+              {wrestler.first_name + " " + wrestler.last_name}
+            </option>
           );
         })}
       </datalist>
@@ -55,45 +81,57 @@ const CoachesView = (props: CoachesViewProps) => {
       <datalist id="wrestler2List">
         {personal_info.map((wrestler) => {
           return (
-            <option
-              value={wrestler.first_name + " " + wrestler.last_name}
-            ></option>
+            <option value={wrestler.user_id}>
+              {wrestler.first_name + " " + wrestler.last_name}
+            </option>
           );
         })}
       </datalist>
 
       <label>Select Level: </label>
-      <input type="number" />
-      <button className="btn btn-primary">Get Wrestlers</button>
+      <input type="number" onChange={onLevelChange} />
+      <button className="btn btn-primary" onClick={getGradesForWrestler1}>
+        Get grades for wrestlers
+      </button>
       <div className="divForLevel">
-        <h1 className="text text-center">Level X</h1>
-        <div className="row col-12 mt-5 d-flex justify-content-around">
-          <div className="col-2">
-            <h3>Move Name:</h3>
-            <h4>switch</h4>
-          </div>
-          <div className="col-2">
-            <h3>Video:</h3>
-            <h4>switch vid</h4>
-          </div>
-          <div className="col-2">
-            <h3>Looped Video:</h3>
-            <h4>looped switch video</h4>
-          </div>
-          <div className="col-2">
-            <h3>Wrestler 1's Name</h3>
-            <label>Current Grade: </label>
-            <input type="number" />
-            <button>submit new grade</button>
-          </div>
-          <div className="col-2">
-            <h3>Wrestler 2s Name</h3>
-            <label>Current Grade: </label>
-            <input type="number" />
-            <button>submit new grade</button>
-          </div>
-        </div>
-        <hr />
+        <h1 className="text text-center">Level {level}</h1>
+        {moves.map((move) => {
+          if (move.curriculum_level === Number(level)) {
+            return (
+              <div className="row col-12 mt-5 d-flex justify-content-around">
+                <div className="col-2">
+                  <h4>{move.name_of_video}</h4>
+                </div>
+                <div className="col-2">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${move.url_to_video}`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
+                  ></iframe>
+                </div>
+                <div className="col-2">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                  ></iframe>
+                </div>
+                <div className="col-2">
+                  <h3>Wrestler 1's Name:</h3>
+                  <label>Current Grade: </label>
+                  <input type="number" value="12345" />
+                  <button>submit new grade</button>
+                </div>
+                <div className="col-2">
+                  <h3>Wrestler 2s Name</h3>
+                  <label>Current Grade: </label>
+                  <input type="number" value="54321" />
+                  <button>submit new grade</button>
+                </div>
+              </div>
+            );
+          }
+        })}
       </div>
     </>
   );

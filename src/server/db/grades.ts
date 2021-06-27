@@ -8,6 +8,10 @@ import { IGrade } from "../../types";
 //   grade: number;
 //   movement_notes: string;
 //   date_created: Date;
+interface IInfo {
+  user_id: number;
+  level: number;
+}
 
 const all = async () => {
   return Query("SELECT * from grades");
@@ -15,6 +19,21 @@ const all = async () => {
 
 const singleGrade = async (id: number) => {
   return Query("SELECT * FROM grades WHERE id=?", [id]);
+};
+
+const gradesForSingleWreslterOnSpecificLevel = async (
+  user_id: number,
+  level: number
+) => {
+  return Query(
+    `
+  SELECT * FROM videos
+  LEFT JOIN grades ON grades.video_id=videos.id
+  LEFT JOIN personal_info ON personal_info.user_id=grades.student_user_id
+  WHERE videos.curriculum_level=? AND (personal_info.user_id=? OR personal_info.user_id IS null);
+  `,
+    [level, user_id]
+  );
 };
 
 const createGrade = async (grade: IGrade) => {
@@ -54,4 +73,5 @@ export default {
   createGrade,
   updateGrade,
   deleteGrade,
+  gradesForSingleWreslterOnSpecificLevel,
 };

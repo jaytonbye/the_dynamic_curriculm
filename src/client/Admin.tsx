@@ -47,7 +47,7 @@ function Admin() {
     });
   };
 
-  const onEditMove = (id) => {
+  const onEditMove = (id: number) => {
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -71,7 +71,7 @@ function Admin() {
     });
   };
 
-  const onDeleteMove = (id) => {
+  const onDeleteMove = (id: number) => {
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },

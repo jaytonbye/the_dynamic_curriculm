@@ -56,10 +56,11 @@ function WrestlersView() {
           })}
         </tbody>
       </table>
-      <h1 className="primary">what an indidivual level will look like:</h1>
-      <SingleLevel />
-      <Move />
-      <Move />
+      <label>
+        Show me all of the moves where my grade is (insert number between 0-3):
+      </label>
+      <input type="number" />
+      <button className="btn"></button>
     </>
   );
 }
