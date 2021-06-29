@@ -22,6 +22,28 @@ router.get(
   }
 );
 
+// This is what a get request would look like for user_id=3, user_id=6 and level=1: http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/3&6&1
+router.get(
+  "/gradesForTwoWresltersOnASpecificLevel/:wrestler1&:wrestler2&:level",
+  async (req, res) => {
+    let wrestler1 = Number(req.params.wrestler1);
+    let wrestler2 = Number(req.params.wrestler2);
+    let level = Number(req.params.level);
+    try {
+      res.json(
+        await db.grades.gradesForTwoWresltersOnASpecificLevel(
+          wrestler1,
+          wrestler2,
+          level
+        )
+      );
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
+
 router.get("/:id?", async (req, res) => {
   let id = Number(req.params.id);
   try {

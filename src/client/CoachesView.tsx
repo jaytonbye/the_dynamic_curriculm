@@ -14,7 +14,12 @@ const CoachesView = (props: CoachesViewProps) => {
     gradesForWrestler2OnCurrentLevel,
     setGradesForWrestler2OnCurrentLevel,
   ] = React.useState([]);
+  const [
+    gradesForBothWrestlersOnCurrentLevel,
+    setGradesForBothWrestlersOnCurrentLevel,
+  ] = React.useState([]);
 
+  //for autocomplete of wrestler names
   const onWrestler1Change = (event: any) => {
     setWrestler1Id(event.target.value);
   };
@@ -44,20 +49,13 @@ const CoachesView = (props: CoachesViewProps) => {
       });
   }, []);
 
-  let getGradesForWrestler1 = () => {
+  let getGradesForBothWrestlers = () => {
     fetch(
-      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/${wrestler1Id}&${level}`
+      `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`
     )
       .then((res) => res.json())
       .then((results) => {
-        setGradesForWrestler1OnCurrentLevel(results);
-      });
-    fetch(
-      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/${wrestler2Id}&${level}`
-    )
-      .then((res) => res.json())
-      .then((results) => {
-        setGradesForWrestler2OnCurrentLevel(results);
+        setGradesForBothWrestlersOnCurrentLevel(results);
       });
   };
   return (
@@ -89,52 +87,51 @@ const CoachesView = (props: CoachesViewProps) => {
 
       <label>Select Level: </label>
       <input type="number" onChange={onLevelChange} />
-      <button className="btn btn-primary" onClick={getGradesForWrestler1}>
+      <button className="btn btn-primary" onClick={getGradesForBothWrestlers}>
         Get grades for wrestlers
       </button>
       <div className="divForLevel">
         <h1 className="text text-center">Level {level}</h1>
-        {moves.map((move) => {
-          if (move.curriculum_level === Number(level)) {
-            return (
-              <div className="row col-6 mt-5 d-flex justify-content-around">
-                <div className="col-2">
-                  <h4>{move.name_of_video}</h4>
-                </div>
-                <div className="col-2">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${move.url_to_video}`}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
-                  ></iframe>
-                </div>
-                <div className="col-2">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                  ></iframe>
-                </div>
+        {gradesForBothWrestlersOnCurrentLevel.map((move) => {
+          return (
+            <div className="row col-12 mt-5 d-flex justify-content-around">
+              <div className="col-2">
+                <h4>{move.name_of_video}</h4>
               </div>
-            );
-          }
-        })}
-        {console.log(gradesForWrestler1OnCurrentLevel)}
-        {gradesForWrestler1OnCurrentLevel.map(() => {
-          <div className="row col-6 ">
-            <div className="col-2">
-              <h3>Wrestler 1's Name:</h3>
-              <label>Current Grade: </label>
-              <input type="number" value="12345" />
-              <button>submit new grade</button>
+              <div className="col-2">
+                <iframe
+                  src={`https://www.youtube.com/embed/${move.url_to_video}`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
+                ></iframe>
+              </div>
+              <div className="col-2">
+                <iframe
+                  src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                ></iframe>
+              </div>
+              <div className="col-2">
+                <label>current grade: </label>
+                <input type="number" value={move.wrestler_1_grade} />
+                <label>Coaches' notes: </label>
+                <textarea>{move.wrestler_1_movement_notes}</textarea>
+                <button className="btn btn-primary">
+                  Update Grade and notes for INSERT NAME
+                </button>
+              </div>
+              <div className="col-2">
+                <label>current grade: </label>
+                <input type="number" value={move.wrestler_2_grade} />
+                <label>Coaches' notes: </label>
+                <textarea>{move.wrestler_2_movement_notes}</textarea>
+                <button className="btn btn-primary">
+                  Update Grade and notes for INSERT NAME
+                </button>
+              </div>
             </div>
-            <div className="col-2">
-              <h3>Wrestler 2s Name</h3>
-              <label>Current Grade: </label>
-              <input type="number" value="54321" />
-              <button>submit new grade</button>
-            </div>
-          </div>;
+          );
         })}
       </div>
     </>

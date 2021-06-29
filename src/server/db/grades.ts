@@ -43,6 +43,37 @@ const gradesForSingleWreslterOnSpecificLevel = async (
   );
 };
 
+const gradesForTwoWresltersOnASpecificLevel = async (
+  wrestler1Id: number,
+  wrestler2Id: number,
+  level: number
+) => {
+  return Query(
+    `
+    Select *, (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_movement_notes,
+      (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_movement_notes
+      FROM videos
+      WHERE curriculum_level=?
+      ORDER BY number_for_ordering;
+  `,
+    [wrestler1Id, wrestler1Id, wrestler2Id, wrestler2Id, level]
+  );
+};
+
 const createGrade = async (grade: IGrade) => {
   return Query(
     `INSERT INTO grades (video_id, coach_user_id, student_user_id, grade, movement_notes) VALUES (?,?,?, ?, ?)`,
@@ -81,4 +112,5 @@ export default {
   updateGrade,
   deleteGrade,
   gradesForSingleWreslterOnSpecificLevel,
+  gradesForTwoWresltersOnASpecificLevel,
 };
