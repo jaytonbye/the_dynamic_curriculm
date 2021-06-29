@@ -10,11 +10,11 @@ const CoachesView = (props: CoachesViewProps) => {
   const [
     gradesForWrestler1OnCurrentLevel,
     setGradesForWrestler1OnCurrentLevel,
-  ] = React.useState({});
+  ] = React.useState([]);
   const [
     gradesForWrestler2OnCurrentLevel,
     setGradesForWrestler2OnCurrentLevel,
-  ] = React.useState({});
+  ] = React.useState([]);
 
   const onWrestler1Change = (event: any) => {
     setWrestler1Id(event.target.value);
@@ -98,7 +98,7 @@ const CoachesView = (props: CoachesViewProps) => {
         {moves.map((move) => {
           if (move.curriculum_level === Number(level)) {
             return (
-              <div className="row col-12 mt-5 d-flex justify-content-around">
+              <div className="row col-6 mt-5 d-flex justify-content-around">
                 <div className="col-2">
                   <h4>{move.name_of_video}</h4>
                 </div>
@@ -116,21 +116,26 @@ const CoachesView = (props: CoachesViewProps) => {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                   ></iframe>
                 </div>
-                <div className="col-2">
-                  <h3>Wrestler 1's Name:</h3>
-                  <label>Current Grade: </label>
-                  <input type="number" value="12345" />
-                  <button>submit new grade</button>
-                </div>
-                <div className="col-2">
-                  <h3>Wrestler 2s Name</h3>
-                  <label>Current Grade: </label>
-                  <input type="number" value="54321" />
-                  <button>submit new grade</button>
-                </div>
               </div>
             );
           }
+        })}
+        {console.log(gradesForWrestler1OnCurrentLevel)}
+        {gradesForWrestler1OnCurrentLevel.map(() => {
+          <div className="row col-6 ">
+            <div className="col-2">
+              <h3>Wrestler 1's Name:</h3>
+              <label>Current Grade: </label>
+              <input type="number" value="12345" />
+              <button>submit new grade</button>
+            </div>
+            <div className="col-2">
+              <h3>Wrestler 2s Name</h3>
+              <label>Current Grade: </label>
+              <input type="number" value="54321" />
+              <button>submit new grade</button>
+            </div>
+          </div>;
         })}
       </div>
     </>
