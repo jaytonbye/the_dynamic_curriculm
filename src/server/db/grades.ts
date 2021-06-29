@@ -27,12 +27,19 @@ const gradesForSingleWreslterOnSpecificLevel = async (
 ) => {
   return Query(
     `
-  SELECT * FROM videos
-  LEFT JOIN grades ON grades.video_id=videos.id
-  LEFT JOIN personal_info ON personal_info.user_id=grades.student_user_id
-  WHERE videos.curriculum_level=? AND (personal_info.user_id=? OR personal_info.user_id IS null);
+    Select *, (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as movement_notes
+       from videos
+      WHERE curriculum_level=?
+      ORDER BY number_for_ordering;
   `,
-    [level, user_id]
+    [user_id, user_id, level]
   );
 };
 

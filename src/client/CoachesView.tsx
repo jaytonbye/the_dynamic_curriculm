@@ -1,5 +1,4 @@
 import * as React from "react";
-import WrestlersView from "./WrestlersView";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [personal_info, setPersonalInfo] = React.useState([]);

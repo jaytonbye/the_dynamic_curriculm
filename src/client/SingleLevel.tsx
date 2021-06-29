@@ -4,16 +4,18 @@ import { useParams } from "react-router-dom";
 //why am I not using typing here?
 
 function SingleLevel() {
-  const [moves, setMoves] = React.useState([]);
+  const [movesAndGrades, setMovesAndGrades] = React.useState([]);
 
   let { level } = useParams();
 
-  //gets us all of the moves in all levels.
+  //gets us all of the moves and grades for specific wrestler on specific level (currently user 3 level 1)
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/videos")
+    fetch(
+      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/3&${level}`
+    )
       .then((res) => res.json())
       .then((results) => {
-        setMoves(results);
+        setMovesAndGrades(results);
       });
   }, []);
 
@@ -35,11 +37,13 @@ function SingleLevel() {
           </tr>
         </thead>
         <tbody>
-          {moves.map((move) => {
+          {movesAndGrades.map((move) => {
             if (move.curriculum_level === Number(level)) {
               return (
                 <tr>
-                  <td>{move.name_of_video}</td>
+                  <td>
+                    {move.number_for_ordering}. {move.name_of_video}
+                  </td>
                   <td>
                     <iframe
                       width="560"
@@ -58,8 +62,8 @@ function SingleLevel() {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>
                   </td>
-                  <td>Your grade here</td>
-                  <td>Potential grades here</td>
+                  <td>Your grade here: {move.grade}</td>
+                  <td>Coaches' notes: {move.movement_notes}</td>
                 </tr>
               );
             }
