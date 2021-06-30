@@ -50,6 +50,7 @@ const gradesForTwoWresltersOnASpecificLevel = async (
 ) => {
   return Query(
     `
+
     Select *, (
       Select grade from grades 
       WHERE video_id=videos.id AND student_user_id=?
@@ -59,18 +60,40 @@ const gradesForTwoWresltersOnASpecificLevel = async (
       WHERE video_id=videos.id AND student_user_id=?
       ORDER BY grades.created_at DESC Limit 1) as wrestler_1_movement_notes,
       (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_1_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_1_last_name,
+      (
       Select grade from grades 
       WHERE video_id=videos.id AND student_user_id=?
       ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade,
       (
       Select movement_notes from grades 
       WHERE video_id=videos.id AND student_user_id=?
-      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_movement_notes
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_movement_notes,
+      (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_2_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_2_last_name
       FROM videos
       WHERE curriculum_level=?
       ORDER BY number_for_ordering;
+
+
   `,
-    [wrestler1Id, wrestler1Id, wrestler2Id, wrestler2Id, level]
+    [
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      level,
+    ]
   );
 };
 
