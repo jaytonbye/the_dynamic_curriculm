@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import WrestlerDashboard from "./WrestlerDashboard";
 
 //why am I not using typing here?
 
@@ -21,9 +22,10 @@ function SingleLevel() {
 
   return (
     <>
+      <WrestlerDashboard />
       <h1>
         You are currently viewing level {level} of the Dynamic Wrestling
-        Curriculum
+        Curriculum!
       </h1>
 
       <table className="table">

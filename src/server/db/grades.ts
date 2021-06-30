@@ -21,6 +21,80 @@ const singleGrade = async (id: number) => {
   return Query("SELECT * FROM grades WHERE id=?", [id]);
 };
 
+const allSpecificCurrentGradesForASingleWrestler = async (
+  user_id: number,
+  grade: number
+) => {
+  return Query(
+    `
+    Select *, (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as movement_notes
+      from videos
+      HAVING grade=?
+      ORDER BY number_for_ordering;
+    `,
+    [user_id, user_id, grade]
+  );
+};
+
+const allSpecificCurrentGradesForTwoWrestlers = async (
+  wrestler1Id: number,
+  wrestler2Id: number,
+  grade: number
+) => {
+  return Query(
+    `
+    Select *, (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_movement_notes,
+      (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_1_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_1_last_name,
+      (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_movement_notes,
+      (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_2_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_2_last_name
+      FROM videos
+      HAVING wrestler_1_grade=? OR wrestler_2_grade=?
+      ORDER BY number_for_ordering;
+    `,
+    [
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      grade,
+      grade,
+    ]
+  );
+};
+
 const gradesForSingleWreslterOnSpecificLevel = async (
   user_id: number,
   level: number
@@ -136,4 +210,6 @@ export default {
   deleteGrade,
   gradesForSingleWreslterOnSpecificLevel,
   gradesForTwoWresltersOnASpecificLevel,
+  allSpecificCurrentGradesForASingleWrestler,
+  allSpecificCurrentGradesForTwoWrestlers,
 };

@@ -1,28 +1,22 @@
-import * as React from "react";
-import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
+import React from "react";
 
-//I am getting "Warning: Each child in a list should have a unique "key" prop." for this page, but i'm not sure why. I don't think I have a list?
-
-const CoachesView = (props: CoachesViewProps) => {
-  const [personal_info, setPersonalInfo] = React.useState([]);
-  const [wrestler1Id, setWrestler1Id] = React.useState();
-  const [wrestler2Id, setWrestler2Id] = React.useState();
+function GradesOfXFor2Wrestlers(props) {
+  const [movesAndGrades, setMovesAndGrades] = React.useState([]);
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
   const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
-  const [level, setLevel] = React.useState();
-  const [
-    gradesForBothWrestlersOnCurrentLevel,
-    setGradesForBothWrestlersOnCurrentLevel,
-  ] = React.useState([]);
 
-  //for autocomplete of wrestler names
-  const onWrestler1Change = (event: any) => {
-    setWrestler1Id(event.target.value);
-  };
-  const onWrestler2Change = (event: any) => {
-    setWrestler2Id(event.target.value);
+  const onGradeChange = (event) => {
+    let grade = event.target.value;
+    fetch(
+      //wrong url
+      `http://localhost:3000/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`
+    )
+      .then((res) => res.json())
+      .then((results) => {
+        setMovesAndGrades(results);
+      });
   };
 
   const onWrestler1GradeChange = (event: any) => {
@@ -37,28 +31,6 @@ const CoachesView = (props: CoachesViewProps) => {
   const onWrestler2NoteChange = (event: any) => {
     setWrestler2NewNote(event.target.value);
   };
-  const onLevelChange = (event: any) => {
-    setLevel(event.target.value);
-  };
-
-  //gets all of the user_profiles
-  React.useEffect(() => {
-    fetch("http://localhost:3000/api/personal_info")
-      .then((res) => res.json())
-      .then((results) => {
-        setPersonalInfo(results);
-      });
-  }, []);
-
-  let getGradesForBothWrestlers = () => {
-    fetch(
-      `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`
-    )
-      .then((res) => res.json())
-      .then((results) => {
-        setGradesForBothWrestlersOnCurrentLevel(results);
-      });
-  };
 
   let submitGrade = (
     video_id: number,
@@ -66,7 +38,6 @@ const CoachesView = (props: CoachesViewProps) => {
     grade: number,
     note: string
   ) => {
-    // put fetch request for update here
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -89,40 +60,16 @@ const CoachesView = (props: CoachesViewProps) => {
 
   return (
     <>
-      <div className="card">
-        <h5 className="card-header">Coach's Dashboard</h5>
-      </div>
-      <label>Wrestler 1: </label>
-      <input type="text" list="wrestler1List" onChange={onWrestler1Change} />
-      <datalist id="wrestler1List">
-        {personal_info.map((wrestler) => {
-          return (
-            <option value={wrestler.user_id}>
-              {wrestler.first_name + " " + wrestler.last_name}
-            </option>
-          );
-        })}
-      </datalist>
-
-      <label>Wrestler 2: </label>
-      <input type="text" list="wrestler2List" onChange={onWrestler2Change} />
-      <datalist id="wrestler2List">
-        {personal_info.map((wrestler) => {
-          return (
-            <option value={wrestler.user_id}>
-              {wrestler.first_name + " " + wrestler.last_name}
-            </option>
-          );
-        })}
-      </datalist>
-
-      <label>Select Level: </label>
-      <input type="number" onChange={onLevelChange} />
-      <button className="btn btn-primary" onClick={getGradesForBothWrestlers}>
-        Get grades for wrestlers
-      </button>
+      <label className="h4">
+        Show me all of the moves where 1 of the wrestlers has a grade of:{" "}
+      </label>
+      <input
+        type="number"
+        onChange={onGradeChange}
+        placeholder="insert number"
+      />
       <div className="divForLevel">
-        {gradesForBothWrestlersOnCurrentLevel.map((move) => {
+        {movesAndGrades.map((move) => {
           return (
             <>
               <div className="row col-12 mt-5 d-flex justify-content-around">
@@ -162,7 +109,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     onClick={() => {
                       submitGrade(
                         move.id,
-                        wrestler1Id,
+                        props.wrestler1Id,
                         wrestler1NewGrade,
                         wrestler1NewNote
                       );
@@ -189,7 +136,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     onClick={() => {
                       submitGrade(
                         move.id,
-                        wrestler2Id,
+                        props.wrestler2Id,
                         wrestler2NewGrade,
                         wrestler2NewNote
                       );
@@ -205,14 +152,8 @@ const CoachesView = (props: CoachesViewProps) => {
           );
         })}
       </div>
-      <GradesOfXFor2Wrestlers
-        wrestler1Id={wrestler1Id}
-        wrestler2Id={wrestler2Id}
-      />
     </>
   );
-};
+}
 
-interface CoachesViewProps {}
-
-export default CoachesView;
+export default GradesOfXFor2Wrestlers;

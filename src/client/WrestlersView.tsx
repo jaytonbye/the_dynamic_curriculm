@@ -1,7 +1,7 @@
 import React from "react";
-import Move from "./Move";
-import SingleLevel from "./SingleLevel";
 import { Link } from "react-router-dom";
+import WrestlerDashboard from "./WrestlerDashboard";
+import GradesOfX from "./GradesOfX";
 
 function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
@@ -23,10 +23,7 @@ function WrestlersView() {
 
   return (
     <>
-      <h1>Wrestler's view page</h1>
-      <h1>Wrestler Dashboard</h1>
-      <h2>Name of wrestler</h2>
-      <h3>Total points</h3>
+      <WrestlerDashboard />
       <h3>
         List of Levels (with link)/ Points Earned / Total Points Available
       </h3>
@@ -56,11 +53,8 @@ function WrestlersView() {
           })}
         </tbody>
       </table>
-      <label>
-        Show me all of the moves where my grade is (insert number between 0-3):
-      </label>
-      <input type="number" />
-      <button className="btn"></button>
+
+      <GradesOfX />
     </>
   );
 }
