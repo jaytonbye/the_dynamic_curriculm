@@ -1,5 +1,6 @@
 import * as React from "react";
 import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
+import Moment from "react-moment";
 
 //I am getting "Warning: Each child in a list should have a unique "key" prop." for this page, but i'm not sure why. I don't think I have a list?
 
@@ -66,7 +67,6 @@ const CoachesView = (props: CoachesViewProps) => {
     grade: number,
     note: string
   ) => {
-    // put fetch request for update here
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -152,6 +152,13 @@ const CoachesView = (props: CoachesViewProps) => {
                     defaultValue={move.wrestler_1_grade}
                     onChange={onWrestler1GradeChange}
                   />
+                  <p>
+                    Last graded:{" "}
+                    <Moment fromNow>
+                      {move.wrestler_1_grade_creation_date}
+                    </Moment>
+                  </p>
+                  <p>By coach: </p>
                   <label>Coaches' notes: </label>
                   <textarea
                     onChange={onWrestler1NoteChange}
@@ -179,6 +186,13 @@ const CoachesView = (props: CoachesViewProps) => {
                     onChange={onWrestler2GradeChange}
                     defaultValue={move.wrestler_2_grade}
                   />
+                  <p>
+                    Last graded:{" "}
+                    <Moment fromNow>
+                      {move.wrestler_2_grade_creation_date}
+                    </Moment>
+                  </p>
+                  <p>By coach: </p>
                   <label>Coaches' notes: </label>
                   <textarea
                     onChange={onWrestler2NoteChange}

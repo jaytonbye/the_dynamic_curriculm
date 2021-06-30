@@ -75,7 +75,13 @@ const allSpecificCurrentGradesForTwoWrestlers = async (
       Select first_name from personal_info
       WHERE user_id=?) as wrestler_2_first_name,
       (Select last_name from personal_info
-      WHERE user_id=?) as wrestler_2_last_name
+      WHERE user_id=?) as wrestler_2_last_name,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_1_grade_creation_date,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_2_grade_creation_date
       FROM videos
       HAVING wrestler_1_grade=? OR wrestler_2_grade=?
       ORDER BY number_for_ordering;
@@ -88,6 +94,8 @@ const allSpecificCurrentGradesForTwoWrestlers = async (
       wrestler2Id,
       wrestler2Id,
       wrestler2Id,
+      wrestler2Id,
+      wrestler1Id,
       wrestler2Id,
       grade,
       grade,
@@ -150,10 +158,17 @@ const gradesForTwoWresltersOnASpecificLevel = async (
       Select first_name from personal_info
       WHERE user_id=?) as wrestler_2_first_name,
       (Select last_name from personal_info
-      WHERE user_id=?) as wrestler_2_last_name
+      WHERE user_id=?) as wrestler_2_last_name,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_1_grade_creation_date,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_2_grade_creation_date
       FROM videos
       WHERE curriculum_level=?
       ORDER BY number_for_ordering;
+
 
 
   `,
@@ -165,6 +180,8 @@ const gradesForTwoWresltersOnASpecificLevel = async (
       wrestler2Id,
       wrestler2Id,
       wrestler2Id,
+      wrestler2Id,
+      wrestler1Id,
       wrestler2Id,
       level,
     ]

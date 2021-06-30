@@ -1,4 +1,5 @@
 import React from "react";
+import Moment from "react-moment";
 
 function GradesOfXFor2Wrestlers(props) {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
@@ -72,38 +73,48 @@ function GradesOfXFor2Wrestlers(props) {
         {movesAndGrades.map((move) => {
           return (
             <>
-              <div className="row col-12 mt-5 d-flex justify-content-around">
-                <div className="col-2">
+              <div className="d-flex">
+                <div className="">
                   <h4>
                     {move.number_for_ordering}. {move.name_of_video}
                   </h4>
                 </div>
-                <div className="col-2">
+                <div className="">
                   <iframe
                     src={`https://www.youtube.com/embed/${move.url_to_video}`}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                   ></iframe>
                 </div>
-                <div className="col-2">
+                <div className="">
                   <iframe
                     src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                   ></iframe>
                 </div>
-                <div className="col-2">
+                <div className="flex-grow-1">
                   <label>current grade: </label>
                   <input
                     type="number"
                     defaultValue={move.wrestler_1_grade}
                     onChange={onWrestler1GradeChange}
                   />
+                  <p>
+                    Last graded:{" "}
+                    <Moment fromNow>
+                      {move.wrestler_1_grade_creation_date}
+                    </Moment>
+                  </p>
+                  <p>By coach: </p>
                   <label>Coaches' notes: </label>
+                  <br />
                   <textarea
+                    style={{ width: 100 }}
                     onChange={onWrestler1NoteChange}
                     defaultValue={move.wrestler_1_movement_notes}
                   ></textarea>
+                  <br />
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -119,13 +130,20 @@ function GradesOfXFor2Wrestlers(props) {
                     {move.wrestler_1_last_name}
                   </button>
                 </div>
-                <div className="col-2">
+                <div className="flex-grow-1">
                   <label>current grade: </label>
                   <input
                     type="number"
                     onChange={onWrestler2GradeChange}
                     defaultValue={move.wrestler_2_grade}
                   />
+                  <p>
+                    Last graded:{" "}
+                    <Moment fromNow>
+                      {move.wrestler_2_grade_creation_date}
+                    </Moment>
+                  </p>
+                  <p>By coach: </p>
                   <label>Coaches' notes: </label>
                   <textarea
                     onChange={onWrestler2NoteChange}

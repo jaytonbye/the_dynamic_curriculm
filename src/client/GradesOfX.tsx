@@ -3,7 +3,7 @@ import React from "react";
 function GradesOfX() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
 
-  const onGradeChange = (event) => {
+  const onGradeChange = (event: any) => {
     let grade = event.target.value;
     fetch(
       `http://localhost:3000/api/grades/allSpecificCurrentGradesForASingleWrestler/3&${grade}`

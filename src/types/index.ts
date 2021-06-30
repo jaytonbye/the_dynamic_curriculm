@@ -38,3 +38,15 @@ export interface IVideo {
   curriculum_level: number;
   date_created: Date;
 }
+
+export interface IGradesForSingleWreslterOnSpecificLevel {
+  id: number;
+  name_of_video: string;
+  url_to_video: string;
+  curriculum_level: number;
+  created_at: Date;
+  url_to_looped_video: string;
+  number_for_ordering: number;
+  grade: number;
+  movement_notes: string;
+}
