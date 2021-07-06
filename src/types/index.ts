@@ -50,3 +50,8 @@ export interface IGradesForSingleWreslterOnSpecificLevel {
   grade: number;
   movement_notes: string;
 }
+
+export interface mysqlResponse {
+  affectedRows: number;
+  insertId: number;
+}

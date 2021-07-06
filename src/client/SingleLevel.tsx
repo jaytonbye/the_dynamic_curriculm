@@ -73,7 +73,7 @@ function SingleLevel() {
                       </p>
                       <p>
                         <strong>Days since last graded:</strong>
-                        {/*what is an easy way to calculate this? */}
+                    
                         <Moment fromNow>{move.created_at}</Moment>
                       </p>
                       <p>
