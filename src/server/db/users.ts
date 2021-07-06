@@ -14,6 +14,10 @@ const all = async () => {
   return Query("SELECT * from users");
 };
 
+const find = async (column: string, email: string) => {
+  return Query("Select * From users WHERE ??=?", [column, email]);
+};
+
 const singleUser = async (id: number) => {
   return Query("SELECT * FROM users WHERE id=?", [id]);
 };
@@ -53,6 +57,7 @@ const deleteCorrespondingGrades = async (id: number) => {
 
 export default {
   all,
+  find,
   singleUser,
   createUser,
   updateUser,

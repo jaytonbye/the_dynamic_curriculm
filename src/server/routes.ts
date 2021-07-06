@@ -1,8 +1,8 @@
 import * as express from "express";
-import routesForUsers from "./routesForUsers";
-import routesForPersonal_info from "./routesForPersonal_info";
-import routesForVideos from "./routesForVideos";
-import routesForGrades from "./routesForGrades";
+import routesForUsers from "./routes/routesForUsers";
+import routesForPersonal_info from "./routes/routesForPersonal_info";
+import routesForVideos from "./routes/routesForVideos";
+import routesForGrades from "./routes/routesForGrades";
 
 const router = express.Router();
 

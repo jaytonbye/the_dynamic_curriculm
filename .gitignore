@@ -7,3 +7,6 @@ public/js/app.js
 
 
 src/server/config
+
+#environment variables
+.env
