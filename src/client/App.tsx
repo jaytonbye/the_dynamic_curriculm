@@ -5,6 +5,8 @@ import CoachesView from "./CoachesView";
 import WrestlersView from "./WrestlersView";
 import Admin from "./Admin";
 import SingleLevel from "./SingleLevel";
+import Login from "./Login";
+import CreateAccount from "./CreateAccount";
 
 const App = (props: AppProps) => {
   return (
@@ -25,6 +27,12 @@ const App = (props: AppProps) => {
           </Route>
           <Route exact path="/level/:level">
             <SingleLevel />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/createAccount">
+            <CreateAccount />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>
