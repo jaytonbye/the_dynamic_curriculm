@@ -9,8 +9,10 @@ function Login() {
   const handleLogin = (e) => {
     try {
       const token = apiService("/auth/login", "POST", {
-        email: "test@test.com",
-        password: "password123",
+        email,
+        password,
+      }).then((data) => {
+        localStorage.setItem("token", data.token);
       });
       console.log(token);
     } catch (error) {

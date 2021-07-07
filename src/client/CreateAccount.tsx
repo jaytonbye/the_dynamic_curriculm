@@ -1,12 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { apiService } from "./services/api-services";
 
 function CreateAccount() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const handleCreateAccount = (e) => {
-    //add the fetch stuff here
+    e.preventDefault();
+    try {
+      const token = apiService("/api/users", "POST", {
+        email: "jason@jason.com",
+        password: "password",
+      }).then((data) => {
+        console.log(data);
+        localStorage.setItem("token", data.token);
+      });
+    } catch (error) {
+      // error is already logged from apiService
+      // so possibly use history object to navigate to error page?
+    }
   };
 
   return (

@@ -19,8 +19,12 @@ router.get("/:id?", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
-    res.json(await db.users.createUser(req.body));
+    //console.log(req.body);
+    let email = req.body.email;
+    let password = req.body.password;
+    console.log(email);
+    console.log(password);
+    res.json(await db.users.createUser({ email, password }));
   } catch (error) {
     console.log(req.body);
     console.log(error);

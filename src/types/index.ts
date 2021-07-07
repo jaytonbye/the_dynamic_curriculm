@@ -1,10 +1,10 @@
 // for table users
 export interface IUser {
-  id: number;
+  id?: number;
   email: string;
   password: string;
-  role: string;
-  date_created: Date;
+  role?: string;
+  date_created?: Date;
 }
 
 // for table personal_info

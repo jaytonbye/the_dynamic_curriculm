@@ -26,7 +26,7 @@ const createUser = async (user: IUser) => {
   return Query(`INSERT INTO users (email, password, role) VALUES (?,?,?)`, [
     user.email,
     user.password,
-    user.role,
+    "wrestler",
   ]);
 };
 

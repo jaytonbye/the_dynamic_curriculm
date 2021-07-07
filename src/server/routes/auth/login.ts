@@ -24,10 +24,8 @@ router.post("/", async (req, res) => {
         config.jwt.secret,
         { expiresIn: "15d" }
       );
-      console.log(password);
-      console.log(userFound.password);
-      console.log(userFound);
-      res.json(token);
+
+      res.json({ token });
       return;
     }
     res.status(401).json({ message: "invalid credentials" });
