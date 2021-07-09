@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { apiService } from "./services/api-services";
+import { useHistory } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const history = useHistory();
 
   const handleLogin = (e) => {
     try {
@@ -15,6 +17,8 @@ function Login() {
         localStorage.setItem("token", data.token);
       });
       console.log(token);
+      //after it gives the token, I want it to navigate to the wrestler's page
+      history.push("/wrestlersview");
     } catch (error) {
       // error is already logged from apiService
       // so possibly use history object to navigate to error page?

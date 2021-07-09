@@ -10,8 +10,8 @@ function CreateAccount() {
     e.preventDefault();
     try {
       const token = apiService("/api/users", "POST", {
-        email: "jason@jason.com",
-        password: "password",
+        email: email,
+        password: password,
       }).then((data) => {
         console.log(data);
         localStorage.setItem("token", data.token);

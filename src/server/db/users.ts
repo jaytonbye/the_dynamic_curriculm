@@ -1,6 +1,7 @@
 import { Query } from "./index";
 import { IUser } from "../../types";
 import personal_info from "./personal_info";
+import { generateHash } from "../utils/passwords";
 
 // export interface IUser {
 //   id: number;
@@ -23,9 +24,10 @@ const singleUser = async (id: number) => {
 };
 
 const createUser = async (user: IUser) => {
+  let hashedPassword = generateHash(user.password);
   return Query(`INSERT INTO users (email, password, role) VALUES (?,?,?)`, [
     user.email,
-    user.password,
+    hashedPassword,
     "wrestler",
   ]);
 };

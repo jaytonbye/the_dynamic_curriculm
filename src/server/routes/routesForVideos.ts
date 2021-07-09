@@ -1,5 +1,6 @@
 import { Router } from "express";
 import db from "../db";
+import { hasValidAdminToken } from "../utils/tokenCheck";
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router.get("/:id?", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", hasValidAdminToken, async (req, res) => {
   try {
     res.json(await db.videos.createVideo(req.body));
   } catch (error) {
@@ -29,7 +30,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", hasValidAdminToken, async (req, res) => {
   try {
     res.json(await db.videos.updateVideo(req.body));
   } catch (error) {
@@ -39,7 +40,7 @@ router.put("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", hasValidAdminToken, async (req, res) => {
   let id = Number(req.params.id);
   try {
     await db.videos.deleteCorrespondingGrades(id);

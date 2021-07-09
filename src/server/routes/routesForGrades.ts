@@ -51,6 +51,7 @@ router.get(
 router.get(
   "/gradesForSingleWreslterOnSpecificLevel/:user_id&:level",
   async (req, res) => {
+    console.log(req.headers);
     let user_id = Number(req.params.user_id);
     let level = Number(req.params.level);
     try {

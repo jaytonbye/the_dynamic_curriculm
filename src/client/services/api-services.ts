@@ -24,7 +24,7 @@ export async function apiService<T = any>(
     headers["Authorization"] = `Bearer ${TOKEN}`;
   }
 
-  if ((method = "GET")) {
+  if (method === "GET") {
     delete headers["Content-type"];
     delete fetchOptions.body;
   }

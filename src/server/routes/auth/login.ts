@@ -26,6 +26,7 @@ router.post("/", async (req, res) => {
       );
 
       res.json({ token });
+      console.log("you should now be logged in");
       return;
     }
     res.status(401).json({ message: "invalid credentials" });
