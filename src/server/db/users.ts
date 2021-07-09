@@ -16,7 +16,12 @@ const all = async () => {
 };
 
 const find = async (column: string, email: string) => {
-  return Query("Select * From users WHERE ??=?", [column, email]);
+  return Query(
+    `Select * From users
+    LEFT JOIN personal_info ON users.id=personal_info.user_id
+    WHERE ??=?`,
+    [column, email]
+  );
 };
 
 const singleUser = async (id: number) => {

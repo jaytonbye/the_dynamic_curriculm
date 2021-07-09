@@ -8,13 +8,16 @@ import Moment from "react-moment";
 
 function SingleLevel() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
-
+  let token = localStorage.getItem("token");
   let { level } = useParams();
 
   //gets us all of the moves and grades for specific wrestler on specific level (currently user 3 level 1)
   React.useEffect(() => {
     fetch(
-      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/3&${level}`
+      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/3&${level}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     )
       .then((res) => res.json())
       .then((results) => {
@@ -73,7 +76,7 @@ function SingleLevel() {
                       </p>
                       <p>
                         <strong>Days since last graded:</strong>
-                    
+
                         <Moment fromNow>{move.created_at}</Moment>
                       </p>
                       <p>

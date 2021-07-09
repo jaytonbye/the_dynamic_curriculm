@@ -8,11 +8,16 @@ function GradesOfXFor2Wrestlers(props) {
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
   const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
 
+  let token = localStorage.getItem("token");
+
   const onGradeChange = (event) => {
     let grade = event.target.value;
     fetch(
       //wrong url
-      `http://localhost:3000/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`
+      `http://localhost:3000/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     )
       .then((res) => res.json())
       .then((results) => {
@@ -41,7 +46,10 @@ function GradesOfXFor2Wrestlers(props) {
   ) => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         video_id: video_id,
         coach_user_id: 10, //until we have logins

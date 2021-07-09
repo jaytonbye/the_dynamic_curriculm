@@ -2,11 +2,15 @@ import React from "react";
 
 function GradesOfX() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
+  let token = localStorage.getItem("token");
 
   const onGradeChange = (event: any) => {
     let grade = event.target.value;
     fetch(
-      `http://localhost:3000/api/grades/allSpecificCurrentGradesForASingleWrestler/3&${grade}`
+      `http://localhost:3000/api/grades/allSpecificCurrentGradesForASingleWrestler/3&${grade}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     )
       .then((res) => res.json())
       .then((results) => {

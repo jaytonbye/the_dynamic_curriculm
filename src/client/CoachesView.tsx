@@ -18,6 +18,8 @@ const CoachesView = (props: CoachesViewProps) => {
     setGradesForBothWrestlersOnCurrentLevel,
   ] = React.useState([]);
 
+  let token = localStorage.getItem("token");
+
   //for autocomplete of wrestler names
   const onWrestler1Change = (event: any) => {
     setWrestler1Id(event.target.value);
@@ -44,7 +46,9 @@ const CoachesView = (props: CoachesViewProps) => {
 
   //gets all of the user_profiles
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/personal_info")
+    fetch("http://localhost:3000/api/personal_info", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => res.json())
       .then((results) => {
         setPersonalInfo(results);
@@ -53,7 +57,10 @@ const CoachesView = (props: CoachesViewProps) => {
 
   let getGradesForBothWrestlers = () => {
     fetch(
-      `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`
+      `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     )
       .then((res) => res.json())
       .then((results) => {
@@ -69,7 +76,10 @@ const CoachesView = (props: CoachesViewProps) => {
   ) => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         video_id: video_id,
         coach_user_id: 10, //until we have logins

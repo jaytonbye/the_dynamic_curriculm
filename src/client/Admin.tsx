@@ -25,17 +25,20 @@ function Admin() {
   };
 
   const onSubmitMove = () => {
+    let token = localStorage.getItem("token");
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+
       body: JSON.stringify({
         name_of_video: moveName,
         url_to_video: moveUrl,
         url_to_looped_video: moveLoopedUrl,
         number_for_ordering: numberForOrdering,
         curriculum_level: curriculumLevel,
-        // Is there a way I can use type checking here?
-        //Would it have made more sense to use identical variables here? I believe I can then write name_of_video by itself instead of name_of_video: name_of_video. Is this correct?
       }),
     };
     fetch("http://localhost:3000/api/videos", requestOptions).then((res) => {
@@ -48,9 +51,13 @@ function Admin() {
   };
 
   const onEditMove = (id: number) => {
+    let token = localStorage.getItem("token");
     const requestOptions = {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name_of_video: moveName,
         url_to_video: moveUrl,
@@ -72,9 +79,13 @@ function Admin() {
   };
 
   const onDeleteMove = (id: number) => {
+    let token = localStorage.getItem("token");
     const requestOptions = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         id: id, //check to see if this can just be id
       }),
@@ -93,7 +104,10 @@ function Admin() {
 
   //gets us all of the moves in all levels.
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/videos")
+    let token = localStorage.getItem("token");
+    fetch("http://localhost:3000/api/videos", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => res.json())
       .then((results) => {
         setMoves(results);
