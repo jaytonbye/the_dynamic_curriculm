@@ -20,15 +20,13 @@ router.post("/", async (req, res) => {
           userId: userFound.id,
           email: userFound.email,
           role: userFound.role,
-          first_name: userFound.first_name,
-          last_name: userFound.last_name,
-          notes: userFound.notes,
         },
         config.jwt.secret,
         { expiresIn: "15d" }
       );
 
-      res.json({ token });
+      let UID = userFound.id;
+      res.json({ token, UID });
       return;
     }
     res.status(401).json({ message: "invalid credentials" });

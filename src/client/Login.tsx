@@ -14,7 +14,8 @@ function Login() {
         email,
         password,
       }).then((data) => {
-        localStorage.setItem("token", data.token);
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("UID", data.UID);
       });
       console.log(token);
       //after it gives the token, I want it to navigate to the wrestler's page
