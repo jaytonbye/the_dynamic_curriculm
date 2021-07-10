@@ -7,7 +7,7 @@ export async function apiService<T = any>(
   method: string = "GET",
   data?: {}
 ) {
-  const TOKEN = localStorage.getItem(TOKEN_KEY);
+  const TOKEN = sessionStorage.getItem(TOKEN_KEY);
 
   const headers: HeadersInit = {
     "Content-Type": "application/json",

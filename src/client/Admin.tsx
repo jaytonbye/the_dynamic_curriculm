@@ -25,7 +25,7 @@ function Admin() {
   };
 
   const onSubmitMove = () => {
-    let token = localStorage.getItem("token");
+    let token = sessionStorage.getItem("token");
     const requestOptions = {
       method: "POST",
       headers: {
@@ -51,7 +51,7 @@ function Admin() {
   };
 
   const onEditMove = (id: number) => {
-    let token = localStorage.getItem("token");
+    let token = sessionStorage.getItem("token");
     const requestOptions = {
       method: "PUT",
       headers: {
@@ -79,7 +79,7 @@ function Admin() {
   };
 
   const onDeleteMove = (id: number) => {
-    let token = localStorage.getItem("token");
+    let token = sessionStorage.getItem("token");
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -104,7 +104,7 @@ function Admin() {
 
   //gets us all of the moves in all levels.
   React.useEffect(() => {
-    let token = localStorage.getItem("token");
+    let token = sessionStorage.getItem("token");
     fetch("http://localhost:3000/api/videos", {
       headers: { Authorization: `Bearer ${token}` },
     })

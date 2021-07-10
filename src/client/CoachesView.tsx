@@ -1,6 +1,7 @@
 import * as React from "react";
 import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
 import Moment from "react-moment";
+import { Link, useHistory } from "react-router-dom";
 
 //I am getting "Warning: Each child in a list should have a unique "key" prop." for this page, but i'm not sure why. I don't think I have a list?
 
@@ -17,8 +18,10 @@ const CoachesView = (props: CoachesViewProps) => {
     gradesForBothWrestlersOnCurrentLevel,
     setGradesForBothWrestlersOnCurrentLevel,
   ] = React.useState([]);
+  let history = useHistory();
 
-  let token = localStorage.getItem("token");
+  let token = sessionStorage.getItem("token");
+  let UID = sessionStorage.getItem("UID");
 
   //for autocomplete of wrestler names
   const onWrestler1Change = (event: any) => {
@@ -42,6 +45,12 @@ const CoachesView = (props: CoachesViewProps) => {
   };
   const onLevelChange = (event: any) => {
     setLevel(event.target.value);
+  };
+
+  let logout = () => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("UID");
+    history.push("/");
   };
 
   //gets all of the user_profiles
@@ -82,7 +91,7 @@ const CoachesView = (props: CoachesViewProps) => {
       },
       body: JSON.stringify({
         video_id: video_id,
-        coach_user_id: 10, //until we have logins
+        coach_user_id: UID,
         student_user_id: user_id,
         grade: grade,
         movement_notes: note,
@@ -99,9 +108,20 @@ const CoachesView = (props: CoachesViewProps) => {
 
   return (
     <>
-      <div className="card">
-        <h5 className="card-header">Coach's Dashboard</h5>
-      </div>
+      <nav className="navbar navbar-light bg-light">
+        <div className="container-fluid">
+          <p>
+            This page is for coaches only. Little scrubs don't have permission
+            to do anything on this page, so get
+            <Link to={`/wrestlersview`}> back to studying...</Link>
+          </p>
+
+          <button className="btn btn-outline-success" onClick={logout}>
+            Logout
+          </button>
+        </div>
+      </nav>
+      <div className="card"></div>
       <label>Wrestler 1: </label>
       <input type="text" list="wrestler1List" onChange={onWrestler1Change} />
       <datalist id="wrestler1List">
@@ -156,6 +176,9 @@ const CoachesView = (props: CoachesViewProps) => {
                   ></iframe>
                 </div>
                 <div className="col-2">
+                  <p>
+                    {move.wrestler_1_first_name} {move.wrestler_1_last_name}
+                  </p>
                   <label>current grade: </label>
                   <input
                     type="number"
@@ -190,6 +213,9 @@ const CoachesView = (props: CoachesViewProps) => {
                   </button>
                 </div>
                 <div className="col-2">
+                  <p>
+                    {move.wrestler_2_first_name} {move.wrestler_2_last_name}
+                  </p>
                   <label>current grade: </label>
                   <input
                     type="number"

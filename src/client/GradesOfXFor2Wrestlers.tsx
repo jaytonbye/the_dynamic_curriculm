@@ -8,7 +8,7 @@ function GradesOfXFor2Wrestlers(props) {
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
   const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
 
-  let token = localStorage.getItem("token");
+  let token = sessionStorage.getItem("token");
 
   const onGradeChange = (event) => {
     let grade = event.target.value;

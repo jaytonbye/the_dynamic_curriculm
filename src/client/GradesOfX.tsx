@@ -2,12 +2,13 @@ import React from "react";
 
 function GradesOfX() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
-  let token = localStorage.getItem("token");
+  let token = sessionStorage.getItem("token");
+  let UID = sessionStorage.getItem("UID");
 
   const onGradeChange = (event: any) => {
     let grade = event.target.value;
     fetch(
-      `http://localhost:3000/api/grades/allSpecificCurrentGradesForASingleWrestler/3&${grade}`,
+      `http://localhost:3000/api/grades/allSpecificCurrentGradesForASingleWrestler/${UID}&${grade}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

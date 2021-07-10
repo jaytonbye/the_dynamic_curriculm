@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { apiService } from "./services/api-services";
-import { useHistory } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = React.useState("");

@@ -9,12 +9,13 @@ function CreateAccount() {
   const handleCreateAccount = (e) => {
     e.preventDefault();
     try {
+      //do I need const token here? It seems like I can just call apiService...
       const token = apiService("/api/users", "POST", {
         email: email,
         password: password,
       }).then((data) => {
         console.log(data);
-        localStorage.setItem("token", data.token);
+        sessionStorage.setItem("token", data.token);
       });
     } catch (error) {
       // error is already logged from apiService

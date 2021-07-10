@@ -2,19 +2,19 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import WrestlerDashboard from "./WrestlerDashboard";
 import { IGradesForSingleWreslterOnSpecificLevel } from "../types/index";
-import Moment from "react-moment";
 
 //why am I not using typing here?
 
 function SingleLevel() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
-  let token = localStorage.getItem("token");
+  let token = sessionStorage.getItem("token");
   let { level } = useParams();
+  let UID = sessionStorage.getItem("UID");
 
   //gets us all of the moves and grades for specific wrestler on specific level (currently user 3 level 1)
   React.useEffect(() => {
     fetch(
-      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/3&${level}`,
+      `http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/${UID}&${level}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -33,14 +33,14 @@ function SingleLevel() {
         Curriculum!
       </h1>
 
-      <table className="table">
+      <table>
         <thead>
           <tr>
             <th>Move</th>
             <th>Video</th>
             <th>Looped Video</th>
             <th>Points earned</th>
-            <th>Points available</th>
+            <th>Coaches' notes</th>
           </tr>
         </thead>
         <tbody>
@@ -74,16 +74,8 @@ function SingleLevel() {
                       <p>
                         <strong>Your grade here:</strong> {move.grade}
                       </p>
-                      <p>
-                        <strong>Days since last graded:</strong>
-
-                        <Moment fromNow>{move.created_at}</Moment>
-                      </p>
-                      <p>
-                        <strong>Coach who gave grade:</strong> insert coach
-                      </p>
                     </td>
-                    <td>Coaches' notes: {move.movement_notes}</td>
+                    <td>{move.movement_notes}</td>
                   </tr>
                 );
               }
