@@ -9,14 +9,14 @@ function Login() {
 
   const handleLogin = (e) => {
     try {
-      const token = apiService("/auth/login", "POST", {
+      apiService("/auth/login", "POST", {
         email,
         password,
       }).then((data) => {
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("UID", data.UID);
       });
-      console.log(token);
+
       //after it gives the token, I want it to navigate to the wrestler's page
       history.push("/wrestlersview");
     } catch (error) {

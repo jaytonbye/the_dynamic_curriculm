@@ -3,6 +3,7 @@ import routesForUsers from "./routes/routesForUsers";
 import routesForPersonal_info from "./routes/routesForPersonal_info";
 import routesForVideos from "./routes/routesForVideos";
 import routesForGrades from "./routes/routesForGrades";
+import { hasValidToken } from "./utils/tokenCheck";
 
 const router = express.Router();
 
@@ -11,8 +12,8 @@ router.get("/api/hello", (req, res, next) => {
 });
 
 router.use("/users", routesForUsers);
-router.use("/personal_info", routesForPersonal_info);
-router.use("/videos", routesForVideos);
-router.use("/grades", routesForGrades);
+router.use("/personal_info", hasValidToken, routesForPersonal_info);
+router.use("/videos", hasValidToken, routesForVideos);
+router.use("/grades", hasValidToken, routesForGrades);
 
 export default router;

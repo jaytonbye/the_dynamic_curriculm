@@ -1,8 +1,13 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
+interface IPersonalInfo {
+  first_name: string;
+  last_name: string;
+}
+
 function WrestlerDashboard() {
-  const [personalInfo, setPersonalInfo] = React.useState([]);
+  const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>({});
   let history = useHistory();
   let UID = sessionStorage.getItem("UID");
   let token = sessionStorage.getItem("token");
@@ -13,7 +18,7 @@ function WrestlerDashboard() {
     })
       .then((res) => res.json())
       .then((results) => {
-        setPersonalInfo(results);
+        setPersonalInfo(results[0]);
       });
   }, []);
 
@@ -40,7 +45,9 @@ function WrestlerDashboard() {
       <div className="card">
         <h5 className="card-header">Wrestler Dashboard</h5>
         <div className="card-body">
-          <h5 className="card-title">hey{personalInfo.first_name}</h5>
+          <h5 className="card-title">
+            {personalInfo.first_name} {personalInfo.last_name}
+          </h5>
           <p className="card-text">Current Shirt Color:</p>
           <p className="card-text">Total Points:</p>
           <p className="card-text">Points till next shirt:</p>

@@ -22,11 +22,15 @@ function Login() {
           user_id: UID,
         }),
       };
-      fetch("/personal_info", requestOptions).then((data) => {
-        alert("profile created");
-        history.push("/wrestlersview");
-      });
-    } catch (error) {}
+      fetch("http://localhost:3000/api/personal_info", requestOptions).then(
+        (data) => {
+          alert("profile created");
+          history.push("/wrestlersview");
+        }
+      );
+    } catch (error) {
+      console.log("something is going wrong in your profile page code");
+    }
   };
 
   return (

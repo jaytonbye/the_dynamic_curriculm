@@ -1,21 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { apiService } from "./services/api-services";
 
 function CreateAccount() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  let history = useHistory();
 
   const handleCreateAccount = (e) => {
-    e.preventDefault();
     try {
-      //do I need const token here? It seems like I can just call apiService...
-      const token = apiService("/api/users", "POST", {
-        email: email,
-        password: password,
-      }).then((data) => {
-        console.log(data);
-        sessionStorage.setItem("token", data.token);
+      let requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      };
+      fetch("/api/users", requestOptions).then((data) => {
+        alert(
+          "Your account was created, you can now create your wrestler profile"
+        );
+        apiService("/auth/login", "POST", {
+          email,
+          password,
+        }).then((data) => {
+          sessionStorage.setItem("token", data.token);
+          sessionStorage.setItem("UID", data.UID);
+        });
+        history.push("/profilepage");
       });
     } catch (error) {
       // error is already logged from apiService

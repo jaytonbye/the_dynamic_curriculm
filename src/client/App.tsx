@@ -7,6 +7,7 @@ import Admin from "./Admin";
 import SingleLevel from "./SingleLevel";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
+import ProfilePage from "./ProfilePage";
 
 const App = (props: AppProps) => {
   return (
@@ -21,6 +22,9 @@ const App = (props: AppProps) => {
           </Route>
           <Route exact path="/wrestlersview">
             <WrestlersView />
+          </Route>
+          <Route exact path="/profilepage">
+            <ProfilePage />
           </Route>
           <Route exact path="/admin">
             <Admin />
