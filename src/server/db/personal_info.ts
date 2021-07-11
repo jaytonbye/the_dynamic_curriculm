@@ -13,7 +13,7 @@ const all = async () => {
 };
 
 const singlePerson = async (id: number) => {
-  return Query("SELECT * FROM personal_info WHERE id=?", [id]);
+  return Query("SELECT * FROM personal_info WHERE user_id=?", [id]);
 };
 
 const createPerson = async (person: IPerson) => {

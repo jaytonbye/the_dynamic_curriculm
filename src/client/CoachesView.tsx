@@ -111,9 +111,12 @@ const CoachesView = (props: CoachesViewProps) => {
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
           <p>
-            This page is for coaches only. Little scrubs don't have permission
-            to do anything on this page, so get
-            <Link to={`/wrestlersview`}> back to studying...</Link>
+            <strong>
+              {" "}
+              This page is for coaches only. Little scrubs don't have permission
+              to do anything on this page, so get
+              <Link to={`/wrestlersview`}> back to studying...</Link>
+            </strong>
           </p>
 
           <button className="btn btn-outline-success" onClick={logout}>

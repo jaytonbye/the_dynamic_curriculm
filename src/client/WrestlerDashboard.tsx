@@ -7,7 +7,10 @@ interface IPersonalInfo {
 }
 
 function WrestlerDashboard() {
-  const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>({});
+  const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>({
+    first_name: "jay",
+    last_name: "lay",
+  });
   const [grades, setGrades] = React.useState([]);
   const [totalPoints, setTotalPoints] = React.useState(0);
   const [totalPointsAvailable, setTotalPointsAvailable] = React.useState(0);
@@ -23,14 +26,19 @@ function WrestlerDashboard() {
   let token = sessionStorage.getItem("token");
 
   React.useEffect(() => {
+    console.log("attempting");
+
     fetch(`/api/personal_info/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
       .then((results) => {
         setPersonalInfo(results[0]);
+        console.log({ results });
       });
   }, []);
+
+  console.log({ personalInfo });
 
   React.useEffect(() => {
     fetch(`/api/grades/allCurrentGradesForASingleWrestler/${UID}`, {
@@ -53,6 +61,10 @@ function WrestlerDashboard() {
   }, [grades]);
 
   React.useEffect(() => {
+    if (totalPointsAvailable === 0) {
+      return;
+    }
+    console.log({ totalPointsAvailable });
     let blue = Math.ceil(totalPointsAvailable * 0.14);
     let grey = Math.ceil(totalPointsAvailable * 0.34);
     let red = Math.ceil(totalPointsAvailable * 0.46);
@@ -131,7 +143,7 @@ function WrestlerDashboard() {
         <div className="card-body">
           <h5 className="card-title">
             <strong>
-              {personalInfo.first_name} {personalInfo.last_name}
+              {/*{personalInfo.first_name} {personalInfo.last_name}*/}
             </strong>
           </h5>
           <p className="card-text">
