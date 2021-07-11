@@ -5,6 +5,16 @@ const router = Router();
 
 //I had to put these get requests above the one get request to "/:id?", because the url was being interpreted as a variable and running that request instead. Is this a good way to do this?
 
+router.get("/allCurrentGradesForASingleWrestler/:user_id", async (req, res) => {
+  let user_id = Number(req.params.user_id);
+  try {
+    res.json(await db.grades.allCurrentGradesForASingleWrestler(user_id));
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 // This is what a get request would look like for user_id=3, user_id=6 and grade=1: http://localhost:3000/api/grades/allSpecificCurrentGradesForTwoWrestlers/3&6&1
 router.get(
   "/allSpecificCurrentGradesForTwoWrestlers/:wrestler1Id&:wrestler2Id&:grade",
