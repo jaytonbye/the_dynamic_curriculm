@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import WrestlerDashboard from "./WrestlerDashboard";
 import GradesOfX from "./GradesOfX";
+import MoveSearch from "./MoveSearch";
 
 function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
@@ -58,7 +59,7 @@ function WrestlersView() {
           })}
         </tbody>
       </table>
-
+      <MoveSearch />
       <GradesOfX />
     </>
   );
