@@ -8,7 +8,7 @@ function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
   const [levels, setLevels] = React.useState([]);
 
-  // this gets us all of the moves from the database and sets it to state.:)
+  // this gets us all of the moves from the database and sets it to state. :)
   let token = sessionStorage.getItem("token");
   React.useEffect(() => {
     fetch("http://localhost:3000/api/videos", {
@@ -46,9 +46,11 @@ function WrestlersView() {
           {levels.map((level) => {
             return (
               <tr>
-                <Link to={`/level/${level.curriculum_level}`}>
-                  <td>Level {level.curriculum_level}</td>
-                </Link>
+                <td>
+                  <Link to={`/level/${level.curriculum_level}`}>
+                    Level {level.curriculum_level}
+                  </Link>
+                </td>
                 {/* Will these be links to the levels? */}
                 <td>
                   How do i get the wrestlers total points for this level here?
