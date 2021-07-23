@@ -45,7 +45,7 @@ function WrestlersView() {
         <tbody>
           {levels.map((level) => {
             return (
-              <tr>
+              <tr key={level.id}>
                 <td>
                   <Link to={`/level/${level.curriculum_level}`}>
                     Level {level.curriculum_level}

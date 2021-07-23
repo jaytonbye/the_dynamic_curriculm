@@ -37,7 +37,7 @@ router.put("/", async (req, res) => {
     res.json(await db.users.updateUser(req.body));
   } catch (error) {
     console.log(error);
-    console.log("somethings fucking up here");
+    console.log("somethings messing up here");
     res.sendStatus(500);
   }
 });

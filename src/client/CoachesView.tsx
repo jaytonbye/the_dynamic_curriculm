@@ -65,16 +65,22 @@ const CoachesView = (props: CoachesViewProps) => {
   }, []);
 
   let getGradesForBothWrestlers = () => {
-    fetch(
-      `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
-      .then((res) => res.json())
-      .then((results) => {
-        setGradesForBothWrestlersOnCurrentLevel(results);
-      });
+    try {
+      fetch(
+        `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((res) => res.json())
+        .then((results) => {
+          setGradesForBothWrestlersOnCurrentLevel(results);
+        });
+    } catch (error) {
+      alert(
+        "Come on scrub, you're trying to grade wrestlers now? You haven't even mastered drilling yet. Back to drilling for you..."
+      );
+    }
   };
 
   let submitGrade = (
@@ -130,7 +136,7 @@ const CoachesView = (props: CoachesViewProps) => {
       <datalist id="wrestler1List">
         {personal_info.map((wrestler) => {
           return (
-            <option value={wrestler.user_id}>
+            <option key={wrestler.user_id} value={wrestler.user_id}>
               {wrestler.first_name + " " + wrestler.last_name}
             </option>
           );
@@ -142,7 +148,7 @@ const CoachesView = (props: CoachesViewProps) => {
       <datalist id="wrestler2List">
         {personal_info.map((wrestler) => {
           return (
-            <option value={wrestler.user_id}>
+            <option key={wrestler.user_id} value={wrestler.user_id}>
               {wrestler.first_name + " " + wrestler.last_name}
             </option>
           );
@@ -157,7 +163,7 @@ const CoachesView = (props: CoachesViewProps) => {
       <div className="divForLevel">
         {gradesForBothWrestlersOnCurrentLevel.map((move) => {
           return (
-            <>
+            <div key={move.id}>
               <div className="row col-12 mt-5 d-flex justify-content-around">
                 <div className="col-2">
                   <h4>
@@ -254,7 +260,7 @@ const CoachesView = (props: CoachesViewProps) => {
                 </div>
               </div>
               <hr />
-            </>
+            </div>
           );
         })}
       </div>

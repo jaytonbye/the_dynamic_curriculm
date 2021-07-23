@@ -8,8 +8,9 @@ function Login() {
   let UID = sessionStorage.getItem("UID");
   let token = sessionStorage.getItem("token");
 
-  const handleCreateProfile = (e) => {
+  const handleCreateProfile = (e: any) => {
     try {
+      e.preventDefault();
       const requestOptions = {
         method: "POST",
         headers: {

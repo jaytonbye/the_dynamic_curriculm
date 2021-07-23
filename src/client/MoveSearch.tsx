@@ -36,38 +36,46 @@ function MoveSearch() {
       <input type="text" list="moveList" onChange={onMoveChange} />
       <datalist id="moveList">
         {allGrades.map((move) => {
-          return <option value={move.id}>{move.name_of_video}</option>;
+          return (
+            <option key={move.id} value={move.id}>
+              {move.name_of_video}
+            </option>
+          );
         })}
       </datalist>
       <hr />
-      <tr>
-        <td>{searchedMoveObject.name_of_video}</td>
-        <td>
-          <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
-        </td>
-        <td>
-          <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_looped_video}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
-        </td>
-        <td>
-          <strong>Your grade here:</strong> {searchedMoveObject.grade}
-        </td>
-        <td>
-          <strong>Coach's notes:</strong>
-          {searchedMoveObject.movements_notes}
-        </td>
-      </tr>
+      <table>
+        <tbody>
+          <tr>
+            <td>{searchedMoveObject.name_of_video}</td>
+            <td>
+              <iframe
+                width="560"
+                height="315"
+                src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              ></iframe>
+            </td>
+            <td>
+              <iframe
+                width="560"
+                height="315"
+                src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_looped_video}`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              ></iframe>
+            </td>
+            <td>
+              <strong>Your grade here:</strong> {searchedMoveObject.grade}
+            </td>
+            <td>
+              <strong>Coach's notes:</strong>
+              {searchedMoveObject.movements_notes}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </>
   );
 }

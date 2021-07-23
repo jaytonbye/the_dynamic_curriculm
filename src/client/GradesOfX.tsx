@@ -41,7 +41,7 @@ function GradesOfX() {
         <tbody>
           {movesAndGrades.map((move) => {
             return (
-              <tr>
+              <tr key={move.id}>
                 <td>
                   {move.number_for_ordering}. {move.name_of_video}
                 </td>
