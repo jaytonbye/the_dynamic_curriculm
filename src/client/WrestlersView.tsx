@@ -30,16 +30,12 @@ function WrestlersView() {
   return (
     <>
       <WrestlerDashboard />
-      <h3>
-        List of Levels (with link)/ Points Earned / Total Points Available
-      </h3>
+      <h3>Click on a level to view the moves, grades, and coaches' notes</h3>
 
       <table className="table">
         <thead>
           <tr>
             <th>Level</th>
-            <th>Points Earned</th>
-            <th>Total Points Available</th>
           </tr>
         </thead>
         <tbody>
@@ -51,11 +47,6 @@ function WrestlersView() {
                     Level {level.curriculum_level}
                   </Link>
                 </td>
-                {/* Will these be links to the levels? */}
-                <td>
-                  How do i get the wrestlers total points for this level here?
-                </td>
-                <td>{level.total_videos * 3}</td>
               </tr>
             );
           })}

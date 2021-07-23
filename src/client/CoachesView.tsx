@@ -3,9 +3,8 @@ import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
 import Moment from "react-moment";
 import { Link, useHistory } from "react-router-dom";
 
-//I am getting "Warning: Each child in a list should have a unique "key" prop." for this page, but i'm not sure why. I don't think I have a list?
-
 const CoachesView = (props: CoachesViewProps) => {
+  const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState();
   const [personal_info, setPersonalInfo] = React.useState([]);
   const [wrestler1Id, setWrestler1Id] = React.useState();
   const [wrestler2Id, setWrestler2Id] = React.useState();
@@ -64,7 +63,25 @@ const CoachesView = (props: CoachesViewProps) => {
       });
   }, []);
 
+  //gets the current user so I can send non-coaches away and laugh in their faces...
+  React.useEffect(() => {
+    fetch(`http://localhost:3000/api/users/${UID}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((results) => {
+        setUserThatIsOnThisPage(results);
+      });
+  }, []);
+
   let getGradesForBothWrestlers = () => {
+    if (userThatIsOnThisPage[0].role === "wrestler") {
+      alert(
+        "Hahahahaha! You're trying to grade wrestlers now? You haven't even mastered drilling yet. Get back to work scrub!"
+      );
+      history.push("/wrestlersview");
+    } else {
+    }
     try {
       fetch(
         `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
@@ -77,9 +94,7 @@ const CoachesView = (props: CoachesViewProps) => {
           setGradesForBothWrestlersOnCurrentLevel(results);
         });
     } catch (error) {
-      alert(
-        "Come on scrub, you're trying to grade wrestlers now? You haven't even mastered drilling yet. Back to drilling for you..."
-      );
+      console.log("something is not working here");
     }
   };
 

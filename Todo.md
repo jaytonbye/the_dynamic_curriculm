@@ -4,3 +4,4 @@
 - Fix all typescript errors
 - Fix lists so they don't have ID errors
 - Add weekly units and a way to upload them.
+- Display when your shirt will changes color

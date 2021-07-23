@@ -26,19 +26,14 @@ function WrestlerDashboard() {
   let token = sessionStorage.getItem("token");
 
   React.useEffect(() => {
-    console.log("attempting");
-
     fetch(`/api/personal_info/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
       .then((results) => {
         setPersonalInfo(results[0]);
-        console.log({ results });
       });
   }, []);
-
-  console.log({ personalInfo });
 
   React.useEffect(() => {
     fetch(`/api/grades/allCurrentGradesForASingleWrestler/${UID}`, {
@@ -64,7 +59,7 @@ function WrestlerDashboard() {
     if (totalPointsAvailable === 0) {
       return;
     }
-    console.log({ totalPointsAvailable });
+
     let blue = Math.ceil(totalPointsAvailable * 0.14);
     let grey = Math.ceil(totalPointsAvailable * 0.34);
     let red = Math.ceil(totalPointsAvailable * 0.46);
