@@ -8,7 +8,7 @@ function GradesOfX() {
   const onGradeChange = (event: any) => {
     let grade = event.target.value;
     fetch(
-      `http://localhost:3000/api/grades/allSpecificCurrentGradesForASingleWrestler/${UID}&${grade}`,
+      `/api/grades/allSpecificCurrentGradesForASingleWrestler/${UID}&${grade}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

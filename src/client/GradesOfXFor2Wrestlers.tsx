@@ -14,7 +14,7 @@ function GradesOfXFor2Wrestlers(props) {
     let grade = event.target.value;
     fetch(
       //wrong url
-      `http://localhost:3000/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
+      `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -58,7 +58,7 @@ function GradesOfXFor2Wrestlers(props) {
         movement_notes: note,
       }),
     };
-    fetch(`http://localhost:3000/api/grades/`, requestOptions).then((res) => {
+    fetch(`/api/grades/`, requestOptions).then((res) => {
       if (res.ok) {
         alert("Grade Updated!");
       } else {

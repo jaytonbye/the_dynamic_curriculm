@@ -11,14 +11,14 @@ function WrestlersView() {
   // this gets us all of the moves from the database and sets it to state. :)
   let token = sessionStorage.getItem("token");
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/videos", {
+    fetch("/api/videos", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
       .then((results) => {
         setMoves(results);
       });
-    fetch("http://localhost:3000/api/videos/getlevels", {
+    fetch("/api/videos/getlevels", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

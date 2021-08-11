@@ -54,7 +54,7 @@ const CoachesView = (props: CoachesViewProps) => {
 
   //gets all of the user_profiles
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/personal_info", {
+    fetch("/api/personal_info", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -65,7 +65,7 @@ const CoachesView = (props: CoachesViewProps) => {
 
   //gets the current user so I can send non-coaches away and laugh in their faces...
   React.useEffect(() => {
-    fetch(`http://localhost:3000/api/users/${UID}`, {
+    fetch(`/api/users/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -84,7 +84,7 @@ const CoachesView = (props: CoachesViewProps) => {
     }
     try {
       fetch(
-        `http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -118,7 +118,7 @@ const CoachesView = (props: CoachesViewProps) => {
         movement_notes: note,
       }),
     };
-    fetch(`http://localhost:3000/api/grades/`, requestOptions).then((res) => {
+    fetch(`/api/grades/`, requestOptions).then((res) => {
       if (res.ok) {
         alert("Grade Updated!");
       } else {

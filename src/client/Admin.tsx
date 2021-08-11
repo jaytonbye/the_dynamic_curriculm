@@ -41,7 +41,7 @@ function Admin() {
         curriculum_level: curriculumLevel,
       }),
     };
-    fetch("http://localhost:3000/api/videos", requestOptions).then((res) => {
+    fetch("/api/videos", requestOptions).then((res) => {
       if (res.ok) {
         alert("Video added");
       } else {
@@ -68,7 +68,7 @@ function Admin() {
         // Is there a way I can use type checking here?
       }),
     };
-    fetch(`http://localhost:3000/api/videos/`, requestOptions).then((res) => {
+    fetch(`/api/videos/`, requestOptions).then((res) => {
       if (res.ok) {
         alert("Video updated!");
         window.location.reload();
@@ -90,22 +90,20 @@ function Admin() {
         id: id, //check to see if this can just be id
       }),
     };
-    fetch(`http://localhost:3000/api/videos/${id}`, requestOptions).then(
-      (res) => {
-        if (res.ok) {
-          alert("Video deleted");
-          window.location.reload();
-        } else {
-          alert("it didn't work!");
-        }
+    fetch(`/api/videos/${id}`, requestOptions).then((res) => {
+      if (res.ok) {
+        alert("Video deleted");
+        window.location.reload();
+      } else {
+        alert("it didn't work!");
       }
-    );
+    });
   };
 
   //gets us all of the moves in all levels.
   React.useEffect(() => {
     let token = sessionStorage.getItem("token");
-    fetch("http://localhost:3000/api/videos", {
+    fetch("/api/videos", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
