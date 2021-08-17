@@ -7,7 +7,6 @@ router.get("/:id?", async (req, res) => {
   let id = Number(req.params.id);
   try {
     if (id) {
-      console.log("heyyyy");
       res.json(await db.personal_info.singlePerson(id));
     } else {
       res.json(await db.personal_info.all());

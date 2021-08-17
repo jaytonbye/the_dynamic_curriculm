@@ -9,17 +9,26 @@ function Login() {
 
   const handleLogin = (e) => {
     try {
+      e.preventDefault();
       apiService("/auth/login", "POST", {
         email,
         password,
       }).then((data) => {
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("UID", data.UID);
-      });
 
-      //after it gives the token, I want it to navigate to the wrestler's page
-      history.push("/wrestlersview");
+        // This is a bit hackish, as i'm letting them move forward if they have a token (not if the token is valid).
+        let token = sessionStorage.getItem("token");
+        if (token) {
+          console.log("token exists, going to wrestler's view page");
+          history.push("/wrestlersview");
+        } else {
+          alert("wrong username/password (or something else went wrong...)");
+          history.push("/login");
+        }
+      });
     } catch (error) {
+      alert("you somehow reached the catch in login.tsx");
       // error is already logged from apiService
       // so possibly use history object to navigate to error page?
     }

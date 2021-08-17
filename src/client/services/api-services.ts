@@ -18,8 +18,7 @@ export async function apiService<T = any>(
     headers,
     body: JSON.stringify(data),
   };
-  console.log(fetchOptions.headers);
-  console.log(fetchOptions.body);
+
   if (TOKEN) {
     headers["Authorization"] = `Bearer ${TOKEN}`;
   }
