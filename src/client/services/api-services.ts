@@ -57,7 +57,7 @@ export async function apiService<T = any>(
     }
   } catch (error) {
     console.error("[error in apiService]", error.message);
-    throw error;
+
     //what does throw error do here? Didn't we already throw the error?
     //why does my program terminate here? I want it to continue on the login page.
   }

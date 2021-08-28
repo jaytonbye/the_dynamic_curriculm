@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 const Home = (props: HomeProps) => {
   return (
     <>
-      <h1>Welcome to the Dynamic Wrestling Curriculum</h1>
-      <main className="container">
-        <section className="mt-4 row justify-content-center">
-          <div>
+      <h1 className="text text-center">
+        Welcome to the Dynamic Wrestling Curriculum
+      </h1>
+      <main>
+        <section className="d-flex mt-4 justify-content-center">
+          <div className="d-flex">
             <Link to={`/login`} className="mb-2">
               Login
             </Link>
           </div>
           <br />
-          {/*why can't i get them on different lines? */}
-          <div>
+          <div className="d-flex">
             <Link to={`/createAccount`} className="mb-2">
               Create An Account
             </Link>

@@ -8,12 +8,12 @@ function Login() {
   const history = useHistory();
 
   const handleLogin = (e) => {
-    try {
-      e.preventDefault();
-      apiService("/auth/login", "POST", {
-        email,
-        password,
-      }).then((data) => {
+    e.preventDefault();
+    apiService("/auth/login", "POST", {
+      email,
+      password,
+    })
+      .then((data) => {
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("UID", data.UID);
 
@@ -22,18 +22,14 @@ function Login() {
         if (token) {
           console.log("token exists, going to wrestler's view page");
           history.push("/wrestlersview");
-        } else {
-          alert("wrong username/password (or something else went wrong...)");
-          history.push("/login");
         }
+      })
+      .catch(() => {
+        alert("wrong username/password (or something else went wrong...)");
+        // error is already logged from apiService
+        // so possibly use history object to navigate to error page?
       });
-    } catch (error) {
-      alert("you somehow reached the catch in login.tsx");
-      // error is already logged from apiService
-      // so possibly use history object to navigate to error page?
-    }
   };
-
   return (
     <>
       <main className="container">
@@ -58,13 +54,18 @@ function Login() {
             <button onClick={handleLogin} className="btn btn-primary">
               Login
             </button>
-            <br />
+            <div className="row"></div>
             <Link to={`/createAccount`}>
               Or click here to create an account
             </Link>
           </form>
         </section>
       </main>
+      <h3 className="text text-center">
+        If nothing is happening when you click the button, it's because your
+        username/password is wrong. If you can't remember your
+        username/password, message coach Jason and he'll help you.
+      </h3>
     </>
   );
 }
