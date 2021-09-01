@@ -5,7 +5,19 @@ import { apiService } from "./services/api-services";
 function CreateAccount() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [approvalCode, setApprovalCode] = React.useState("");
+
   let history = useHistory();
+
+  const confirmApprovalCode = () => {
+    if (approvalCode === "dynamic") {
+      handleCreateAccount("why do i need a parameter here?");
+    } else {
+      alert(
+        "Sorry, you tried to submit an incorrect approval code. Please ask coach Jason for permission to access the curriculum"
+      );
+    }
+  };
 
   const handleCreateAccount = (e) => {
     try {
@@ -59,7 +71,14 @@ function CreateAccount() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleCreateAccount} className="btn btn-primary">
+            <label>Approval code: </label>
+            <input
+              type="text"
+              className="mb-2 form-control"
+              value={approvalCode}
+              onChange={(e) => setApprovalCode(e.target.value)}
+            />
+            <button onClick={confirmApprovalCode} className="btn btn-primary">
               Create Account
             </button>
             <br />
