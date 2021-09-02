@@ -27,7 +27,7 @@ function Login() {
       .catch(() => {
         alert("wrong username/password (or something else went wrong...)");
         // error is already logged from apiService
-        // so possibly use history object to navigate to error page?
+        // so possibly use history object to navigate to error page??
       });
   };
   return (
