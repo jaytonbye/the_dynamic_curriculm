@@ -1,7 +1,4 @@
 - Make it so grades can only be 0-3.
-- After creating your profile, why doesn't it load the wrestler's view page?
-- Once a user has a profile, they shouldn't be able to create another...
-- Fix all typescript errors
 - Fix lists so they don't have ID errors
 - Add weekly units and a way to upload them.
 - Display when your shirt will changes color
