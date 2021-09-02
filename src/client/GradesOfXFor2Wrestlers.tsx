@@ -1,7 +1,7 @@
 import React from "react";
 import Moment from "react-moment";
 
-function GradesOfXFor2Wrestlers(props) {
+function GradesOfXFor2Wrestlers(props: any) {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
@@ -10,7 +10,7 @@ function GradesOfXFor2Wrestlers(props) {
 
   let token = sessionStorage.getItem("token");
 
-  const onGradeChange = (event) => {
+  const onGradeChange = (event: any) => {
     let grade = event.target.value;
     fetch(
       //wrong url

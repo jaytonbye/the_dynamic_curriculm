@@ -11,7 +11,7 @@ function CreateAccount() {
 
   const confirmApprovalCode = () => {
     if (approvalCode === "dynamic") {
-      handleCreateAccount("why do i need a parameter here?");
+      handleCreateAccount();
     } else {
       alert(
         "Sorry, you tried to submit an incorrect approval code. Please ask coach Jason for permission to access the curriculum"
@@ -19,7 +19,7 @@ function CreateAccount() {
     }
   };
 
-  const handleCreateAccount = (e) => {
+  const handleCreateAccount = () => {
     try {
       let requestOptions = {
         method: "POST",

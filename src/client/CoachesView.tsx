@@ -4,7 +4,7 @@ import Moment from "react-moment";
 import { Link, useHistory } from "react-router-dom";
 
 const CoachesView = (props: CoachesViewProps) => {
-  const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState();
+  const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
   const [personal_info, setPersonalInfo] = React.useState([]);
   const [wrestler1Id, setWrestler1Id] = React.useState();
   const [wrestler2Id, setWrestler2Id] = React.useState();

@@ -7,7 +7,7 @@ function Login() {
   const [password, setPassword] = React.useState("");
   const history = useHistory();
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: any) => {
     e.preventDefault();
     apiService("/auth/login", "POST", {
       email,
@@ -54,7 +54,6 @@ function Login() {
             <button onClick={handleLogin} className="btn btn-primary">
               Login
             </button>
-            <div className="row"></div>
             <Link to={`/createAccount`}>
               Or click here to create an account
             </Link>

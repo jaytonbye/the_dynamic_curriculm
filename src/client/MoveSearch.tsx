@@ -3,12 +3,12 @@ import React from "react";
 function MoveSearch() {
   let [allGrades, setAllGrades] = React.useState([]);
   let [searchedMoveId, setSearchedMoveId] = React.useState();
-  let [searchedMoveObject, setSearchedMoveObject] = React.useState({});
+  let [searchedMoveObject, setSearchedMoveObject] = React.useState<any>({});
 
   let UID = sessionStorage.getItem("UID");
   let token = sessionStorage.getItem("token");
 
-  let onMoveChange = (event) => {
+  let onMoveChange = (event: any) => {
     setSearchedMoveId(event.target.value);
   };
 

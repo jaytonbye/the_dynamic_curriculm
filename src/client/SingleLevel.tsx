@@ -8,7 +8,7 @@ import { IGradesForSingleWreslterOnSpecificLevel } from "../types/index";
 function SingleLevel() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
   let token = sessionStorage.getItem("token");
-  let { level } = useParams();
+  let { level } = useParams<any>();
   let UID = sessionStorage.getItem("UID");
 
   //gets us all of the moves and grades for specific wrestler on specific level (currently user 3 level 1)
