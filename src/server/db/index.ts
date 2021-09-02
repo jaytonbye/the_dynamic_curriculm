@@ -5,7 +5,8 @@ import grades from "./grades";
 import videos from "./videos";
 import config from "../config";
 
-export const Connection = mysql.createConnection({
+export const Pool = mysql.createPool({
+  connectionLimit: 10,
   host: config.db.host,
   port: Number(config.db.port),
   user: config.db.user,
@@ -15,7 +16,7 @@ export const Connection = mysql.createConnection({
 
 export const Query = (query: string, values?: Array<string | number>) => {
   return new Promise<Array<any>>((resolve, reject) => {
-    Connection.query(query, values, (err, results) => {
+    Pool.query(query, values, (err, results) => {
       if (err) return reject(err);
       return resolve(results);
     });
