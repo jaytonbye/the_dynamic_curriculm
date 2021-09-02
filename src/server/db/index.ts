@@ -14,7 +14,8 @@ export const Pool = mysql.createPool({
   database: config.db.database,
 });
 
-console.log(config);
+//console logging for luke
+console.log({ config });
 
 export const Query = (query: string, values?: Array<string | number>) => {
   return new Promise<Array<any>>((resolve, reject) => {
