@@ -3,13 +3,14 @@ import users from "./users";
 import personal_info from "./personal_info";
 import grades from "./grades";
 import videos from "./videos";
+import config from "../config";
 
 export const Connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "JasonLayton",
-  password: "fakepassword",
-  database: "the_dynamic_curriculum",
+  host: config.db.host,
+  port: Number(config.db.port),
+  user: config.db.user,
+  password: config.db.password,
+  database: config.db.database,
 });
 
 export const Query = (query: string, values?: Array<string | number>) => {
