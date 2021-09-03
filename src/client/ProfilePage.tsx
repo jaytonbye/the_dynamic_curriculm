@@ -12,7 +12,7 @@ function Login() {
     e.preventDefault();
     try {
       const requestOptions = {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

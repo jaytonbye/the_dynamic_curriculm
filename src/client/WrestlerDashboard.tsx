@@ -125,9 +125,7 @@ function WrestlerDashboard() {
           <Link to={`/coachesview`}>
             <p>I'm a coach...</p>
           </Link>
-          <Link to={"/ProfilePage"}>
-            <p>Update my profile</p>
-          </Link>
+
           <button className="btn btn-outline-success" onClick={logout}>
             Logout
           </button>
