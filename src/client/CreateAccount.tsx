@@ -32,7 +32,7 @@ function CreateAccount() {
           password: password,
         }),
       };
-      console.log("about to fetch");
+
       fetch("/api/users", requestOptions).then((data) => {
         alert(
           "Your account was created, you can now create your wrestler profile"
@@ -45,7 +45,6 @@ function CreateAccount() {
           sessionStorage.setItem("UID", data.UID);
         });
         history.push("/profilepage");
-        console.log("finished fetch");
       });
     } catch (error) {
       // error is already logged from apiService
@@ -85,8 +84,10 @@ function CreateAccount() {
             <button onClick={confirmApprovalCode} className="btn btn-primary">
               Create Account
             </button>
-            <br />
-            <Link to={`/login`}>Or click here to login</Link>
+
+            <Link className="btn btn-secondary ml-2" to={`/login`}>
+              Or click here to login
+            </Link>
           </form>
         </section>
       </main>

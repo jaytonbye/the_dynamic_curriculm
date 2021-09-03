@@ -20,7 +20,6 @@ function Login() {
         // This is a bit hackish, as i'm letting them move forward if they have a token (not if the token is valid).
         let token = sessionStorage.getItem("token");
         if (token) {
-          console.log("token exists, going to wrestler's view page");
           history.push("/wrestlersview");
         }
       })
@@ -55,7 +54,7 @@ function Login() {
             <button onClick={handleLogin} className="btn btn-primary">
               Login
             </button>
-            <Link to={`/createAccount`}>
+            <Link className="btn btn-secondary ml-2" to={`/createAccount`}>
               Or click here to create an account
             </Link>
           </form>

@@ -10,13 +10,12 @@ const Home = (props: HomeProps) => {
       <main>
         <section className="d-flex mt-4 justify-content-center">
           <div className="d-flex">
-            <Link to={`/login`} className="mb-2">
+            <Link to={`/login`} className="mb-2 mr-2 btn btn-primary">
               Login
             </Link>
           </div>
-          <br />
           <div className="d-flex">
-            <Link to={`/createAccount`} className="mb-2">
+            <Link to={`/createAccount`} className="mb-2 ml-2 btn btn-secondary">
               Create An Account
             </Link>
           </div>

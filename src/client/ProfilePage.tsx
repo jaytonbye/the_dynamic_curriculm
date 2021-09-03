@@ -9,8 +9,8 @@ function Login() {
   let token = sessionStorage.getItem("token");
 
   const handleCreateProfile = (e: any) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       const requestOptions = {
         method: "PUT",
         headers: {
