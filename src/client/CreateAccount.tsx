@@ -9,7 +9,8 @@ function CreateAccount() {
 
   let history = useHistory();
 
-  const confirmApprovalCode = () => {
+  const confirmApprovalCode = (e: any) => {
+    e.preventDefault();
     if (approvalCode === "dynamic") {
       handleCreateAccount();
     } else {
@@ -31,6 +32,7 @@ function CreateAccount() {
           password: password,
         }),
       };
+      console.log("about to fetch");
       fetch("/api/users", requestOptions).then((data) => {
         alert(
           "Your account was created, you can now create your wrestler profile"
@@ -43,6 +45,7 @@ function CreateAccount() {
           sessionStorage.setItem("UID", data.UID);
         });
         history.push("/profilepage");
+        console.log("finished fetch");
       });
     } catch (error) {
       // error is already logged from apiService

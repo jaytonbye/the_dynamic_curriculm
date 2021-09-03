@@ -1,4 +1,5 @@
+- Make the default value of grade 0 instead of null (so that it is searchable)
 - Make it so grades can only be 0-3.
-- Fix lists so they don't have ID errors
-- Add weekly units and a way to upload them.
 - Display when your shirt will changes color
+
+- Add weekly units and a way to upload them.
