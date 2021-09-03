@@ -40,7 +40,7 @@ const App = (props: AppProps) => {
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>
-            <a href="/">Go back to the homepage</a>
+            <a href="/">Go back to the homepage!</a>
           </Route>
         </Switch>
       </BrowserRouter>
