@@ -55,10 +55,11 @@ function CreateAccount() {
       <main className="container">
         <section className="mt-4 row justify-content-center">
           <form className="p-4 border rounded shadown form-group">
-            <label>Email: </label>
+            <label>
+              Username (please format it as your full name with all lowercase
+              letters and no spaces. Example: johndoe):{" "}
+            </label>
             <input
-              type="email"
-              autoComplete="email"
               className="mb-2 form-control"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

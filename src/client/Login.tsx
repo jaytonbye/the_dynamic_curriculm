@@ -35,10 +35,11 @@ function Login() {
       <main className="container">
         <section className="mt-4 row justify-content-center">
           <form className="p-4 border rounded shadown form-group">
-            <label>Email: </label>
+            <label>
+              Username (If you followed the instructions, it should be your full
+              name in all lowercase letters with no spaces. Example: johndoe):{" "}
+            </label>
             <input
-              type="email"
-              autoComplete="email"
               className="mb-2 form-control"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -63,7 +64,7 @@ function Login() {
       <h3 className="text text-center">
         If nothing is happening when you click the button, it's because your
         username/password is wrong. If you can't remember your
-        username/password, message coach Jason and he'll help you.
+        username/password, message coach Jason and he will help you.
       </h3>
     </>
   );
