@@ -8,8 +8,8 @@ interface IPersonalInfo {
 
 function WrestlerDashboard() {
   const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>({
-    first_name: "jay",
-    last_name: "lay",
+    first_name: "wrestler's first name",
+    last_name: "wrestler's last name",
   });
   const [grades, setGrades] = React.useState([]);
   const [totalPoints, setTotalPoints] = React.useState(0);
