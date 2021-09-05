@@ -111,7 +111,7 @@ function WrestlerDashboard() {
     } else if (shirtColor === "Black") {
       setPointsNeededForNextShirtColor(blue - totalPoints);
     }
-  }, [shirtColor]);
+  }, [shirtColor, grades]);
 
   let logout = () => {
     sessionStorage.removeItem("token");
