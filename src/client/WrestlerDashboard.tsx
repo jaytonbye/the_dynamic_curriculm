@@ -88,7 +88,7 @@ function WrestlerDashboard() {
       setShirtColor("Blue");
       setNextShirtColor("Grey");
     }
-  }, [totalPointsAvailable]);
+  }, [totalPointsAvailable, grades]);
 
   React.useEffect(() => {
     let blue = Math.ceil(totalPointsAvailable * 0.14);
