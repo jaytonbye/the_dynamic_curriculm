@@ -111,7 +111,7 @@ function WrestlerDashboard() {
     } else if (shirtColor === "Black") {
       setPointsNeededForNextShirtColor(blue - totalPoints);
     }
-  }, [shirtColor, grades]);
+  }, [shirtColor, grades, totalPointsAvailable]);
 
   let logout = () => {
     sessionStorage.removeItem("token");
@@ -132,7 +132,10 @@ function WrestlerDashboard() {
         </div>
       </nav>
       <div className="card">
-        <h5 className="card-header">Wrestler Dashboard</h5>
+        <h5 className="card-header">
+          Wrestler Dashboard - {personalInfo.first_name}{" "}
+          {personalInfo.last_name}
+        </h5>
         <div className="card-body">
           <h5 className="card-title">
             <strong>
@@ -143,7 +146,8 @@ function WrestlerDashboard() {
             Current Shirt Color: <strong>{shirtColor}</strong>
           </p>
           <p className="card-text">
-            Total Points Earned: <strong>{totalPoints}</strong>
+            You have currently earned <strong>{totalPoints}</strong> out of{" "}
+            <strong>{totalPointsAvailable}</strong> total available points.
           </p>
           <p className="card-text">
             Next shirt color: <strong>{nextShirtColor}</strong>
