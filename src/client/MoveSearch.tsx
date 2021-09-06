@@ -13,6 +13,7 @@ function MoveSearch() {
   };
 
   React.useEffect(() => {
+    //I don't know what I chose this variable name, I believe these are all of the moves, and not the grades...
     fetch(`/api/grades/allCurrentGradesForASingleWrestler/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })

@@ -21,7 +21,7 @@ function GradesOfX() {
   return (
     <>
       <label className="h4">
-        Show me all of the moves where I have a grade of:{" "}
+        Show me all of the moves where I have a grade of (0, 1, 2, or 3):{" "}
       </label>
       <input
         type="number"

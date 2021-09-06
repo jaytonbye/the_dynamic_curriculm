@@ -2,6 +2,7 @@ import * as React from "react";
 import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
 import Moment from "react-moment";
 import { Link, useHistory } from "react-router-dom";
+import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
@@ -146,7 +147,7 @@ const CoachesView = (props: CoachesViewProps) => {
         </div>
       </nav>
       <div className="card"></div>
-      <label>Wrestler 1: </label>
+      <label className="h4">Wrestler 1: </label>
       <input type="text" list="wrestler1List" onChange={onWrestler1Change} />
       <datalist id="wrestler1List">
         {personal_info.map((wrestler) => {
@@ -158,7 +159,7 @@ const CoachesView = (props: CoachesViewProps) => {
         })}
       </datalist>
 
-      <label>Wrestler 2: </label>
+      <label className="h4">Wrestler 2: </label>
       <input type="text" list="wrestler2List" onChange={onWrestler2Change} />
       <datalist id="wrestler2List">
         {personal_info.map((wrestler) => {
@@ -170,7 +171,7 @@ const CoachesView = (props: CoachesViewProps) => {
         })}
       </datalist>
 
-      <label>Select Level: </label>
+      <label className="h4">Select Level: </label>
       <input type="number" onChange={onLevelChange} />
       <button className="btn btn-primary" onClick={getGradesForBothWrestlers}>
         Get grades for wrestlers
@@ -280,6 +281,10 @@ const CoachesView = (props: CoachesViewProps) => {
         })}
       </div>
       <GradesOfXFor2Wrestlers
+        wrestler1Id={wrestler1Id}
+        wrestler2Id={wrestler2Id}
+      />
+      <MoveSearchFor2Wrestlers
         wrestler1Id={wrestler1Id}
         wrestler2Id={wrestler2Id}
       />

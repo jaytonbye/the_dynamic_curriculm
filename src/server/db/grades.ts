@@ -206,6 +206,63 @@ const gradesForTwoWresltersOnASpecificLevel = async (
   );
 };
 
+const allGradesForTwoWreslters = async (
+  wrestler1Id: number,
+  wrestler2Id: number
+) => {
+  return Query(
+    `
+
+    Select *, (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_movement_notes,
+      (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_1_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_1_last_name,
+      (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_movement_notes,
+      (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_2_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_2_last_name,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_1_grade_creation_date,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_2_grade_creation_date
+      FROM videos
+      ORDER BY number_for_ordering;
+  `,
+    [
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler1Id,
+      wrestler2Id,
+    ]
+  );
+};
+
 const createGrade = async (grade: IGrade) => {
   return Query(
     `INSERT INTO grades (video_id, coach_user_id, student_user_id, grade, movement_notes) VALUES (?,?,?, ?, ?)`,
@@ -248,4 +305,5 @@ export default {
   allSpecificCurrentGradesForASingleWrestler,
   allSpecificCurrentGradesForTwoWrestlers,
   allCurrentGradesForASingleWrestler,
+  allGradesForTwoWreslters,
 };
