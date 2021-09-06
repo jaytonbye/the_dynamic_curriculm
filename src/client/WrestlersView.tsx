@@ -58,4 +58,6 @@ function WrestlersView() {
   );
 }
 
+//delete this comment
+
 export default WrestlersView;
