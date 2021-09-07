@@ -8,7 +8,6 @@ function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
   const [levels, setLevels] = React.useState([]);
 
-  // this gets us all of the moves from the database and sets it to state. :)
   let token = sessionStorage.getItem("token");
   React.useEffect(() => {
     fetch("/api/videos", {

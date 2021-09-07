@@ -9,7 +9,13 @@ function MoveSearch() {
   let token = sessionStorage.getItem("token");
 
   let onMoveChange = (event: any) => {
-    setSearchedMoveId(event.target.value);
+    let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
+    let moveIdAfterSlice = event.target.value.slice(
+      whereToSliceFrom,
+      event.target.value.length
+    );
+
+    setSearchedMoveId(moveIdAfterSlice);
   };
 
   React.useEffect(() => {
@@ -38,9 +44,11 @@ function MoveSearch() {
       <datalist id="moveList">
         {allGrades.map((move) => {
           return (
-            <option key={move.id} value={move.id}>
-              {move.name_of_video}
-            </option>
+            <option
+              key={move.id}
+              value={move.name_of_video + " -+- " + String(move.id)}
+              data-value={move.id}
+            ></option>
           );
         })}
       </datalist>
