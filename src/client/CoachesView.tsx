@@ -25,10 +25,20 @@ const CoachesView = (props: CoachesViewProps) => {
 
   //for autocomplete of wrestler names
   const onWrestler1Change = (event: any) => {
-    setWrestler1Id(event.target.value);
+    let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
+    let wrestlerIdAfterSlice = event.target.value.slice(
+      whereToSliceFrom,
+      event.target.value.length
+    );
+    setWrestler1Id(wrestlerIdAfterSlice);
   };
   const onWrestler2Change = (event: any) => {
-    setWrestler2Id(event.target.value);
+    let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
+    let wrestlerIdAfterSlice = event.target.value.slice(
+      whereToSliceFrom,
+      event.target.value.length
+    );
+    setWrestler2Id(wrestlerIdAfterSlice);
   };
 
   const onWrestler1GradeChange = (event: any) => {
@@ -152,9 +162,16 @@ const CoachesView = (props: CoachesViewProps) => {
       <datalist id="wrestler1List">
         {personal_info.map((wrestler) => {
           return (
-            <option key={wrestler.user_id} value={wrestler.user_id}>
-              {wrestler.first_name + " " + wrestler.last_name}
-            </option>
+            <option
+              key={wrestler.user_id}
+              value={
+                wrestler.first_name +
+                " " +
+                wrestler.last_name +
+                " -+- " +
+                String(wrestler.user_id)
+              }
+            ></option>
           );
         })}
       </datalist>
@@ -164,9 +181,16 @@ const CoachesView = (props: CoachesViewProps) => {
       <datalist id="wrestler2List">
         {personal_info.map((wrestler) => {
           return (
-            <option key={wrestler.user_id} value={wrestler.user_id}>
-              {wrestler.first_name + " " + wrestler.last_name}
-            </option>
+            <option
+              key={wrestler.user_id}
+              value={
+                wrestler.first_name +
+                " " +
+                wrestler.last_name +
+                " -+- " +
+                String(wrestler.user_id)
+              }
+            ></option>
           );
         })}
       </datalist>
