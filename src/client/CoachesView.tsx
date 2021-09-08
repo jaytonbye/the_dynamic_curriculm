@@ -7,8 +7,8 @@ import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
   const [personal_info, setPersonalInfo] = React.useState([]);
-  const [wrestler1Id, setWrestler1Id] = React.useState();
-  const [wrestler2Id, setWrestler2Id] = React.useState();
+  const [wrestler1Id, setWrestler1Id] = React.useState<number>();
+  const [wrestler2Id, setWrestler2Id] = React.useState<number>(); // The 1 is a dummy number that I'm using to avoid getting database errors in the MoveSearchFor2Wrestlers component
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
@@ -30,7 +30,7 @@ const CoachesView = (props: CoachesViewProps) => {
       whereToSliceFrom,
       event.target.value.length
     );
-    setWrestler1Id(wrestlerIdAfterSlice);
+    setWrestler1Id(Number(wrestlerIdAfterSlice));
   };
   const onWrestler2Change = (event: any) => {
     let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
@@ -38,7 +38,7 @@ const CoachesView = (props: CoachesViewProps) => {
       whereToSliceFrom,
       event.target.value.length
     );
-    setWrestler2Id(wrestlerIdAfterSlice);
+    setWrestler2Id(Number(wrestlerIdAfterSlice));
   };
 
   const onWrestler1GradeChange = (event: any) => {
@@ -156,7 +156,24 @@ const CoachesView = (props: CoachesViewProps) => {
           </button>
         </div>
       </nav>
+
+      <h3>Grading:</h3>
+      <p>
+        A grade of 3 means the wrestler knows the movement by it's name, and can
+        demonstrate it perfectly without hesitation. If a wrestler needed any
+        help whatsoever, or got any of the details incorrect, they should not
+        receive a 3.
+      </p>
+      <p>
+        A grade of 2 means the wrestler has a decent grasp of the move, but is
+        still working on a few details.
+      </p>
+      <p>A grade of 1 means the wrestler needs a lot of work on the move.</p>
       <div className="card"></div>
+      <h3>
+        You must always start by selecting two wrestlers before doing anything
+        else. If you mess this up, refresh the page and start again.
+      </h3>
       <label className="h4">Wrestler 1: </label>
       <input type="text" list="wrestler1List" onChange={onWrestler1Change} />
       <datalist id="wrestler1List">
@@ -304,10 +321,12 @@ const CoachesView = (props: CoachesViewProps) => {
           );
         })}
       </div>
+      <hr />
       <GradesOfXFor2Wrestlers
         wrestler1Id={wrestler1Id}
         wrestler2Id={wrestler2Id}
       />
+      <hr />
       <MoveSearchFor2Wrestlers
         wrestler1Id={wrestler1Id}
         wrestler2Id={wrestler2Id}
@@ -317,5 +336,5 @@ const CoachesView = (props: CoachesViewProps) => {
 };
 
 interface CoachesViewProps {}
-// poopy
+
 export default CoachesView;

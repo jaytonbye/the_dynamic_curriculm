@@ -25,39 +25,44 @@ function MoveSearchFor2Wrestlers(props: any) {
   };
 
   React.useEffect(() => {
-    try {
-      //this fetches all of the moves, not all of the grades. Terrible variable naming...
-      fetch(
-        `/api/grades/allCurrentGradesForASingleWrestler/${props.wrestler1Id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-        .then((res) => res.json())
-        .then((results) => {
-          setAllMoves(results);
-        });
-    } catch (error) {
-      console.log("something is not working here");
+    if (props.wrestler1Id) {
+      try {
+        //this fetches all of the moves, not all of the grades. Terrible variable naming...
+        fetch(
+          `/api/grades/allCurrentGradesForASingleWrestler/${props.wrestler1Id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+          .then((res) => res.json())
+          .then((results) => {
+            setAllMoves(results);
+          });
+      } catch (error) {
+        console.log("something is not working here");
+      }
     }
   }, [props.wrestler1Id, props.wrestler2Id]);
 
   React.useEffect(() => {
-    try {
-      fetch(
-        `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-        .then((res) => res.json())
-        .then((results) => {
-          setAllGrades(results);
-        });
-    } catch (error) {
-      console.log("something is not working here");
+    if (props.wrestler1Id) {
+      console.log("running");
+      try {
+        fetch(
+          `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+          .then((res) => res.json())
+          .then((results) => {
+            setAllGrades(results);
+          });
+      } catch (error) {
+        console.log("something is not working here");
+      }
     }
-  });
+  }, [searchedMoveId]);
 
   React.useEffect(() => {
     for (let x = 0; x < allGrades.length; x++) {
@@ -123,7 +128,7 @@ function MoveSearchFor2Wrestlers(props: any) {
           );
         })}
       </datalist>
-      <hr />
+
       <div className="divForLevel">
         <div key={searchedMoveObject.id}>
           <div className="row col-12 mt-5 d-flex justify-content-around">
