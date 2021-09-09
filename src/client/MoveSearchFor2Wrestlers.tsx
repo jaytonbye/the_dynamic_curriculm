@@ -131,28 +131,28 @@ function MoveSearchFor2Wrestlers(props: any) {
 
       <div className="divForLevel">
         <div key={searchedMoveObject.id}>
-          <div className="row col-12 mt-5 d-flex justify-content-around">
-            <div className="col-2">
+          <div className="col-12 mt-5 d-flex justify-content-around flex-wrap">
+            <div className="">
               <h4>
                 {searchedMoveObject.number_for_ordering}.{" "}
                 {searchedMoveObject.name_of_video}
               </h4>
             </div>
-            <div className="col-2">
+            <div className="">
               <iframe
                 src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
               ></iframe>
             </div>
-            <div className="col-2">
+            <div className="">
               <iframe
                 src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_looped_video}`}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               ></iframe>
             </div>
-            <div className="col-2">
+            <div className="">
               <p>
                 {searchedMoveObject.wrestler_1_first_name}{" "}
                 {searchedMoveObject.wrestler_1_last_name}
@@ -191,7 +191,7 @@ function MoveSearchFor2Wrestlers(props: any) {
                 {searchedMoveObject.wrestler_1_last_name}
               </button>
             </div>
-            <div className="col-2">
+            <div className="">
               <p>
                 {searchedMoveObject.wrestler_2_first_name}{" "}
                 {searchedMoveObject.wrestler_2_last_name}

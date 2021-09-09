@@ -221,27 +221,31 @@ const CoachesView = (props: CoachesViewProps) => {
         {gradesForBothWrestlersOnCurrentLevel.map((move) => {
           return (
             <div key={move.id}>
-              <div className="row col-12 mt-5 d-flex justify-content-around">
-                <div className="col-2">
+              <div className="mt-5 d-flex justify-content-around flex-wrap">
+                <div className="">
                   <h4>
                     {move.number_for_ordering}. {move.name_of_video}
                   </h4>
                 </div>
-                <div className="col-2">
+                <div className="">
                   <iframe
+                    width="95%"
+                    height="100%"
                     src={`https://www.youtube.com/embed/${move.url_to_video}`}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                   ></iframe>
                 </div>
-                <div className="col-2">
+                <div className="">
                   <iframe
+                    width="95%"
+                    height="100%"
                     src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                   ></iframe>
                 </div>
-                <div className="col-2">
+                <div className="">
                   <p>
                     {move.wrestler_1_first_name} {move.wrestler_1_last_name}
                   </p>
@@ -278,7 +282,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     {move.wrestler_1_last_name}
                   </button>
                 </div>
-                <div className="col-2">
+                <div className="">
                   <p>
                     {move.wrestler_2_first_name} {move.wrestler_2_last_name}
                   </p>

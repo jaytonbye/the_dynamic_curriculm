@@ -81,7 +81,7 @@ function GradesOfXFor2Wrestlers(props: any) {
         {movesAndGrades.map((move) => {
           return (
             <>
-              <div className="d-flex">
+              <div className="mt-5 d-flex justify-content-around flex-wrap">
                 <div className="">
                   <h4>
                     {move.number_for_ordering}. {move.name_of_video}
