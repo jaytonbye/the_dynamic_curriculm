@@ -28,48 +28,43 @@ function GradesOfX() {
         onChange={onGradeChange}
         placeholder="insert number"
       />
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Move</th>
-            <th>Video</th>
-            <th>Looped Video</th>
-            <th>Points earned</th>
-            <th>Points available</th>
-          </tr>
-        </thead>
-        <tbody>
-          {movesAndGrades.map((move) => {
-            return (
-              <tr key={move.id}>
-                <td>
-                  {move.number_for_ordering}. {move.name_of_video}
-                </td>
-                <td>
-                  <iframe
-                    width="560"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${move.url_to_video}`}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  ></iframe>
-                </td>
-                <td>
-                  <iframe
-                    width="560"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  ></iframe>
-                </td>
-                <td>Your grade here: {move.grade}</td>
-                <td>Coaches' notes: {move.movement_notes}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="container">
+        <div className="col-12">
+          <div>
+            {movesAndGrades.map((move) => {
+              return (
+                <div key={move.id}>
+                  <hr />
+                  <h5>
+                    {move.number_for_ordering}. {move.name_of_video}
+                  </h5>
+                  <div>
+                    <iframe
+                      width="95%"
+                      height="35%"
+                      src={`https://www.youtube.com/embed/${move.url_to_video}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
+                  </div>
+                  <div>
+                    <iframe
+                      width="95%"
+                      height="35%"
+                      src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
+                  </div>
+                  <h5>Your grade here: {move.grade}</h5>
+                  <h5>Coaches' notes: {move.movement_notes}</h5>
+                  <hr />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </>
   );
 }
