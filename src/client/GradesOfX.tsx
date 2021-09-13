@@ -21,12 +21,12 @@ function GradesOfX() {
   return (
     <>
       <label className="h4">
-        Show me all of the moves where I have a grade of (0, 1, 2, or 3):{" "}
+        Show me all of the moves where I have a grade of:{" "}
       </label>
       <input
         type="number"
         onChange={onGradeChange}
-        placeholder="insert number"
+        placeholder="insert 1, 2, or 3"
       />
       <div className="container">
         <div className="col-12">

@@ -22,6 +22,9 @@ const CoachesView = (props: CoachesViewProps) => {
 
   let token = sessionStorage.getItem("token");
   let UID = sessionStorage.getItem("UID");
+  let color1 = "red";
+  let color2 = "yellow";
+  let color3 = "green";
 
   //for autocomplete of wrestler names
   const onWrestler1Change = (event: any) => {
@@ -131,7 +134,9 @@ const CoachesView = (props: CoachesViewProps) => {
     };
     fetch(`/api/grades/`, requestOptions).then((res) => {
       if (res.ok) {
-        alert("Grade Updated!");
+        alert(
+          `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
+        );
       } else {
         alert("it didn't work!");
       }
@@ -222,11 +227,12 @@ const CoachesView = (props: CoachesViewProps) => {
           return (
             <div key={move.id}>
               <div className="mt-5 d-flex justify-content-around flex-wrap">
-                <div className="">
+                <div className="" style={{ width: "100vw" }}>
                   <h4>
                     {move.number_for_ordering}. {move.name_of_video}
                   </h4>
                 </div>
+
                 <div className="">
                   <iframe
                     width="95%"
@@ -245,6 +251,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                   ></iframe>
                 </div>
+
                 <div className="">
                   <p>
                     {move.wrestler_1_first_name} {move.wrestler_1_last_name}
@@ -261,12 +268,13 @@ const CoachesView = (props: CoachesViewProps) => {
                       {move.wrestler_1_grade_creation_date}
                     </Moment>
                   </p>
-                  <p>By coach: </p>
+                  <p>By coach with ID of: {move.wrestler_1_grade_graded_by} </p>
                   <label>Coaches' notes: </label>
                   <textarea
                     onChange={onWrestler1NoteChange}
                     defaultValue={move.wrestler_1_movement_notes}
                   ></textarea>
+
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -282,6 +290,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     {move.wrestler_1_last_name}
                   </button>
                 </div>
+
                 <div className="">
                   <p>
                     {move.wrestler_2_first_name} {move.wrestler_2_last_name}
@@ -298,12 +307,13 @@ const CoachesView = (props: CoachesViewProps) => {
                       {move.wrestler_2_grade_creation_date}
                     </Moment>
                   </p>
-                  <p>By coach: </p>
+                  <p>By coach with ID of: {move.wrestler_2_grade_graded_by}</p>
                   <label>Coaches' notes: </label>
                   <textarea
                     onChange={onWrestler2NoteChange}
                     defaultValue={move.wrestler_2_movement_notes}
                   ></textarea>
+
                   <button
                     className="btn btn-primary"
                     onClick={() => {

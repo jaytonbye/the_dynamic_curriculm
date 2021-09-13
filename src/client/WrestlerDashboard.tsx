@@ -122,8 +122,8 @@ function WrestlerDashboard() {
     <>
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
-          <Link to={`/coachesview`}>
-            <p>I'm a coach...</p>
+          <Link to={`/coachesview`} className="btn btn-outline-primary">
+            I'm a coach...
           </Link>
 
           <button className="btn btn-outline-success" onClick={logout}>
@@ -157,59 +157,55 @@ function WrestlerDashboard() {
             <strong>{pointsNeededForNextShirtColor}</strong>
           </p>
           <p>Points required for each shirt:</p>
-          <div className="row">
-            <div className="d-flex justify-content-around">
-              <h4
-                className="shirt-color-text-resizer"
-                style={{ color: "black", fontSize: "smaller" }}
-              >
-                {" "}
-                Black shirt <br></br> 0
-              </h4>
-              <h4
-                className="shirt-color-text-resizer"
-                style={{ color: "blue", fontSize: "smaller" }}
-              >
-                {" "}
-                Blue Shirt <br></br> {Math.ceil(totalPointsAvailable * 0.14)}
-              </h4>
-              <h4
-                className="shirt-color-text-resizer"
-                style={{ color: "grey", fontSize: "smaller" }}
-              >
-                {" "}
-                Grey Shirt <br></br> {Math.ceil(totalPointsAvailable * 0.34)}
-              </h4>
-              <h4
-                className="shirt-color-text-resizer"
-                style={{ color: "red", fontSize: "smaller" }}
-              >
-                {" "}
-                Red Shirt <br></br> {Math.ceil(totalPointsAvailable * 0.46)}
-              </h4>
-              <h4
-                className="shirt-color-text-resizer"
-                style={{ color: "purple", fontSize: "smaller" }}
-              >
-                {" "}
-                Purple Shirt <br></br> {Math.ceil(totalPointsAvailable * 0.61)}
-              </h4>
-              <h4
-                className="shirt-color-text-resizer"
-                style={{ color: "aqua", fontSize: "smaller" }}
-              >
-                {" "}
-                Light Blue Shirt <br></br>{" "}
-                {Math.ceil(totalPointsAvailable * 0.79)}
-              </h4>
-              <h4
-                className="shirt-color-text-resizer"
-                style={{ color: "orange", fontSize: "smaller" }}
-              >
-                Orange Shirt <br></br> {Math.ceil(totalPointsAvailable * 0.97)}
-              </h4>
-            </div>
-          </div>
+
+          <p
+            className="card-text"
+            style={{ color: "black", fontSize: "smaller" }}
+          >
+            {" "}
+            Black shirt - 0
+          </p>
+          <p
+            className="card-text"
+            style={{ color: "blue", fontSize: "smaller" }}
+          >
+            {" "}
+            Blue Shirt - {Math.ceil(totalPointsAvailable * 0.14)}
+          </p>
+          <p
+            className="card-text"
+            style={{ color: "grey", fontSize: "smaller" }}
+          >
+            {" "}
+            Grey Shirt - {Math.ceil(totalPointsAvailable * 0.34)}
+          </p>
+          <p
+            className="card-text"
+            style={{ color: "red", fontSize: "smaller" }}
+          >
+            {" "}
+            Red Shirt - {Math.ceil(totalPointsAvailable * 0.46)}
+          </p>
+          <p
+            className="card-text"
+            style={{ color: "purple", fontSize: "smaller" }}
+          >
+            {" "}
+            Purple Shirt - {Math.ceil(totalPointsAvailable * 0.61)}
+          </p>
+          <p
+            className="card-text"
+            style={{ color: "aqua", fontSize: "smaller" }}
+          >
+            {" "}
+            Light Blue Shirt - {Math.ceil(totalPointsAvailable * 0.79)}
+          </p>
+          <p
+            className="card-text"
+            style={{ color: "orange", fontSize: "smaller" }}
+          >
+            Orange Shirt - {Math.ceil(totalPointsAvailable * 0.97)}
+          </p>
         </div>
       </div>
     </>

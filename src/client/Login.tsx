@@ -51,12 +51,20 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleLogin} className="btn btn-primary">
-              Login
-            </button>
-            <Link className="btn btn-secondary ml-2" to={`/createAccount`}>
-              Or click here to create an account
-            </Link>
+            <div className="d-flex justify-content-start flex-wrap align-items-center">
+              <button
+                onClick={handleLogin}
+                className="btn btn-primary ml-2 mt-2"
+              >
+                Login
+              </button>
+              <Link
+                className="btn btn-secondary ml-2 mt-2"
+                to={`/createAccount`}
+              >
+                Or click here to create an account
+              </Link>
+            </div>
           </form>
         </section>
       </main>
