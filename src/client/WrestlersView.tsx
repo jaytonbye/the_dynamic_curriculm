@@ -29,8 +29,9 @@ function WrestlersView() {
   return (
     <>
       <WrestlerDashboard />
+      <GradesOfX />
+      <hr />
       <h3>Click on a level to view the moves, grades, and coaches' notes</h3>
-
       <table className="table">
         <thead>
           <tr>
@@ -51,8 +52,8 @@ function WrestlersView() {
           })}
         </tbody>
       </table>
+      <hr />
       <MoveSearch />
-      <GradesOfX />
     </>
   );
 }

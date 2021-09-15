@@ -28,61 +28,51 @@ function SingleLevel() {
   return (
     <>
       <WrestlerDashboard />
-      <h1>
+      <h1 className="text text-center mb-3">
         You are currently viewing level {level} of the Dynamic Wrestling
         Curriculum!
       </h1>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Move</th>
-            <th>Video</th>
-            <th>Looped Video</th>
-            <th>Points earned</th>
-            <th>Coaches' notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {movesAndGrades.map(
-            (move: IGradesForSingleWreslterOnSpecificLevel) => {
-              if (move.curriculum_level === Number(level)) {
-                return (
-                  <tr>
-                    <td>
-                      {move.number_for_ordering}. {move.name_of_video}
-                    </td>
-                    <td>
-                      <iframe
-                        width="560"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${move.url_to_video}`}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      ></iframe>
-                    </td>
-                    <td>
-                      <iframe
-                        width="560"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      ></iframe>
-                    </td>
-                    <td>
-                      <p>
-                        <strong>Your grade here:</strong> {move.grade}
-                      </p>
-                    </td>
-                    <td>{move.movement_notes}</td>
-                  </tr>
-                );
-              }
-            }
-          )}
-        </tbody>
-      </table>
+      <div>
+        {movesAndGrades.map((move: IGradesForSingleWreslterOnSpecificLevel) => {
+          if (move.curriculum_level === Number(level)) {
+            return (
+              <div className="everything">
+                <h4 className="text text-center">
+                  {move.number_for_ordering}. {move.name_of_video}
+                </h4>
+                <div className="d-flex justify-content-around flex-wrap">
+                  <div>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${move.url_to_video}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
+                  </div>
+                  <div>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
+                  </div>
+                </div>
+                <div>
+                  <p>
+                    <strong>Your grade here: </strong>
+                    {move.grade}
+                  </p>
+                </div>
+                <div>
+                  <strong>Coaches Notes: </strong>
+                  {move.movement_notes}
+                </div>
+                <hr />
+              </div>
+            );
+          }
+        })}
+      </div>
     </>
   );
 }

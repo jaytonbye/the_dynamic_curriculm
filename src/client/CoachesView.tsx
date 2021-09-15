@@ -19,6 +19,10 @@ const CoachesView = (props: CoachesViewProps) => {
     gradesForBothWrestlersOnCurrentLevel,
     setGradesForBothWrestlersOnCurrentLevel,
   ] = React.useState([]);
+
+  //The purpose of using useless state is so that we rerender the child component "Grading Dashboard For 2 Wrestlers" whenever a grade is changed. To do this, we use the function "incrementUselessState" update the key prop.
+  const [uselessState, setUselessState] = React.useState(0);
+
   let history = useHistory();
 
   let token = sessionStorage.getItem("token");
@@ -138,12 +142,17 @@ const CoachesView = (props: CoachesViewProps) => {
         alert(
           `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
         );
+        incrementUselessState();
       } else {
         alert("it didn't work!");
       }
     });
   };
 
+  let incrementUselessState = () => {
+    console.log("incrementing the useless state!");
+    setUselessState(uselessState + 1);
+  };
   return (
     <>
       <nav className="navbar navbar-light bg-light">
@@ -162,209 +171,223 @@ const CoachesView = (props: CoachesViewProps) => {
           </button>
         </div>
       </nav>
+      <div className="ml-2">
+        <h3>Grading Key:</h3>
+        <p>A grade of 1 means the wrestler needs a lot of work on the move.</p>
+        <p>
+          A grade of 2 means the wrestler has a decent grasp of the move, but is
+          still working on a few details.
+        </p>
+        <p>
+          A grade of 3 means the wrestler knows the movement by it's name, and
+          can demonstrate it perfectly without hesitation. If a wrestler needed
+          any help whatsoever, or got any of the details incorrect, they should
+          not receive a 3.
+        </p>
+        <p>
+          <strong>
+            Grading should be strict. It's better to undergrade and have a
+            wrestler end up drilling something more than neccessary, than it is
+            to move past something that they haven't truely mastered. The
+            purpose of the curriculum is to serve as a path to MASTERY. Do not
+            rush it!
+          </strong>
+        </p>
 
-      <h3>Grading:</h3>
-      <p>A grade of 1 means the wrestler needs a lot of work on the move.</p>
-      <p>
-        A grade of 2 means the wrestler has a decent grasp of the move, but is
-        still working on a few details.
-      </p>
-      <p>
-        A grade of 3 means the wrestler knows the movement by it's name, and can
-        demonstrate it perfectly without hesitation. If a wrestler needed any
-        help whatsoever, or got any of the details incorrect, they should not
-        receive a 3.
-      </p>
-      <p>
-        <strong>
-          Grading should be strict. It's better to undergrade and have a
-          wrestler end up drilling something more than neccessary, than it is to
-          move past something that they haven't truely mastered. The purpose of
-          the curriculum is to serve as a path to MASTERY. Do not rush it!
-        </strong>
-      </p>
-
-      <div className="card"></div>
-      <h3>
-        You must always start by selecting two wrestlers before doing anything
-        else. If you mess this up, refresh the page and start again.
-      </h3>
-      <label className="h4">Wrestler 1: </label>
-      <input type="text" list="wrestler1List" onChange={onWrestler1Change} />
-      <datalist id="wrestler1List">
-        {personal_info.map((wrestler) => {
-          return (
-            <option
-              key={wrestler.user_id}
-              value={
-                wrestler.first_name +
-                " " +
-                wrestler.last_name +
-                " -+- " +
-                String(wrestler.user_id)
-              }
-            ></option>
-          );
-        })}
-      </datalist>
-
-      <label className="h4">Wrestler 2: </label>
-      <input type="text" list="wrestler2List" onChange={onWrestler2Change} />
-      <datalist id="wrestler2List">
-        {personal_info.map((wrestler) => {
-          return (
-            <option
-              key={wrestler.user_id}
-              value={
-                wrestler.first_name +
-                " " +
-                wrestler.last_name +
-                " -+- " +
-                String(wrestler.user_id)
-              }
-            ></option>
-          );
-        })}
-      </datalist>
-
-      <label className="h4">Select Level: </label>
-      <input type="number" onChange={onLevelChange} />
-      <button className="btn btn-primary" onClick={getGradesForBothWrestlers}>
-        Get grades for wrestlers
-      </button>
-      <div className="divForLevel">
-        {gradesForBothWrestlersOnCurrentLevel.map((move) => {
-          return (
-            <div key={move.id}>
-              <div className="" style={{ width: "100vw" }}>
-                <h4 className="text text-center">
-                  {move.number_for_ordering}. {move.name_of_video}
-                </h4>
-              </div>
-              <div className="d-flex justify-content-center flex-wrap">
-                <div className="">
-                  <iframe
-                    width="95%"
-                    height="100%"
-                    src={`https://www.youtube.com/embed/${move.url_to_video}`}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
-                  ></iframe>
+        <div className="card"></div>
+        <div className="" style={{ width: "100%" }}></div>
+        <div className="mt-1">
+          <label className="h4 ">Wrestler 1: </label>
+          <input
+            type="text"
+            list="wrestler1List"
+            onChange={onWrestler1Change}
+          />
+          <datalist id="wrestler1List">
+            {personal_info.map((wrestler) => {
+              return (
+                <option
+                  key={wrestler.user_id}
+                  value={
+                    wrestler.first_name +
+                    " " +
+                    wrestler.last_name +
+                    " -+- " +
+                    String(wrestler.user_id)
+                  }
+                ></option>
+              );
+            })}
+          </datalist>
+        </div>
+        <div className="" style={{ width: "100%" }}></div>
+        <label className="h4">Wrestler 2: </label>
+        <input type="text" list="wrestler2List" onChange={onWrestler2Change} />
+        <datalist id="wrestler2List">
+          {personal_info.map((wrestler) => {
+            return (
+              <option
+                key={wrestler.user_id}
+                value={
+                  wrestler.first_name +
+                  " " +
+                  wrestler.last_name +
+                  " -+- " +
+                  String(wrestler.user_id)
+                }
+              ></option>
+            );
+          })}
+        </datalist>
+        <div className="" style={{ width: "100%" }}></div>
+        <label className="h4">Select Level: </label>
+        <input type="number" onChange={onLevelChange} />
+        <div className="" style={{ width: "100%" }}></div>
+        <button className="btn btn-primary" onClick={getGradesForBothWrestlers}>
+          Get grades for wrestlers
+        </button>
+        <div className="divForLevel">
+          {gradesForBothWrestlersOnCurrentLevel.map((move) => {
+            return (
+              <div key={move.id}>
+                <div className="" style={{ width: "100vw" }}>
+                  <h4 className="text text-center">
+                    {move.number_for_ordering}. {move.name_of_video}
+                  </h4>
                 </div>
-                <div className="">
-                  <iframe
-                    width="95%"
-                    height="100%"
-                    src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                  ></iframe>
+                <div className="d-flex justify-content-center flex-wrap">
+                  <div className="">
+                    <iframe
+                      width="95%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${move.url_to_video}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
+                    ></iframe>
+                  </div>
+                  <div className="">
+                    <iframe
+                      width="95%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                    ></iframe>
+                  </div>
                 </div>
-              </div>
 
-              <div className="d-flex justify-content-center flex-wrap">
-                <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
-                  <p>
-                    {move.wrestler_1_first_name} {move.wrestler_1_last_name}
-                  </p>
-                  <label>current grade: </label>
-                  <input
-                    type="number"
-                    defaultValue={move.wrestler_1_grade}
-                    onChange={onWrestler1GradeChange}
-                  />
-                  <p>
-                    Last graded:{" "}
-                    <Moment fromNow>
-                      {move.wrestler_1_grade_creation_date}
-                    </Moment>
-                  </p>
-                  <p>By coach with ID of: {move.wrestler_1_grade_graded_by} </p>
-                  <label>Coaches' notes: </label>
-                  <textarea
-                    onChange={onWrestler1NoteChange}
-                    defaultValue={move.wrestler_1_movement_notes}
-                  ></textarea>
-                  <div className="" style={{ width: "50%" }}></div>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      submitGrade(
-                        move.id,
-                        wrestler1Id,
-                        wrestler1NewGrade,
-                        wrestler1NewNote
-                      );
-                    }}
+                <div className="d-flex justify-content-center flex-wrap">
+                  <div
+                    className="my-1 p-2"
+                    style={{ border: "solid black 1px" }}
                   >
-                    Update grade and notes for {move.wrestler_1_first_name}{" "}
-                    {move.wrestler_1_last_name}
-                  </button>
-                </div>
+                    <p>
+                      {move.wrestler_1_first_name} {move.wrestler_1_last_name}
+                    </p>
+                    <label>current grade: </label>
+                    <input
+                      type="number"
+                      defaultValue={move.wrestler_1_grade}
+                      onChange={onWrestler1GradeChange}
+                    />
+                    <p>
+                      Last graded:{" "}
+                      <Moment fromNow>
+                        {move.wrestler_1_grade_creation_date}
+                      </Moment>
+                    </p>
+                    <p>
+                      By coach with ID of: {move.wrestler_1_grade_graded_by}{" "}
+                    </p>
+                    <label>Coaches' notes: </label>
+                    <textarea
+                      onChange={onWrestler1NoteChange}
+                      defaultValue={move.wrestler_1_movement_notes}
+                    ></textarea>
+                    <div className="" style={{ width: "50%" }}></div>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        submitGrade(
+                          move.id,
+                          wrestler1Id,
+                          wrestler1NewGrade,
+                          wrestler1NewNote
+                        );
+                      }}
+                    >
+                      Update grade and notes for {move.wrestler_1_first_name}{" "}
+                      {move.wrestler_1_last_name}
+                    </button>
+                  </div>
 
-                <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
-                  <p>
-                    {move.wrestler_2_first_name} {move.wrestler_2_last_name}
-                  </p>
-                  <label>current grade: </label>
-                  <input
-                    type="number"
-                    onChange={onWrestler2GradeChange}
-                    defaultValue={move.wrestler_2_grade}
-                  />
-                  <p>
-                    Last graded:{" "}
-                    <Moment fromNow>
-                      {move.wrestler_2_grade_creation_date}
-                    </Moment>
-                  </p>
-                  <p>By coach with ID of: {move.wrestler_2_grade_graded_by}</p>
-                  <label>Coaches' notes: </label>
-                  <textarea
-                    onChange={onWrestler2NoteChange}
-                    defaultValue={move.wrestler_2_movement_notes}
-                  ></textarea>
-                  <div className="" style={{ width: "50%" }}></div>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      submitGrade(
-                        move.id,
-                        wrestler2Id,
-                        wrestler2NewGrade,
-                        wrestler2NewNote
-                      );
-                    }}
+                  <div
+                    className="my-1 p-2"
+                    style={{ border: "solid black 1px" }}
                   >
-                    Update grade and notes for {move.wrestler_2_first_name}{" "}
-                    {move.wrestler_2_last_name}
-                  </button>
+                    <p>
+                      {move.wrestler_2_first_name} {move.wrestler_2_last_name}
+                    </p>
+                    <label>current grade: </label>
+                    <input
+                      type="number"
+                      onChange={onWrestler2GradeChange}
+                      defaultValue={move.wrestler_2_grade}
+                    />
+                    <p>
+                      Last graded:{" "}
+                      <Moment fromNow>
+                        {move.wrestler_2_grade_creation_date}
+                      </Moment>
+                    </p>
+                    <p>
+                      By coach with ID of: {move.wrestler_2_grade_graded_by}
+                    </p>
+                    <label>Coaches' notes: </label>
+                    <textarea
+                      onChange={onWrestler2NoteChange}
+                      defaultValue={move.wrestler_2_movement_notes}
+                    ></textarea>
+                    <div className="" style={{ width: "50%" }}></div>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        submitGrade(
+                          move.id,
+                          wrestler2Id,
+                          wrestler2NewGrade,
+                          wrestler2NewNote
+                        );
+                      }}
+                    >
+                      Update grade and notes for {move.wrestler_2_first_name}{" "}
+                      {move.wrestler_2_last_name}
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <hr />
-            </div>
-          );
-        })}
+                <hr />
+              </div>
+            );
+          })}
+        </div>
+        <hr />
+        <GradesOfXFor2Wrestlers
+          wrestler1Id={wrestler1Id}
+          wrestler2Id={wrestler2Id}
+          incrementUselessStateFunction={incrementUselessState}
+        />
+        <hr />
+        <MoveSearchFor2Wrestlers
+          wrestler1Id={wrestler1Id}
+          wrestler2Id={wrestler2Id}
+        />
+        <GradingDashboardFor2Wrestlers
+          wrestler1UID={wrestler1Id}
+          wrestler2UID={wrestler2Id}
+          key={uselessState}
+        />
       </div>
-      <hr />
-      <GradesOfXFor2Wrestlers
-        wrestler1Id={wrestler1Id}
-        wrestler2Id={wrestler2Id}
-      />
-      <hr />
-      <MoveSearchFor2Wrestlers
-        wrestler1Id={wrestler1Id}
-        wrestler2Id={wrestler2Id}
-      />
-      <GradingDashboardFor2Wrestlers
-        wrestler1UID={wrestler1Id}
-        Wrestler1first_name={"testfirstname"}
-        Wrestler1last_name={"testlastname"}
-        wrestler2UID={wrestler2Id}
-        Wrestler2first_name={"testfirstname2"}
-        Wrestler2last_name={"testlastname2"}
-      />
     </>
   );
 };

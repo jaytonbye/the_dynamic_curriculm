@@ -51,7 +51,6 @@ function MoveSearch() {
           );
         })}
       </datalist>
-      <hr />
 
       <div className="container">
         <h5>{searchedMoveObject.name_of_video}</h5>

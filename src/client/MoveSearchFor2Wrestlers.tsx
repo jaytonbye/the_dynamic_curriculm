@@ -108,6 +108,7 @@ function MoveSearchFor2Wrestlers(props: any) {
     fetch(`/api/grades/`, requestOptions).then((res) => {
       if (res.ok) {
         alert("Grade Updated!");
+        props.incrementUselessStateFunction();
       } else {
         alert("it didn't work!");
       }
