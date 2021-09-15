@@ -371,6 +371,10 @@ function GradingDashboardFor2Wrestlers(props: any) {
               {Math.ceil(totalPointsAvailableForWrestler1 * 0.97)}
             </p>
           </div>
+          <h5 className="card-header">
+            Wrestler Dashboard - {personalInfoForWrestler1.first_name}{" "}
+            {personalInfoForWrestler1.last_name}
+          </h5>
         </div>
         <div className="card">
           <h5 className="card-header">
@@ -451,6 +455,10 @@ function GradingDashboardFor2Wrestlers(props: any) {
               {Math.ceil(totalPointsAvailableForWrestler2 * 0.97)}
             </p>
           </div>
+          <h5 className="card-header">
+            Wrestler Dashboard - {personalInfoForWrestler2.first_name}{" "}
+            {personalInfoForWrestler1.last_name}
+          </h5>
         </div>
       </div>
     </>
