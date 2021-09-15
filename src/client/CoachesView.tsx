@@ -3,12 +3,13 @@ import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
 import Moment from "react-moment";
 import { Link, useHistory } from "react-router-dom";
 import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
+import GradingDashboardFor2Wrestlers from "./GradingDashboardFor2Wrestlers";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
   const [personal_info, setPersonalInfo] = React.useState([]);
   const [wrestler1Id, setWrestler1Id] = React.useState<number>();
-  const [wrestler2Id, setWrestler2Id] = React.useState<number>(); // The 1 is a dummy number that I'm using to avoid getting database errors in the MoveSearchFor2Wrestlers component
+  const [wrestler2Id, setWrestler2Id] = React.useState<number>();
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
@@ -163,6 +164,11 @@ const CoachesView = (props: CoachesViewProps) => {
       </nav>
 
       <h3>Grading:</h3>
+      <p>A grade of 1 means the wrestler needs a lot of work on the move.</p>
+      <p>
+        A grade of 2 means the wrestler has a decent grasp of the move, but is
+        still working on a few details.
+      </p>
       <p>
         A grade of 3 means the wrestler knows the movement by it's name, and can
         demonstrate it perfectly without hesitation. If a wrestler needed any
@@ -170,10 +176,14 @@ const CoachesView = (props: CoachesViewProps) => {
         receive a 3.
       </p>
       <p>
-        A grade of 2 means the wrestler has a decent grasp of the move, but is
-        still working on a few details.
+        <strong>
+          Grading should be strict. It's better to undergrade and have a
+          wrestler end up drilling something more than neccessary, than it is to
+          move past something that they haven't truely mastered. The purpose of
+          the curriculum is to serve as a path to MASTERY. Do not rush it!
+        </strong>
       </p>
-      <p>A grade of 1 means the wrestler needs a lot of work on the move.</p>
+
       <div className="card"></div>
       <h3>
         You must always start by selecting two wrestlers before doing anything
@@ -344,6 +354,14 @@ const CoachesView = (props: CoachesViewProps) => {
       <MoveSearchFor2Wrestlers
         wrestler1Id={wrestler1Id}
         wrestler2Id={wrestler2Id}
+      />
+      <GradingDashboardFor2Wrestlers
+        wrestler1UID={wrestler1Id}
+        Wrestler1first_name={"testfirstname"}
+        Wrestler1last_name={"testlastname"}
+        wrestler2UID={wrestler2Id}
+        Wrestler2first_name={"testfirstname2"}
+        Wrestler2last_name={"testlastname2"}
       />
     </>
   );
