@@ -131,104 +131,116 @@ function MoveSearchFor2Wrestlers(props: any) {
 
       <div className="divForLevel">
         <div key={searchedMoveObject.id}>
-          <div className="col-12 mt-5 d-flex justify-content-around flex-wrap">
-            <div className="">
-              <h4>
+          <div className="mt-5">
+            <div className="" style={{ width: "100vw" }}>
+              <h4 className="text text-center">
                 {searchedMoveObject.number_for_ordering}.{" "}
                 {searchedMoveObject.name_of_video}
               </h4>
             </div>
-            <div className="">
-              <iframe
-                src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
-              ></iframe>
+            <div className="d-flex justify-content-center flex-wrap">
+              <div className="mx-1">
+                <iframe
+                  src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
+                ></iframe>
+              </div>
+              <div className="mx-1">
+                <iframe
+                  src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_looped_video}`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                ></iframe>
+              </div>
             </div>
-            <div className="">
-              <iframe
-                src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_looped_video}`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              ></iframe>
-            </div>
-            <div className="">
-              <p>
-                {searchedMoveObject.wrestler_1_first_name}{" "}
-                {searchedMoveObject.wrestler_1_last_name}
-              </p>
-              <label>current grade: </label>
-              <input
-                type="number"
-                defaultValue={searchedMoveObject.wrestler_1_grade}
-                onChange={onWrestler1GradeChange}
-              />
-              <p>
-                Last graded:{" "}
-                <Moment fromNow>
-                  {searchedMoveObject.wrestler_1_grade_creation_date}
-                </Moment>
-              </p>
-              <p>By coach: </p>
-              <label>Coaches' notes: </label>
-              <textarea
-                onChange={onWrestler1NoteChange}
-                defaultValue={searchedMoveObject.wrestler_1_movement_notes}
-              ></textarea>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  submitGrade(
-                    searchedMoveObject.id,
-                    props.wrestler1Id,
-                    wrestler1NewGrade,
-                    wrestler1NewNote
-                  );
-                }}
+            <div className="d-flex justify-content-center flex-wrap">
+              <div
+                className="my-1 mx-1 p-2"
+                style={{ border: "black solid 1px" }}
               >
-                Update Grade and notes for{" "}
-                {searchedMoveObject.wrestler_1_first_name}{" "}
-                {searchedMoveObject.wrestler_1_last_name}
-              </button>
-            </div>
-            <div className="">
-              <p>
-                {searchedMoveObject.wrestler_2_first_name}{" "}
-                {searchedMoveObject.wrestler_2_last_name}
-              </p>
-              <label>current grade: </label>
-              <input
-                type="number"
-                onChange={onWrestler2GradeChange}
-                defaultValue={searchedMoveObject.wrestler_2_grade}
-              />
-              <p>
-                Last graded:{" "}
-                <Moment fromNow>
-                  {searchedMoveObject.wrestler_2_grade_creation_date}
-                </Moment>
-              </p>
-              <p>By coach: </p>
-              <label>Coaches' notes: </label>
-              <textarea
-                onChange={onWrestler2NoteChange}
-                defaultValue={searchedMoveObject.wrestler_2_movement_notes}
-              ></textarea>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  submitGrade(
-                    searchedMoveObject.id,
-                    props.wrestler2Id,
-                    wrestler2NewGrade,
-                    wrestler2NewNote
-                  );
-                }}
+                <p>
+                  {searchedMoveObject.wrestler_1_first_name}{" "}
+                  {searchedMoveObject.wrestler_1_last_name}
+                </p>
+                <label>current grade: </label>
+                <input
+                  type="number"
+                  defaultValue={searchedMoveObject.wrestler_1_grade}
+                  onChange={onWrestler1GradeChange}
+                />
+                <p>
+                  Last graded:{" "}
+                  <Moment fromNow>
+                    {searchedMoveObject.wrestler_1_grade_creation_date}
+                  </Moment>
+                </p>
+                <p>By coach: </p>
+                <label>Coaches' notes: </label>
+                <textarea
+                  onChange={onWrestler1NoteChange}
+                  defaultValue={searchedMoveObject.wrestler_1_movement_notes}
+                ></textarea>
+                <div className="" style={{ width: "50%" }}></div>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    submitGrade(
+                      searchedMoveObject.id,
+                      props.wrestler1Id,
+                      wrestler1NewGrade,
+                      wrestler1NewNote
+                    );
+                  }}
+                >
+                  Update Grade and notes for{" "}
+                  {searchedMoveObject.wrestler_1_first_name}{" "}
+                  {searchedMoveObject.wrestler_1_last_name}
+                </button>
+              </div>
+              <div
+                className="my-1 mx-1 p-2"
+                style={{ border: "black solid 1px" }}
               >
-                Update Grade and notes for{" "}
-                {searchedMoveObject.wrestler_2_first_name}{" "}
-                {searchedMoveObject.wrestler_2_last_name}
-              </button>
+                <p>
+                  {searchedMoveObject.wrestler_2_first_name}{" "}
+                  {searchedMoveObject.wrestler_2_last_name}
+                </p>
+                <label>current grade: </label>
+                <input
+                  type="number"
+                  onChange={onWrestler2GradeChange}
+                  defaultValue={searchedMoveObject.wrestler_2_grade}
+                />
+                <p>
+                  Last graded:{" "}
+                  <Moment fromNow>
+                    {searchedMoveObject.wrestler_2_grade_creation_date}
+                  </Moment>
+                </p>
+                <p>By coach: </p>
+                <label>Coaches' notes: </label>
+                <textarea
+                  onChange={onWrestler2NoteChange}
+                  defaultValue={searchedMoveObject.wrestler_2_movement_notes}
+                ></textarea>
+                <div className="" style={{ width: "50%" }}></div>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    submitGrade(
+                      searchedMoveObject.id,
+                      props.wrestler2Id,
+                      wrestler2NewGrade,
+                      wrestler2NewNote
+                    );
+                  }}
+                >
+                  Update Grade and notes for{" "}
+                  {searchedMoveObject.wrestler_2_first_name}{" "}
+                  {searchedMoveObject.wrestler_2_last_name}
+                </button>
+              </div>
             </div>
           </div>
           <hr />
