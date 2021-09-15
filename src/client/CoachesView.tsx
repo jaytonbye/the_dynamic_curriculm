@@ -236,13 +236,12 @@ const CoachesView = (props: CoachesViewProps) => {
         {gradesForBothWrestlersOnCurrentLevel.map((move) => {
           return (
             <div key={move.id}>
-              <div className="mt-5 d-flex justify-content-around flex-wrap">
-                <div className="" style={{ width: "100vw" }}>
-                  <h4>
-                    {move.number_for_ordering}. {move.name_of_video}
-                  </h4>
-                </div>
-
+              <div className="" style={{ width: "100vw" }}>
+                <h4 className="text text-center">
+                  {move.number_for_ordering}. {move.name_of_video}
+                </h4>
+              </div>
+              <div className="d-flex justify-content-center flex-wrap">
                 <div className="">
                   <iframe
                     width="95%"
@@ -261,8 +260,10 @@ const CoachesView = (props: CoachesViewProps) => {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                   ></iframe>
                 </div>
+              </div>
 
-                <div className="">
+              <div className="d-flex justify-content-center flex-wrap">
+                <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
                   <p>
                     {move.wrestler_1_first_name} {move.wrestler_1_last_name}
                   </p>
@@ -284,7 +285,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     onChange={onWrestler1NoteChange}
                     defaultValue={move.wrestler_1_movement_notes}
                   ></textarea>
-
+                  <div className="" style={{ width: "50%" }}></div>
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -296,12 +297,12 @@ const CoachesView = (props: CoachesViewProps) => {
                       );
                     }}
                   >
-                    Update Grade and notes for {move.wrestler_1_first_name}{" "}
+                    Update grade and notes for {move.wrestler_1_first_name}{" "}
                     {move.wrestler_1_last_name}
                   </button>
                 </div>
 
-                <div className="">
+                <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
                   <p>
                     {move.wrestler_2_first_name} {move.wrestler_2_last_name}
                   </p>
@@ -323,7 +324,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     onChange={onWrestler2NoteChange}
                     defaultValue={move.wrestler_2_movement_notes}
                   ></textarea>
-
+                  <div className="" style={{ width: "50%" }}></div>
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -335,11 +336,12 @@ const CoachesView = (props: CoachesViewProps) => {
                       );
                     }}
                   >
-                    Update Grade and notes for {move.wrestler_2_first_name}{" "}
+                    Update grade and notes for {move.wrestler_2_first_name}{" "}
                     {move.wrestler_2_last_name}
                   </button>
                 </div>
               </div>
+
               <hr />
             </div>
           );
