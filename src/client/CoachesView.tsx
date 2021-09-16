@@ -381,6 +381,7 @@ const CoachesView = (props: CoachesViewProps) => {
         <MoveSearchFor2Wrestlers
           wrestler1Id={wrestler1Id}
           wrestler2Id={wrestler2Id}
+          incrementUselessStateFunction={incrementUselessState}
         />
         <GradingDashboardFor2Wrestlers
           wrestler1UID={wrestler1Id}
