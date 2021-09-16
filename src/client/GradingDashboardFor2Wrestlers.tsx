@@ -379,7 +379,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
         <div className="card">
           <h5 className="card-header">
             Wrestler Dashboard - {personalInfoForWrestler2.first_name}{" "}
-            {personalInfoForWrestler1.last_name}
+            {personalInfoForWrestler2.last_name}
           </h5>
           <div className="card-body">
             <h5 className="card-title">
@@ -457,7 +457,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
           </div>
           <h5 className="card-header">
             Wrestler Dashboard - {personalInfoForWrestler2.first_name}{" "}
-            {personalInfoForWrestler1.last_name}
+            {personalInfoForWrestler2.last_name}
           </h5>
         </div>
       </div>
