@@ -156,31 +156,39 @@ function MoveSearchFor2Wrestlers(props: any) {
               </div>
             </div>
             <div className="d-flex justify-content-center flex-wrap">
-              <div
-                className="my-1 mx-1 p-2"
-                style={{ border: "black solid 1px" }}
-              >
-                <p>
+              <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
+                <h6 className="text text-center">
                   {searchedMoveObject.wrestler_1_first_name}{" "}
                   {searchedMoveObject.wrestler_1_last_name}
+                </h6>
+                <p>Current grade: {searchedMoveObject.wrestler_1_grade}</p>
+                <p>
+                  Current notes: {searchedMoveObject.wrestler_1_movement_notes}
                 </p>
-                <label>current grade: </label>
-                <input
-                  type="number"
-                  defaultValue={searchedMoveObject.wrestler_1_grade}
-                  onChange={onWrestler1GradeChange}
-                />
                 <p>
                   Last graded:{" "}
                   <Moment fromNow>
                     {searchedMoveObject.wrestler_1_grade_creation_date}
                   </Moment>
                 </p>
-                <p>By coach: </p>
-                <label>Coaches' notes: </label>
+                <p>
+                  By coach with ID of:{" "}
+                  {searchedMoveObject.wrestler_1_grade_graded_by}{" "}
+                </p>
+
+                <label>New grade: </label>
+                <input
+                  type="number"
+                  onChange={onWrestler1GradeChange}
+                  placeholder="0, 1, 2, or 3"
+                />
+                <div className="" style={{ width: "50%" }}></div>
+                <label>Notes: </label>
                 <textarea
+                  rows={5}
+                  cols={30}
                   onChange={onWrestler1NoteChange}
-                  defaultValue={searchedMoveObject.wrestler_1_movement_notes}
+                  placeholder="enter notes that you want the wrestler and/or other coaches to be able to view (this will replace the current notes)."
                 ></textarea>
                 <div className="" style={{ width: "50%" }}></div>
                 <button
@@ -194,36 +202,44 @@ function MoveSearchFor2Wrestlers(props: any) {
                     );
                   }}
                 >
-                  Update Grade and notes for{" "}
+                  Update grade and notes for{" "}
                   {searchedMoveObject.wrestler_1_first_name}{" "}
                   {searchedMoveObject.wrestler_1_last_name}
                 </button>
               </div>
-              <div
-                className="my-1 mx-1 p-2"
-                style={{ border: "black solid 1px" }}
-              >
-                <p>
+              <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
+                <h6 className="text text-center">
                   {searchedMoveObject.wrestler_2_first_name}{" "}
                   {searchedMoveObject.wrestler_2_last_name}
+                </h6>
+                <p>Current grade: {searchedMoveObject.wrestler_2_grade}</p>
+                <p>
+                  Current notes: {searchedMoveObject.wrestler_2_movement_notes}
                 </p>
-                <label>current grade: </label>
-                <input
-                  type="number"
-                  onChange={onWrestler2GradeChange}
-                  defaultValue={searchedMoveObject.wrestler_2_grade}
-                />
                 <p>
                   Last graded:{" "}
                   <Moment fromNow>
                     {searchedMoveObject.wrestler_2_grade_creation_date}
                   </Moment>
                 </p>
-                <p>By coach: </p>
-                <label>Coaches' notes: </label>
+                <p>
+                  By coach with ID of:{" "}
+                  {searchedMoveObject.wrestler_2_grade_graded_by}{" "}
+                </p>
+
+                <label>New grade: </label>
+                <input
+                  type="number"
+                  onChange={onWrestler2GradeChange}
+                  placeholder="0, 1, 2, or 3"
+                />
+                <div className="" style={{ width: "50%" }}></div>
+                <label>Notes: </label>
                 <textarea
+                  rows={5}
+                  cols={30}
                   onChange={onWrestler2NoteChange}
-                  defaultValue={searchedMoveObject.wrestler_2_movement_notes}
+                  placeholder="enter notes that you want the wrestler and/or other coaches to be able to view (this will replace the current notes)."
                 ></textarea>
                 <div className="" style={{ width: "50%" }}></div>
                 <button
@@ -237,7 +253,7 @@ function MoveSearchFor2Wrestlers(props: any) {
                     );
                   }}
                 >
-                  Update Grade and notes for{" "}
+                  Update grade and notes for{" "}
                   {searchedMoveObject.wrestler_2_first_name}{" "}
                   {searchedMoveObject.wrestler_2_last_name}
                 </button>

@@ -82,55 +82,66 @@ function GradesOfXFor2Wrestlers(props: any) {
         {movesAndGrades.map((move) => {
           return (
             <>
-              <div className="mt-5">
+              <div key={move.id}>
                 <div className="" style={{ width: "100vw" }}>
-                  <h4 className="text text-center">
+                  <h3 className="text text-center">
                     {move.number_for_ordering}. {move.name_of_video}
-                  </h4>
+                  </h3>
                 </div>
                 <div className="d-flex justify-content-center flex-wrap">
-                  <div className="mx-1">
+                  <div className="">
+                    <h6 className="text text-center">Detailed Explanation</h6>
                     <iframe
+                      width="95%"
                       src={`https://www.youtube.com/embed/${move.url_to_video}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                     ></iframe>
                   </div>
-                  <div className="mx-1">
+                  <div className="">
+                    <h6 className="text text-center">Looped Video</h6>
                     <iframe
+                      width="95%"
                       src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                     ></iframe>
                   </div>
                 </div>
+
                 <div className="d-flex justify-content-center flex-wrap">
                   <div
-                    className="my-1 mx-1 p-2"
-                    style={{ border: "black solid 1px" }}
+                    className="my-1 p-2"
+                    style={{ border: "solid black 1px" }}
                   >
-                    <p>
+                    <h6 className="text text-center">
                       {move.wrestler_1_first_name} {move.wrestler_1_last_name}
-                    </p>
-                    <label>current grade: </label>
-                    <input
-                      type="number"
-                      defaultValue={move.wrestler_1_grade}
-                      onChange={onWrestler1GradeChange}
-                    />
+                    </h6>
+                    <p>Current grade: {move.wrestler_1_grade}</p>
+                    <p>Current notes: {move.wrestler_1_movement_notes}</p>
                     <p>
                       Last graded:{" "}
                       <Moment fromNow>
                         {move.wrestler_1_grade_creation_date}
                       </Moment>
                     </p>
-                    <p>By coach: </p>
-                    <label>Coaches' notes: </label>
-                    <br />
+                    <p>
+                      By coach with ID of: {move.wrestler_1_grade_graded_by}{" "}
+                    </p>
+
+                    <label>New grade: </label>
+                    <input
+                      type="number"
+                      onChange={onWrestler1GradeChange}
+                      placeholder="0, 1, 2, or 3"
+                    />
+                    <div className="" style={{ width: "50%" }}></div>
+                    <label>Notes: </label>
                     <textarea
-                      style={{ width: 100 }}
+                      rows={5}
+                      cols={30}
                       onChange={onWrestler1NoteChange}
-                      defaultValue={move.wrestler_1_movement_notes}
+                      placeholder="enter notes that you want the wrestler and/or other coaches to be able to view (this will replace the current notes)."
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
                     <button
@@ -144,34 +155,42 @@ function GradesOfXFor2Wrestlers(props: any) {
                         );
                       }}
                     >
-                      Update Grade and notes for {move.wrestler_1_first_name}{" "}
+                      Update grade and notes for {move.wrestler_1_first_name}{" "}
                       {move.wrestler_1_last_name}
                     </button>
                   </div>
                   <div
-                    className="my-1 mx-1 p-2"
-                    style={{ border: "black solid 1px" }}
+                    className="my-1 p-2"
+                    style={{ border: "solid black 1px" }}
                   >
-                    <p>
+                    <h6 className="text text-center">
                       {move.wrestler_2_first_name} {move.wrestler_2_last_name}
-                    </p>
-                    <label>current grade: </label>
-                    <input
-                      type="number"
-                      onChange={onWrestler2GradeChange}
-                      defaultValue={move.wrestler_2_grade}
-                    />
+                    </h6>
+                    <p>Current grade: {move.wrestler_2_grade}</p>
+                    <p>Current notes: {move.wrestler_2_movement_notes}</p>
                     <p>
                       Last graded:{" "}
                       <Moment fromNow>
                         {move.wrestler_2_grade_creation_date}
                       </Moment>
                     </p>
-                    <p>By coach: </p>
-                    <label>Coaches' notes: </label>
+                    <p>
+                      By coach with ID of: {move.wrestler_2_grade_graded_by}{" "}
+                    </p>
+
+                    <label>New grade: </label>
+                    <input
+                      type="number"
+                      onChange={onWrestler2GradeChange}
+                      placeholder="0, 1, 2, or 3"
+                    />
+                    <div className="" style={{ width: "50%" }}></div>
+                    <label>Notes: </label>
                     <textarea
+                      rows={5}
+                      cols={30}
                       onChange={onWrestler2NoteChange}
-                      defaultValue={move.wrestler_2_movement_notes}
+                      placeholder="enter notes that you want the wrestler and/or other coaches to be able to view (this will replace the current notes)."
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
                     <button
@@ -185,11 +204,13 @@ function GradesOfXFor2Wrestlers(props: any) {
                         );
                       }}
                     >
-                      Update Grade and notes for {move.wrestler_2_first_name}{" "}
+                      Update grade and notes for {move.wrestler_2_first_name}{" "}
                       {move.wrestler_2_last_name}
                     </button>
                   </div>
                 </div>
+
+                <hr />
               </div>
               <hr />
             </>
