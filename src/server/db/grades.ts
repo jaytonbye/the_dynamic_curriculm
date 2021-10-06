@@ -21,6 +21,7 @@ const singleGrade = async (id: number) => {
   return Query("SELECT * FROM grades WHERE id=?", [id]);
 };
 
+//this query returns 1 grade for each of the movements, even movements the wrestler doesn't have graded (it returns null).
 const allCurrentGradesForASingleWrestler = async (user_id: number) => {
   return Query(
     `

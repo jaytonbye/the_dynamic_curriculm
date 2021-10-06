@@ -8,6 +8,7 @@ import SingleLevel from "./SingleLevel";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import ProfilePage from "./ProfilePage";
+import Tests from "./Tests";
 
 const App = (props: AppProps) => {
   return (
@@ -37,6 +38,9 @@ const App = (props: AppProps) => {
           </Route>
           <Route exact path="/createAccount">
             <CreateAccount />
+          </Route>
+          <Route exact path="/tests">
+            <Tests />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>

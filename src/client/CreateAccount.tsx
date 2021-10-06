@@ -76,7 +76,7 @@ function CreateAccount() {
             />
             <label>Approval code: </label>
             <input
-              type="text"
+              type="password"
               className="mb-2 form-control"
               value={approvalCode}
               onChange={(e) => setApprovalCode(e.target.value)}

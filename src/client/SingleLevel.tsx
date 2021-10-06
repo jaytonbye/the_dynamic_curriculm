@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import WrestlerDashboard from "./WrestlerDashboard";
 import { IGradesForSingleWreslterOnSpecificLevel } from "../types/index";
 
@@ -27,6 +27,7 @@ function SingleLevel() {
 
   return (
     <>
+      <Link to={`/wrestlersview`}> Go back to homepage</Link>
       <WrestlerDashboard />
       <h1 className="text text-center mb-3">
         You are currently viewing level {level} of the Dynamic Wrestling
@@ -72,6 +73,15 @@ function SingleLevel() {
             );
           }
         })}
+        <h2 className="text text-center mb-5">
+          <strong>
+            <Link to={"/Tests"}>
+              <div className="btn btn-primary btn-lg">
+                Click here to view the written tests for all levels.
+              </div>
+            </Link>
+          </strong>
+        </h2>
       </div>
     </>
   );
