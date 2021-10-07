@@ -136,13 +136,11 @@ function GradingDashboardFor2Wrestlers(props: any) {
       total = total + gradesForWrestler2[x].grade;
       totalAvailableForWrestler2 =
         totalAvailableForWrestler2 + gradesForWrestler2[x].maximum_grade;
-      console.log(totalAvailableForWrestler2);
     }
     setTotalPointsForWrestler2(total);
     setTotalPointsAvailableForWrestler2(totalAvailableForWrestler2);
   }, [gradesForWrestler2]);
 
-  //up to here:
   React.useEffect(() => {
     if (totalPointsAvailableForWrestler1 === 0) {
       return;
