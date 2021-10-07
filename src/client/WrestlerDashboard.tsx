@@ -11,6 +11,7 @@ function WrestlerDashboard() {
     first_name: "wrestler's first name",
     last_name: "wrestler's last name",
   });
+  // grades was a poorly named variable, because it is actually all of the videos, including null grades.
   const [grades, setGrades] = React.useState([]);
   const [totalPoints, setTotalPoints] = React.useState(0);
   const [totalPointsAvailable, setTotalPointsAvailable] = React.useState(0);
@@ -48,11 +49,13 @@ function WrestlerDashboard() {
   // We wait for the grades api call, and then we calculate the total points the wrestler has earned and the total points available. The waiting is handled by the dependency array.
   React.useEffect(() => {
     let total = 0;
+    let totalAvailable = 0;
     for (let x = 0; x < grades.length; x++) {
       total = total + grades[x].grade;
+      totalAvailable = totalAvailable + grades[x].maximum_grade;
     }
     setTotalPoints(total);
-    setTotalPointsAvailable(grades.length * 3);
+    setTotalPointsAvailable(totalAvailable);
   }, [grades]);
 
   React.useEffect(() => {
