@@ -37,6 +37,7 @@ export interface IVideo {
   number_for_ordering: number;
   curriculum_level: number;
   date_created: Date;
+  maximum_grade: number;
 }
 
 export interface IGradesForSingleWreslterOnSpecificLevel {

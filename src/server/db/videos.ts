@@ -21,26 +21,28 @@ const singleVideo = async (id: number) => {
 
 const createVideo = async (video: IVideo) => {
   return Query(
-    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level) VALUES (?,?,?,?,?)`,
+    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level, maximum_grade) VALUES (?,?,?,?,?,?)`,
     [
       video.name_of_video,
       video.url_to_video,
       video.url_to_looped_video,
       video.number_for_ordering,
       video.curriculum_level,
+      video.maximum_grade,
     ]
   );
 };
 
 const updateVideo = async (video: IVideo) => {
   return Query(
-    `UPDATE videos SET name_of_video=?, url_to_video=?, url_to_looped_video=?, number_for_ordering=?, curriculum_level=? WHERE id=?`,
+    `UPDATE videos SET name_of_video=?, url_to_video=?, url_to_looped_video=?, number_for_ordering=?, curriculum_level=?, maximum_grade=? WHERE id=?`,
     [
       video.name_of_video,
       video.url_to_video,
       video.url_to_looped_video,
       video.number_for_ordering,
       video.curriculum_level,
+      video.maximum_grade,
       video.id,
     ]
   );

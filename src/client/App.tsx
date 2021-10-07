@@ -9,6 +9,7 @@ import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import ProfilePage from "./ProfilePage";
 import Tests from "./Tests";
+import AllGradesAllLevels from "./AllGradesAllLevels";
 
 const App = (props: AppProps) => {
   return (
@@ -42,9 +43,12 @@ const App = (props: AppProps) => {
           <Route exact path="/tests">
             <Tests />
           </Route>
+          <Route exact path="/AllGradesAllLevels">
+            <AllGradesAllLevels />
+          </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>
-            <a href="/">Go back to the homepage!</a>
+            <a href="/WrestlersView">Go back to the homepage!</a>
           </Route>
         </Switch>
       </BrowserRouter>

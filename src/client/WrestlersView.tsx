@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import WrestlerDashboard from "./WrestlerDashboard";
 import GradesOfX from "./GradesOfX";
 import MoveSearch from "./MoveSearch";
-import Tests from "./Tests";
 
 function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
@@ -31,6 +30,11 @@ function WrestlersView() {
     <>
       <WrestlerDashboard />
       <GradesOfX />
+      <hr />
+      <Link to={"/AllGradesAllLevels"}>
+        <h3>Click here to view all of your grades on all levels</h3>
+      </Link>
+
       <hr />
       <h3>Click on a level to view the moves, grades, and coaches' notes</h3>
       <table className="table">

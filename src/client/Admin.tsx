@@ -7,6 +7,7 @@ function Admin() {
   const [curriculumLevel, setCurriculumLevel] = React.useState("");
   const [numberForOrdering, setNumberForOrdering] = React.useState("");
   const [moves, setMoves] = React.useState([]);
+  const [maximum_grade, setMaximum_grade] = React.useState([]);
 
   const onMoveNameChange = (event: any) => {
     setMoveName(event.target.value);
@@ -22,6 +23,9 @@ function Admin() {
   };
   const onNumberForOrderingChange = (event: any) => {
     setNumberForOrdering(event.target.value);
+  };
+  const onMaximum_gradeChange = (event: any) => {
+    setMaximum_grade(event.target.value);
   };
 
   const onSubmitMove = () => {
@@ -39,6 +43,7 @@ function Admin() {
         url_to_looped_video: moveLoopedUrl,
         number_for_ordering: numberForOrdering,
         curriculum_level: curriculumLevel,
+        maximum_grade: maximum_grade,
       }),
     };
     fetch("/api/videos", requestOptions).then((res) => {
@@ -65,6 +70,7 @@ function Admin() {
         number_for_ordering: numberForOrdering,
         curriculum_level: curriculumLevel,
         id: id,
+        maximum_grade: maximum_grade,
         // Is there a way I can use type checking here?
       }),
     };
@@ -133,6 +139,9 @@ function Admin() {
         <label htmlFor="">Insert into curriculum level: </label>
         <input type="number" onChange={onCurriculumLevelChange} />
         <br />
+        <label htmlFor="">Maximum Grade: </label>
+        <input type="number" onChange={onMaximum_gradeChange} />
+        <br />
         <button
           id="submitButton"
           className="btn btn-success"
@@ -156,7 +165,8 @@ function Admin() {
             <th>Url to video</th>
             <th>Url to looped video</th>
             <th>Points Available</th>
-            <th>Buttons</th>
+            <th>Submit Buttons</th>
+            <th>Delete Buttons</th>
           </tr>
         </thead>
         <tbody>
@@ -169,6 +179,7 @@ function Admin() {
                 <td>{move.name_of_video}</td>
                 <td>{move.url_to_video}</td>
                 <td>{move.url_to_looped_video}</td>
+                <td>{move.maximum_grade}</td>
                 <td>
                   <button
                     className="btn btn-success"
