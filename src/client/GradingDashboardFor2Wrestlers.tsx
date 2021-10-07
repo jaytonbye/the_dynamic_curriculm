@@ -119,20 +119,27 @@ function GradingDashboardFor2Wrestlers(props: any) {
   // We wait for the grades api call, and then we calculate the total points the wrestler has earned and the total points available. The waiting is handled by the dependency array.
   React.useEffect(() => {
     let total = 0;
+    let totalAvailableForWrestler1 = 0;
     for (let x = 0; x < gradesForWrestler1.length; x++) {
       total = total + gradesForWrestler1[x].grade;
+      totalAvailableForWrestler1 =
+        totalAvailableForWrestler1 + gradesForWrestler1[x].maximum_grade;
     }
     setTotalPointsForWrestler1(total);
-    setTotalPointsAvailableForWrestler1(gradesForWrestler1.length * 3);
+    setTotalPointsAvailableForWrestler1(totalAvailableForWrestler1);
   }, [gradesForWrestler1]);
 
   React.useEffect(() => {
     let total = 0;
+    let totalAvailableForWrestler2 = 0;
     for (let x = 0; x < gradesForWrestler2.length; x++) {
       total = total + gradesForWrestler2[x].grade;
+      totalAvailableForWrestler2 =
+        totalAvailableForWrestler2 + gradesForWrestler2[x].maximum_grade;
+      console.log(totalAvailableForWrestler2);
     }
     setTotalPointsForWrestler2(total);
-    setTotalPointsAvailableForWrestler2(gradesForWrestler1.length * 3);
+    setTotalPointsAvailableForWrestler2(totalAvailableForWrestler2);
   }, [gradesForWrestler2]);
 
   //up to here:
