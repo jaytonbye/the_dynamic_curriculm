@@ -23,9 +23,9 @@ export default function AllGradesAllLevels() {
     <>
       <Link to={`/wrestlersview`}> Go back to homepage</Link>
       <WrestlerDashboard />
-      <table className="table">
-        <thead>
-          <tr>
+      <table className="table table-striped">
+        <thead className="sticky-top">
+          <tr className="bg-light">
             <th>Level</th>
             <th>Name</th>
             <th>Link to detailed video explanation</th>
