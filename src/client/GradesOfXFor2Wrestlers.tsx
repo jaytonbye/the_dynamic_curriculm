@@ -141,7 +141,6 @@ function GradesOfXFor2Wrestlers(props: any) {
                       rows={5}
                       cols={30}
                       onChange={onWrestler1NoteChange}
-                      placeholder="enter notes that you want the wrestler and/or other coaches to be able to view (this will replace the current notes)."
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
                     <button
@@ -190,7 +189,6 @@ function GradesOfXFor2Wrestlers(props: any) {
                       rows={5}
                       cols={30}
                       onChange={onWrestler2NoteChange}
-                      placeholder="enter notes that you want the wrestler and/or other coaches to be able to view (this will replace the current notes)."
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
                     <button

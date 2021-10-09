@@ -61,7 +61,6 @@ function GradingDashboardFor2Wrestlers(props: any) {
   ] = React.useState(0);
 
   let history = useHistory();
-  let UID = sessionStorage.getItem("UID");
   let token = sessionStorage.getItem("token");
   let wrestler1UID = props.wrestler1UID;
   let wrestler2UID = props.wrestler2UID;
