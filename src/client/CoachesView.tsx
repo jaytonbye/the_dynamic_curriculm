@@ -1,9 +1,10 @@
 import * as React from "react";
 import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
 import Moment from "react-moment";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Route, BrowserRouter } from "react-router-dom";
 import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
 import GradingDashboardFor2Wrestlers from "./GradingDashboardFor2Wrestlers";
+import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
@@ -19,6 +20,9 @@ const CoachesView = (props: CoachesViewProps) => {
     gradesForBothWrestlersOnCurrentLevel,
     setGradesForBothWrestlersOnCurrentLevel,
   ] = React.useState([]);
+  const [showAllGrades, setShowAllGrades] = React.useState(false);
+  const [wrestler1FullName, setWrestler1FullName] = React.useState("");
+  const [wrestler2FullName, setWrestler2FullName] = React.useState("");
 
   //The purpose of using useless state is so that we rerender the child component "Grading Dashboard For 2 Wrestlers" whenever a grade is changed. To do this, we use the function "incrementUselessState" update the key prop.
   const [uselessState, setUselessState] = React.useState(0);
@@ -27,9 +31,6 @@ const CoachesView = (props: CoachesViewProps) => {
 
   let token = sessionStorage.getItem("token");
   let UID = sessionStorage.getItem("UID");
-  let color1 = "red";
-  let color2 = "yellow";
-  let color3 = "green";
 
   //for autocomplete of wrestler names
   const onWrestler1Change = (event: any) => {
@@ -92,6 +93,22 @@ const CoachesView = (props: CoachesViewProps) => {
         setUserThatIsOnThisPage(results);
       });
   }, []);
+
+  //shows all grades and also gets the wrestler's names
+  let switchShowAllGrades = () => {
+    personal_info.map((person) => {
+      if (person.user_id === wrestler1Id) {
+        setWrestler1FullName(person.first_name + " " + person.last_name);
+      }
+    });
+
+    personal_info.map((person2) => {
+      if (person2.user_id === wrestler2Id) {
+        setWrestler2FullName(person2.first_name + " " + person2.last_name);
+      }
+    });
+    setShowAllGrades(true);
+  };
 
   let getGradesForBothWrestlers = () => {
     if (userThatIsOnThisPage[0].role === "wrestler") {
@@ -192,7 +209,6 @@ const CoachesView = (props: CoachesViewProps) => {
             rush it!
           </strong>
         </p>
-
         <div className="card"></div>
         <div className="" style={{ width: "100%" }}></div>
         <div className="mt-1">
@@ -245,6 +261,19 @@ const CoachesView = (props: CoachesViewProps) => {
         <button className="btn btn-primary" onClick={getGradesForBothWrestlers}>
           Get grades for wrestlers
         </button>
+        <button className="btn btn-primary ml-2" onClick={switchShowAllGrades}>
+          Get grades for both wrestlers on all levels (MASTER VIEW)
+        </button>
+
+        {showAllGrades && (
+          <AllGradesAllLevelsFor2Wrestlers
+            wrestler1Id={wrestler1Id}
+            wrestler2Id={wrestler2Id}
+            wrestler1FullName={wrestler1FullName}
+            wrestler2FullName={wrestler2FullName}
+            incrementUselessStateFunction={incrementUselessState}
+          />
+        )}
         <div className="divForLevel">
           {gradesForBothWrestlersOnCurrentLevel.map((move) => {
             return (
@@ -394,6 +423,8 @@ const CoachesView = (props: CoachesViewProps) => {
         <GradingDashboardFor2Wrestlers
           wrestler1UID={wrestler1Id}
           wrestler2UID={wrestler2Id}
+          wrestler1FullName={wrestler1FullName}
+          wrestler2FullName={wrestler2FullName}
           key={uselessState}
         />
       </div>

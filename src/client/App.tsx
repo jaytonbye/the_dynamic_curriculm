@@ -10,6 +10,7 @@ import CreateAccount from "./CreateAccount";
 import ProfilePage from "./ProfilePage";
 import Tests from "./Tests";
 import AllGradesAllLevels from "./AllGradesAllLevels";
+import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 
 const App = (props: AppProps) => {
   return (
@@ -45,6 +46,12 @@ const App = (props: AppProps) => {
           </Route>
           <Route exact path="/AllGradesAllLevels">
             <AllGradesAllLevels />
+          </Route>
+          <Route exact path="/blah">
+            <AllGradesAllLevelsFor2Wrestlers
+              wrestler1Id="21"
+              wrestler2Id="87"
+            />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>

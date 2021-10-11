@@ -298,8 +298,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
       <div className="d-flex flex-wrap justify-content-around">
         <div className="card">
           <h5 className="card-header">
-            Wrestler Dashboard - {personalInfoForWrestler1.first_name}{" "}
-            {personalInfoForWrestler1.last_name}
+            Wrestler Dashboard - {props.wrestler1FullName}
           </h5>
           <div className="card-body">
             <h5 className="card-title">
@@ -376,14 +375,12 @@ function GradingDashboardFor2Wrestlers(props: any) {
             </p>
           </div>
           <h5 className="card-header">
-            Wrestler Dashboard - {personalInfoForWrestler1.first_name}{" "}
-            {personalInfoForWrestler1.last_name}
+            Wrestler Dashboard - {props.wrestler1FullName}
           </h5>
         </div>
         <div className="card">
           <h5 className="card-header">
-            Wrestler Dashboard - {personalInfoForWrestler2.first_name}{" "}
-            {personalInfoForWrestler2.last_name}
+            Wrestler Dashboard - {props.wrestler2FullName}
           </h5>
           <div className="card-body">
             <h5 className="card-title">
@@ -460,8 +457,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
             </p>
           </div>
           <h5 className="card-header">
-            Wrestler Dashboard - {personalInfoForWrestler2.first_name}{" "}
-            {personalInfoForWrestler2.last_name}
+            Wrestler Dashboard - {props.wrestler2FullName}
           </h5>
         </div>
       </div>

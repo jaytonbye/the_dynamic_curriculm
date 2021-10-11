@@ -22,7 +22,9 @@ export default function AllGradesAllLevels() {
   return (
     <>
       <Link to={`/wrestlersview`}> Go back to homepage</Link>
+
       <WrestlerDashboard />
+
       <table className="table table-striped">
         <thead className="sticky-top">
           <tr className="bg-light">
@@ -55,7 +57,7 @@ export default function AllGradesAllLevels() {
                     href={`https://www.youtube.com/watch?v=${video.url_to_looped_video}`}
                     target="_blank"
                   >
-                    Detailed Video
+                    Looped Video
                   </a>
                 </td>
                 <td>{video.maximum_grade}</td>

@@ -100,6 +100,24 @@ router.get(
 );
 
 router.get(
+  "/gradesForTwoWresltersOnAllLevels/:wrestler1&:wrestler2",
+  hasValidCoachToken,
+  async (req, res) => {
+    let wrestler1 = Number(req.params.wrestler1);
+    let wrestler2 = Number(req.params.wrestler2);
+
+    try {
+      res.json(
+        await db.grades.gradesForTwoWresltersOnAllLevels(wrestler1, wrestler2)
+      );
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
+
+router.get(
   "/allGradesForTwoWrestlers/:wrestler1&:wrestler2",
   hasValidCoachToken,
   async (req, res) => {

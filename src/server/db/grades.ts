@@ -217,6 +217,73 @@ const gradesForTwoWresltersOnASpecificLevel = async (
   );
 };
 
+const gradesForTwoWresltersOnAllLevels = async (
+  wrestler1Id: number,
+  wrestler2Id: number
+) => {
+  return Query(
+    `
+
+    Select *, (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_1_movement_notes,
+      (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_1_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_1_last_name,
+      (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as wrestler_2_movement_notes,
+      (
+      Select first_name from personal_info
+      WHERE user_id=?) as wrestler_2_first_name,
+      (Select last_name from personal_info
+      WHERE user_id=?) as wrestler_2_last_name,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_1_grade_creation_date,
+      (
+        Select coach_user_id from grades
+        WHERE video_id=videos.id AND student_user_id=?
+        ORDER BY grades.created_at DESC Limit 1) as wrestler_1_grade_graded_by,
+      (SELECT created_at FROM grades
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_2_grade_creation_date,
+      (
+        Select coach_user_id from grades
+        WHERE video_id=videos.id AND student_user_id=?
+        ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade_graded_by
+      FROM videos
+      ORDER BY curriculum_level, number_for_ordering;
+  `,
+    [
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler2Id,
+      wrestler1Id,
+      wrestler1Id,
+      wrestler2Id,
+      wrestler2Id,
+    ]
+  );
+};
+
 //on 9/10/21 at 10:45am I added in the coach who did all of the grades. It wasn't supposed to be added here, but I will leave it as it might be useful. I'm leaving this note incase it causes a breaking change.
 const allGradesForTwoWreslters = async (
   wrestler1Id: number,
@@ -328,4 +395,5 @@ export default {
   allSpecificCurrentGradesForTwoWrestlers,
   allCurrentGradesForASingleWrestler,
   allGradesForTwoWreslters,
+  gradesForTwoWresltersOnAllLevels,
 };
