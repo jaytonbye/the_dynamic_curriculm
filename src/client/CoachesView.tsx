@@ -266,13 +266,23 @@ const CoachesView = (props: CoachesViewProps) => {
         </button>
 
         {showAllGrades && (
-          <AllGradesAllLevelsFor2Wrestlers
-            wrestler1Id={wrestler1Id}
-            wrestler2Id={wrestler2Id}
-            wrestler1FullName={wrestler1FullName}
-            wrestler2FullName={wrestler2FullName}
-            incrementUselessStateFunction={incrementUselessState}
-          />
+          <>
+            <GradingDashboardFor2Wrestlers
+              wrestler1UID={wrestler1Id}
+              wrestler2UID={wrestler2Id}
+              wrestler1FullName={wrestler1FullName}
+              wrestler2FullName={wrestler2FullName}
+              key={uselessState}
+            />
+
+            <AllGradesAllLevelsFor2Wrestlers
+              wrestler1Id={wrestler1Id}
+              wrestler2Id={wrestler2Id}
+              wrestler1FullName={wrestler1FullName}
+              wrestler2FullName={wrestler2FullName}
+              incrementUselessStateFunction={incrementUselessState}
+            />
+          </>
         )}
         <div className="divForLevel">
           {gradesForBothWrestlersOnCurrentLevel.map((move) => {
@@ -419,13 +429,6 @@ const CoachesView = (props: CoachesViewProps) => {
           wrestler1Id={wrestler1Id}
           wrestler2Id={wrestler2Id}
           incrementUselessStateFunction={incrementUselessState}
-        />
-        <GradingDashboardFor2Wrestlers
-          wrestler1UID={wrestler1Id}
-          wrestler2UID={wrestler2Id}
-          wrestler1FullName={wrestler1FullName}
-          wrestler2FullName={wrestler2FullName}
-          key={uselessState}
         />
       </div>
     </>
