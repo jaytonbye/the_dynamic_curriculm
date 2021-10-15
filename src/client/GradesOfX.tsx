@@ -44,7 +44,7 @@ function GradesOfX() {
                       height="35%"
                       src={`https://www.youtube.com/embed/${move.url_to_video}`}
                       title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                     ></iframe>
                   </div>
                   <div>
@@ -53,7 +53,7 @@ function GradesOfX() {
                       height="35%"
                       src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
                       title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                     ></iframe>
                   </div>
                   <h5>Your grade here: {move.grade}</h5>

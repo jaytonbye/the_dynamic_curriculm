@@ -31,30 +31,47 @@ export default function AllGradesAllLevels(props: any) {
     user_id: number,
     grade: number,
     note: string,
-    coach_user_id: number
+    coach_user_id: number,
+    max_grade: number
   ) => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        video_id: video_id,
-        coach_user_id: coach_user_id,
-        student_user_id: user_id,
-        grade: grade,
-        movement_notes: note,
-      }),
-    };
-    fetch(`/api/grades/`, requestOptions).then((res) => {
-      if (res.ok) {
-        alert("Grade Updated!");
-        props.incrementUselessStateFunction();
-      } else {
-        alert("it didn't work!");
-      }
-    });
+    if (grade > max_grade) {
+      console.log("whoops");
+      alert(
+        "GRADE NOT SUBMITTED! You cannot submit a grade higher than the maximum grade"
+      );
+    } else if (grade < 0) {
+      alert(
+        "GRADE NOT SUBMITTED! You cannot submit a grade of a negative number"
+      );
+    } else {
+      console.log("here");
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          video_id: video_id,
+          coach_user_id: coach_user_id,
+          student_user_id: user_id,
+          grade: grade,
+          movement_notes: note,
+        }),
+      };
+      fetch(`/api/grades/`, requestOptions).then((res) => {
+        if (res.ok) {
+          alert(
+            `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
+          );
+          props.incrementUselessStateFunction();
+        } else {
+          alert(
+            "GRADE NOT SUBMITTED! Something went wrong. Try logging out and then logging in again."
+          );
+        }
+      });
+    }
   };
 
   React.useEffect(() => {
@@ -152,7 +169,8 @@ export default function AllGradesAllLevels(props: any) {
                         props.wrestler1Id,
                         wrestler1NewGrade,
                         wrestler1NewNote,
-                        Number(UID)
+                        Number(UID),
+                        video.maximum_grade
                       );
                     }}
                   >
@@ -197,7 +215,8 @@ export default function AllGradesAllLevels(props: any) {
                         props.wrestler2Id,
                         wrestler2NewGrade,
                         wrestler2NewNote,
-                        Number(UID)
+                        Number(UID),
+                        video.maximum_grade
                       );
                     }}
                   >

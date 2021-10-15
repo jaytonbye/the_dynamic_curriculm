@@ -138,32 +138,45 @@ const CoachesView = (props: CoachesViewProps) => {
     video_id: number,
     user_id: number,
     grade: number,
-    note: string
+    note: string,
+    maximum_grade: number
   ) => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        video_id: video_id,
-        coach_user_id: UID,
-        student_user_id: user_id,
-        grade: grade,
-        movement_notes: note,
-      }),
-    };
-    fetch(`/api/grades/`, requestOptions).then((res) => {
-      if (res.ok) {
-        alert(
-          `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
-        );
-        incrementUselessState();
-      } else {
-        alert("it didn't work!");
-      }
-    });
+    if (grade > maximum_grade) {
+      alert(
+        "GRADE NOT SUBMITTED! You cannot submit a grade higher than the maximum grade"
+      );
+    } else if (grade < 0) {
+      alert(
+        "GRADE NOT SUBMITTED! You cannot submit a grade of a negative number"
+      );
+    } else {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          video_id: video_id,
+          coach_user_id: UID,
+          student_user_id: user_id,
+          grade: grade,
+          movement_notes: note,
+        }),
+      };
+      fetch(`/api/grades/`, requestOptions).then((res) => {
+        if (res.ok) {
+          alert(
+            `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
+          );
+          incrementUselessState();
+        } else {
+          alert(
+            "GRADE NOT SUBMITTED! Something went wrong, try logging in again"
+          );
+        }
+      });
+    }
   };
 
   let incrementUselessState = () => {
@@ -355,7 +368,8 @@ const CoachesView = (props: CoachesViewProps) => {
                           move.id,
                           wrestler1Id,
                           wrestler1NewGrade,
-                          wrestler1NewNote
+                          wrestler1NewNote,
+                          move.maximum_grade
                         );
                       }}
                     >
@@ -403,7 +417,8 @@ const CoachesView = (props: CoachesViewProps) => {
                           move.id,
                           wrestler2Id,
                           wrestler2NewGrade,
-                          wrestler2NewNote
+                          wrestler2NewNote,
+                          move.maximum_grade
                         );
                       }}
                     >
