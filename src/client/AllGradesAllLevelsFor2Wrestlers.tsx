@@ -30,7 +30,8 @@ export default function AllGradesAllLevels(props: any) {
     video_id: number,
     user_id: number,
     grade: number,
-    note: string
+    note: string,
+    coach_user_id: number
   ) => {
     const requestOptions = {
       method: "POST",
@@ -40,7 +41,7 @@ export default function AllGradesAllLevels(props: any) {
       },
       body: JSON.stringify({
         video_id: video_id,
-        coach_user_id: 10, //until we have logins
+        coach_user_id: coach_user_id,
         student_user_id: user_id,
         grade: grade,
         movement_notes: note,
@@ -150,7 +151,8 @@ export default function AllGradesAllLevels(props: any) {
                         video.id,
                         props.wrestler1Id,
                         wrestler1NewGrade,
-                        wrestler1NewNote
+                        wrestler1NewNote,
+                        Number(UID)
                       );
                     }}
                   >
@@ -194,7 +196,8 @@ export default function AllGradesAllLevels(props: any) {
                         video.id,
                         props.wrestler2Id,
                         wrestler2NewGrade,
-                        wrestler2NewNote
+                        wrestler2NewNote,
+                        Number(UID)
                       );
                     }}
                   >
