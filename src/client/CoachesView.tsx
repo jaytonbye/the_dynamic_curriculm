@@ -107,7 +107,7 @@ const CoachesView = (props: CoachesViewProps) => {
         setWrestler2FullName(person2.first_name + " " + person2.last_name);
       }
     });
-    setShowAllGrades(true);
+    setShowAllGrades(!showAllGrades);
   };
 
   let getGradesForBothWrestlers = () => {
@@ -275,7 +275,7 @@ const CoachesView = (props: CoachesViewProps) => {
           Get grades for wrestlers
         </button>
         <button className="btn btn-primary ml-2" onClick={switchShowAllGrades}>
-          Get grades for both wrestlers on all levels (MASTER VIEW)
+          Show/Hide grades for both wrestlers on all levels (MASTER VIEW)
         </button>
 
         {showAllGrades && (
