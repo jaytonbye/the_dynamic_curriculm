@@ -94,43 +94,56 @@ const CoachesView = (props: CoachesViewProps) => {
       });
   }, []);
 
+  let laughInWrestlersFace = () => {
+    alert(
+      "Hahahahaha! You're trying to grade wrestlers now? You haven't even mastered drilling yet. Get back to work scrub!"
+    );
+    history.push("/wrestlersview");
+  };
   //shows all grades and also gets the wrestler's names
   let switchShowAllGrades = () => {
-    personal_info.map((person) => {
-      if (person.user_id === wrestler1Id) {
-        setWrestler1FullName(person.first_name + " " + person.last_name);
-      }
-    });
+    if (
+      userThatIsOnThisPage[0].role !== "coach" &&
+      userThatIsOnThisPage[0].role !== "admin"
+    ) {
+      laughInWrestlersFace();
+    } else {
+      personal_info.map((person) => {
+        if (person.user_id === wrestler1Id) {
+          setWrestler1FullName(person.first_name + " " + person.last_name);
+        }
+      });
 
-    personal_info.map((person2) => {
-      if (person2.user_id === wrestler2Id) {
-        setWrestler2FullName(person2.first_name + " " + person2.last_name);
-      }
-    });
-    setShowAllGrades(!showAllGrades);
+      personal_info.map((person2) => {
+        if (person2.user_id === wrestler2Id) {
+          setWrestler2FullName(person2.first_name + " " + person2.last_name);
+        }
+      });
+      setShowAllGrades(!showAllGrades);
+    }
   };
 
   let getGradesForBothWrestlers = () => {
-    if (userThatIsOnThisPage[0].role === "wrestler") {
-      alert(
-        "Hahahahaha! You're trying to grade wrestlers now? You haven't even mastered drilling yet. Get back to work scrub!"
-      );
-      history.push("/wrestlersview");
+    if (
+      userThatIsOnThisPage[0].role !== "coach" &&
+      userThatIsOnThisPage[0].role !== "admin"
+    ) {
+      laughInWrestlersFace();
     } else {
-    }
-    try {
-      fetch(
-        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-        .then((res) => res.json())
-        .then((results) => {
-          setGradesForBothWrestlersOnCurrentLevel(results);
-        });
-    } catch (error) {
-      console.log("something is not working here");
+      try {
+        fetch(
+          `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+          .then((res) => res.json())
+          .then((results) => {
+            setGradesForBothWrestlersOnCurrentLevel(results);
+          });
+      } catch (error) {
+        console.log("something is not working here");
+      }
     }
   };
 

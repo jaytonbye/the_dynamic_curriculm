@@ -96,7 +96,6 @@ export default function AllGradesAllLevels(props: any) {
             <th>Name</th>
             <th>Link to detailed video explanation</th>
             <th>Link to looped video</th>
-            <th>Maximum grade</th>
             <th>{props.wrestler1FullName}'s grade</th>
             <th>{props.wrestler1FullName}'s notes</th>
             <th>Last graded</th>
@@ -133,7 +132,6 @@ export default function AllGradesAllLevels(props: any) {
                     Looped Video
                   </a>
                 </td>
-                <td>{video.maximum_grade}</td>
                 <td>{video.wrestler_1_grade}</td>
                 <td>{video.wrestler_1_movement_notes}</td>
                 <td>
