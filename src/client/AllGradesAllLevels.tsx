@@ -2,6 +2,7 @@ import React from "react";
 import WrestlerDashboard from "./WrestlerDashboard";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
+import classNames from "classnames";
 
 export default function AllGradesAllLevels() {
   const [grades, setGrades] = React.useState([]);
@@ -32,7 +33,7 @@ export default function AllGradesAllLevels() {
             <th>Name</th>
             <th>Link to detailed video explanation</th>
             <th>Link to looped video</th>
-            <th>Maximum grade</th>
+
             <th>Your grade</th>
             <th>Notes</th>
             <th>Last graded</th>
@@ -60,10 +61,35 @@ export default function AllGradesAllLevels() {
                     Looped Video
                   </a>
                 </td>
-                <td>{video.maximum_grade}</td>
-                <td>{video.grade}</td>
-                <td>{video.movement_notes}</td>
-                <td>
+
+                <td
+                  className={classNames({
+                    gradeOf3: video.grade === 3,
+                    gradeOf2: video.grade === 2,
+                    gradeOf1: video.grade === 1,
+                    gradeOfIncorrect: video.grade > 3 || video.grade < 0,
+                  })}
+                >
+                  {video.grade}
+                </td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.grade === 3,
+                    gradeOf2: video.grade === 2,
+                    gradeOf1: video.grade === 1,
+                    gradeOfIncorrect: video.grade > 3 || video.grade < 0,
+                  })}
+                >
+                  {video.movement_notes}
+                </td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.grade === 3,
+                    gradeOf2: video.grade === 2,
+                    gradeOf1: video.grade === 1,
+                    gradeOfIncorrect: video.grade > 3 || video.grade < 0,
+                  })}
+                >
                   <Moment fromNow>{video.created_at}</Moment>
                 </td>
               </tr>

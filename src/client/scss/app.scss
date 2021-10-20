@@ -4,3 +4,19 @@ $theme-colors: (
 );
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+.gradeOf3 {
+  background-color: lightgreen;
+}
+
+.gradeOf2 {
+  background-color: orange;
+}
+
+.gradeOf1 {
+  background-color: yellow;
+}
+
+.gradeOfIncorrect {
+  background-color: red;
+}

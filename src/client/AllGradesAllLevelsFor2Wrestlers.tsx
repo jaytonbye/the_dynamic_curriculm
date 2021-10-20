@@ -1,7 +1,6 @@
 import React from "react";
-import WrestlerDashboard from "./WrestlerDashboard";
-import { Link } from "react-router-dom";
 import Moment from "react-moment";
+import classNames from "classnames";
 
 export default function AllGradesAllLevels(props: any) {
   const [grades, setGrades] = React.useState([]);
@@ -132,9 +131,37 @@ export default function AllGradesAllLevels(props: any) {
                     Looped Video
                   </a>
                 </td>
-                <td>{video.wrestler_1_grade}</td>
-                <td>{video.wrestler_1_movement_notes}</td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_1_grade === 3,
+                    gradeOf2: video.wrestler_1_grade === 2,
+                    gradeOf1: video.wrestler_1_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                  })}
+                >
+                  {video.wrestler_1_grade}
+                </td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_1_grade === 3,
+                    gradeOf2: video.wrestler_1_grade === 2,
+                    gradeOf1: video.wrestler_1_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                  })}
+                >
+                  {video.wrestler_1_movement_notes}
+                </td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_1_grade === 3,
+                    gradeOf2: video.wrestler_1_grade === 2,
+                    gradeOf1: video.wrestler_1_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                  })}
+                >
                   Last graded by coach with user ID:{" "}
                   {video.wrestler_1_grade_graded_by}
                   {" - "}
@@ -142,7 +169,15 @@ export default function AllGradesAllLevels(props: any) {
                     {video.wrestler_1_grade_creation_date}
                   </Moment>
                 </td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_1_grade === 3,
+                    gradeOf2: video.wrestler_1_grade === 2,
+                    gradeOf1: video.wrestler_1_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                  })}
+                >
                   <input
                     type="number"
                     onChange={onWrestler1GradeChange}
@@ -150,7 +185,15 @@ export default function AllGradesAllLevels(props: any) {
                     placeholder={`0-${video.maximum_grade}`}
                   />
                 </td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_1_grade === 3,
+                    gradeOf2: video.wrestler_1_grade === 2,
+                    gradeOf1: video.wrestler_1_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                  })}
+                >
                   <textarea
                     rows={10}
                     cols={10}
@@ -158,7 +201,15 @@ export default function AllGradesAllLevels(props: any) {
                     placeholder="add notes"
                   ></textarea>
                 </td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_1_grade === 3,
+                    gradeOf2: video.wrestler_1_grade === 2,
+                    gradeOf1: video.wrestler_1_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                  })}
+                >
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -178,9 +229,37 @@ export default function AllGradesAllLevels(props: any) {
                     </strong>
                   </button>
                 </td>
-                <td>{video.wrestler_2_grade}</td>
-                <td>{video.wrestler_2_movement_notes}</td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_2_grade === 3,
+                    gradeOf2: video.wrestler_2_grade === 2,
+                    gradeOf1: video.wrestler_2_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                  })}
+                >
+                  {video.wrestler_2_grade}
+                </td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_2_grade === 3,
+                    gradeOf2: video.wrestler_2_grade === 2,
+                    gradeOf1: video.wrestler_2_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                  })}
+                >
+                  {video.wrestler_2_movement_notes}
+                </td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_2_grade === 3,
+                    gradeOf2: video.wrestler_2_grade === 2,
+                    gradeOf1: video.wrestler_2_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                  })}
+                >
                   Last graded by coach with user ID:{" "}
                   {video.wrestler_2_grade_graded_by}
                   {" - "}
@@ -188,7 +267,15 @@ export default function AllGradesAllLevels(props: any) {
                     {video.wrestler_2_grade_creation_date}
                   </Moment>
                 </td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_2_grade === 3,
+                    gradeOf2: video.wrestler_2_grade === 2,
+                    gradeOf1: video.wrestler_2_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                  })}
+                >
                   <input
                     type="number"
                     onChange={onWrestler2GradeChange}
@@ -196,7 +283,15 @@ export default function AllGradesAllLevels(props: any) {
                     placeholder={`0-${video.maximum_grade}`}
                   />
                 </td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_2_grade === 3,
+                    gradeOf2: video.wrestler_2_grade === 2,
+                    gradeOf1: video.wrestler_2_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                  })}
+                >
                   <textarea
                     rows={10}
                     cols={10}
@@ -204,7 +299,15 @@ export default function AllGradesAllLevels(props: any) {
                     placeholder="add notes"
                   ></textarea>
                 </td>
-                <td>
+                <td
+                  className={classNames({
+                    gradeOf3: video.wrestler_2_grade === 3,
+                    gradeOf2: video.wrestler_2_grade === 2,
+                    gradeOf1: video.wrestler_2_grade === 1,
+                    gradeOfIncorrect:
+                      video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                  })}
+                >
                   <button
                     className="btn btn-primary"
                     onClick={() => {
