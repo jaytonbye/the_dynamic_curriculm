@@ -43,7 +43,6 @@ export default function AllGradesAllLevels(props: any) {
         "GRADE NOT SUBMITTED! You cannot submit a grade of a negative number"
       );
     } else {
-      console.log("here");
       const requestOptions = {
         method: "POST",
         headers: {
