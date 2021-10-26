@@ -34,7 +34,7 @@ const allCurrentGradesForASingleWrestler = async (user_id: number) => {
     WHERE video_id=videos.id AND student_user_id=?
     ORDER BY grades.created_at DESC Limit 1) as movement_notes
     from videos
-    ORDER BY number_for_ordering;
+    ORDER BY curriculum_level, number_for_ordering;
     `,
     [user_id, user_id]
   );

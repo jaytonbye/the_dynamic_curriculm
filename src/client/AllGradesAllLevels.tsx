@@ -68,6 +68,7 @@ export default function AllGradesAllLevels() {
                     gradeOf2: video.grade === 2,
                     gradeOf1: video.grade === 1,
                     gradeOfIncorrect: video.grade > 3 || video.grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   {video.grade}
@@ -78,6 +79,7 @@ export default function AllGradesAllLevels() {
                     gradeOf2: video.grade === 2,
                     gradeOf1: video.grade === 1,
                     gradeOfIncorrect: video.grade > 3 || video.grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   {video.movement_notes}
@@ -88,6 +90,7 @@ export default function AllGradesAllLevels() {
                     gradeOf2: video.grade === 2,
                     gradeOf1: video.grade === 1,
                     gradeOfIncorrect: video.grade > 3 || video.grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   <Moment fromNow>{video.created_at}</Moment>

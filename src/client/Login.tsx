@@ -1,12 +1,17 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { apiService } from "./services/api-services";
+import PasswordReset from "./PasswordReset";
 
 function Login() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const history = useHistory();
+  const [showPasswordReset, setShowPasswordReset] = React.useState(false);
 
+  const forgotPassword = () => {
+    setShowPasswordReset(!showPasswordReset);
+  };
   const handleLogin = (e: any) => {
     e.preventDefault();
     apiService("/auth/login", "POST", {
@@ -66,13 +71,13 @@ function Login() {
               </Link>
             </div>
           </form>
+          <button className="buttonThatLooksLikeALink" onClick={forgotPassword}>
+            Forgot your username or password?
+          </button>
         </section>
       </main>
-      <h3 className="text text-center">
-        If nothing is happening when you click the button, it's because your
-        username/password is wrong. If you can't remember your
-        username/password, message coach Jason and he will help you.
-      </h3>
+
+      {showPasswordReset && <PasswordReset />}
     </>
   );
 }

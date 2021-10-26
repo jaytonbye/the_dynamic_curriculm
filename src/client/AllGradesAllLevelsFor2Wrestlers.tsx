@@ -93,7 +93,7 @@ export default function AllGradesAllLevels(props: any) {
 
   return (
     <>
-      <table className="table table-striped">
+      <table className="table ">
         <thead className="sticky-top">
           <tr className="bg-light">
             <th>Level</th>
@@ -143,6 +143,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_1_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   {video.wrestler_1_grade}
@@ -154,6 +155,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_1_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   {video.wrestler_1_movement_notes}
@@ -165,6 +167,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_1_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   Last graded by coach with user ID:{" "}
@@ -181,6 +184,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_1_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   <input
@@ -197,6 +201,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_1_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   <textarea
@@ -213,6 +218,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_1_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_1_grade > 3 || video.wrestler_1_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   <button
@@ -241,6 +247,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_2_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   {video.wrestler_2_grade}
@@ -252,6 +259,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_2_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   {video.wrestler_2_movement_notes}
@@ -263,6 +271,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_2_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   Last graded by coach with user ID:{" "}
@@ -279,6 +288,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_2_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   <input
@@ -295,6 +305,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_2_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   <textarea
@@ -311,6 +322,7 @@ export default function AllGradesAllLevels(props: any) {
                     gradeOf1: video.wrestler_2_grade === 1,
                     gradeOfIncorrect:
                       video.wrestler_2_grade > 3 || video.wrestler_2_grade < 0,
+                    notGradeable: video.maximum_grade === 0,
                   })}
                 >
                   <button
