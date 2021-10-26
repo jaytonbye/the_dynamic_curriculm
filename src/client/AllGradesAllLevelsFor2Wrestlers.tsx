@@ -8,6 +8,11 @@ export default function AllGradesAllLevels(props: any) {
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
   const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
+  const [uselessState2, setUselessState2] = React.useState(0);
+
+  const incrementUselessState2 = () => {
+    setUselessState2(uselessState2 + 1);
+  };
 
   let UID = sessionStorage.getItem("UID");
   let token = sessionStorage.getItem("token");
@@ -63,6 +68,7 @@ export default function AllGradesAllLevels(props: any) {
             `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
           );
           props.incrementUselessStateFunction();
+          incrementUselessState2();
         } else {
           alert(
             "GRADE NOT SUBMITTED! Something went wrong. Try logging out and then logging in again."
@@ -83,7 +89,7 @@ export default function AllGradesAllLevels(props: any) {
       .then((results) => {
         setGrades(results);
       });
-  }, []);
+  }, [uselessState2]);
 
   return (
     <>
