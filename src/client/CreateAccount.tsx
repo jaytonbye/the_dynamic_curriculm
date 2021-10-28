@@ -5,6 +5,7 @@ import { apiService } from "./services/api-services";
 function CreateAccount() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [realEmail, setRealEmail] = React.useState("");
   const [approvalCode, setApprovalCode] = React.useState("");
 
   let history = useHistory();
@@ -30,6 +31,7 @@ function CreateAccount() {
         body: JSON.stringify({
           email: email,
           password: password,
+          real_email: realEmail,
         }),
       };
 
@@ -65,6 +67,12 @@ function CreateAccount() {
               className="mb-2 form-control"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            />
+            <label>email</label>
+            <input
+              className="mb-2 form-control"
+              value={realEmail}
+              onChange={(e) => setRealEmail(e.target.value)}
             />
             <label>Password: </label>
             <input

@@ -1,15 +1,6 @@
 import { Query } from "./index";
 import { IUser } from "../../types";
-import personal_info from "./personal_info";
 import { generateHash } from "../utils/passwords";
-
-// export interface IUser {
-//   id: number;
-//   email: string;
-//   password: string;
-//   role: string;
-//   date_created: Date;
-// }
 
 const all = async () => {
   return Query("SELECT * from users");
@@ -29,20 +20,17 @@ const singleUser = async (id: number) => {
 
 const createUser = async (user: IUser) => {
   let hashedPassword = generateHash(user.password);
-  return Query(`INSERT INTO users (email, password, role) VALUES (?,?,?)`, [
-    user.email,
-    hashedPassword,
-    "wrestler",
-  ]);
+  return Query(
+    `INSERT INTO users (email, password, role, real_email) VALUES (?,?,?,?)`,
+    [user.email, hashedPassword, "wrestler", user.real_email]
+  );
 };
 
 const updateUser = async (user: IUser) => {
-  return Query(`UPDATE users SET email=?, password=?, role=? WHERE id=?`, [
-    user.email,
-    user.password,
-    user.role,
-    user.id,
-  ]);
+  return Query(
+    `UPDATE users SET email=?, password=?, role=?, real_email=? WHERE id=?`,
+    [user.email, user.password, user.role, user.real_email, user.id]
+  );
 };
 
 const deleteUser = async (id: number) => {

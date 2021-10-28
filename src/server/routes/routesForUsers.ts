@@ -21,8 +21,9 @@ router.post("/", async (req, res) => {
   try {
     let email = req.body.email;
     let password = req.body.password;
+    let real_email = req.body.real_email;
 
-    res.json(await db.users.createUser({ email, password }));
+    res.json(await db.users.createUser({ email, password, real_email }));
   } catch (error) {
     console.log(req.body);
     console.log(error);
