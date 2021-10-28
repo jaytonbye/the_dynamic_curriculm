@@ -56,4 +56,15 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/passwordReset/:user_id&:newPassword", async (req, res) => {
+  let user_id = Number(req.params.user_id);
+  let newPassword = req.params.level;
+  try {
+    res.json(await db.users.resetPassword(user_id, newPassword));
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 export default router;

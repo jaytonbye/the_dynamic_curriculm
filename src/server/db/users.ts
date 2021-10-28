@@ -49,6 +49,15 @@ const deleteCorrespondingGrades = async (id: number) => {
   );
 };
 
+const resetPassword = async (id: number, password: string) => {
+  return Query(
+    `UPDATE users
+SET password=?
+WHERE id=?`,
+    [password, id]
+  );
+};
+
 export default {
   all,
   find,
@@ -58,4 +67,5 @@ export default {
   deleteUser,
   deleteCorrespondingGrades,
   deleteCorrespondingPersonal_info,
+  resetPassword,
 };

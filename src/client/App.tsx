@@ -11,6 +11,7 @@ import ProfilePage from "./ProfilePage";
 import Tests from "./Tests";
 import AllGradesAllLevels from "./AllGradesAllLevels";
 import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
+import PasswordResetLandingPage from "./PasswordResetLandingPage";
 
 const App = (props: AppProps) => {
   return (
@@ -52,6 +53,9 @@ const App = (props: AppProps) => {
               wrestler1Id="21"
               wrestler2Id="87"
             />
+          </Route>
+          <Route path="/passwordResetLandingPage">
+            <PasswordResetLandingPage />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>

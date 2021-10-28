@@ -68,7 +68,7 @@ function CreateAccount() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label>email</label>
+            <label>Email: </label>
             <input
               className="mb-2 form-control"
               value={realEmail}
