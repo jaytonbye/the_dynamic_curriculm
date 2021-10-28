@@ -120,36 +120,38 @@ function Admin() {
 
   return (
     <>
-      <h1>admin page where we will add videos</h1>
-      <form>
-        <label htmlFor="">Name of Move: </label>
-        <input type="text" onChange={onMoveNameChange} />
-        <br />
-        <label htmlFor="">Url to corresponding youtube video: </label>
-        <input type="text" onChange={onMoveUrlChange} />
-        <br />
-        <label htmlFor="">
-          Url to looped version of corresponding youtube video:
-        </label>
-        <input type="text" onChange={onMoveLoopedUrlChange} />
-        <br />
-        <label htmlFor="">Number for ordering:</label>
-        <input type="number" onChange={onNumberForOrderingChange} />
-        <br />
-        <label htmlFor="">Insert into curriculum level: </label>
-        <input type="number" onChange={onCurriculumLevelChange} />
-        <br />
-        <label htmlFor="">Maximum Grade: </label>
-        <input type="number" onChange={onMaximum_gradeChange} />
-        <br />
-        <button
-          id="submitButton"
-          className="btn btn-success"
-          onClick={onSubmitMove}
-        >
-          Submit New Move
-        </button>
-      </form>
+      <div className="sticky-top bg-light">
+        <h1>admin page where we will add videos</h1>
+        <form>
+          <label htmlFor="">Name of Move: </label>
+          <input type="text" onChange={onMoveNameChange} />
+          <br />
+          <label htmlFor="">Url to corresponding youtube video: </label>
+          <input type="text" onChange={onMoveUrlChange} />
+          <br />
+          <label htmlFor="">
+            Url to looped version of corresponding youtube video:
+          </label>
+          <input type="text" onChange={onMoveLoopedUrlChange} />
+          <br />
+          <label htmlFor="">Number for ordering:</label>
+          <input type="number" onChange={onNumberForOrderingChange} />
+          <br />
+          <label htmlFor="">Insert into curriculum level: </label>
+          <input type="number" onChange={onCurriculumLevelChange} />
+          <br />
+          <label htmlFor="">Maximum Grade: </label>
+          <input type="number" onChange={onMaximum_gradeChange} />
+          <br />
+          <button
+            id="submitButton"
+            className="btn btn-success"
+            onClick={onSubmitMove}
+          >
+            Submit New Move
+          </button>
+        </form>
+      </div>
       <h2>Complete Curriculum</h2>
       <h3>
         Because I'm a lazy hacker, use the above input fields if you want to

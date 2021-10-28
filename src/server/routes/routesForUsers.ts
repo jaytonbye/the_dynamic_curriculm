@@ -1,5 +1,6 @@
 import { Router } from "express";
 import db from "../db";
+import { hasValidAdminToken } from "../utils/tokenCheck";
 
 const router = Router();
 
@@ -31,7 +32,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", hasValidAdminToken, async (req, res) => {
   try {
     res.json(await db.users.updateUser(req.body));
   } catch (error) {
@@ -41,7 +42,7 @@ router.put("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", hasValidAdminToken, async (req, res) => {
   let id = Number(req.params.id);
   try {
     await db.users.deleteCorrespondingGrades(id);
@@ -56,9 +57,9 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/passwordReset/:user_id&:newPassword", async (req, res) => {
-  let user_id = Number(req.params.user_id);
-  let newPassword = req.params.level;
+router.put("/passwordReset", async (req, res) => {
+  let user_id = req.body.user_id;
+  let newPassword = req.body.newPassword;
   try {
     res.json(await db.users.resetPassword(user_id, newPassword));
   } catch (error) {
