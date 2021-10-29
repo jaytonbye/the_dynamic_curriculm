@@ -47,7 +47,7 @@ export default function PasswordReset() {
             body: JSON.stringify({
               from: "test@test.com",
               subject: subject1,
-              html: `<h4>To reset the password for the username: <strong>${arrayOfUsers[x].email}</strong> <a href="http://localhost:3000/PasswordResetLandingPage/${encodedId}">click here</a></h4>`,
+              html: `<h4>To reset the password for the username: <strong>${arrayOfUsers[x].email}</strong> <a href="https://dynamic-curriculum-on-heroku.herokuapp.com/PasswordResetLandingPage/${encodedId}">click here</a></h4>`,
               //The use of localhost (above) will cause a problem in production. Don't forget!
             }),
           })
