@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as FormData from "form-data";
+//@ts-ignore
 import * as Mailgun from "mailgun.js";
 import MailGun from "mailgun.js";
 import config from "../config";
