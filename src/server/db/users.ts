@@ -50,12 +50,18 @@ const deleteCorrespondingGrades = async (id: number) => {
 };
 
 const resetPassword = async (id: number, password: string) => {
+  let hashedPassword = generateHash(password);
   return Query(
     `UPDATE users
 SET password=?
 WHERE id=?`,
-    [password, id]
+    [hashedPassword, id]
   );
+};
+
+const getAllUserIDsForPasswordReset = async (email: string) => {
+  //in the sentence below, "email" is actually username in the database.
+  return Query("SELECT * FROM users WHERE real_email=?", [email]);
 };
 
 export default {
@@ -68,4 +74,5 @@ export default {
   deleteCorrespondingGrades,
   deleteCorrespondingPersonal_info,
   resetPassword,
+  getAllUserIDsForPasswordReset,
 };

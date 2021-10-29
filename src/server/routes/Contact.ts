@@ -23,6 +23,7 @@ router.post("/", async (req, res) => {
       subject: newEmail.subject,
       from: newEmail.from,
       text: newEmail.message,
+      html: newEmail.html,
     });
     res.json(result);
   } catch (error) {

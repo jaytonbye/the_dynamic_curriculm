@@ -54,7 +54,7 @@ const App = (props: AppProps) => {
               wrestler2Id="87"
             />
           </Route>
-          <Route path="/passwordResetLandingPage">
+          <Route path="/passwordResetLandingPage/:user_id">
             <PasswordResetLandingPage />
           </Route>
           <Route path="*">

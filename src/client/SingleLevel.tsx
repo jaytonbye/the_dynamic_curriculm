@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import WrestlerDashboard from "./WrestlerDashboard";
 import { IGradesForSingleWreslterOnSpecificLevel } from "../types/index";
 

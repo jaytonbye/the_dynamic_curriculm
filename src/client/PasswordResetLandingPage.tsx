@@ -1,14 +1,18 @@
 import React from "react";
+import { useParams, useHistory } from "react-router-dom";
 
 export default function PasswordResetLandingPage() {
   const [newPassword1, setNewPassword1] = React.useState("");
+
+  let { user_id } = useParams<any>();
+  console.log(user_id);
+  let history = useHistory();
+
   let handleChange = (event: any) => {
     setNewPassword1(event.target.value);
   };
 
   let submitNewPassword = (event: any) => {
-    let user_id = 19;
-
     try {
       const requestOptions = {
         method: "PUT",
@@ -16,14 +20,17 @@ export default function PasswordResetLandingPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: user_id,
+          user_id: Number(user_id),
           newPassword: newPassword1,
         }),
       };
       fetch(`/api/users/passwordReset`, requestOptions)
         .then((res) => res.json())
         .then((results) => {});
-      alert("password reset!");
+      alert(
+        "Your paassword has been reset. We will now redirect you to the login page"
+      );
+      history.push("/login");
     } catch (error) {
       console.log(error);
     }

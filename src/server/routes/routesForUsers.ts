@@ -68,4 +68,11 @@ router.put("/passwordReset", async (req, res) => {
   }
 });
 
+router.get("/gettingYourUser_Ids/:email", async (req, res) => {
+  try {
+    let email = req.params.email;
+    res.json(await db.users.getAllUserIDsForPasswordReset(email));
+  } catch (error) {}
+});
+
 export default router;
