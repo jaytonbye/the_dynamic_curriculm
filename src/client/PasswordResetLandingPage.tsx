@@ -1,11 +1,23 @@
 import React from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+const CryptoJS = require("crypto-js");
 
 export default function PasswordResetLandingPage() {
   const [newPassword1, setNewPassword1] = React.useState("");
 
-  let { user_id } = useParams<any>();
-  console.log(user_id);
+  const decryptWithAES = (ciphertext: string) => {
+    const passphrase = "123abc";
+    const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+    return originalText;
+  };
+
+  let fullPath = location.pathname;
+  let encryptedIdInUrl = fullPath.replace("/PasswordResetLandingPage/", "");
+  let decryptedIdFromUrl = decryptWithAES(encryptedIdInUrl);
+  let decryptedIdFromUrlAsANumber = Number(decryptedIdFromUrl);
+
   let history = useHistory();
 
   let handleChange = (event: any) => {
@@ -20,7 +32,7 @@ export default function PasswordResetLandingPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: Number(user_id),
+          user_id: Number(decryptedIdFromUrlAsANumber),
           newPassword: newPassword1,
         }),
       };

@@ -1,4 +1,5 @@
 import React from "react";
+const CryptoJS = require("crypto-js");
 
 export default function PasswordReset() {
   const [emailToReset, setEmailToReset] = React.useState("");
@@ -30,7 +31,14 @@ export default function PasswordReset() {
     if (arrayOfUsers) {
       for (let x = 0; x < arrayOfUsers.length; x++) {
         console.log("attempting to send message");
-        let encodedId = arrayOfUsers[x].id;
+        let userId = arrayOfUsers[x].id;
+
+        var ciphertext1 = CryptoJS.AES.encrypt(
+          userId.toString(),
+          "123abc"
+        ).toString();
+        let encodedId = ciphertext1;
+        console.log({ encodedId });
 
         try {
           fetch("/api/contact", {
@@ -45,6 +53,9 @@ export default function PasswordReset() {
           })
             .then((res) => res.json())
             .then((result) => console.log(result));
+          alert(
+            "Please check your email for a password reset link, it may be in your spam and may take a few minutes to reach your inbox. If you get this message multiple times, it's because you have multiple usernames associated with your email."
+          );
         } catch (error) {
           console.log(error);
         }
