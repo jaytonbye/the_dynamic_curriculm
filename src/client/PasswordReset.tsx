@@ -16,7 +16,7 @@ export default function PasswordReset() {
       fetch(`/api/users/gettingYourUser_Ids/${emailToReset}`)
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
+          console.log({ result });
           setArrayOfUsers(result);
         });
     } catch (error) {
@@ -38,7 +38,6 @@ export default function PasswordReset() {
           "123abc"
         ).toString();
         let encodedId = ciphertext1;
-        console.log({ encodedId });
 
         try {
           fetch("/api/contact", {
