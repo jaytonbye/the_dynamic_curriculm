@@ -1,36 +1,36 @@
-// import { Router } from "express";
-// import * as FormData from "form-data";
-// //@ts-ignore
-// import * as Mailgun from "mailgun.js";
-// import MailGun from "mailgun.js";
-// import config from "../config";
+import { Router } from "express";
+import * as FormData from "form-data";
+//@ts-ignore
+import * as Mailgun from "mailgun.js";
+import MailGun from "mailgun.js";
+import config from "../config";
 
-// const mailgun = new (<typeof MailGun>(<any>Mailgun))(<any>FormData).client({
-//   username: "api",
-//   key: config.mailgun.apiKey,
-// });
+const mailgun = new (<typeof MailGun>(<any>Mailgun))(<any>FormData).client({
+  username: "api",
+  key: config.mailgun.apiKey,
+});
 
-// const router = Router();
+const router = Router();
 
-// router.get("/here", (req, res, next) => {
-//   res.json("hey you guys!!!");
-// });
+router.get("/here", (req, res, next) => {
+  res.json("hey you guys!!!");
+});
 
-// router.post("/", async (req, res) => {
-//   const newEmail = req.body;
-//   try {
-//     const result = await mailgun.messages.create(config.mailgun.domain, {
-//       to: config.mailgun.toEmail,
-//       subject: newEmail.subject,
-//       from: newEmail.from,
-//       text: newEmail.message,
-//       html: newEmail.html,
-//     });
-//     res.json(result);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ message: "something didn't work in contact form" });
-//   }
-// });
+router.post("/", async (req, res) => {
+  const newEmail = req.body;
+  try {
+    const result = await mailgun.messages.create(config.mailgun.domain, {
+      to: config.mailgun.toEmail,
+      subject: newEmail.subject,
+      from: newEmail.from,
+      text: newEmail.message,
+      html: newEmail.html,
+    });
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something didn't work in contact form" });
+  }
+});
 
-// export default router;
+export default router;
