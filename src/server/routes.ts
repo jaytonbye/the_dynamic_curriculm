@@ -16,6 +16,6 @@ router.use("/users", routesForUsers);
 router.use("/personal_info", hasValidToken, routesForPersonal_info);
 router.use("/videos", hasValidToken, routesForVideos);
 router.use("/grades", hasValidToken, routesForGrades);
-router.use("/contact", Contact);
+//router.use("/contact", Contact);
 
 export default router;
