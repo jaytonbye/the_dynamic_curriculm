@@ -3,10 +3,14 @@ import db from "../db";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/:id?", async (req, res) => {
   let id = Number(req.params.id);
   try {
-    res.json(await db.successful_logins.allLogins());
+    if (id) {
+      res.json(await db.successful_logins.singleUserAllLogins(id));
+    } else {
+      res.json(await db.successful_logins.allLogins());
+    }
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
