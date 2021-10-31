@@ -20,9 +20,9 @@ router.post("/", async (req, res) => {
   const newEmail = req.body;
   try {
     const result = await mailgun.messages.create(config.mailgun.domain, {
-      to: config.mailgun.toEmail,
+      to: newEmail.to,
       subject: newEmail.subject,
-      from: newEmail.from,
+      from: config.mailgun.fromEmail,
       text: newEmail.message,
       html: newEmail.html,
     });
