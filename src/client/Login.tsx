@@ -24,6 +24,9 @@ function Login() {
 
         // This is a bit hackish, as i'm letting them move forward if they have a token (not if the token is valid).
         let token = sessionStorage.getItem("token");
+        let userID = data.UID;
+        console.log({ userID });
+        successfulLogin(userID);
         if (token) {
           history.push("/wrestlersview");
         }
@@ -34,6 +37,28 @@ function Login() {
         // so possibly use history object to navigate to error page??
       });
   };
+
+  let successfulLogin = (UserID: number) => {
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: UserID,
+        }),
+      };
+      fetch(`/api/successfulLogins/`, requestOptions).then((res) => {
+        if (res.ok) {
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <main className="container">

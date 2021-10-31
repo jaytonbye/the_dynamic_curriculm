@@ -3,6 +3,7 @@ import users from "./users";
 import personal_info from "./personal_info";
 import grades from "./grades";
 import videos from "./videos";
+import successful_logins from "./successful_logins";
 import config from "../config";
 
 export const Pool = mysql.createPool({
@@ -28,4 +29,5 @@ export default {
   personal_info,
   grades,
   videos,
+  successful_logins,
 };

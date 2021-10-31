@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
           role: userFound.role,
         },
         config.jwt.secret,
-        { expiresIn: "15d" }
+        { expiresIn: "1d" }
       );
 
       let UID = userFound.id;

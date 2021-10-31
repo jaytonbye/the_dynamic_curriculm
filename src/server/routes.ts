@@ -3,6 +3,7 @@ import routesForUsers from "./routes/routesForUsers";
 import routesForPersonal_info from "./routes/routesForPersonal_info";
 import routesForVideos from "./routes/routesForVideos";
 import routesForGrades from "./routes/routesForGrades";
+import routesForSuccessfulLogins from "./routes/routesForSuccessfulLogins";
 import { hasValidToken } from "./utils/tokenCheck";
 import Contact from "./routes/Contact";
 
@@ -16,6 +17,7 @@ router.use("/users", routesForUsers);
 router.use("/personal_info", hasValidToken, routesForPersonal_info);
 router.use("/videos", hasValidToken, routesForVideos);
 router.use("/grades", hasValidToken, routesForGrades);
+router.use("/successfulLogins", routesForSuccessfulLogins);
 router.use("/contact", Contact);
 
 export default router;
