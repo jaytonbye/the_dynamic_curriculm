@@ -21,7 +21,8 @@ export default function ShowAllLogins() {
         <thead className="sticky-top">
           <tr className="bg-light">
             <th>User Id</th>
-            <th>Timestamp</th>
+            <th>Wrestler's Name</th>
+            <th>Time Since Login</th>
           </tr>
         </thead>
         <tbody>
@@ -30,7 +31,10 @@ export default function ShowAllLogins() {
               <tr key={`${login.id}`}>
                 <td>{login.user_id}</td>
                 <td>
-                  <Moment fromNow>{login.created_at}</Moment>
+                  {login.first_name} {login.last_name}
+                </td>
+                <td>
+                  <Moment fromNow>{login.login_was_created_at}</Moment>
                 </td>
               </tr>
             );

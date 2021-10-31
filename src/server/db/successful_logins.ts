@@ -1,7 +1,8 @@
 import { Query } from "./index";
 
 const allLogins = async () => {
-  return Query("SELECT * from successful_logins;");
+  return Query(`Select *, successful_logins.created_at as login_was_created_at from successful_logins
+  JOIN personal_info ON personal_info.user_id = successful_logins.user_id;`);
 };
 
 const userLoggedIn = async (user_id: number) => {
