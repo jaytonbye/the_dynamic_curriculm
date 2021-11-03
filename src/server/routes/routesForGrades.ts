@@ -1,6 +1,6 @@
 import db from "../db";
 import { Router } from "express";
-import { hasValidToken, hasValidCoachToken } from "../utils/tokenCheck";
+import { hasValidCoachToken } from "../utils/tokenCheck";
 
 const router = Router();
 
