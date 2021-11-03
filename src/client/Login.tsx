@@ -25,7 +25,7 @@ function Login() {
         // This is a bit hackish, as i'm letting them move forward if they have a token (not if the token is valid).
         let token = sessionStorage.getItem("token");
         let userID = data.UID;
-        console.log({ userID });
+
         successfulLogin(userID);
         if (token) {
           history.push("/wrestlersview");
