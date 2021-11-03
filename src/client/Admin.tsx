@@ -8,7 +8,7 @@ function Admin() {
   const [numberForOrdering, setNumberForOrdering] = React.useState("");
   const [moves, setMoves] = React.useState([]);
   const [maximum_grade, setMaximum_grade] = React.useState([]);
-
+  // deleteable comment that means nothing
   const onMoveNameChange = (event: any) => {
     setMoveName(event.target.value);
   };
