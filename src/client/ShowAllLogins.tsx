@@ -23,6 +23,7 @@ export default function ShowAllLogins() {
             <th>User Id</th>
             <th>Wrestler's Name</th>
             <th>Time Since Login</th>
+            <th>Date/Time</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,9 @@ export default function ShowAllLogins() {
                 </td>
                 <td>
                   <Moment fromNow>{login.login_was_created_at}</Moment>
+                </td>
+                <td>
+                  <Moment>{login.login_was_created_at}</Moment>
                 </td>
               </tr>
             );
