@@ -17,7 +17,7 @@ export default function Tests() {
       </h3>
       <h4>
         <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSdBux6dxv-84KzO9CqPQA5ZzgfNL8E_FNpZQDo0kdHMXr70lg/viewform"
+          href="https://docs.google.com/document/d/1XcVL6xtqIWDj83b5bjKv1Xjt5fefK_QETq0BfXV_myQ/edit"
           target="_blank"
         >
           Click here to take the level 1 test

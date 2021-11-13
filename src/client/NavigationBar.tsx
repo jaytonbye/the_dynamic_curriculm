@@ -12,6 +12,10 @@ export default function NavigationBar() {
   let goToUnitVideosPage = () => {
     history.push("/UnitVideosPage");
   };
+  let goToTestPage = () => {
+    history.push("/Tests");
+  };
+
   return (
     <>
       <nav className="navbar navbar-light bg-light">
@@ -25,7 +29,9 @@ export default function NavigationBar() {
           >
             Unit Videos (for practice)
           </button>
-
+          <button className="btn btn-outline-primary" onClick={goToTestPage}>
+            Tests
+          </button>
           <button className="btn btn-outline-success" onClick={logout}>
             Logout
           </button>
