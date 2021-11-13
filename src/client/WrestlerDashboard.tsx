@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import NavigationBar from "./NavigationBar";
 
 interface IPersonalInfo {
   first_name: string;
@@ -22,7 +22,6 @@ function WrestlerDashboard() {
     setPointsNeededForNextShirtColor,
   ] = React.useState(0);
 
-  let history = useHistory();
   let UID = sessionStorage.getItem("UID");
   let token = sessionStorage.getItem("token");
 
@@ -116,24 +115,9 @@ function WrestlerDashboard() {
     }
   }, [shirtColor, grades, totalPointsAvailable]);
 
-  let logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("UID");
-    history.push("/");
-  };
   return (
     <>
-      <nav className="navbar navbar-light bg-light">
-        <div className="container-fluid">
-          <Link to={`/coachesview`} className="btn btn-outline-primary">
-            I'm a coach...
-          </Link>
-
-          <button className="btn btn-outline-success" onClick={logout}>
-            Logout
-          </button>
-        </div>
-      </nav>
+      <NavigationBar />
       <div className="card">
         <h5 className="card-header">
           Wrestler Dashboard - {personalInfo.first_name}{" "}

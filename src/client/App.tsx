@@ -13,6 +13,7 @@ import AllGradesAllLevels from "./AllGradesAllLevels";
 import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import PasswordResetLandingPage from "./PasswordResetLandingPage";
 import ShowAllLogins from "./ShowAllLogins";
+import UnitVideosPage from "./UnitVideosPage";
 
 const App = (props: AppProps) => {
   return (
@@ -60,6 +61,9 @@ const App = (props: AppProps) => {
           </Route>
           <Route path="/ShowAllLoggins">
             <ShowAllLogins />
+          </Route>
+          <Route path="/UnitVideosPage">
+            <UnitVideosPage />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>

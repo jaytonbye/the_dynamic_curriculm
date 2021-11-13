@@ -5,7 +5,7 @@ const Home = (props: HomeProps) => {
   return (
     <>
       <h1 className="text text-center">
-        Welcome to the Dynamic Wrestling Curriculum
+        Welcome to the Dynamic Wrestling Curriculum!
       </h1>
       <main>
         <section className="d-flex mt-4 justify-content-center">

@@ -5,6 +5,7 @@ import { Link, useHistory, Route, BrowserRouter } from "react-router-dom";
 import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
 import GradingDashboardFor2Wrestlers from "./GradingDashboardFor2Wrestlers";
 import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
+import NavigationBar from "./NavigationBar";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
@@ -64,12 +65,6 @@ const CoachesView = (props: CoachesViewProps) => {
   };
   const onLevelChange = (event: any) => {
     setLevel(event.target.value);
-  };
-
-  let logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("UID");
-    history.push("/");
   };
 
   //gets all of the user_profiles
@@ -197,6 +192,7 @@ const CoachesView = (props: CoachesViewProps) => {
   };
   return (
     <>
+      <NavigationBar />
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
           <p>
@@ -207,10 +203,6 @@ const CoachesView = (props: CoachesViewProps) => {
               <Link to={`/wrestlersview`}> back to studying...</Link>
             </strong>
           </p>
-
-          <button className="btn btn-outline-success" onClick={logout}>
-            Logout
-          </button>
         </div>
       </nav>
       <div className="ml-2">
