@@ -99,6 +99,39 @@ function CreateAccount() {
           </form>
         </section>
       </main>
+      <h2 className="text-center">Want access?</h2>
+      <h4>
+        The Dynamic Curriculum is free for members of the Dynamic Wrestling
+        Academy, if you aren't a member you can gain access for $100.
+      </h4>
+      <h3>What it includes:</h3>
+      <ul>
+        <li>
+          Organized and growing curriculum with over 200 detailed technique
+          videos spread across 16 levels
+        </li>
+
+        <li>
+          Designed to turn beginners into elite wrestlers via a technical study
+          of the sport
+        </li>
+        <li>8 unit videos designed for team practices</li>
+        <li>Live positions: The movie!</li>
+        <li>
+          Grading system for earning the colored Dynamic shirts (only for
+          Dynamic members via private lessons)
+        </li>
+        <li>
+          It will continue to be updated for as long as Jason Layton coaches
+          wrestling (which is most likely forever)
+        </li>
+      </ul>
+
+      <h4>
+        To gain acces, please send $100 via paypal to WrestleDynamic@gmail.com
+        (make sure to include your full name and that you are requesting access)
+        and I will create an account for you.
+      </h4>
     </>
   );
 }

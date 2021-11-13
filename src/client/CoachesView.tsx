@@ -95,6 +95,7 @@ const CoachesView = (props: CoachesViewProps) => {
     );
     history.push("/wrestlersview");
   };
+
   //shows all grades and also gets the wrestler's names
   let switchShowAllGrades = () => {
     if (
