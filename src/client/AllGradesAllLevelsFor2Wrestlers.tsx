@@ -6,8 +6,8 @@ export default function AllGradesAllLevels(props: any) {
   const [grades, setGrades] = React.useState([]);
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
-  const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
-  const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
+  const [wrestler1NewNote, setWrestler1NewNote] = React.useState<string>();
+  const [wrestler2NewNote, setWrestler2NewNote] = React.useState<string>();
   const [uselessState2, setUselessState2] = React.useState(0);
 
   const incrementUselessState2 = () => {
@@ -76,6 +76,9 @@ export default function AllGradesAllLevels(props: any) {
         }
       });
     }
+    // clears the state of the notes, so we don't accidentally enter the wrong notes for the next move.
+    setWrestler1NewNote("");
+    setWrestler2NewNote("");
   };
 
   React.useEffect(() => {
