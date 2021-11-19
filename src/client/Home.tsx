@@ -4,6 +4,14 @@ import { Link } from "react-router-dom";
 const Home = (props: HomeProps) => {
   return (
     <>
+      <div className="row">
+        <img
+          className="mx-auto"
+          src="https://i.ibb.co/S505hdx/private-lesson-photo-1.png"
+          alt="a good pic"
+        />
+      </div>
+
       <h1 className="text text-center">
         Welcome to the Dynamic Wrestling Curriculum!
       </h1>
