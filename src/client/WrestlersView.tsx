@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import WrestlerDashboard from "./WrestlerDashboard";
 import GradesOfX from "./GradesOfX";
 import MoveSearch from "./MoveSearch";
+import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
 
 function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
@@ -29,6 +30,8 @@ function WrestlersView() {
   return (
     <>
       <WrestlerDashboard />
+      <NotesFromCoachesForWrestlers />
+      <hr />
       <GradesOfX />
       <hr />
       <Link to={"/AllGradesAllLevels"}>
@@ -60,9 +63,6 @@ function WrestlersView() {
       <hr />
       <MoveSearch />
       <hr />
-      <h1 className="text text-center mb-5">
-        <Link to={"/Tests"}>Click here to view the written tests page</Link>
-      </h1>
     </>
   );
 }
