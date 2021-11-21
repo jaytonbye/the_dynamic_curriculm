@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import Moment from "react-moment";
 import SubmitNoteForWrestler from "./SubmitNoteForWrestler";
+import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
 
 interface IPersonalInfo {
   first_name: string;
@@ -407,6 +408,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
               })}
             </p>
           </div>
+          <NotesFromCoachesForWrestlers UID={wrestler1UID} />
           <SubmitNoteForWrestler wrestlerID={wrestler1UID} />
           <h5 className="card-header">
             Wrestler Dashboard - {props.wrestler1FullName}
@@ -503,6 +505,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
               })}
             </p>
           </div>
+          <NotesFromCoachesForWrestlers UID={wrestler2UID} />
           <SubmitNoteForWrestler wrestlerID={wrestler2UID} />
           <h5 className="card-header">
             Wrestler Dashboard - {props.wrestler2FullName}

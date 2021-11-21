@@ -37,8 +37,10 @@ export default function SubmitNoteForWrestler(props: any) {
   return (
     <>
       <label>
-        Submit your notes for the wrestler here. It will be the first thing
-        displayed when he logs in:
+        <strong>
+          Submit your notes for the wrestler here. It will be the first thing
+          displayed when he logs in:
+        </strong>
       </label>
       <textarea
         rows={10}

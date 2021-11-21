@@ -10,6 +10,8 @@ function WrestlersView() {
   const [levels, setLevels] = React.useState([]);
 
   let token = sessionStorage.getItem("token");
+  let UID = Number(sessionStorage.getItem("UID"));
+
   React.useEffect(() => {
     fetch("/api/videos", {
       headers: { Authorization: `Bearer ${token}` },
@@ -30,7 +32,7 @@ function WrestlersView() {
   return (
     <>
       <WrestlerDashboard />
-      <NotesFromCoachesForWrestlers />
+      <NotesFromCoachesForWrestlers UID={UID} />
       <hr />
       <GradesOfX />
       <hr />

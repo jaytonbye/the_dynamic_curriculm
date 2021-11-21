@@ -1,10 +1,10 @@
 import React from "react";
 import Moment from "react-moment";
 
-export default function NotesFromCoachesForWrestlers() {
+export default function NotesFromCoachesForWrestlers(props: any) {
   const [notes, setNotes] = React.useState([]);
 
-  let UID = sessionStorage.getItem("UID");
+  let UID = props.UID;
 
   fetch(`/api/coaches_notes_for_wrestlers/${UID}`)
     .then((res) => res.json())
@@ -14,7 +14,7 @@ export default function NotesFromCoachesForWrestlers() {
 
   return (
     <>
-      <h3>Recent notes from your coaches</h3>
+      <h3>Recent coaching notes</h3>
 
       <table className="table ">
         <thead className="sticky-top">
