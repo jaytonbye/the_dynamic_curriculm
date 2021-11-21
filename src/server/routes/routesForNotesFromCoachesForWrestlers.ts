@@ -18,4 +18,22 @@ router.get("/:id?", async (req, res) => {
   }
 });
 
+router.post("/", hasValidCoachToken, async (req, res) => {
+  let notes = req.body.notes;
+  let from_coach = req.body.from_coach;
+  let for_wrestler = req.body.for_wrestler;
+  try {
+    res.json(
+      await db.coaches_notes_for_wrestlers.createNote(
+        notes,
+        from_coach,
+        for_wrestler
+      )
+    );
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 export default router;

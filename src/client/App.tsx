@@ -14,7 +14,6 @@ import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import PasswordResetLandingPage from "./PasswordResetLandingPage";
 import ShowAllLogins from "./ShowAllLogins";
 import UnitVideosPage from "./UnitVideosPage";
-import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
 
 const App = (props: AppProps) => {
   return (
@@ -66,9 +65,7 @@ const App = (props: AppProps) => {
           <Route path="/UnitVideosPage">
             <UnitVideosPage />
           </Route>
-          <Route path="/NotesFromCoachesForWrestlers">
-            <NotesFromCoachesForWrestlers />
-          </Route>
+
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>
             <a href="/WrestlersView">Go back to the homepage!</a>
