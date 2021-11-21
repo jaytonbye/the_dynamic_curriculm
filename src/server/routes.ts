@@ -6,6 +6,7 @@ import routesForGrades from "./routes/routesForGrades";
 import routesForSuccessfulLogins from "./routes/routesForSuccessfulLogins";
 import { hasValidToken } from "./utils/tokenCheck";
 import Contact from "./routes/Contact";
+import routesForNotesFromCoachesForWrestlers from "./routes/routesForNotesFromCoachesForWrestlers";
 
 const router = express.Router();
 
@@ -19,5 +20,9 @@ router.use("/videos", hasValidToken, routesForVideos);
 router.use("/grades", hasValidToken, routesForGrades);
 router.use("/successfulLogins", routesForSuccessfulLogins);
 router.use("/contact", Contact);
+router.use(
+  "/coaches_notes_for_wrestlers",
+  routesForNotesFromCoachesForWrestlers
+);
 
 export default router;
