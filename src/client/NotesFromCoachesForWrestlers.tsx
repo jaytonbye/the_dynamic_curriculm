@@ -6,16 +6,18 @@ export default function NotesFromCoachesForWrestlers(props: any) {
 
   let UID = props.UID;
 
-  fetch(`/api/coaches_notes_for_wrestlers/${UID}`)
-    .then((res) => res.json())
-    .then((results) => {
-      setNotes(results);
-    });
+  React.useEffect(() => {
+    fetch(`/api/coaches_notes_for_wrestlers/${UID}`)
+      .then((res) => res.json())
+      .then((results) => {
+        setNotes(results);
+        console.log("happening now");
+      });
+  }, []);
 
   return (
     <>
       <h3>Recent coaching notes</h3>
-
       <table className="table ">
         <thead className="sticky-top">
           <tr className="bg-light">
