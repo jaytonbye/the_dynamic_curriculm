@@ -125,6 +125,7 @@ function GradesOfXFor2Wrestlers(props: any) {
 
                 <div className="d-flex justify-content-center flex-wrap">
                   <div
+                    key={`${move.id}${move.wrestler_1_grade}`}
                     className="my-1 p-2"
                     style={{ border: "solid black 1px" }}
                   >
