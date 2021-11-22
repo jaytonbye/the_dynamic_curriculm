@@ -24,6 +24,7 @@ const CoachesView = (props: CoachesViewProps) => {
   const [showAllGrades, setShowAllGrades] = React.useState(false);
   const [wrestler1FullName, setWrestler1FullName] = React.useState("");
   const [wrestler2FullName, setWrestler2FullName] = React.useState("");
+  const [uselessState3, setUselessState3] = React.useState(0);
 
   //The purpose of using useless state is so that we rerender the child component "Grading Dashboard For 2 Wrestlers" whenever a grade is changed. To do this, we use the function "incrementUselessState" to update the key prop.
   const [uselessState, setUselessState] = React.useState(0);
@@ -143,6 +144,21 @@ const CoachesView = (props: CoachesViewProps) => {
     }
   };
 
+  React.useEffect(() => {
+    if (uselessState3 > 0) {
+      fetch(
+        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((res) => res.json())
+        .then((results) => {
+          setGradesForBothWrestlersOnCurrentLevel(results);
+        });
+    }
+  }, [uselessState3]);
+
   let submitGrade = (
     video_id: number,
     user_id: number,
@@ -179,6 +195,7 @@ const CoachesView = (props: CoachesViewProps) => {
             `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
           );
           incrementUselessState();
+          incrementUselessState3();
         } else {
           alert(
             "GRADE NOT SUBMITTED! Something went wrong, try logging in again"
@@ -190,6 +207,9 @@ const CoachesView = (props: CoachesViewProps) => {
 
   let incrementUselessState = () => {
     setUselessState(uselessState + 1);
+  };
+  let incrementUselessState3 = () => {
+    setUselessState3(uselessState3 + 1);
   };
   return (
     <>
@@ -307,7 +327,7 @@ const CoachesView = (props: CoachesViewProps) => {
         <div className="divForLevel">
           {gradesForBothWrestlersOnCurrentLevel.map((move) => {
             return (
-              <div key={move.id}>
+              <div key={`${move.id} ${move.wrestler_1_grade}`}>
                 <div className="" style={{ width: "100vw" }}>
                   <h3 className="text text-center">
                     {move.number_for_ordering}. {move.name_of_video}

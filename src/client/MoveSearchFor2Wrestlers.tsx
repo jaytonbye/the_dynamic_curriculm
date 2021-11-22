@@ -10,6 +10,12 @@ function MoveSearchFor2Wrestlers(props: any) {
   const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
   const [allMoves, setAllMoves] = React.useState([]);
   const [searchedMoveObject, setSearchedMoveObject] = React.useState<any>({});
+  const [uselessState4, setUselessState4] = React.useState(0);
+  const [uselessState4_1, setUselessState4_1] = React.useState(0);
+
+  let incrementUselessState4 = () => {
+    setUselessState4(uselessState4 + 1);
+  };
 
   let token = sessionStorage.getItem("token");
   let UID = sessionStorage.getItem("UID");
@@ -23,6 +29,23 @@ function MoveSearchFor2Wrestlers(props: any) {
 
     setSearchedMoveId(moveIdAfterSlice);
   };
+
+  React.useEffect(() => {
+    if (uselessState4 > 0) {
+      fetch(
+        `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((res) => res.json())
+        .then((results) => {
+          console.log("hey");
+          setAllGrades(results);
+          setUselessState4_1(uselessState4_1 + 1);
+        });
+    }
+  }, [uselessState4]);
 
   React.useEffect(() => {
     if (props.wrestler1Id) {
@@ -70,7 +93,7 @@ function MoveSearchFor2Wrestlers(props: any) {
         setSearchedMoveObject(allGrades[x]);
       }
     }
-  }, [searchedMoveId]);
+  }, [searchedMoveId, uselessState4_1]);
 
   const onWrestler1GradeChange = (event: any) => {
     setWrestler1NewGrade(event.target.value);
@@ -122,6 +145,7 @@ function MoveSearchFor2Wrestlers(props: any) {
             `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
           );
           props.incrementUselessStateFunction();
+          incrementUselessState4();
         } else {
           alert("it didn't work!");
         }
@@ -144,7 +168,7 @@ function MoveSearchFor2Wrestlers(props: any) {
         })}
       </datalist>
 
-      <div className="divForLevel">
+      <div className="divForLevel" key={`${allGrades}`}>
         <div key={searchedMoveObject.id}>
           <div className="mt-5">
             <div className="" style={{ width: "100vw" }}>
