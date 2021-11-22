@@ -17,6 +17,7 @@ export const Pool = mysql.createPool({
 });
 
 export const Query = (query: string, values?: Array<string | number>) => {
+  console.log({ query });
   return new Promise<Array<any>>((resolve, reject) => {
     Pool.query(query, values, (err, results) => {
       if (err) return reject(err);

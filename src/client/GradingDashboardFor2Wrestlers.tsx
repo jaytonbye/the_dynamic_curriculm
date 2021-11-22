@@ -394,7 +394,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
               Orange Shirt -{" "}
               {Math.ceil(totalPointsAvailableForWrestler1 * 0.97)}
             </p>
-            <p
+            <div
               className="card-text"
               style={{ color: "black", fontSize: "smaller" }}
             >
@@ -406,7 +406,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
                   </p>
                 );
               })}
-            </p>
+            </div>
           </div>
           <NotesFromCoachesForWrestlers UID={wrestler1UID} />
           <SubmitNoteForWrestler wrestlerID={wrestler1UID} />
@@ -491,7 +491,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
               Orange Shirt -{" "}
               {Math.ceil(totalPointsAvailableForWrestler2 * 0.97)}
             </p>
-            <p
+            <div
               className="card-text"
               style={{ color: "black", fontSize: "smaller" }}
             >
@@ -503,7 +503,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
                   </p>
                 );
               })}
-            </p>
+            </div>
           </div>
           <NotesFromCoachesForWrestlers UID={wrestler2UID} />
           <SubmitNoteForWrestler wrestlerID={wrestler2UID} />
