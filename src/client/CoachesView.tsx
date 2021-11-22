@@ -25,7 +25,7 @@ const CoachesView = (props: CoachesViewProps) => {
   const [wrestler1FullName, setWrestler1FullName] = React.useState("");
   const [wrestler2FullName, setWrestler2FullName] = React.useState("");
 
-  //The purpose of using useless state is so that we rerender the child component "Grading Dashboard For 2 Wrestlers" whenever a grade is changed. To do this, we use the function "incrementUselessState" update the key prop.
+  //The purpose of using useless state is so that we rerender the child component "Grading Dashboard For 2 Wrestlers" whenever a grade is changed. To do this, we use the function "incrementUselessState" to update the key prop.
   const [uselessState, setUselessState] = React.useState(0);
 
   let history = useHistory();
@@ -291,7 +291,8 @@ const CoachesView = (props: CoachesViewProps) => {
               wrestler2UID={wrestler2Id}
               wrestler1FullName={wrestler1FullName}
               wrestler2FullName={wrestler2FullName}
-              key={uselessState}
+              //key={uselessState}
+              // I commented out the uselessState function, because it was triggering rerenders in the children components, and causing too many queries (taking our DB offline)
             />
 
             <AllGradesAllLevelsFor2Wrestlers
