@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
+import classNames from "classnames";
 
 function GradesOfXFor2Wrestlers(props: any) {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
@@ -126,7 +127,14 @@ function GradesOfXFor2Wrestlers(props: any) {
                 <div className="d-flex justify-content-center flex-wrap">
                   <div
                     key={`${move.id}${move.wrestler_1_grade}`}
-                    className="my-1 p-2"
+                    className={`${classNames({
+                      gradeOf3: move.wrestler_1_grade === 3,
+                      gradeOf2: move.wrestler_1_grade === 2,
+                      gradeOf1: move.wrestler_1_grade === 1,
+                      gradeOfIncorrect:
+                        move.wrestler_1_grade > 3 || move.wrestler_1_grade < 0,
+                      notGradeable: move.maximum_grade === 0,
+                    })} my-1 p-2`}
                     style={{ border: "solid black 1px" }}
                   >
                     <h6 className="text text-center">
@@ -175,7 +183,15 @@ function GradesOfXFor2Wrestlers(props: any) {
                     </button>
                   </div>
                   <div
-                    className="my-1 p-2"
+                    key={`${move.id}${move.wrestler_2_grade}`}
+                    className={`${classNames({
+                      gradeOf3: move.wrestler_2_grade === 3,
+                      gradeOf2: move.wrestler_2_grade === 2,
+                      gradeOf1: move.wrestler_2_grade === 1,
+                      gradeOfIncorrect:
+                        move.wrestler_2_grade > 3 || move.wrestler_2_grade < 0,
+                      notGradeable: move.maximum_grade === 0,
+                    })} my-1 p-2`}
                     style={{ border: "solid black 1px" }}
                   >
                     <h6 className="text text-center">

@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import WrestlerDashboard from "./WrestlerDashboard";
 import { IGradesForSingleWreslterOnSpecificLevel } from "../types/index";
+import classNames from "classnames";
 
 //why am I not using typing here?
 
@@ -38,7 +39,15 @@ function SingleLevel() {
         {movesAndGrades.map((move: IGradesForSingleWreslterOnSpecificLevel) => {
           if (move.curriculum_level === Number(level)) {
             return (
-              <div className="everything">
+              <div
+                className={`${classNames({
+                  gradeOf3: move.grade === 3,
+                  gradeOf2: move.grade === 2,
+                  gradeOf1: move.grade === 1,
+                  gradeOfIncorrect: move.grade > 3 || move.grade < 0,
+                  notGradeable: move.grade === 0,
+                })} everything`}
+              >
                 <h4 className="text text-center">
                   {move.number_for_ordering}. {move.name_of_video}
                 </h4>

@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
+import classNames from "classnames";
 
 function MoveSearchFor2Wrestlers(props: any) {
   let [searchedMoveId, setSearchedMoveId] = React.useState();
@@ -194,7 +195,18 @@ function MoveSearchFor2Wrestlers(props: any) {
               </div>
             </div>
             <div className="d-flex justify-content-center flex-wrap">
-              <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
+              <div
+                className={`${classNames({
+                  gradeOf3: searchedMoveObject.wrestler_1_grade === 3,
+                  gradeOf2: searchedMoveObject.wrestler_1_grade === 2,
+                  gradeOf1: searchedMoveObject.wrestler_1_grade === 1,
+                  gradeOfIncorrect:
+                    searchedMoveObject.wrestler_1_grade > 3 ||
+                    searchedMoveObject.wrestler_1_grade < 0,
+                  notGradeable: searchedMoveObject.maximum_grade === 0,
+                })} my-1 p-2`}
+                style={{ border: "solid black 1px" }}
+              >
                 <h6 className="text text-center">
                   {searchedMoveObject.wrestler_1_first_name}{" "}
                   {searchedMoveObject.wrestler_1_last_name}
@@ -245,7 +257,18 @@ function MoveSearchFor2Wrestlers(props: any) {
                   {searchedMoveObject.wrestler_1_last_name}
                 </button>
               </div>
-              <div className="my-1 p-2" style={{ border: "solid black 1px" }}>
+              <div
+                className={`${classNames({
+                  gradeOf3: searchedMoveObject.wrestler_2_grade === 3,
+                  gradeOf2: searchedMoveObject.wrestler_2_grade === 2,
+                  gradeOf1: searchedMoveObject.wrestler_2_grade === 1,
+                  gradeOfIncorrect:
+                    searchedMoveObject.wrestler_2_grade > 3 ||
+                    searchedMoveObject.wrestler_2_grade < 0,
+                  notGradeable: searchedMoveObject.maximum_grade === 0,
+                })} my-1 p-2`}
+                style={{ border: "solid black 1px" }}
+              >
                 <h6 className="text text-center">
                   {searchedMoveObject.wrestler_2_first_name}{" "}
                   {searchedMoveObject.wrestler_2_last_name}
