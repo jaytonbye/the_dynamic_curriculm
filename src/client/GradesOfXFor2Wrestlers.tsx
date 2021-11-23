@@ -8,11 +8,18 @@ function GradesOfXFor2Wrestlers(props: any) {
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
   const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
+  const [uselessState6, setUselessState6] = React.useState(0);
+  const [gradeSelectedForSearch, setGradeSelectedForSearch] = React.useState();
+
+  let incrementUselessState6 = () => {
+    setUselessState6(uselessState6 + 1);
+  };
 
   let token = sessionStorage.getItem("token");
 
   const onGradeChange = (event: any) => {
     let grade = event.target.value;
+    setGradeSelectedForSearch(grade);
     fetch(
       //wrong url
       `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
@@ -25,6 +32,21 @@ function GradesOfXFor2Wrestlers(props: any) {
         setMovesAndGrades(results);
       });
   };
+
+  React.useEffect(() => {
+    let grade = gradeSelectedForSearch;
+    fetch(
+      //wrong url
+      `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+      .then((res) => res.json())
+      .then((results) => {
+        setMovesAndGrades(results);
+      });
+  }, [uselessState6]);
 
   const onWrestler1GradeChange = (event: any) => {
     setWrestler1NewGrade(event.target.value);
@@ -76,6 +98,7 @@ function GradesOfXFor2Wrestlers(props: any) {
             `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
           );
           props.incrementUselessStateFunction();
+          incrementUselessState6();
         } else {
           alert("it didn't work!");
         }
@@ -124,7 +147,10 @@ function GradesOfXFor2Wrestlers(props: any) {
                   </div>
                 </div>
 
-                <div className="d-flex justify-content-center flex-wrap">
+                <div
+                  key={`${move.id}-${move.wrestler_1_grade}-${move.wrestler_2_grade}`}
+                  className="d-flex justify-content-center flex-wrap"
+                >
                   <div
                     key={`${move.id}${move.wrestler_1_grade}`}
                     className={`${classNames({
