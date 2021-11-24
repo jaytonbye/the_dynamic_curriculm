@@ -50,9 +50,15 @@ export default function SubmitNoteForWrestler(props: any) {
             body: JSON.stringify({
               to: wrestlerEmail,
               subject: `${props.wrestlerFullName} has received a message from coach ${from_coach}`,
-              html: `<h4>Coach ${from_coach} has left a message for ${props.wrestlerFullName} in the Dynamic Wrestling Curriculum. You can view your message here: <a href="https://dynamic-curriculum-on-heroku.herokuapp.com/login">click here</a> or copy and paste the following web address into your browser: https://dynamic-curriculum-on-heroku.herokuapp.com/login</h4>, or you can just read the message here:
+              html: `<p>Coach ${from_coach} has left a message for ${props.wrestlerFullName} in the Dynamic Wrestling Curriculum. <br>
+              The message is:<br></p>
+              <br>
+              <h4>${note}</h4>
+<br>
+<br>
+              You can login to your account by <a href="https://dynamic-curriculum-on-heroku.herokuapp.com/login">clicking here</a> 
               
-              ${note}
+              </h4>
               `,
             }),
           })
