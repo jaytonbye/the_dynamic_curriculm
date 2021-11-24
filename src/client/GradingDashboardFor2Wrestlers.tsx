@@ -409,7 +409,10 @@ function GradingDashboardFor2Wrestlers(props: any) {
             </div>
           </div>
           <NotesFromCoachesForWrestlers UID={wrestler1UID} />
-          <SubmitNoteForWrestler wrestlerID={wrestler1UID} />
+          <SubmitNoteForWrestler
+            wrestlerID={wrestler1UID}
+            wrestlerFullName={props.wrestler1FullName}
+          />
           <h5 className="card-header">
             Wrestler Dashboard - {props.wrestler1FullName}
           </h5>
@@ -506,7 +509,10 @@ function GradingDashboardFor2Wrestlers(props: any) {
             </div>
           </div>
           <NotesFromCoachesForWrestlers UID={wrestler2UID} />
-          <SubmitNoteForWrestler wrestlerID={wrestler2UID} />
+          <SubmitNoteForWrestler
+            wrestlerID={wrestler2UID}
+            wrestlerFullName={props.wrestler2FullName}
+          />
           <h5 className="card-header">
             Wrestler Dashboard - {props.wrestler2FullName}
           </h5>
