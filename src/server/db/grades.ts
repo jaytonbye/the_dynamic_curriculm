@@ -138,10 +138,10 @@ const gradesForSingleWreslterOnSpecificLevel = async (
       WHERE video_id=videos.id AND student_user_id=?
       ORDER BY grades.created_at DESC Limit 1) as movement_notes
        from videos
-      WHERE curriculum_level=?
+      WHERE curriculum_level=? AND tenant=(Select tenant from users Where id=?)
       ORDER BY number_for_ordering;
   `,
-    [user_id, user_id, level]
+    [user_id, user_id, level, user_id]
   );
 };
 
