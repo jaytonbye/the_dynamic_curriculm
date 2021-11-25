@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
           userId: userFound.id,
           email: userFound.email,
           role: userFound.role,
+          tenant: userFound.tenant,
         },
         config.jwt.secret,
         { expiresIn: "1d" }
