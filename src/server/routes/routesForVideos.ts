@@ -5,15 +5,10 @@ import { hasValidAdminToken } from "../utils/tokenCheck";
 const router = Router();
 
 router.get("/:id?", async (req, res) => {
-  let id = Number(req.params.id);
+  let UID = Number(req.params.id);
   try {
-    if (req.params.id === "getlevels") {
-      //My plan is to now do a fetch to http://localhost:3000/api/videos/pizza Is this a bad idea?
-      res.json(await db.videos.getNumberOfVideosInEachLevel());
-    } else if (id) {
-      res.json(await db.videos.singleVideo(id));
-    } else {
-      res.json(await db.videos.all());
+    if (UID) {
+      res.json(await db.videos.getNumberOfVideosInEachLevel(UID));
     }
   } catch (e) {
     console.log(e);

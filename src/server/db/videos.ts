@@ -15,6 +15,10 @@ const all = async () => {
   );
 };
 
+// const allVideosRelevantToUser = async (id: number)=>{
+//   return Query("SELECT * FROM videos ORDER BY curriculum_level ASC, number_for_ordering ASC")
+// }
+
 const singleVideo = async (id: number) => {
   return Query("SELECT * FROM videos WHERE id=?", [id]);
 };
@@ -56,9 +60,11 @@ const deleteCorrespondingGrades = async (id: number) => {
   return Query("DELETE FROM grades WHERE video_id=?", [id]);
 };
 
-const getNumberOfVideosInEachLevel = async () => {
+const getNumberOfVideosInEachLevel = async (UID: number) => {
   return Query(
-    "SELECT COUNT(*) as total_videos, curriculum_level FROM videos GROUP BY curriculum_level;"
+    `Select DISTINCT curriculum_level from videos
+    Where tenant= (Select tenant from users Where id=?);`,
+    [UID]
   );
 };
 
