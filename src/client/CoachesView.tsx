@@ -6,6 +6,7 @@ import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
 import GradingDashboardFor2Wrestlers from "./GradingDashboardFor2Wrestlers";
 import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import NavigationBar from "./NavigationBar";
+import GradingKey from "./GradingKey";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
@@ -227,18 +228,7 @@ const CoachesView = (props: CoachesViewProps) => {
         </div>
       </nav>
       <div className="ml-2">
-        <h3>Grading Key:</h3>
-        <p>A grade of 1 means the wrestler needs a lot of work on the move.</p>
-        <p>
-          A grade of 2 means the wrestler has a decent grasp of the move, but is
-          still working on a few details.
-        </p>
-        <p>
-          A grade of 3 means the wrestler knows the movement by it's name, and
-          can demonstrate it perfectly without hesitation. If a wrestler needed
-          any help whatsoever, or got any of the details incorrect, they should
-          not receive a 3.
-        </p>
+        <GradingKey />
         <p>
           <strong>
             Grading should be strict. It's better to undergrade and have a
