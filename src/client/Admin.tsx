@@ -8,7 +8,7 @@ function Admin() {
   const [numberForOrdering, setNumberForOrdering] = React.useState("");
   const [moves, setMoves] = React.useState([]);
   const [maximum_grade, setMaximum_grade] = React.useState([]);
-  // deleteable comment that means nothing
+
   const onMoveNameChange = (event: any) => {
     setMoveName(event.target.value);
   };
@@ -30,6 +30,7 @@ function Admin() {
 
   const onSubmitMove = () => {
     let token = sessionStorage.getItem("token");
+    let UID = Number(sessionStorage.getItem("UID"));
     const requestOptions = {
       method: "POST",
       headers: {
@@ -44,6 +45,7 @@ function Admin() {
         number_for_ordering: numberForOrdering,
         curriculum_level: curriculumLevel,
         maximum_grade: maximum_grade,
+        UID: UID,
       }),
     };
     fetch("/api/videos", requestOptions).then((res) => {
@@ -109,7 +111,8 @@ function Admin() {
   //gets us all of the moves in all levels.
   React.useEffect(() => {
     let token = sessionStorage.getItem("token");
-    fetch("/api/videos", {
+    let UID = Number(sessionStorage.getItem("UID"));
+    fetch(`/api/videos/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

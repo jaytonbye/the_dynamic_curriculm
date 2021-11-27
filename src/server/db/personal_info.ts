@@ -8,8 +8,16 @@ import { IPerson } from "../../types";
 //     user_id: number;
 //     date_created: Date;
 
-const all = async () => {
-  return Query("SELECT * from personal_info");
+//this gets all of the personal_info, but only for users from the corresponding tenant
+const allPeopleRelevantToUser = async (UID: number) => {
+  return Query(
+    `
+  Select * from users
+      Join personal_info ON personal_info.user_id = users.id
+      Where tenant = (Select tenant from users Where id=?);
+  `,
+    [UID]
+  );
 };
 
 const singlePerson = async (id: number) => {
@@ -35,7 +43,7 @@ const deletePerson = async (id: number) => {
 };
 
 export default {
-  all,
+  allPeopleRelevantToUser,
   singlePerson,
   createPerson,
   updatePerson,

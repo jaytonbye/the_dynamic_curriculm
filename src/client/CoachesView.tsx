@@ -69,9 +69,9 @@ const CoachesView = (props: CoachesViewProps) => {
     setLevel(event.target.value);
   };
 
-  //gets all of the user_profiles
+  //gets all of the user_profiles for proper tenant
   React.useEffect(() => {
-    fetch("/api/personal_info", {
+    fetch(`/api/personal_info/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -130,7 +130,7 @@ const CoachesView = (props: CoachesViewProps) => {
     } else {
       try {
         fetch(
-          `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+          `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}&${UID}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -148,7 +148,7 @@ const CoachesView = (props: CoachesViewProps) => {
   React.useEffect(() => {
     if (uselessState3 > 0) {
       fetch(
-        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}&${UID}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -301,8 +301,6 @@ const CoachesView = (props: CoachesViewProps) => {
               wrestler2UID={wrestler2Id}
               wrestler1FullName={wrestler1FullName}
               wrestler2FullName={wrestler2FullName}
-              //key={uselessState}
-              // I commented out the uselessState function, because it was triggering rerenders in the children components, and causing too many queries (taking our DB offline)
             />
 
             <AllGradesAllLevelsFor2Wrestlers

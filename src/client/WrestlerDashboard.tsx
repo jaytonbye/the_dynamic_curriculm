@@ -26,7 +26,7 @@ function WrestlerDashboard() {
   let token = sessionStorage.getItem("token");
 
   React.useEffect(() => {
-    fetch(`/api/personal_info/${UID}`, {
+    fetch(`/api/personal_info/person/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

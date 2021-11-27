@@ -9,15 +9,14 @@ import { IVideo } from "../../types";
 //   curriculum_level: number;
 //   date_created: Date;
 
-const all = async () => {
+const allVideosRelevantToUser = async (UID: number) => {
   return Query(
-    "SELECT * from videos ORDER BY curriculum_level ASC, number_for_ordering ASC"
+    `SELECT * from videos 
+      WHERE tenant= (Select tenant from users Where id=?)
+      ORDER BY curriculum_level ASC, number_for_ordering ASC;`,
+    [UID]
   );
 };
-
-// const allVideosRelevantToUser = async (id: number)=>{
-//   return Query("SELECT * FROM videos ORDER BY curriculum_level ASC, number_for_ordering ASC")
-// }
 
 const singleVideo = async (id: number) => {
   return Query("SELECT * FROM videos WHERE id=?", [id]);
@@ -25,7 +24,7 @@ const singleVideo = async (id: number) => {
 
 const createVideo = async (video: IVideo) => {
   return Query(
-    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level, maximum_grade) VALUES (?,?,?,?,?,?)`,
+    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level, maximum_grade, tenant) VALUES (?,?,?,?,?,?, (Select tenant from users Where id=?))`,
     [
       video.name_of_video,
       video.url_to_video,
@@ -33,6 +32,7 @@ const createVideo = async (video: IVideo) => {
       video.number_for_ordering,
       video.curriculum_level,
       video.maximum_grade,
+      video.UID,
     ]
   );
 };
@@ -69,7 +69,7 @@ const getNumberOfVideosInEachLevel = async (UID: number) => {
 };
 
 export default {
-  all,
+  allVideosRelevantToUser,
   singleVideo,
   createVideo,
   updateVideo,

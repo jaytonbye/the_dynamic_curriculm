@@ -13,7 +13,7 @@ function WrestlersView() {
   let UID = Number(sessionStorage.getItem("UID"));
 
   React.useEffect(() => {
-    fetch(`/api/videos/${UID}`, {
+    fetch(`/api/videos/blah/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

@@ -6,6 +6,11 @@ const router = Router();
 
 router.get("/:id?", async (req, res) => {
   let UID = Number(req.params.id);
+  res.json(await db.videos.allVideosRelevantToUser(UID));
+});
+
+router.get("/blah/:id?", async (req, res) => {
+  let UID = Number(req.params.id);
   try {
     if (UID) {
       res.json(await db.videos.getNumberOfVideosInEachLevel(UID));
