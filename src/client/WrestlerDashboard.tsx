@@ -1,5 +1,4 @@
 import React from "react";
-import NavigationBar from "./NavigationBar";
 
 interface IPersonalInfo {
   first_name: string;
@@ -117,7 +116,6 @@ function WrestlerDashboard() {
 
   return (
     <>
-      <NavigationBar />
       <div className="card">
         <h5 className="card-header">
           Wrestler Dashboard - {personalInfo.first_name}{" "}

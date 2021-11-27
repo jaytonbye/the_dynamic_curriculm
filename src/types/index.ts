@@ -7,6 +7,7 @@ export interface IUser {
   role?: string;
   real_email?: string;
   date_created?: Date;
+  tenant?: string;
 }
 
 // for table personal_info

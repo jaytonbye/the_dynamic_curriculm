@@ -1,15 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NavigationBar from "./NavigationBar";
 //
 export default function Tests() {
   return (
     <>
-      <div className="text text-center mt-2">
-        <Link to={`/wrestlersview`}>
-          {" "}
-          <div className="btn btn-primary btn-lg">Go back to homepage</div>
-        </Link>
-      </div>
+      <NavigationBar />
 
       <h3 className="text text-center">
         To receive an official grade for your test, please submit the result to

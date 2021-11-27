@@ -23,8 +23,11 @@ router.post("/", async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     let real_email = req.body.real_email;
+    let tenant = req.body.tenant;
 
-    res.json(await db.users.createUser({ email, password, real_email }));
+    res.json(
+      await db.users.createUser({ email, password, real_email, tenant })
+    );
   } catch (error) {
     console.log(req.body);
     console.log(error);
