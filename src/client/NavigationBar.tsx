@@ -72,6 +72,9 @@ export default function NavigationBar() {
           <button className="btn btn-outline-primary" onClick={goToTestPage}>
             Tests
           </button>
+          <a target="_blank" href="https://www.wellruntournaments.com/blog-2/">
+            <button className="btn btn-outline-primary">Articles</button>
+          </a>
           <button className="btn btn-outline-primary" onClick={callMeAScrub}>
             Don't press this button
           </button>
