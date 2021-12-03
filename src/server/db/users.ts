@@ -20,9 +20,11 @@ const singleUser = async (id: number) => {
 
 const createUser = async (user: IUser) => {
   let hashedPassword = generateHash(user.password);
-  return Query(
-    `INSERT INTO users (email, password, role, real_email, tenant) VALUES (?,?,?,?,?)`,
-    [user.email, hashedPassword, user.role, user.real_email, user.tenant]
+  return <Promise<any>>(
+    Query(
+      `INSERT INTO users (email, password, role, real_email, tenant) VALUES (?,?,?,?,?)`,
+      [user.email, hashedPassword, user.role, user.real_email, user.tenant]
+    )
   );
 };
 

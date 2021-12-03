@@ -28,11 +28,13 @@ function CreateAccount() {
 
   const handleCreateAccount = (e: any) => {
     e.preventDefault();
+    let token = sessionStorage.getItem("token");
     try {
       let requestOptions = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           email: email,
@@ -47,17 +49,15 @@ function CreateAccount() {
 
       fetch("/api/users/forAdminCreatedAccounts", requestOptions).then(
         (data) => {
-          alert(
-            "Your account was created, you can now create your wrestler profile"
-          );
+          alert("The account was created!");
           apiService("/auth/login", "POST", {
             email,
             password,
           }).then((data) => {
-            sessionStorage.setItem("token", data.token);
-            sessionStorage.setItem("UID", data.UID);
+            // sessionStorage.setItem("token", data.token);
+            // sessionStorage.setItem("UID", data.UID);
           });
-          history.push("/profilepage");
+          history.go(0);
         }
       );
     } catch (error) {
@@ -85,8 +85,8 @@ function CreateAccount() {
               onChange={(e) => setWrestlersLastName(e.target.value)}
             />
             <label>
-              Username (please format it as your full name with all lowercase
-              letters and no spaces. Example: johndoe):{" "}
+              Username (please format it as the wrestler's full name with all
+              lowercase letters and no spaces. Example: johndoe):{" "}
             </label>
             <input
               className="mb-2 form-control"

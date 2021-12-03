@@ -31,6 +31,18 @@ const createPerson = async (person: IPerson) => {
   );
 };
 
+const createPersonFromAdminCreate = async (
+  first_name: string,
+  last_name: string,
+  notes: string,
+  user_id: number
+) => {
+  return Query(
+    `INSERT INTO personal_info (first_name, last_name, notes, user_id) VALUES (?,?,?,?)`,
+    [first_name, last_name, notes, user_id]
+  );
+};
+
 const updatePerson = async (person: IPerson) => {
   return Query(
     `UPDATE personal_info SET first_name=?, last_name=?, notes=? WHERE user_id=?`,
@@ -48,4 +60,5 @@ export default {
   createPerson,
   updatePerson,
   deletePerson,
+  createPersonFromAdminCreate,
 };
