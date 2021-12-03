@@ -3,6 +3,17 @@ import { Link, useHistory } from "react-router-dom";
 
 export default function NavigationBar() {
   const [counter, setCounter] = React.useState(0);
+  const [userRole, setUserRole] = React.useState("");
+
+  let UID = Number(sessionStorage.getItem("UID"));
+
+  React.useEffect(() => {
+    fetch(`/api/users/${UID}`)
+      .then((res) => res.json())
+      .then((results) => {
+        setUserRole(results[0].role);
+      });
+  });
 
   let history = useHistory();
   let logout = () => {
@@ -21,6 +32,10 @@ export default function NavigationBar() {
 
   let goToWrestlerView = () => {
     history.push("/WrestlersView");
+  };
+
+  let goToAdminPage = () => {
+    history.push("/admin");
   };
 
   let callMeAScrub = () => {
@@ -78,6 +93,11 @@ export default function NavigationBar() {
           <button className="btn btn-outline-primary" onClick={callMeAScrub}>
             Don't press this button
           </button>
+          {userRole === "admin" && (
+            <button className="btn btn-outline-danger" onClick={goToAdminPage}>
+              Admin Panel
+            </button>
+          )}
           <button className="btn btn-outline-success" onClick={logout}>
             Logout
           </button>

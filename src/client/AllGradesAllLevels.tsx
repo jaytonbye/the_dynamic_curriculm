@@ -3,6 +3,7 @@ import WrestlerDashboard from "./WrestlerDashboard";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import classNames from "classnames";
+import NavigationBar from "./NavigationBar";
 
 export default function AllGradesAllLevels() {
   const [grades, setGrades] = React.useState([]);
@@ -22,7 +23,7 @@ export default function AllGradesAllLevels() {
 
   return (
     <>
-      <Link to={`/wrestlersview`}> Go back to homepage</Link>
+      <NavigationBar />
 
       <WrestlerDashboard />
 
@@ -33,7 +34,6 @@ export default function AllGradesAllLevels() {
             <th>Name</th>
             <th>Link to detailed video explanation</th>
             <th>Link to looped video</th>
-
             <th>Your grade</th>
             <th>Notes</th>
             <th>Last graded</th>

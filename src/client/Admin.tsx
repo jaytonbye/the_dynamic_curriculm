@@ -1,4 +1,5 @@
 import React from "react";
+import NavigationBar from "./NavigationBar";
 
 function Admin() {
   const [moveName, setMoveName] = React.useState("");
@@ -124,6 +125,7 @@ function Admin() {
   return (
     <>
       <div className="sticky-top bg-light">
+        <NavigationBar />
         <h1>admin page where we will add videos</h1>
         <form>
           <label htmlFor="">Name of Move: </label>
