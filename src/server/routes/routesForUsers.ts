@@ -22,12 +22,33 @@ router.post("/", async (req, res) => {
   try {
     let email = req.body.email;
     let password = req.body.password;
+    let role = req.body.role;
     let real_email = req.body.real_email;
     let tenant = req.body.tenant;
 
     res.json(
-      await db.users.createUser({ email, password, real_email, tenant })
+      await db.users.createUser({ email, password, role, real_email, tenant })
     );
+  } catch (error) {
+    console.log(req.body);
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+router.post("/forAdminCreatedAccounts", async (req, res) => {
+  try {
+    let email = req.body.email;
+    let password = req.body.password;
+    let role = req.body.role;
+    let real_email = req.body.real_email;
+    let tenant = req.body.tenant;
+    let firstName = req.body.first_name;
+    let lastName = req.body.last_name;
+
+    await db.users.createUser({ email, password, role, real_email, tenant });
+    await db.personal_info.createPerson(req.body);
+    res.json();
   } catch (error) {
     console.log(req.body);
     console.log(error);

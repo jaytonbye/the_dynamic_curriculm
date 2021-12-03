@@ -1,5 +1,6 @@
 import React from "react";
 import NavigationBar from "./NavigationBar";
+import CreateAccountForTennancyModel from "./CreateAccountForTennancyModel";
 
 function Admin() {
   const [moveName, setMoveName] = React.useState("");
@@ -126,6 +127,7 @@ function Admin() {
     <>
       <div className="sticky-top bg-light">
         <NavigationBar />
+        <CreateAccountForTennancyModel />
         <h1>admin page where we will add videos</h1>
         <form>
           <label htmlFor="">Name of Move: </label>
