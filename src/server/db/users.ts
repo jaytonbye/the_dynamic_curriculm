@@ -20,6 +20,7 @@ const singleUser = async (id: number) => {
 
 const createUser = async (user: IUser) => {
   let hashedPassword = generateHash(user.password);
+  console.log(user.role);
   return <Promise<any>>(
     Query(
       `INSERT INTO users (email, password, role, real_email, tenant) VALUES (?,?,?,?,?)`,

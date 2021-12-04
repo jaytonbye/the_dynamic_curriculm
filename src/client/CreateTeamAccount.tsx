@@ -32,6 +32,7 @@ function CreateAccount() {
         body: JSON.stringify({
           email: email,
           password: password,
+          role: "admin",
           real_email: realEmail,
           tenant: teamName,
         }),

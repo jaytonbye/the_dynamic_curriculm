@@ -50,8 +50,6 @@ router.post(
       let last_name = req.body.last_name;
       let notes = "";
 
-      const poop = 3;
-
       const returnedFromSql: { insertId: number } = await db.users.createUser({
         email,
         password,

@@ -98,6 +98,9 @@ function CreateAccount() {
             <Link className="btn btn-secondary ml-2" to={`/login`}>
               Or click here to login
             </Link>
+            <Link className="btn btn-secondary ml-2" to={`/CreateTeamAccount`}>
+              Or click here to create a video curriculum for your team
+            </Link>
           </form>
         </section>
       </main>

@@ -169,7 +169,7 @@ const CoachesView = (props: CoachesViewProps) => {
   ) => {
     if (grade > maximum_grade) {
       alert(
-        "GRADE NOT SUBMITTED! You cannot submit a grade higher than the maximum grade"
+        `GRADE NOT SUBMITTED! You cannot submit a grade higher than a maximum of ${maximum_grade} for this move`
       );
     } else if (grade < 0) {
       alert(

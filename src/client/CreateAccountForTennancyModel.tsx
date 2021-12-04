@@ -61,6 +61,7 @@ function CreateAccount() {
         }
       );
     } catch (error) {
+      alert("it didn't work");
       // error is already logged from apiService
       // so possibly use history object to navigate to error page?
     }
@@ -125,10 +126,6 @@ function CreateAccount() {
             <button onClick={handleCreateAccount} className="btn btn-primary">
               Create Account
             </button>
-
-            <Link className="btn btn-secondary ml-2" to={`/login`}>
-              Or click here to login
-            </Link>
           </form>
         </section>
       </main>
