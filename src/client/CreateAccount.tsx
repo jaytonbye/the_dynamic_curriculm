@@ -31,6 +31,7 @@ function CreateAccount() {
         body: JSON.stringify({
           email: email,
           password: password,
+          role: "wrestler",
           real_email: realEmail,
           tenant: "dynamic",
         }),
