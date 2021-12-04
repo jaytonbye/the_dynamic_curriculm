@@ -49,14 +49,15 @@ function CreateAccount() {
 
       fetch("/api/users/forAdminCreatedAccounts", requestOptions).then(
         (data) => {
-          alert("The account was created!");
           apiService("/auth/login", "POST", {
             email,
             password,
           }).then((data) => {
+            console.log(data);
             // sessionStorage.setItem("token", data.token);
             // sessionStorage.setItem("UID", data.UID);
           });
+          alert("The account was created!");
           history.go(0);
         }
       );
