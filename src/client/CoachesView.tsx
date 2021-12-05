@@ -7,6 +7,7 @@ import GradingDashboardFor2Wrestlers from "./GradingDashboardFor2Wrestlers";
 import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import NavigationBar from "./NavigationBar";
 import GradingKey from "./GradingKey";
+import classNames from "classnames";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
@@ -344,7 +345,14 @@ const CoachesView = (props: CoachesViewProps) => {
 
                 <div className="d-flex justify-content-center flex-wrap">
                   <div
-                    className="my-1 p-2"
+                    className={classNames("my-1 p-2 ", {
+                      gradeOf3: move.wrestler_1_grade === 3,
+                      gradeOf2: move.wrestler_1_grade === 2,
+                      gradeOf1: move.wrestler_1_grade === 1,
+                      gradeOfIncorrect:
+                        move.wrestler_1_grade > 3 || move.wrestler_1_grade < 0,
+                      notGradeable: move.maximum_grade === 0,
+                    })}
                     style={{ border: "solid black 1px" }}
                   >
                     <h6 className="text text-center">
@@ -393,7 +401,14 @@ const CoachesView = (props: CoachesViewProps) => {
                     </button>
                   </div>
                   <div
-                    className="my-1 p-2"
+                    className={classNames("my-1 p-2 ", {
+                      gradeOf3: move.wrestler_2_grade === 3,
+                      gradeOf2: move.wrestler_2_grade === 2,
+                      gradeOf1: move.wrestler_2_grade === 1,
+                      gradeOfIncorrect:
+                        move.wrestler_2_grade > 3 || move.wrestler_2_grade < 0,
+                      notGradeable: move.maximum_grade === 0,
+                    })}
                     style={{ border: "solid black 1px" }}
                   >
                     <h6 className="text text-center">
