@@ -13,6 +13,13 @@ function WrestlersView() {
   let token = sessionStorage.getItem("token");
   let UID = Number(sessionStorage.getItem("UID"));
 
+  let poop = () => {
+    console.log("poop");
+  };
+
+  poop();
+  poop();
+  console.log("not a poop yo!");
   React.useEffect(() => {
     fetch(`/api/videos/blah/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -46,7 +53,7 @@ function WrestlersView() {
         <tbody>
           {levels.map((level) => {
             return (
-              <tr key={level.id}>
+              <tr key={level.curriculum_level}>
                 <td>
                   <Link to={`/level/${level.curriculum_level}`}>
                     Level {level.curriculum_level}

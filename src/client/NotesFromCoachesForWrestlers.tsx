@@ -11,7 +11,6 @@ export default function NotesFromCoachesForWrestlers(props: any) {
       .then((res) => res.json())
       .then((results) => {
         setNotes(results);
-        console.log("happening now");
       });
   }, []);
 

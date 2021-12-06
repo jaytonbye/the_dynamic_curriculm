@@ -177,7 +177,7 @@ export default function VideoManager() {
         <tbody>
           {moves.map((move) => {
             return (
-              <tr>
+              <tr key={move.id}>
                 <td>{move.id}</td>
                 <td>{move.number_for_ordering}</td>
                 <td>{move.curriculum_level}</td>
