@@ -4,6 +4,7 @@ import WrestlerDashboard from "./WrestlerDashboard";
 import GradesOfX from "./GradesOfX";
 import MoveSearch from "./MoveSearch";
 import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
+import NavigationBar from "./NavigationBar";
 
 function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
@@ -12,15 +13,15 @@ function WrestlersView() {
   let token = sessionStorage.getItem("token");
   let UID = Number(sessionStorage.getItem("UID"));
 
+  let poop = () => {
+    console.log("poop");
+  };
+
+  poop();
+  poop();
+  console.log("not a poop yo!");
   React.useEffect(() => {
-    fetch("/api/videos", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((results) => {
-        setMoves(results);
-      });
-    fetch("/api/videos/getlevels", {
+    fetch(`/api/videos/blah/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -31,6 +32,7 @@ function WrestlersView() {
 
   return (
     <>
+      <NavigationBar />
       <WrestlerDashboard />
       <NotesFromCoachesForWrestlers UID={UID} />
       <hr />
@@ -51,7 +53,7 @@ function WrestlersView() {
         <tbody>
           {levels.map((level) => {
             return (
-              <tr key={level.id}>
+              <tr key={level.curriculum_level}>
                 <td>
                   <Link to={`/level/${level.curriculum_level}`}>
                     Level {level.curriculum_level}

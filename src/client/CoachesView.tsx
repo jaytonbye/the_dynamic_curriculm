@@ -6,6 +6,8 @@ import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
 import GradingDashboardFor2Wrestlers from "./GradingDashboardFor2Wrestlers";
 import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import NavigationBar from "./NavigationBar";
+import GradingKey from "./GradingKey";
+import classNames from "classnames";
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
@@ -68,9 +70,9 @@ const CoachesView = (props: CoachesViewProps) => {
     setLevel(event.target.value);
   };
 
-  //gets all of the user_profiles
+  //gets all of the user_profiles for proper tenant
   React.useEffect(() => {
-    fetch("/api/personal_info", {
+    fetch(`/api/personal_info/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -129,7 +131,7 @@ const CoachesView = (props: CoachesViewProps) => {
     } else {
       try {
         fetch(
-          `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+          `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}&${UID}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -147,7 +149,7 @@ const CoachesView = (props: CoachesViewProps) => {
   React.useEffect(() => {
     if (uselessState3 > 0) {
       fetch(
-        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}`,
+        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}&${UID}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -168,7 +170,7 @@ const CoachesView = (props: CoachesViewProps) => {
   ) => {
     if (grade > maximum_grade) {
       alert(
-        "GRADE NOT SUBMITTED! You cannot submit a grade higher than the maximum grade"
+        `GRADE NOT SUBMITTED! You cannot submit a grade higher than a maximum of ${maximum_grade} for this move`
       );
     } else if (grade < 0) {
       alert(
@@ -227,18 +229,7 @@ const CoachesView = (props: CoachesViewProps) => {
         </div>
       </nav>
       <div className="ml-2">
-        <h3>Grading Key:</h3>
-        <p>A grade of 1 means the wrestler needs a lot of work on the move.</p>
-        <p>
-          A grade of 2 means the wrestler has a decent grasp of the move, but is
-          still working on a few details.
-        </p>
-        <p>
-          A grade of 3 means the wrestler knows the movement by it's name, and
-          can demonstrate it perfectly without hesitation. If a wrestler needed
-          any help whatsoever, or got any of the details incorrect, they should
-          not receive a 3.
-        </p>
+        <GradingKey />
         <p>
           <strong>
             Grading should be strict. It's better to undergrade and have a
@@ -311,8 +302,6 @@ const CoachesView = (props: CoachesViewProps) => {
               wrestler2UID={wrestler2Id}
               wrestler1FullName={wrestler1FullName}
               wrestler2FullName={wrestler2FullName}
-              //key={uselessState}
-              // I commented out the uselessState function, because it was triggering rerenders in the children components, and causing too many queries (taking our DB offline)
             />
 
             <AllGradesAllLevelsFor2Wrestlers
@@ -356,7 +345,14 @@ const CoachesView = (props: CoachesViewProps) => {
 
                 <div className="d-flex justify-content-center flex-wrap">
                   <div
-                    className="my-1 p-2"
+                    className={classNames("my-1 p-2 ", {
+                      gradeOf3: move.wrestler_1_grade === 3,
+                      gradeOf2: move.wrestler_1_grade === 2,
+                      gradeOf1: move.wrestler_1_grade === 1,
+                      gradeOfIncorrect:
+                        move.wrestler_1_grade > 3 || move.wrestler_1_grade < 0,
+                      notGradeable: move.maximum_grade === 0,
+                    })}
                     style={{ border: "solid black 1px" }}
                   >
                     <h6 className="text text-center">
@@ -405,7 +401,14 @@ const CoachesView = (props: CoachesViewProps) => {
                     </button>
                   </div>
                   <div
-                    className="my-1 p-2"
+                    className={classNames("my-1 p-2 ", {
+                      gradeOf3: move.wrestler_2_grade === 3,
+                      gradeOf2: move.wrestler_2_grade === 2,
+                      gradeOf1: move.wrestler_2_grade === 1,
+                      gradeOfIncorrect:
+                        move.wrestler_2_grade > 3 || move.wrestler_2_grade < 0,
+                      notGradeable: move.maximum_grade === 0,
+                    })}
                     style={{ border: "solid black 1px" }}
                   >
                     <h6 className="text text-center">

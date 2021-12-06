@@ -14,6 +14,7 @@ import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import PasswordResetLandingPage from "./PasswordResetLandingPage";
 import ShowAllLogins from "./ShowAllLogins";
 import UnitVideosPage from "./UnitVideosPage";
+import CreateTeamAccount from "./CreateTeamAccount";
 
 const App = (props: AppProps) => {
   return (
@@ -43,6 +44,9 @@ const App = (props: AppProps) => {
           </Route>
           <Route exact path="/createAccount">
             <CreateAccount />
+          </Route>
+          <Route exact path="/createTeamAccount">
+            <CreateTeamAccount />
           </Route>
           <Route exact path="/tests">
             <Tests />

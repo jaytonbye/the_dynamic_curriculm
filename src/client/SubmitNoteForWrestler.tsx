@@ -3,9 +3,31 @@ import React, { EventHandler } from "react";
 export default function SubmitNoteForWrestler(props: any) {
   const [notes, setNotes] = React.useState("not it");
   const [allUsers, setAllUsers] = React.useState([]);
+  const [coachesUserInfo, setCoachesUserInfo] = React.useState([]);
+  const [coachesPersonalInfo, setCoachesPersonalInfo] = React.useState([]);
 
   let token = sessionStorage.getItem("token");
   let UID = Number(sessionStorage.getItem("UID"));
+
+  // Gets the coaches' user info.
+  React.useEffect(() => {
+    fetch(`/api/users/${UID}`)
+      .then((res) => res.json())
+      .then((results) => {
+        setCoachesUserInfo(results);
+      });
+  }, []);
+
+  // Get the coaches' personal info
+  React.useEffect(() => {
+    fetch(`/api/personal_info/person/${UID}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((results) => {
+        setCoachesPersonalInfo(results);
+      });
+  }, []);
 
   let handleChange = (event: any) => {
     setNotes(event.target.value);
@@ -49,8 +71,8 @@ export default function SubmitNoteForWrestler(props: any) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               to: wrestlerEmail,
-              subject: `${props.wrestlerFullName} has received a message from coach ${from_coach}`,
-              html: `<p>Coach ${from_coach} has left a message for ${props.wrestlerFullName} in the Dynamic Wrestling Curriculum. <br>
+              subject: `${props.wrestlerFullName} has received a message from coach ${coachesPersonalInfo[0].first_name} ${coachesPersonalInfo[0].last_name}`,
+              html: `<p>Coach ${coachesPersonalInfo[0].first_name} ${coachesPersonalInfo[0].last_name} has left a message for ${props.wrestlerFullName} in the ${coachesUserInfo[0].tenant} Wrestling Curriculum. <br>
               The message is:<br></p>
               <br>
               <h4>${note}</h4>

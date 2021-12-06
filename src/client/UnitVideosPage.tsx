@@ -1,8 +1,10 @@
 import React from "react";
+import NavigationBar from "./NavigationBar";
 
 export default function UnitVideosPage() {
   return (
     <>
+      <NavigationBar />
       <h1>Unit videos</h1>
       <h6>(May take a moment to load)</h6>
       <iframe

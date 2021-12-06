@@ -24,6 +24,7 @@ router.get(
     let wrestler1Id = Number(req.params.wrestler1Id);
     let wrestler2Id = Number(req.params.wrestler2Id);
     let grade = Number(req.params.grade);
+
     try {
       res.json(
         await db.grades.allSpecificCurrentGradesForTwoWrestlers(
@@ -78,18 +79,20 @@ router.get(
 
 // This is what a get request would look like for user_id=3, user_id=6 and level=1: http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/3&6&1
 router.get(
-  "/gradesForTwoWresltersOnASpecificLevel/:wrestler1&:wrestler2&:level",
+  "/gradesForTwoWresltersOnASpecificLevel/:wrestler1&:wrestler2&:level&:coachID",
   hasValidCoachToken,
   async (req, res) => {
     let wrestler1 = Number(req.params.wrestler1);
     let wrestler2 = Number(req.params.wrestler2);
     let level = Number(req.params.level);
+    let coachID = Number(req.params.coachID);
     try {
       res.json(
         await db.grades.gradesForTwoWresltersOnASpecificLevel(
           wrestler1,
           wrestler2,
-          level
+          level,
+          coachID
         )
       );
     } catch (error) {
@@ -100,15 +103,20 @@ router.get(
 );
 
 router.get(
-  "/gradesForTwoWresltersOnAllLevels/:wrestler1&:wrestler2",
+  "/gradesForTwoWresltersOnAllLevels/:wrestler1&:wrestler2&:coachUID",
   hasValidCoachToken,
   async (req, res) => {
     let wrestler1 = Number(req.params.wrestler1);
     let wrestler2 = Number(req.params.wrestler2);
-
+    let coachUID = Number(req.params.coachUID);
+    console.log({ coachUID });
     try {
       res.json(
-        await db.grades.gradesForTwoWresltersOnAllLevels(wrestler1, wrestler2)
+        await db.grades.gradesForTwoWresltersOnAllLevels(
+          wrestler1,
+          wrestler2,
+          coachUID
+        )
       );
     } catch (error) {
       console.log(error);
@@ -123,7 +131,6 @@ router.get(
   async (req, res) => {
     let wrestler1 = Number(req.params.wrestler1);
     let wrestler2 = Number(req.params.wrestler2);
-
     try {
       res.json(await db.grades.allGradesForTwoWreslters(wrestler1, wrestler2));
     } catch (error) {

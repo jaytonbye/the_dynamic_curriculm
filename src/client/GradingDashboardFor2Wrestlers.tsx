@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Moment from "react-moment";
 import SubmitNoteForWrestler from "./SubmitNoteForWrestler";
 import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
@@ -87,7 +87,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
   }, []);
 
   React.useEffect(() => {
-    fetch(`/api/personal_info/${wrestler1UID}`, {
+    fetch(`/api/personal_info/person/${wrestler1UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -97,7 +97,7 @@ function GradingDashboardFor2Wrestlers(props: any) {
   }, []);
 
   React.useEffect(() => {
-    fetch(`/api/personal_info/${wrestler2UID}`, {
+    fetch(`/api/personal_info/person/${wrestler2UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

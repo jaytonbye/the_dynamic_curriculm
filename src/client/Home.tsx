@@ -27,6 +27,14 @@ const Home = (props: HomeProps) => {
               Create An Account
             </Link>
           </div>
+          <div className="d-flex">
+            <Link
+              to={`/createTeamAccount`}
+              className="mb-2 ml-2 btn btn-secondary"
+            >
+              Create A Team Account
+            </Link>
+          </div>
         </section>
       </main>
     </>

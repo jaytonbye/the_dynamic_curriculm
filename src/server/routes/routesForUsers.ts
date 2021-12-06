@@ -22,15 +22,56 @@ router.post("/", async (req, res) => {
   try {
     let email = req.body.email;
     let password = req.body.password;
+    let role = req.body.role;
     let real_email = req.body.real_email;
+    let tenant = req.body.tenant;
 
-    res.json(await db.users.createUser({ email, password, real_email }));
+    res.json(
+      await db.users.createUser({ email, password, role, real_email, tenant })
+    );
   } catch (error) {
     console.log(req.body);
     console.log(error);
     res.sendStatus(500);
   }
 });
+
+router.post(
+  "/forAdminCreatedAccounts",
+  hasValidAdminToken,
+  async (req, res) => {
+    try {
+      let email = req.body.email;
+      let password = req.body.password;
+      let role = req.body.role;
+      let real_email = req.body.real_email;
+      let tenant = req.body.tenant;
+      let first_name = req.body.first_name;
+      let last_name = req.body.last_name;
+      let notes = "";
+
+      const returnedFromSql: { insertId: number } = await db.users.createUser({
+        email,
+        password,
+        role,
+        real_email,
+        tenant,
+      });
+
+      await db.personal_info.createPersonFromAdminCreate(
+        first_name,
+        last_name,
+        notes,
+        returnedFromSql.insertId
+      );
+      res.json();
+    } catch (error) {
+      console.log(req.body);
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
 
 router.put("/", hasValidAdminToken, async (req, res) => {
   try {

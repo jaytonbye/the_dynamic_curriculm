@@ -34,9 +34,10 @@ const allCurrentGradesForASingleWrestler = async (user_id: number) => {
     WHERE video_id=videos.id AND student_user_id=?
     ORDER BY grades.created_at DESC Limit 1) as movement_notes
     from videos
+    WHERE tenant=(Select tenant from users Where id=?)
     ORDER BY curriculum_level, number_for_ordering;
     `,
-    [user_id, user_id]
+    [user_id, user_id, user_id]
   );
 };
 
@@ -137,17 +138,18 @@ const gradesForSingleWreslterOnSpecificLevel = async (
       WHERE video_id=videos.id AND student_user_id=?
       ORDER BY grades.created_at DESC Limit 1) as movement_notes
        from videos
-      WHERE curriculum_level=?
+      WHERE curriculum_level=? AND tenant=(Select tenant from users Where id=?)
       ORDER BY number_for_ordering;
   `,
-    [user_id, user_id, level]
+    [user_id, user_id, level, user_id]
   );
 };
 
 const gradesForTwoWresltersOnASpecificLevel = async (
   wrestler1Id: number,
   wrestler2Id: number,
-  level: number
+  level: number,
+  coachID: number
 ) => {
   return Query(
     `
@@ -193,11 +195,8 @@ const gradesForTwoWresltersOnASpecificLevel = async (
         WHERE video_id=videos.id AND student_user_id=?
         ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade_graded_by
       FROM videos
-      WHERE curriculum_level=?
+      WHERE curriculum_level=? AND Tenant = (Select tenant from users Where id=?)
       ORDER BY number_for_ordering;
-
-
-
   `,
     [
       wrestler1Id,
@@ -213,13 +212,15 @@ const gradesForTwoWresltersOnASpecificLevel = async (
       wrestler2Id,
       wrestler2Id,
       level,
+      coachID,
     ]
   );
 };
 
 const gradesForTwoWresltersOnAllLevels = async (
   wrestler1Id: number,
-  wrestler2Id: number
+  wrestler2Id: number,
+  coachUID: number
 ) => {
   return Query(
     `
@@ -265,6 +266,7 @@ const gradesForTwoWresltersOnAllLevels = async (
         WHERE video_id=videos.id AND student_user_id=?
         ORDER BY grades.created_at DESC Limit 1) as wrestler_2_grade_graded_by
       FROM videos
+      WHERE Tenant=(Select tenant from users Where id=?)
       ORDER BY curriculum_level, number_for_ordering;
   `,
     [
@@ -280,6 +282,7 @@ const gradesForTwoWresltersOnAllLevels = async (
       wrestler1Id,
       wrestler2Id,
       wrestler2Id,
+      coachUID,
     ]
   );
 };
@@ -352,6 +355,7 @@ const allGradesForTwoWreslters = async (
   );
 };
 
+//coaches currently could create grades for wrestlers who are not in their tenanacy. I would like to setup if/then logic in the SQL Statement to prevent this, but I can't figure out.
 const createGrade = async (grade: IGrade) => {
   return Query(
     `INSERT INTO grades (video_id, coach_user_id, student_user_id, grade, movement_notes) VALUES (?,?,?, ?, ?)`,

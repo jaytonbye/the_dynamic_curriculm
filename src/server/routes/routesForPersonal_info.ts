@@ -4,12 +4,15 @@ import db from "../db";
 const router = Router();
 
 router.get("/:id?", async (req, res) => {
+  let UID = Number(req.params.id);
+  res.json(await db.personal_info.allPeopleRelevantToUser(UID));
+});
+
+router.get("/person/:id?", async (req, res) => {
   let id = Number(req.params.id);
   try {
     if (id) {
       res.json(await db.personal_info.singlePerson(id));
-    } else {
-      res.json(await db.personal_info.all());
     }
   } catch (e) {
     console.log(e);

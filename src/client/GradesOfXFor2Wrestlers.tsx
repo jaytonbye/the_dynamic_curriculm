@@ -35,17 +35,19 @@ function GradesOfXFor2Wrestlers(props: any) {
 
   React.useEffect(() => {
     let grade = gradeSelectedForSearch;
-    fetch(
-      //wrong url
-      `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
-      .then((res) => res.json())
-      .then((results) => {
-        setMovesAndGrades(results);
-      });
+    //the purpose of the if statement is to delay this from running until the 3 things exist
+    if (props.wrestler1Id && props.wrestler2Id && grade) {
+      fetch(
+        `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((res) => res.json())
+        .then((results) => {
+          setMovesAndGrades(results);
+        });
+    }
   }, [uselessState6]);
 
   const onWrestler1GradeChange = (event: any) => {

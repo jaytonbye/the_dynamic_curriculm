@@ -7,6 +7,7 @@ export interface IUser {
   role?: string;
   real_email?: string;
   date_created?: Date;
+  tenant?: string;
 }
 
 // for table personal_info
@@ -40,6 +41,7 @@ export interface IVideo {
   curriculum_level: number;
   date_created: Date;
   maximum_grade: number;
+  UID: number;
 }
 
 export interface IGradesForSingleWreslterOnSpecificLevel {

@@ -7,6 +7,7 @@ function CreateAccount() {
   const [password, setPassword] = React.useState("");
   const [realEmail, setRealEmail] = React.useState("");
   const [approvalCode, setApprovalCode] = React.useState("");
+  const [teamName, setTeamName] = React.useState("");
 
   let history = useHistory();
 
@@ -31,9 +32,9 @@ function CreateAccount() {
         body: JSON.stringify({
           email: email,
           password: password,
-          role: "wrestler",
+          role: "admin",
           real_email: realEmail,
-          tenant: "dynamic",
+          tenant: teamName,
         }),
       };
 
@@ -70,6 +71,15 @@ function CreateAccount() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <label>
+              Team Name (Be careful to spell it the exact way you would like it
+              to be displayed):{" "}
+            </label>
+            <input
+              className="mb-2 form-control"
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+            />
             <label>Email: </label>
             <input
               className="mb-2 form-control"
@@ -92,51 +102,19 @@ function CreateAccount() {
               onChange={(e) => setApprovalCode(e.target.value)}
             />
             <button onClick={confirmApprovalCode} className="btn btn-primary">
-              Create Account
+              Create Team Account
             </button>
 
             <Link className="btn btn-secondary ml-2" to={`/login`}>
               Or click here to login
             </Link>
-            <Link className="btn btn-secondary ml-2" to={`/CreateTeamAccount`}>
-              Or click here to create a video curriculum for your team
-            </Link>
           </form>
         </section>
       </main>
-      <h2 className="text-center">Want access?</h2>
-      <h4>
-        The Dynamic Curriculum is free for members of the Dynamic Wrestling
-        Academy, if you aren't a member you can gain access for $100.
-      </h4>
-      <h3>What it includes:</h3>
-      <ul>
-        <li>
-          Organized and growing curriculum with over 200 detailed technique
-          videos spread across 16 levels
-        </li>
-
-        <li>
-          Designed to turn beginners into elite wrestlers via a technical study
-          of the sport
-        </li>
-        <li>8 unit videos designed for team practices</li>
-        <li>Live positions: The movie!</li>
-        <li>
-          Grading system for earning the colored Dynamic shirts (only for
-          Dynamic members via private lessons)
-        </li>
-        <li>
-          It will continue to be updated for as long as Jason Layton coaches
-          wrestling (which is most likely forever)
-        </li>
-      </ul>
-
-      <h4>
-        To gain acces, please send $100 via paypal to WrestleDynamic@gmail.com
-        (make sure to include your full name and that you are requesting access)
-        and I will create an account for you.
-      </h4>
+      <h2 className="text-center">
+        Want to create a video curriculum and grading system for your expertise?
+      </h2>
+      <h3>Contact Jason Layton at 516 996 9922, he's the man with the plan.</h3>
     </>
   );
 }

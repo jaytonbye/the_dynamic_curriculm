@@ -83,7 +83,7 @@ export default function AllGradesAllLevels(props: any) {
 
   React.useEffect(() => {
     fetch(
-      `/api/grades/gradesForTwoWresltersOnAllLevels/${props.wrestler1Id}&${props.wrestler2Id}`,
+      `/api/grades/gradesForTwoWresltersOnAllLevels/${props.wrestler1Id}&${props.wrestler2Id}&${UID}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
