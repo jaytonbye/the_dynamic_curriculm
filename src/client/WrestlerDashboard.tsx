@@ -150,6 +150,7 @@ function WrestlerDashboard() {
             {" "}
             Black shirt - 0
           </p>
+
           <p
             className="card-text"
             style={{ color: "blue", fontSize: "smaller" }}
