@@ -7,6 +7,7 @@ import routesForSuccessfulLogins from "./routes/routesForSuccessfulLogins";
 import { hasValidToken } from "./utils/tokenCheck";
 import Contact from "./routes/Contact";
 import routesForNotesFromCoachesForWrestlers from "./routes/routesForNotesFromCoachesForWrestlers";
+import routesForEarnableItems from "./routes/EarnableItemsRoute";
 
 const router = express.Router();
 
@@ -24,5 +25,7 @@ router.use(
   "/coaches_notes_for_wrestlers",
   routesForNotesFromCoachesForWrestlers
 );
+router.use("/earnableItems", routesForEarnableItems);
+
 
 export default router;

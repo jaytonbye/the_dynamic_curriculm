@@ -21,10 +21,12 @@ const allVideosRelevantToUser = async (UID: number) => {
 const singleVideo = async (id: number) => {
   return Query("SELECT * FROM videos WHERE id=?", [id]);
 };
+// WayneCarl will use this to help him
 
 const createVideo = async (video: IVideo) => {
   return Query(
-    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level, maximum_grade, tenant) VALUES (?,?,?,?,?,?, (Select tenant from users Where id=?))`,
+    `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level, maximum_grade, tenant) VALUES (?,?,?,?,?,?, 
+      (Select tenant from users Where id=?))`,
     [
       video.name_of_video,
       video.url_to_video,

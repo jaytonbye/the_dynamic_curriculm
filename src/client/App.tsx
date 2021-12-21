@@ -15,6 +15,7 @@ import PasswordResetLandingPage from "./PasswordResetLandingPage";
 import ShowAllLogins from "./ShowAllLogins";
 import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
+import ShirtSelector from './ShirtSelector'
 
 const App = (props: AppProps) => {
   return (
@@ -54,12 +55,7 @@ const App = (props: AppProps) => {
           <Route exact path="/AllGradesAllLevels">
             <AllGradesAllLevels />
           </Route>
-          <Route exact path="/blah">
-            <AllGradesAllLevelsFor2Wrestlers
-              wrestler1Id="21"
-              wrestler2Id="87"
-            />
-          </Route>
+
           <Route path="/passwordResetLandingPage/:encryptedIdInUrl">
             <PasswordResetLandingPage />
           </Route>
@@ -69,7 +65,9 @@ const App = (props: AppProps) => {
           <Route path="/UnitVideosPage">
             <UnitVideosPage />
           </Route>
-
+          <Route exact path="/blah">
+            <ShirtSelector></ShirtSelector>
+          </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>
             <a href="/WrestlersView">Go back to the homepage!</a>
@@ -80,6 +78,6 @@ const App = (props: AppProps) => {
   );
 };
 
-interface AppProps {}
+interface AppProps { }
 
 export default App;
