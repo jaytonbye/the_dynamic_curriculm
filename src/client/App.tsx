@@ -16,6 +16,7 @@ import ShowAllLogins from "./ShowAllLogins";
 import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
 import ShirtSelector from './ShirtSelector'
+import AddItemAdminPage from "./addItemAdminPage";
 
 const App = (props: AppProps) => {
   return (
@@ -66,7 +67,7 @@ const App = (props: AppProps) => {
             <UnitVideosPage />
           </Route>
           <Route exact path="/blah">
-            <ShirtSelector></ShirtSelector>
+            <AddItemAdminPage />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>

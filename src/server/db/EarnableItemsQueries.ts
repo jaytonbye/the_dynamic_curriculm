@@ -1,21 +1,6 @@
 import { Query } from "./index";
 
 
-const createVideo = async (video: any) => {
-    return Query(
-        `INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level, maximum_grade, tenant) VALUES (?,?,?,?,?,?, 
-        (Select tenant from users Where id=?))`,
-        [
-            video.name_of_video,
-            video.url_to_video,
-            video.url_to_looped_video,
-            video.number_for_ordering,
-            video.curriculum_level,
-            video.maximum_grade,
-            video.UID,
-        ]
-    );
-};
 // INSERT INTO videos (name_of_video, url_to_video, url_to_looped_video, number_for_ordering, curriculum_level, maximum_grade, tenant) VALUES (?,?,?,?,?,?, 
 //     (Select tenant from users Where id=?))`
 
@@ -29,11 +14,11 @@ const selectAllFromEarnable = async (UID: string | number) => {
     );
 };
 
-const insertIntoEarnablItems = async (userId: number, tenant: string, itemName: string, itemColor: string, PercentagePointsNeeded: number) => {
+const insertIntoEarnablItems = async (userId: number, userId2: number, itemName: string, itemColor: string, PercentagePointsNeeded: number) => {
     return Query(
-        'INSERT INTO earnable_items (user_id, tenant, item_name, item_color, percentage_of_total_points_needed) VALUES (?, ?, ?, ?, ?)',
+        'INSERT INTO earnable_items (user_id, tenant, item_name, item_color, percentage_of_total_points_needed) VALUES (?, (Select tenant from users Where id=?), ?, ?, ?)',
         [
-            userId, tenant, itemName, itemColor, PercentagePointsNeeded
+            userId, userId2, itemName, itemColor, PercentagePointsNeeded
         ]
     )
 }

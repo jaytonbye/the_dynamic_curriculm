@@ -5,10 +5,11 @@ import { hasValidAdminToken } from "../utils/tokenCheck";
 
 const router = Router();
 
-// takes uid from session storage
-router.get("/", async (req, res, next) => {
+// takes uid from session storage and give matching tenant items
+router.get("/:id", async (req, res, next) => {
+    const ID = Number(req.params.id);
     try {
-        res.json(await db.EarnableItemsQueries.selectAllFromEarnable(21));
+        res.json(await db.EarnableItemsQueries.selectAllFromEarnable(ID));
     } catch (error) {
         console.log(error)
     }
@@ -17,26 +18,29 @@ router.get("/", async (req, res, next) => {
 
 // takes user id, tenant, clothing, color, and percent
 router.post("/insert", hasValidAdminToken, async (req, res, next) => {
+    const Body = req.body;
+
     try {
-        res.json(await db.EarnableItemsQueries.insertIntoEarnablItems(106, 'notDynamic', "thong", "black", 10));
+        res.json(await db.EarnableItemsQueries.insertIntoEarnablItems(Body.userId, Body.tenant, Body.clothing, Body.color, Body.percent));
     } catch (error) {
         console.log(error)
     }
 }
 )
 
-// takes item id
+// takes item id deletes item
 router.delete("/delete/:id", hasValidAdminToken, async (req, res, next) => {
-    const userId = req.params.id;
+    const itemId = Number(req.params.id);
 
     try {
-        res.json(await db.EarnableItemsQueries.deleteFromEarnablItems(userId));
+        res.json(await db.EarnableItemsQueries.deleteFromEarnablItems(itemId));
     } catch (error) {
         console.log(error)
     }
 }
 )
 
+// This takes colum and value and returns matching results
 
 router.get("/specific", hasValidAdminToken, async (req, res, next) => {
     try {

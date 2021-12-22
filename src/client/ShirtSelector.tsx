@@ -1,42 +1,45 @@
 import React from "react";
+import { useState, useEffect } from 'react';
 // let userID = data.UID;
 
-const ShirtSelector: React.FC = () => {
+const ShirtSelector: React.FC = ({ statesFromAddItemAdminPage, setStatesFromAddItemAdminPage }: any) => {
 
+    // const [clothing, setClothing] = useState("");
+    // const [color, setColor] = useState("");
+    // const [percent, setPercent] = useState<number | string>(0);
+    //  don't know why I needed to put a string there
 
 
     // Add an item to the database
 
-    // const onSubmitItem = () => {
-    //     let token = sessionStorage.getItem("token");
-    //     let UID = Number(sessionStorage.getItem("UID"));
-    //     const requestOptions = {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: `Bearer ${token}`,
-    //         },
+    const onSubmitItem = () => {
+        let token = sessionStorage.getItem("token");
+        let UID = Number(sessionStorage.getItem("UID"));
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
 
-    //         body: JSON.stringify({
-    //             name_of_video: moveName,
-    //             url_to_video: moveUrl,
-    //             url_to_looped_video: moveLoopedUrl,
-    //             number_for_ordering: numberForOrdering,
-    //             curriculum_level: curriculumLevel,
-    //             maximum_grade: maximum_grade,
-    //             UID: UID,
-    //         }),
-    //     };
-    //     fetch("/api/videos", requestOptions).then((res) => {
-    //         if (res.ok) {
-    //             alert("Video added");
-    //         } else {
-    //             alert("it didn't work!");
-    //         }
-    //     });
-    // };
+            body: JSON.stringify({
+                "userId": UID,
+                "tenant": UID,
+                "clothing": statesFromAddItemAdminPage.clothing,
+                "color": statesFromAddItemAdminPage.color,
+                "percent": statesFromAddItemAdminPage.percent
+            }),
+        };
+        fetch("/api/earnableItems/insert", requestOptions).then((res) => {
+            if (res.ok) {
+                alert("Item added");
+            } else {
+                alert("it didn't work!");
+            }
+        });
+    };
 
-    // potentially edeit a item
+    // potentially edit a item
 
     // const onEditMove = (id: number) => {
     //     let token = sessionStorage.getItem("token");
@@ -69,7 +72,7 @@ const ShirtSelector: React.FC = () => {
 
     // Delete an item
 
-    const onDeleteMove = (id: number) => {
+    const onDeleteItem = (id: number) => {
         let token = sessionStorage.getItem("token");
         const requestOptions = {
             method: "DELETE",
@@ -104,10 +107,33 @@ const ShirtSelector: React.FC = () => {
 
     }, [])
 
+    console.log()
 
     return (
         <>
-
+            <h1 className="text text-center">Add an Item</h1>
+            <div className="row sticky-top bg-white ml-2 mt-2">
+                <form className="mx-auto form-group w-50">
+                    <label htmlFor="itemName">Name of Item: </label>
+                    <input type="text" className="form-control" id="itemName" onChange={(e) => setStatesFromAddItemAdminPage.setClothing(e.target.value)} />
+                    <br />
+                    <label htmlFor="itemColor">Color of item</label>
+                    <input type="text" className="form-control" id="itemColor" onChange={(e) => setStatesFromAddItemAdminPage.setColor(e.target.value)} />
+                    <br />
+                    <label htmlFor="itemPercent">
+                        Percent of total points till earned
+                    </label>
+                    <input type="number" className="form-control" id="itemPercent" min="0" max="100" onChange={(e) => setStatesFromAddItemAdminPage.setPercent(e.target.value)} />
+                    <br />
+                    <button
+                        id="submitNewItemButton"
+                        className="btn btn-success"
+                        onClick={onSubmitItem}
+                    >
+                        Submit New Item
+                    </button>
+                </form>
+            </div>
         </>
     );
 }
