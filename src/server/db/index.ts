@@ -5,6 +5,7 @@ import grades from "./grades";
 import videos from "./videos";
 import successful_logins from "./successful_logins";
 import coaches_notes_for_wrestlers from "./coaches_notes_for_wrestlers";
+import EarnableItemsQueries from "./EarnableItemsQueries";
 import config from "../config";
 
 export const Pool = mysql.createPool({
@@ -32,4 +33,5 @@ export default {
   videos,
   successful_logins,
   coaches_notes_for_wrestlers,
+  EarnableItemsQueries
 };
