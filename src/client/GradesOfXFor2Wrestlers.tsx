@@ -121,6 +121,7 @@ function GradesOfXFor2Wrestlers(props: any) {
         onChange={onGradeChange}
         placeholder="insert number"
       />
+      <p>(Limit 10 results)</p>
       <div className="divForLevel">
         {movesAndGrades.map((move) => {
           return (

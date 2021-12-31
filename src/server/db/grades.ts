@@ -57,7 +57,8 @@ const allSpecificCurrentGradesForASingleWrestler = async (
       ORDER BY grades.created_at DESC Limit 1) as movement_notes
       from videos
       HAVING grade=?
-      ORDER BY number_for_ordering;
+      ORDER BY number_for_ordering
+      Limit 10;
     `,
     [user_id, user_id, grade]
   );
@@ -104,7 +105,7 @@ const allSpecificCurrentGradesForTwoWrestlers = async (
       ORDER BY grades.created_at DESC LIMIT 1) AS wrestler_2_grade_creation_date
       FROM videos
       HAVING wrestler_1_grade=? OR wrestler_2_grade=?
-      ORDER BY number_for_ordering;
+      ORDER BY number_for_ordering LIMIT 10;
     `,
     [
       wrestler1Id,
