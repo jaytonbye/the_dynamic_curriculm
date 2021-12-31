@@ -4,52 +4,42 @@ import { Query } from "./index";
 //     (Select tenant from users Where id=?))`
 
 const selectAllFromEarnable = async (UID: string | number) => {
-<<<<<<< HEAD
-  return Query(
-    `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?) ORDER BY percentage_of_total_points_needed`,
-    [UID]
-  );
-=======
     return Query(
-        `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?)order by percentage_of_total_points_needed`,
-        [
-            UID
-        ]
-
+        `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?) ORDER BY percentage_of_total_points_needed`,
+        [UID]
     );
->>>>>>> 31c510522e307a1bc53e9042d953523a7b4a4404
 };
 
 const insertIntoEarnablItems = async (
-  userId: number,
-  userId2: number,
-  itemName: string,
-  itemColor: string,
-  PercentagePointsNeeded: number
+    userId: number,
+    userId2: number,
+    itemName: string,
+    itemColor: string,
+    PercentagePointsNeeded: number
 ) => {
-  return Query(
-    "INSERT INTO earnable_items (user_id, tenant, item_name, item_color, percentage_of_total_points_needed) VALUES (?, (Select tenant from users Where id=?), ?, ?, ?)",
-    [userId, userId2, itemName, itemColor, PercentagePointsNeeded]
-  );
+    return Query(
+        "INSERT INTO earnable_items (user_id, tenant, item_name, item_color, percentage_of_total_points_needed) VALUES (?, (Select tenant from users Where id=?), ?, ?, ?)",
+        [userId, userId2, itemName, itemColor, PercentagePointsNeeded]
+    );
 };
 
 const deleteFromEarnablItems = async (itemId: number | string) => {
-  return Query("delete from earnable_items where id = ?;", [itemId]);
+    return Query("delete from earnable_items where id = ?;", [itemId]);
 };
 
 const selectColumnEquals = async (
-  column: string,
-  columnEquals: string | number
+    column: string,
+    columnEquals: string | number
 ) => {
-  return Query(`SELECT * from earnable_items where ??=?`, [
-    column,
-    columnEquals,
-  ]);
+    return Query(`SELECT * from earnable_items where ??=?`, [
+        column,
+        columnEquals,
+    ]);
 };
 
 export default {
-  selectAllFromEarnable,
-  insertIntoEarnablItems,
-  deleteFromEarnablItems,
-  selectColumnEquals,
+    selectAllFromEarnable,
+    insertIntoEarnablItems,
+    deleteFromEarnablItems,
+    selectColumnEquals,
 };
