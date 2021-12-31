@@ -1,7 +1,14 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React from 'react'
+import { useState, useEffect } from 'react';
 
+<<<<<<< HEAD
 interface Props { }
+=======
+
+interface Props {
+
+}
+>>>>>>> parent of 48aaa04 (waynes code review checks out)
 
 const ShirtDisplayer: React.FC<Props> = () => {
   let UID = sessionStorage.getItem("UID");
@@ -15,16 +22,18 @@ const ShirtDisplayer: React.FC<Props> = () => {
     })
       .then((res) => res.json())
       .then((coding) => {
-        console.log(coding);
-        setItems(coding);
-        console.log(coding);
+        console.log(coding)
+        setItems(coding)
+        console.log(coding)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+
+  }, [])
 
   const onDeleteItem = (id: number) => {
+    let token = sessionStorage.getItem("token");
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -37,16 +46,18 @@ const ShirtDisplayer: React.FC<Props> = () => {
     };
     fetch(`/api/earnableItems/delete/${id}`, requestOptions).then((res) => {
       if (res.ok) {
-        alert("Item deleted");
+        alert("Video deleted");
+        window.location.reload();
       } else {
         alert("it didn't work!");
       }
     });
   };
 
+
   return (
-    <div className="row">
-      <table className="table w-75 mx-auto">
+    <div className='row'>
+      <table className='table w-75 mx-auto'>
         <thead>
           <tr>
             <th>Id</th>
@@ -63,6 +74,14 @@ const ShirtDisplayer: React.FC<Props> = () => {
                 <td>{move.item_color}</td>
                 <td>{move.item_name}</td>
                 <td>{move.percentage_of_total_points_needed}</td>
+                {/* <td>
+                                    <button
+                                        className="btn btn-success"
+                                        onClick={() => onEditMove(move.id)}
+                                    >
+                                        Submit Update
+                                    </button>
+                                </td> */}
                 <td>
                   <button
                     className="btn btn-danger"
@@ -77,7 +96,7 @@ const ShirtDisplayer: React.FC<Props> = () => {
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
 export default ShirtDisplayer;
