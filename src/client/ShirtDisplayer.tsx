@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-interface Props {}
+interface Props { }
 
 const ShirtDisplayer: React.FC<Props> = () => {
   let UID = sessionStorage.getItem("UID");
@@ -37,7 +37,7 @@ const ShirtDisplayer: React.FC<Props> = () => {
     };
     fetch(`/api/earnableItems/delete/${id}`, requestOptions).then((res) => {
       if (res.ok) {
-        alert("Video deleted");
+        alert("Item deleted");
         window.location.reload();
       } else {
         alert("it didn't work!");

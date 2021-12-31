@@ -6,7 +6,7 @@ import { Query } from "./index";
 
 const selectAllFromEarnable = async (UID: string | number) => {
     return Query(
-        `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?)`,
+        `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?)order by percentage_of_total_points_needed`,
         [
             UID
         ]
