@@ -38,7 +38,6 @@ const ShirtDisplayer: React.FC<Props> = () => {
     fetch(`/api/earnableItems/delete/${id}`, requestOptions).then((res) => {
       if (res.ok) {
         alert("Item deleted");
-        window.location.reload();
       } else {
         alert("it didn't work!");
       }
@@ -64,14 +63,6 @@ const ShirtDisplayer: React.FC<Props> = () => {
                 <td>{move.item_color}</td>
                 <td>{move.item_name}</td>
                 <td>{move.percentage_of_total_points_needed}</td>
-                {/* <td>
-                                    <button
-                                        className="btn btn-success"
-                                        onClick={() => onEditMove(move.id)}
-                                    >
-                                        Submit Update
-                                    </button>
-                                </td> */}
                 <td>
                   <button
                     className="btn btn-danger"

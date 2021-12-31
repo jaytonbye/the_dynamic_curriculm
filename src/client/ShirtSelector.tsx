@@ -87,7 +87,6 @@ const ShirtSelector: React.FC = ({ statesFromAddItemAdminPage, setStatesFromAddI
         fetch(`/api/earnableItems/delete/${id}`, requestOptions).then((res) => {
             if (res.ok) {
                 alert("Row deleted");
-                window.location.reload();
             } else {
                 alert("it didn't work!");
             }
@@ -107,7 +106,6 @@ const ShirtSelector: React.FC = ({ statesFromAddItemAdminPage, setStatesFromAddI
 
     }, [])
 
-    console.log()
 
     return (
         <>
