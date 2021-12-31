@@ -4,10 +4,20 @@ import { Query } from "./index";
 //     (Select tenant from users Where id=?))`
 
 const selectAllFromEarnable = async (UID: string | number) => {
+<<<<<<< HEAD
   return Query(
     `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?) ORDER BY percentage_of_total_points_needed`,
     [UID]
   );
+=======
+    return Query(
+        `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?)order by percentage_of_total_points_needed`,
+        [
+            UID
+        ]
+
+    );
+>>>>>>> 31c510522e307a1bc53e9042d953523a7b4a4404
 };
 
 const insertIntoEarnablItems = async (
