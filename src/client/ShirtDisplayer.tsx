@@ -1,14 +1,7 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
 
-<<<<<<< HEAD
-interface Props { }
-=======
-
-interface Props {
-
-}
->>>>>>> parent of 48aaa04 (waynes code review checks out)
+interface Props {}
 
 const ShirtDisplayer: React.FC<Props> = () => {
   let UID = sessionStorage.getItem("UID");
@@ -22,15 +15,14 @@ const ShirtDisplayer: React.FC<Props> = () => {
     })
       .then((res) => res.json())
       .then((coding) => {
-        console.log(coding)
-        setItems(coding)
-        console.log(coding)
+        console.log(coding);
+        setItems(coding);
+        console.log(coding);
       })
       .catch((err) => {
         console.log(err);
       });
-
-  }, [])
+  }, []);
 
   const onDeleteItem = (id: number) => {
     let token = sessionStorage.getItem("token");
@@ -54,10 +46,9 @@ const ShirtDisplayer: React.FC<Props> = () => {
     });
   };
 
-
   return (
-    <div className='row'>
-      <table className='table w-75 mx-auto'>
+    <div className="row">
+      <table className="table w-75 mx-auto">
         <thead>
           <tr>
             <th>Id</th>
@@ -96,7 +87,7 @@ const ShirtDisplayer: React.FC<Props> = () => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 export default ShirtDisplayer;
