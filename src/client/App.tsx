@@ -67,7 +67,6 @@ const App = (props: AppProps) => {
             <UnitVideosPage />
           </Route>
           <Route exact path="/blah">
-            <AddItemAdminPage />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>
