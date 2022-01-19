@@ -1,9 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
 import classNames from "classnames";
-import toast from 'react-hot-toast';
-;
-
 
 function MoveSearchFor2Wrestlers(props: any) {
   let [searchedMoveId, setSearchedMoveId] = React.useState();
@@ -145,10 +142,9 @@ function MoveSearchFor2Wrestlers(props: any) {
       };
       fetch(`/api/grades/`, requestOptions).then((res) => {
         if (res.ok) {
-          () => toast.success(`A grade of ${grade} was entered for wrestler with user ID: ${user_id}`)
-          // alert(
-          //   `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
-          // );
+          alert(
+            `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
+          );
           props.incrementUselessStateFunction();
           incrementUselessState4();
         } else {

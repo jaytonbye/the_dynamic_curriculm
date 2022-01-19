@@ -17,14 +17,10 @@ import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
 import ShirtSelector from './ShirtSelector'
 import AddItemAdminPage from "./addItemAdminPage";
-import { Toaster } from 'react-hot-toast';
-;
-
 
 const App = (props: AppProps) => {
   return (
     <>
-      {/* <Toaster /> */}
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
