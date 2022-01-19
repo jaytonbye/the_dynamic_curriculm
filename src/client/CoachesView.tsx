@@ -8,6 +8,9 @@ import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import NavigationBar from "./NavigationBar";
 import GradingKey from "./GradingKey";
 import classNames from "classnames";
+import toast from 'react-hot-toast';
+;
+
 
 const CoachesView = (props: CoachesViewProps) => {
   const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
@@ -193,9 +196,13 @@ const CoachesView = (props: CoachesViewProps) => {
       };
       fetch(`/api/grades/`, requestOptions).then((res) => {
         if (res.ok) {
-          alert(
-            `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
-          );
+
+
+          () => toast.success(`A grade of ${grade} was entered for wrestler with user ID: ${user_id}`)
+
+          // alert(
+          //   `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
+          // );
           incrementUselessState();
           incrementUselessState3();
         } else {
@@ -480,6 +487,6 @@ const CoachesView = (props: CoachesViewProps) => {
   );
 };
 
-interface CoachesViewProps {}
+interface CoachesViewProps { }
 
 export default CoachesView;
