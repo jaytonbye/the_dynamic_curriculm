@@ -33,7 +33,7 @@ function Admin() {
     setShowOrHideCreateAccount(false)
     setShowOrHideVideoManager(false)
   };
-  // stuff
+
   return (
     <>
       <NavigationBar />
