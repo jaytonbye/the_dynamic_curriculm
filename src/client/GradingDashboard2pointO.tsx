@@ -22,6 +22,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     })
 
     const [totalPoints, setTotalPoints] = useState(null);
+    const [totalPointsAvailable, setTotalPointsAvailable] = useState(null);
 
     // const singlePerson = async (id: number) => {
     //     return Query("SELECT * FROM personal_info WHERE user_id=?", [id]);
@@ -37,8 +38,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
             });
     }, []);
 
-    // I was trying to reduce this down But keep gettin null test wrestlers id is 123, 
-    // but he had no grades so I used 3
+    // These functions in combination with the SetStates get the potential and total 
+    // grade of the wrestlers
 
     React.useEffect(() => {
         fetch(`/api/grades/allCurrentGradesForASingleWrestler/3`, {
@@ -46,20 +47,28 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         })
             .then((res) => res.json())
             .then((results) => {
-                function reducerFunc(array) {
-                    array.reduce(function (total, currentValue) {
-                        console.log(currentValue);
-                        console.log({ crntValue: currentValue.grade })
-                        total = total + currentValue.grade;
-                    }, 0)
-                }
-                const totalPointsForSetter = reducerFunc(results);
-                setTotalPoints(totalPointsForSetter);
-            });
+                console.log(results);
+                const totalPointsForSetter = results.reduce((total, currentValue) => {
+                    total = total + currentValue.grade;
+                    return total;
+                }, 0)
+                const totalPointsAvailableForSetter = results.reduce((total, currentValue) => {
+                    total = total + currentValue.maximum_grade;
+                    return total;
+                }, 0)
+                return {
+                    totalPoints: totalPointsForSetter,
+                    totalPointsAvailable: totalPointsAvailableForSetter,
+                };
+            }).then(({ totalPoints, totalPointsAvailable }) => {
+                setTotalPoints(totalPoints);
+                setTotalPointsAvailable(totalPointsAvailable);
+            }
+            );
     }, []);
 
-    // console.log(personalInfo);
-    // console.log(totalPoints);
+    console.log(totalPoints);
+    console.log(totalPointsAvailable);
 
     return (
         <div>
