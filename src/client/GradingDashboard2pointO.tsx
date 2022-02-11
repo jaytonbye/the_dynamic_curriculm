@@ -4,9 +4,28 @@ interface Props {
 
 }
 
+// This typing is wrong I did the correct type below as well as the default state to put in 
+//interface IPersonalInfo {
+//     first_name: string;
+//     last_name: string;
+// }
+
 interface IPersonalInfo {
+    created_at: string;
     first_name: string;
+    id: number;
     last_name: string;
+    notes: string;
+    user_id: number;
+}
+
+const defaultInfoState = {
+    created_at: "2021-07-09T15:56:34.000Z",
+    first_name: "jay",
+    id: 21,
+    last_name: "layton",
+    notes: null,
+    user_id: 21
 }
 
 const GradingDashboard2pointO: React.FC<Props> = () => {
@@ -14,21 +33,15 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     let UID = sessionStorage.getItem("UID");
     let token = sessionStorage.getItem("token");
 
-    console.log(UID);
 
-    const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>({
-        first_name: "wrestler's first name",
-        last_name: "wrestler's last name",
-    })
+    const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>(defaultInfoState);
 
     const [totalPoints, setTotalPoints] = useState(0);
     const [totalPointsAvailable, setTotalPointsAvailable] = useState([]);
     const [userItems, setUserItems] = useState([]);
     const [itemsSortedByPercentOfTotalPoints, setItemsSortedByPercentOfTotalPoints] = useState([]);
     const [currentItem, setCurrentItem] = useState("Not Working");
-    // const singlePerson = async (id: number) => {
-    //     return Query("SELECT * FROM personal_Items WHERE user_id=?", [id]);
-    //   };
+
 
 
 
@@ -56,7 +69,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         })
             .then((res) => res.json())
             .then((results) => {
-                setPersonalInfo(results);
+                setPersonalInfo(results[0]);
             });
     }, []);
 
@@ -69,7 +82,6 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         })
             .then((res) => res.json())
             .then((results) => {
-                console.log(results);
                 const totalPointsForSetter = results.reduce((total, currentValue) => {
                     total = total + currentValue.grade;
                     return total;
@@ -85,8 +97,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     totalPointsAvailableFrom: totalPointsAvailableForSetter,
                 };
             }).then(async ({ totalPointsFrom, totalPointsAvailableFrom }) => {
-                console.log({ totalPointsFrom });
-                console.log({ totalPointsAvailableFrom });
+
                 setTotalPoints(totalPointsFrom);
                 setTotalPointsAvailable(totalPointsAvailableFrom);
 
@@ -95,14 +106,14 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     }, []);
 
     React.useEffect(() => {
-        console.log('For Loop Is Here')
-        console.log({ personalInfo });
-        console.log({ totalPointsAvailable });
-        console.log({ totalPoints });
-        console.log({ userItems });
-        console.log({ currentItem })
-        console.log({ userItems });
-        console.log({ itemsSortedByPercentOfTotalPoints });
+        // console.log('For Loop Is Here')
+        // console.log({ personalInfo });
+        // console.log({ totalPointsAvailable });
+        // console.log({ totalPoints });
+        // console.log({ userItems });
+        // console.log({ currentItem })
+        // console.log({ userItems });
+        // console.log({ itemsSortedByPercentOfTotalPoints });
 
         for (let theIndex = 0; theIndex < itemsSortedByPercentOfTotalPoints.length; theIndex++) {
             const element = itemsSortedByPercentOfTotalPoints[theIndex];
@@ -113,13 +124,12 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         }
     }, [totalPointsAvailable])
 
-
     return (
         <div>
             <h1 className="text-center">Hello</h1>
             <div className="card">
                 <h5 className="card-header">
-                    Wrestler Dashboard - NewerGuy B
+                    Wrestler Dashboard - {personalInfo.first_name} {personalInfo.last_name}
                 </h5>
                 <div className="card-body">
                     <ul>
