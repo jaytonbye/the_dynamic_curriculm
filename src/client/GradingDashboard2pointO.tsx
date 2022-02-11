@@ -106,8 +106,6 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
 
         for (let theIndex = 0; theIndex < itemsSortedByPercentOfTotalPoints.length; theIndex++) {
             const element = itemsSortedByPercentOfTotalPoints[theIndex];
-            console.log("Got to the for loop")
-            console.log({ element })
             if (element.percentage_of_total_points_needed >= totalPoints) {
                 setCurrentItem(`${element.item_color} ${element.item_name}`)
                 break;
