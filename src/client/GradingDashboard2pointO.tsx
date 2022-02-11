@@ -21,12 +21,34 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         last_name: "wrestler's last name",
     })
 
-    const [totalPoints, setTotalPoints] = useState(null);
-    const [totalPointsAvailable, setTotalPointsAvailable] = useState(null);
-
+    const [totalPoints, setTotalPoints] = useState(0);
+    const [totalPointsAvailable, setTotalPointsAvailable] = useState([]);
+    const [userItems, setUserItems] = useState([]);
+    const [itemsSortedByPercentOfTotalPoints, setItemsSortedByPercentOfTotalPoints] = useState([]);
+    const [currentItem, setCurrentItem] = useState("Not Working");
     // const singlePerson = async (id: number) => {
-    //     return Query("SELECT * FROM personal_info WHERE user_id=?", [id]);
+    //     return Query("SELECT * FROM personal_Items WHERE user_id=?", [id]);
     //   };
+
+
+
+    React.useEffect(() => {
+        fetch(`/api/earnableItems/123`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((res) => res.json())
+            .then((results: Array<Object> | any) => {
+                setUserItems(results);
+                (function () {
+                    results.sort((a: any, b: any) => {
+                        return a.percentage_of_total_points_needed - b.percentage_of_total_points_needed;
+                    })
+
+                    setItemsSortedByPercentOfTotalPoints(results);
+                }());
+
+            });
+    }, []);
 
     React.useEffect(() => {
         fetch(`/api/personal_info/person/${UID}`, {
@@ -56,19 +78,43 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     total = total + currentValue.maximum_grade;
                     return total;
                 }, 0)
+
+
                 return {
-                    totalPoints: totalPointsForSetter,
-                    totalPointsAvailable: totalPointsAvailableForSetter,
+                    totalPointsFrom: totalPointsForSetter,
+                    totalPointsAvailableFrom: totalPointsAvailableForSetter,
                 };
-            }).then(({ totalPoints, totalPointsAvailable }) => {
-                setTotalPoints(totalPoints);
-                setTotalPointsAvailable(totalPointsAvailable);
+            }).then(async ({ totalPointsFrom, totalPointsAvailableFrom }) => {
+                console.log({ totalPointsFrom });
+                console.log({ totalPointsAvailableFrom });
+                setTotalPoints(totalPointsFrom);
+                setTotalPointsAvailable(totalPointsAvailableFrom);
+
             }
-            );
+            )
     }, []);
 
-    console.log(totalPoints);
-    console.log(totalPointsAvailable);
+    React.useEffect(() => {
+        console.log('For Loop Is Here')
+        console.log({ personalInfo });
+        console.log({ totalPointsAvailable });
+        console.log({ totalPoints });
+        console.log({ userItems });
+        console.log({ currentItem })
+        console.log({ userItems });
+        console.log({ itemsSortedByPercentOfTotalPoints });
+
+        for (let theIndex = 0; theIndex < itemsSortedByPercentOfTotalPoints.length; theIndex++) {
+            const element = itemsSortedByPercentOfTotalPoints[theIndex];
+            console.log("Got to the for loop")
+            console.log({ element })
+            if (element.percentage_of_total_points_needed >= totalPoints) {
+                setCurrentItem(`${element.item_color} ${element.item_name}`)
+                break;
+            }
+        }
+    }, [totalPointsAvailable])
+
 
     return (
         <div>
@@ -78,13 +124,20 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     Wrestler Dashboard - NewerGuy B
                 </h5>
                 <div className="card-body">
-                    <h5 className="card-title">
-                        <strong>
-                            {/*{personalInfo.first_name} {personalInfo.last_name}*/}
-                        </strong>
-                    </h5>
+                    <ul>
+                        {
+                            userItems.map((item) => {
+                                return (<li key={item.id}>
+                                    <h6 key={`${item.id}: PercentTotal: ${item.percentage_of_total_points_needed}`}>
+                                        {item.item_color}  {item.item_name}
+                                    </h6>
+                                </li>)
+                            }
+                            )
+                        }
+                    </ul>
                     <p className="card-text">
-                        Current Shirt Color: <strong>{ }</strong>
+                        Current Item: <strong>{currentItem}</strong>
                     </p>
                 </div>
             </div>
