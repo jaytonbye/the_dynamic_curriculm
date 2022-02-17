@@ -118,7 +118,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         for (let theIndex = 0; theIndex < itemsSortedByPercentOfTotalPoints.length; theIndex++) {
             const element = itemsSortedByPercentOfTotalPoints[theIndex];
             if (element.percentage_of_total_points_needed >= totalPoints) {
-                setCurrentItem(`${element.item_color} ${element.item_name}`)
+                setCurrentItem(`${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name} `)
                 break;
             }
         }
@@ -136,8 +136,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                         {
                             userItems.map((item) => {
                                 return (<li key={item.id}>
-                                    <h6 key={`${item.id}: PercentTotal: ${item.percentage_of_total_points_needed}`}>
-                                        {item.item_color}  {item.item_name}
+                                    <h6 key={`${item.id}: PercentTotal: ${item.percentage_of_total_points_needed} `}>
+                                        {item.item_color}  {item.item_name} ({Math.round(Number(totalPointsAvailable) * (item.percentage_of_total_points_needed / 100))} points)
                                     </h6>
                                 </li>)
                             }
@@ -146,6 +146,10 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     </ul>
                     <p className="card-text">
                         Current Item: <strong>{currentItem}</strong>
+                        <br />
+                        Current Points: <strong>{totalPoints}</strong>
+                    </p>
+                    <p className="card-text">
                     </p>
                 </div>
             </div>
