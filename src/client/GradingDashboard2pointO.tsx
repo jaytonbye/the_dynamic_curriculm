@@ -117,8 +117,12 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
 
         for (let theIndex = 0; theIndex < itemsSortedByPercentOfTotalPoints.length; theIndex++) {
             const element = itemsSortedByPercentOfTotalPoints[theIndex];
-            if (element.percentage_of_total_points_needed >= totalPoints) {
+            if (element.percentage_of_total_points_needed > totalPoints) {
                 setCurrentItem(`${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name} `)
+                break;
+            }
+            else if (element.percentage_of_total_points_needed = totalPoints) {
+                setCurrentItem(`${element}.item_color} ${element}.item_name} `)
                 break;
             }
         }
@@ -153,6 +157,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     </p>
                 </div>
             </div>
+
         </div>
     )
 }
