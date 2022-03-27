@@ -22,7 +22,7 @@ const defaultInfoState = {
   first_name: "a",
   id: 21,
   last_name: "a",
-  notes: null,
+  notes: "blah blah",
   user_id: 21,
 }; //
 
@@ -44,25 +44,28 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   const [currentItem, setCurrentItem] = useState("Not Working");
 
   React.useEffect(() => {
-    fetch(`/api/earnableItems/123`, {
+    fetch(`/api/earnableItems/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
       .then((results: Array<Object> | any) => {
         setUserItems(results);
         (function () {
+          console.log({ results });
           results.sort((a: any, b: any) => {
+            console.log({ a });
+            console.log({ b });
             return (
               a.percentage_of_total_points_needed -
               b.percentage_of_total_points_needed
             );
           });
-
+          console.log({ results });
           setItemsSortedByPercentOfTotalPoints(results);
         })();
       });
   }, []);
-
+  console.log({ itemsSortedByPercentOfTotalPoints });
   React.useEffect(() => {
     fetch(`/api/personal_info/person/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -77,17 +80,20 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   // grade of the wrestlers
 
   React.useEffect(() => {
-    fetch(`/api/grades/allCurrentGradesForASingleWrestler/3`, {
+    fetch(`/api/grades/allCurrentGradesForASingleWrestler/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
       .then((results) => {
-        const totalPointsForSetter = results.reduce((total, currentValue) => {
-          total = total + currentValue.grade;
-          return total;
-        }, 0);
+        const totalPointsForSetter = results.reduce(
+          (total: any, currentValue: any) => {
+            total = total + currentValue.grade;
+            return total;
+          },
+          0
+        );
         const totalPointsAvailableForSetter = results.reduce(
-          (total, currentValue) => {
+          (total: any, currentValue: any) => {
             total = total + currentValue.maximum_grade;
             return total;
           },
@@ -128,7 +134,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
           } `
         );
         break;
-      } else if ((element.percentage_of_total_points_needed = totalPoints)) {
+      } else if (element.percentage_of_total_points_needed === totalPoints) {
         setCurrentItem(`${element}.item_color} ${element}.item_name} `);
         break;
       }
@@ -144,6 +150,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
           {personalInfo.last_name}
         </h5>
         <div className="card-body">
+          <h5>Earnable Items:</h5>
           <ul>
             {userItems.map((item) => {
               return (
@@ -163,10 +170,13 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
             })}
           </ul>
           <p className="card-text">
-            Current Item: <strong>{currentItem}</strong>
+            Current Item Earned: <strong>{currentItem}</strong>
             <br />
-            Current Points: <strong>{totalPoints}</strong>
+            You have earned <strong>{totalPoints}</strong> of{" "}
+            <strong>{totalPointsAvailable}</strong> total points available.
           </p>
+          <p>Next item: </p>
+          <p>Number of points until next item:</p>
           <p className="card-text"></p>
         </div>
       </div>

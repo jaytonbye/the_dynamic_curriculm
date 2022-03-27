@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 function GradesOfXFor2Wrestlers(props: any) {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
-  const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState({});
+  const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState<any>({});
   const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
   const [wrestler1NewNote, setWrestler1NewNote] = React.useState<string>();
   const [wrestler2NewNote, setWrestler2NewNote] = React.useState<string>();
@@ -50,7 +50,6 @@ function GradesOfXFor2Wrestlers(props: any) {
     }
   }, [uselessState6]);
 
-
   //     const [arrayOfStuff, setArrayOfStuff] = React.useState([1, 2, 3]);
   //     const [theText, setTheText] = useState({});
 
@@ -75,16 +74,14 @@ function GradesOfXFor2Wrestlers(props: any) {
   //                         <h1>You Just Typed </h1>
   //                     </>
   //                 );
-  //             })} 
+  //             })}
   //             ;
   //         </div>
   //     );
   // }
 
-
-
   const onWrestler1GradeChange = (event: any) => {
-    setWrestler1NewGrade((previousState) => ({
+    setWrestler1NewGrade((previousState: any) => ({
       ...previousState,
       [event.target.name]: event.target.value,
     }));
@@ -106,8 +103,7 @@ function GradesOfXFor2Wrestlers(props: any) {
     note: string,
     max_grade: number
   ) => {
-
-    console.log({ grade })
+    console.log({ grade });
 
     // if (grade > max_grade) {
     //   console.log("whoops");
@@ -240,7 +236,6 @@ function GradesOfXFor2Wrestlers(props: any) {
                     <div className="" style={{ width: "50%" }}></div>
                     {/* Button for wrestler 1 */}
                     <button
-
                       className="btn btn-primary"
                       onClick={() => {
                         submitGrade(
