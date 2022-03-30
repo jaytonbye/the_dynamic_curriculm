@@ -215,8 +215,6 @@ const CoachesView = (props: CoachesViewProps) => {
         setUselessState3(uselessState3 + 1);
     };
 
-
-
     // make a function that will select a random user from the list of users
     let randomUser = () => {
         let randomNumber = Math.floor(Math.random() * personal_info.length);
