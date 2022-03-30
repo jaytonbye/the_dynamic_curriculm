@@ -17,7 +17,9 @@ import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
 import ShirtSelector from './ShirtSelector'
 import AddItemAdminPage from "./addItemAdminPage";
+import CoachesViewTwoPointO from './CoachesViewTwoPOintO';
 import GradingDashboard2pointO from "./GradingDashboard2pointO";
+import GradingDashBoardForTwoWrestlersTwoPointO from "./GradingDashBoardForTwoWrestlersTwoPointO";
 
 const App = (props: AppProps) => {
   return (
@@ -28,7 +30,8 @@ const App = (props: AppProps) => {
             <Home />
           </Route>
           <Route exact path="/coachesview">
-            <CoachesView />
+            {/* <CoachesView /> */}
+            <CoachesViewTwoPointO />
           </Route>
           <Route exact path="/wrestlersview">
             <WrestlersView />
@@ -69,6 +72,9 @@ const App = (props: AppProps) => {
           </Route>
           <Route exact path="/blah">
             <GradingDashboard2pointO />
+          </Route>
+          <Route exact path="/GradingDashBoardForTwoWrestlersTwoPointO">
+            <GradingDashBoardForTwoWrestlersTwoPointO />
           </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>

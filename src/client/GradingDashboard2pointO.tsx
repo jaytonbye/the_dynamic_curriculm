@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-interface Props {}
+interface Props { }
 
 // This typing is wrong I did the correct type below as well as the default state to put in
 //interface IPersonalInfo {
@@ -129,8 +129,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
       const element = itemsSortedByPercentOfTotalPoints[theIndex];
       if (element.percentage_of_total_points_needed > totalPoints) {
         setCurrentItem(
-          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${
-            itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
+          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
           } `
         );
         break;
@@ -161,7 +160,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     {item.item_color} {item.item_name} (
                     {Math.round(
                       Number(totalPointsAvailable) *
-                        (item.percentage_of_total_points_needed / 100)
+                      (item.percentage_of_total_points_needed / 100)
                     )}{" "}
                     points)
                   </h6>
