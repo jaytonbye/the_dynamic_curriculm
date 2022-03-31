@@ -109,7 +109,6 @@ router.get(
     let wrestler1 = Number(req.params.wrestler1);
     let wrestler2 = Number(req.params.wrestler2);
     let coachUID = Number(req.params.coachUID);
-    console.log({ coachUID });
     try {
       res.json(
         await db.grades.gradesForTwoWresltersOnAllLevels(

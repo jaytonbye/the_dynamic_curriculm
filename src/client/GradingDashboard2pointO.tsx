@@ -51,21 +51,16 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
       .then((results: Array<Object> | any) => {
         setUserItems(results);
         (function () {
-          console.log({ results });
           results.sort((a: any, b: any) => {
-            console.log({ a });
-            console.log({ b });
             return (
               a.percentage_of_total_points_needed -
               b.percentage_of_total_points_needed
             );
           });
-          console.log({ results });
           setItemsSortedByPercentOfTotalPoints(results);
         })();
       });
   }, []);
-  console.log({ itemsSortedByPercentOfTotalPoints });
   React.useEffect(() => {
     fetch(`/api/personal_info/person/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -112,14 +107,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   }, []);
 
   React.useEffect(() => {
-    // console.log('For Loop Is Here')
-    // console.log({ personalInfo });
-    // console.log({ totalPointsAvailable });
-    // console.log({ totalPoints });
-    // console.log({ userItems });
-    // console.log({ currentItem })
-    // console.log({ userItems });
-    // console.log({ itemsSortedByPercentOfTotalPoints });
+
 
     for (
       let theIndex = 0;
@@ -142,7 +130,6 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
 
   return (
     <div>
-      <h1 className="text-center">Hello</h1>
       <div className="card">
         <h5 className="card-header">
           Wrestler Dashboard - {personalInfo.first_name}{" "}
