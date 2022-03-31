@@ -31,7 +31,6 @@ const defaultInfoState = {
 const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO }) => {
     let UID = wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO ? wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO : console.log("UID wasn't passed correctly");
     let token = sessionStorage.getItem("token");
-    console.log({ wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO })
     const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>(
         defaultInfoState
     );
@@ -51,18 +50,14 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
         })
             .then((res) => res.json())
             .then((results: Array<Object> | any) => {
-                // console.log({ UID })
                 setUserItems(results);
                 (function () {
                     results.sort((a: any, b: any) => {
-                        console.log({ a });
-                        console.log({ b });
                         return (
                             a.percentage_of_total_points_needed -
                             b.percentage_of_total_points_needed
                         );
                     });
-                    console.log({ results });
                     setItemsSortedByPercentOfTotalPoints(results);
                 })();
             });
