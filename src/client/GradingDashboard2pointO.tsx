@@ -52,16 +52,16 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     })
       .then((res) => res.json())
       .then((results: Array<Object> | any) => {
-        console.log({ results });
         setUserItems(results);
         (function () {
           results.sort((a: any, b: any) => {
             if (!a.percent_of_total_points || !b.percent_of_total_points) {
               console.log("Problem in grading dashboard for two point o")
+              console.log(a, b)
             } else {
               return (
-                a.percentage_of_total_points_needed -
-                b.percentage_of_total_points_needed
+                Number(a.percentage_of_total_points_needed) -
+                Number(b.percentage_of_total_points_needed)
               );
             }
           });
@@ -110,8 +110,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         };
       })
       .then(async ({ totalPointsFrom, totalPointsAvailableFrom }) => {
-        setTotalPoints(totalPointsFrom);
-        setTotalPointsAvailable(totalPointsAvailableFrom);
+        await setTotalPoints(totalPointsFrom);
+        await setTotalPointsAvailable(totalPointsAvailableFrom);
       });
   }, []);
 
@@ -124,6 +124,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     ) {
       const item = itemsSortedByPercentOfTotalPoints[theIndex]
       if (item.percentage_of_total_points_needed > totalPoints) {
+        console.log(itemsSortedByPercentOfTotalPoints[theIndex - 1])
+
         console.log(item);
         setCurrentItem(
           `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
@@ -153,11 +155,20 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
 
         break;
       } else if (item.percentage_of_total_points_needed === totalPoints) {
-        setCurrentItem(`${item}.item_color} ${item}.item_name} `);
+
+
+        if (!item) {
+          console.log({ item })
+          setCurrentItem("Place Holder Item");
+        } else {
+          console.log({ item })
+          setCurrentItem(`${item.item_color} ${item.item_name} `);
+        }
+
         break;
       }
     }
-  }, [totalPointsAvailable]);
+  }, [totalPointsAvailable, itemsSortedByPercentOfTotalPoints]);
 
   return (
     <div>
