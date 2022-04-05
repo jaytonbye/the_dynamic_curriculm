@@ -20,10 +20,10 @@ interface IPersonalInfo {
 const defaultInfoState = {
   created_at: "a",
   first_name: "a",
-  id: 21,
+  id: 0,
   last_name: "a",
   notes: "blah blah",
-  user_id: 21,
+  user_id: 0,
 }; //
 
 const GradingDashboard2pointO: React.FC<Props> = () => {
@@ -42,6 +42,11 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     setItemsSortedByPercentOfTotalPoints,
   ] = useState([]);
   const [currentItem, setCurrentItem] = useState("Not Working");
+  const [nextItem, setNextItem] = useState("Not Working");
+  const [pointsTillNextItem, setPointsTillNextItem] = useState(0);
+
+
+  console.log({ itemsSortedByPercentOfTotalPoints });
 
   React.useEffect(() => {
     fetch(`/api/earnableItems/${UID}`, {
@@ -108,7 +113,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
 
   React.useEffect(() => {
 
-
+    console.log(itemsSortedByPercentOfTotalPoints);
     for (
       let theIndex = 0;
       theIndex < itemsSortedByPercentOfTotalPoints.length;
@@ -117,9 +122,20 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
       const element = itemsSortedByPercentOfTotalPoints[theIndex];
       if (element.percentage_of_total_points_needed > totalPoints) {
         setCurrentItem(
-          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
+          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color ? itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color : itemsSortedByPercentOfTotalPoints[0].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
           } `
         );
+
+        setNextItem(
+          `${itemsSortedByPercentOfTotalPoints[theIndex].item_color ? itemsSortedByPercentOfTotalPoints[theIndex].item_color : itemsSortedByPercentOfTotalPoints[0].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex].item_name} `
+        );
+
+        let mathForNextItem = ((itemsSortedByPercentOfTotalPoints[theIndex + 1].percentage_of_total_points_needed ? itemsSortedByPercentOfTotalPoints[theIndex + 1].percentage_of_total_points_needed : 0) / 100) * Number(totalPointsAvailable);
+
+
+        let answer = Math.floor(mathForNextItem - totalPoints);
+        setPointsTillNextItem(answer);
+
         break;
       } else if (element.percentage_of_total_points_needed === totalPoints) {
         setCurrentItem(`${element}.item_color} ${element}.item_name} `);
@@ -127,6 +143,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
       }
     }
   }, [totalPointsAvailable]);
+
 
   return (
     <div>
@@ -161,8 +178,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
             You have earned <strong>{totalPoints}</strong> of{" "}
             <strong>{totalPointsAvailable}</strong> total points available.
           </p>
-          <p>Next item: </p>
-          <p>Number of points until next item:</p>
+          <p>Next item: <strong>{nextItem}</strong></p>
+          <p>Number of points until next item: <strong>{pointsTillNextItem}</strong></p>
           <p className="card-text"></p>
         </div>
       </div>
