@@ -93,7 +93,12 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
         })
             .then((res) => res.json())
             .then((results) => {
-                setPersonalInfoForWrestler1(results[0]);
+                if (results.length === 0) {
+                    alert("No personal info found for wrestler 1");
+                    history.push("/");
+                } else {
+                    setPersonalInfoForWrestler1(results[0]);
+                }
             });
     }, []);
 
@@ -103,7 +108,12 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
         })
             .then((res) => res.json())
             .then((results) => {
-                setPersonalInfoForWrestler2(results[0]);
+                if (results.length === 0) {
+                    alert("No personal info found for wrestler 2");
+                    history.push("/");
+                } else {
+                    setPersonalInfoForWrestler2(results[0]);
+                }
             });
     }, []);
 
@@ -143,7 +153,6 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
         history.push("/");
     };
 
-    console.log({ wrestler1UID });
 
     return (
         <>
