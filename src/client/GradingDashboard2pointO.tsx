@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-interface Props { }
+interface Props {}
 
 // This typing is wrong I did the correct type below as well as the default state to put in
 //interface IPersonalInfo {
@@ -44,7 +44,6 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   const [currentItem, setCurrentItem] = useState("Not Working");
   const [nextItem, setNextItem] = useState("Not Working");
   const [pointsTillNextItem, setPointsTillNextItem] = useState(0);
-
 
   console.log({ itemsSortedByPercentOfTotalPoints });
 
@@ -112,7 +111,6 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   }, []);
 
   React.useEffect(() => {
-
     console.log(itemsSortedByPercentOfTotalPoints);
     for (
       let theIndex = 0;
@@ -122,16 +120,29 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
       const element = itemsSortedByPercentOfTotalPoints[theIndex];
       if (element.percentage_of_total_points_needed > totalPoints) {
         setCurrentItem(
-          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color ? itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color : itemsSortedByPercentOfTotalPoints[0].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
-          } `
+          `${
+            itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
+              ? itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
+              : itemsSortedByPercentOfTotalPoints[0].item_color
+          } ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name} `
         );
 
         setNextItem(
-          `${itemsSortedByPercentOfTotalPoints[theIndex].item_color ? itemsSortedByPercentOfTotalPoints[theIndex].item_color : itemsSortedByPercentOfTotalPoints[0].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex].item_name} `
+          `${
+            itemsSortedByPercentOfTotalPoints[theIndex].item_color
+              ? itemsSortedByPercentOfTotalPoints[theIndex].item_color
+              : itemsSortedByPercentOfTotalPoints[0].item_color
+          } ${itemsSortedByPercentOfTotalPoints[theIndex].item_name} `
         );
 
-        let mathForNextItem = ((itemsSortedByPercentOfTotalPoints[theIndex + 1].percentage_of_total_points_needed ? itemsSortedByPercentOfTotalPoints[theIndex + 1].percentage_of_total_points_needed : 0) / 100) * Number(totalPointsAvailable);
-
+        let mathForNextItem =
+          ((itemsSortedByPercentOfTotalPoints[theIndex + 1]
+            .percentage_of_total_points_needed
+            ? itemsSortedByPercentOfTotalPoints[theIndex + 1]
+                .percentage_of_total_points_needed
+            : 0) /
+            100) *
+          Number(totalPointsAvailable);
 
         let answer = Math.floor(mathForNextItem - totalPoints);
         setPointsTillNextItem(answer);
@@ -143,7 +154,6 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
       }
     }
   }, [totalPointsAvailable]);
-
 
   return (
     <div>
@@ -164,7 +174,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     {item.item_color} {item.item_name} (
                     {Math.round(
                       Number(totalPointsAvailable) *
-                      (item.percentage_of_total_points_needed / 100)
+                        (item.percentage_of_total_points_needed / 100)
                     )}{" "}
                     points)
                   </h6>
@@ -178,8 +188,11 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
             You have earned <strong>{totalPoints}</strong> of{" "}
             <strong>{totalPointsAvailable}</strong> total points available.
           </p>
-          <p>Next item: <strong>{nextItem}</strong></p>
-          <p>Number of points until next item: <strong>{pointsTillNextItem}</strong></p>
+
+          <p>
+            Number of points until <strong>{nextItem}</strong>:{" "}
+            <strong>{pointsTillNextItem}</strong>
+          </p>
           <p className="card-text"></p>
         </div>
       </div>

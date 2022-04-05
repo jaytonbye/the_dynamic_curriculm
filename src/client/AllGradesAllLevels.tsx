@@ -1,9 +1,9 @@
 import React from "react";
-import WrestlerDashboard from "./WrestlerDashboard";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import classNames from "classnames";
 import NavigationBar from "./NavigationBar";
+import GradingDashboard2pointO from "./GradingDashboard2pointO";
 
 export default function AllGradesAllLevels() {
   const [grades, setGrades] = React.useState([]);
@@ -25,7 +25,7 @@ export default function AllGradesAllLevels() {
     <>
       <NavigationBar />
 
-      <WrestlerDashboard />
+      <GradingDashboard2pointO />
 
       <table className="table table-striped">
         <thead className="sticky-top">

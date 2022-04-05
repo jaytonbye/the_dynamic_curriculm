@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import WrestlerDashboard from "./WrestlerDashboard";
 import GradesOfX from "./GradesOfX";
 import MoveSearch from "./MoveSearch";
 import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
 import NavigationBar from "./NavigationBar";
+import GradingDashboard2pointO from "./GradingDashboard2pointO";
 
 function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
@@ -26,7 +26,7 @@ function WrestlersView() {
   return (
     <>
       <NavigationBar />
-      <WrestlerDashboard />
+      <GradingDashboard2pointO />
       <NotesFromCoachesForWrestlers UID={UID} />
       <hr />
       <GradesOfX />
