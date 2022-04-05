@@ -111,7 +111,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(itemsSortedByPercentOfTotalPoints);
+    console.log({ itemsSortedByPercentOfTotalPoints });
     for (
       let theIndex = 0;
       theIndex < itemsSortedByPercentOfTotalPoints.length;
