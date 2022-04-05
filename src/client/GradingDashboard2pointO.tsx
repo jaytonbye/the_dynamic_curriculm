@@ -41,8 +41,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     itemsSortedByPercentOfTotalPoints,
     setItemsSortedByPercentOfTotalPoints,
   ] = useState([]);
-  const [currentItem, setCurrentItem] = useState("Not Working");
-  const [nextItem, setNextItem] = useState("Not Working");
+  const [currentItem, setCurrentItem] = useState("Place Holder Item");
+  const [nextItem, setNextItem] = useState("Place Holder Item");
   const [pointsTillNextItem, setPointsTillNextItem] = useState(0);
 
 
@@ -56,8 +56,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         setUserItems(results);
         (function () {
           results.sort((a: any, b: any) => {
-            if (!a.percent_of_total_points && !b.percent_of_total_points) {
-              return 1;
+            if (!a.percent_of_total_points || !b.percent_of_total_points) {
+              console.log("Problem in grading dashboard for two point o")
             } else {
               return (
                 a.percentage_of_total_points_needed -
