@@ -5,7 +5,13 @@ import { Query } from "./index";
 
 const selectAllFromEarnable = async (UID: string | number) => {
   let numberUID = Number(UID);
-  return Query(
+
+  console.log(await Query(
+    `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?) ORDER BY percentage_of_total_points_needed`,
+    [numberUID]
+  ))
+
+  return await Query(
     `SELECT * from earnable_items where tenant = (Select tenant from users Where id=?) ORDER BY percentage_of_total_points_needed`,
     [numberUID]
   );

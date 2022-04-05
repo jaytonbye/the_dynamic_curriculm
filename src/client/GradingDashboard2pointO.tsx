@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-interface Props {}
+interface Props { }
 
 // This typing is wrong I did the correct type below as well as the default state to put in
 //interface IPersonalInfo {
@@ -45,7 +45,6 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   const [nextItem, setNextItem] = useState("Not Working");
   const [pointsTillNextItem, setPointsTillNextItem] = useState(0);
 
-  console.log({ itemsSortedByPercentOfTotalPoints });
 
   React.useEffect(() => {
     fetch(`/api/earnableItems/${UID}`, {
@@ -53,18 +52,24 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
     })
       .then((res) => res.json())
       .then((results: Array<Object> | any) => {
+        console.log({ results });
         setUserItems(results);
         (function () {
           results.sort((a: any, b: any) => {
-            return (
-              a.percentage_of_total_points_needed -
-              b.percentage_of_total_points_needed
-            );
+            if (!a.percent_of_total_points && !b.percent_of_total_points) {
+              return 1;
+            } else {
+              return (
+                a.percentage_of_total_points_needed -
+                b.percentage_of_total_points_needed
+              );
+            }
           });
           setItemsSortedByPercentOfTotalPoints(results);
         })();
       });
   }, []);
+
   React.useEffect(() => {
     fetch(`/api/personal_info/person/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -111,27 +116,26 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log({ itemsSortedByPercentOfTotalPoints });
+    // console.log({ itemsSortedByPercentOfTotalPoints });  worked
     for (
       let theIndex = 0;
       theIndex < itemsSortedByPercentOfTotalPoints.length;
       theIndex++
     ) {
-      const element = itemsSortedByPercentOfTotalPoints[theIndex];
-      if (element.percentage_of_total_points_needed > totalPoints) {
+      const item = itemsSortedByPercentOfTotalPoints[theIndex]
+      if (item.percentage_of_total_points_needed > totalPoints) {
+        console.log(item);
         setCurrentItem(
-          `${
-            itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
-              ? itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
-              : itemsSortedByPercentOfTotalPoints[0].item_color
+          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
+            ? itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
+            : itemsSortedByPercentOfTotalPoints[0].item_color
           } ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name} `
         );
 
         setNextItem(
-          `${
-            itemsSortedByPercentOfTotalPoints[theIndex].item_color
-              ? itemsSortedByPercentOfTotalPoints[theIndex].item_color
-              : itemsSortedByPercentOfTotalPoints[0].item_color
+          `${itemsSortedByPercentOfTotalPoints[theIndex].item_color
+            ? itemsSortedByPercentOfTotalPoints[theIndex].item_color
+            : itemsSortedByPercentOfTotalPoints[0].item_color
           } ${itemsSortedByPercentOfTotalPoints[theIndex].item_name} `
         );
 
@@ -139,7 +143,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
           ((itemsSortedByPercentOfTotalPoints[theIndex + 1]
             .percentage_of_total_points_needed
             ? itemsSortedByPercentOfTotalPoints[theIndex + 1]
-                .percentage_of_total_points_needed
+              .percentage_of_total_points_needed
             : 0) /
             100) *
           Number(totalPointsAvailable);
@@ -148,8 +152,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
         setPointsTillNextItem(answer);
 
         break;
-      } else if (element.percentage_of_total_points_needed === totalPoints) {
-        setCurrentItem(`${element}.item_color} ${element}.item_name} `);
+      } else if (item.percentage_of_total_points_needed === totalPoints) {
+        setCurrentItem(`${item}.item_color} ${item}.item_name} `);
         break;
       }
     }
@@ -174,7 +178,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                     {item.item_color} {item.item_name} (
                     {Math.round(
                       Number(totalPointsAvailable) *
-                        (item.percentage_of_total_points_needed / 100)
+                      (item.percentage_of_total_points_needed / 100)
                     )}{" "}
                     points)
                   </h6>
