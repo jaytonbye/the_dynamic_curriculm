@@ -60,8 +60,8 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
               console.log(a, b)
             } else {
               return (
-                Number(a.percentage_of_total_points_needed) -
-                Number(b.percentage_of_total_points_needed)
+                (Number(a.percentage_of_total_points_needed) -
+                  Number(b.percentage_of_total_points_needed))
               );
             }
           });
@@ -82,6 +82,67 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
 
   // These functions in combination with the SetStates get the potential and total
   // grade of the wrestlers
+
+
+  React.useEffect(() => {
+    console.log({ itemsSortedByPercentOfTotalPoints });
+    for (
+      let theIndex = 0;
+      theIndex < itemsSortedByPercentOfTotalPoints.length;
+      theIndex++
+    ) {
+      const item = itemsSortedByPercentOfTotalPoints[theIndex]
+
+
+      if ((item.percentage_of_total_points_needed / 100) * Number(totalPointsAvailable) > totalPoints) {
+        console.log(itemsSortedByPercentOfTotalPoints[theIndex - 1])
+
+        console.log(item);
+        setCurrentItem(
+          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
+            ? itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
+            : itemsSortedByPercentOfTotalPoints[0].item_color
+          } ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name} `
+        );
+
+        setNextItem(
+          itemsSortedByPercentOfTotalPoints[theIndex].item_color
+            ? `${itemsSortedByPercentOfTotalPoints[theIndex].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex].item_name}`
+            : `${itemsSortedByPercentOfTotalPoints[1].item_color} ${itemsSortedByPercentOfTotalPoints[1].item_name}`
+        );
+
+        console.log({ itemAboveerror: itemsSortedByPercentOfTotalPoints[theIndex], theIndex });
+
+        let mathForNextItem =
+          ((!itemsSortedByPercentOfTotalPoints[theIndex + 1]
+            ? itemsSortedByPercentOfTotalPoints[theIndex]
+              .percentage_of_total_points_needed
+            : itemsSortedByPercentOfTotalPoints[theIndex + 1]
+              .percentage_of_total_points_needed) /
+            100) *
+          Number(totalPointsAvailable);
+
+        console.log({ mathForNextItem })
+
+        let answer = Math.floor(mathForNextItem - totalPoints);
+        setPointsTillNextItem(answer);
+
+        break;
+      } else if (item.percentage_of_total_points_needed === totalPoints) {
+
+
+        if (!item) {
+          console.log({ item })
+          setCurrentItem("Place Holder Item");
+        } else {
+          console.log({ item })
+          setCurrentItem(`${item.item_color} ${item.item_name} `);
+        }
+
+        break;
+      }
+    }
+  }, [totalPointsAvailable, itemsSortedByPercentOfTotalPoints]);
 
   React.useEffect(() => {
     fetch(`/api/grades/allCurrentGradesForASingleWrestler/${UID}`, {
@@ -115,60 +176,13 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
       });
   }, []);
 
-  React.useEffect(() => {
-    // console.log({ itemsSortedByPercentOfTotalPoints });  worked
-    for (
-      let theIndex = 0;
-      theIndex < itemsSortedByPercentOfTotalPoints.length;
-      theIndex++
-    ) {
-      const item = itemsSortedByPercentOfTotalPoints[theIndex]
-      if (item.percentage_of_total_points_needed > totalPoints) {
-        console.log(itemsSortedByPercentOfTotalPoints[theIndex - 1])
-
-        console.log(item);
-        setCurrentItem(
-          `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
-            ? itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color
-            : itemsSortedByPercentOfTotalPoints[0].item_color
-          } ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name} `
-        );
-
-        setNextItem(
-          `${itemsSortedByPercentOfTotalPoints[theIndex].item_color
-            ? itemsSortedByPercentOfTotalPoints[theIndex].item_color
-            : itemsSortedByPercentOfTotalPoints[0].item_color
-          } ${itemsSortedByPercentOfTotalPoints[theIndex].item_name} `
-        );
-
-        let mathForNextItem =
-          ((itemsSortedByPercentOfTotalPoints[theIndex + 1]
-            .percentage_of_total_points_needed
-            ? itemsSortedByPercentOfTotalPoints[theIndex + 1]
-              .percentage_of_total_points_needed
-            : 0) /
-            100) *
-          Number(totalPointsAvailable);
-
-        let answer = Math.floor(mathForNextItem - totalPoints);
-        setPointsTillNextItem(answer);
-
-        break;
-      } else if (item.percentage_of_total_points_needed === totalPoints) {
 
 
-        if (!item) {
-          console.log({ item })
-          setCurrentItem("Place Holder Item");
-        } else {
-          console.log({ item })
-          setCurrentItem(`${item.item_color} ${item.item_name} `);
-        }
+  console.log({ totalPoints })
 
-        break;
-      }
-    }
-  }, [totalPointsAvailable, itemsSortedByPercentOfTotalPoints]);
+  console.log({ totalPointsAvailable })
+
+  console.log({ currentItem });
 
   return (
     <div>
@@ -205,8 +219,10 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
           </p>
 
           <p>
-            Number of points until <strong>{nextItem}</strong>:{" "}
-            <strong>{pointsTillNextItem}</strong>
+            Number of points until <strong>{nextItem === "Place Holder Item" ?
+              `${!itemsSortedByPercentOfTotalPoints[1] ? "A different Color Place Holder" : itemsSortedByPercentOfTotalPoints[1]} 
+                    ${!itemsSortedByPercentOfTotalPoints[1] ? "A different Name Place Holder" : itemsSortedByPercentOfTotalPoints[1]}` :
+              nextItem}</strong>:{" "}            <strong>{pointsTillNextItem}</strong>
           </p>
           <p className="card-text"></p>
         </div>

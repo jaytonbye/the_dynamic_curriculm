@@ -154,6 +154,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
     };
 
 
+
     return (
         <>
             <div className="d-flex flex-wrap justify-content-around">

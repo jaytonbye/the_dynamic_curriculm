@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 interface Props {
-    wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO: number;
+    wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO: number
 }
 
 // This typing is wrong I did the correct type below as well as the default state to put in
@@ -28,12 +28,8 @@ const defaultInfoState = {
     user_id: 21,
 }; //
 
-const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
-    wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO,
-}) => {
-    let UID = wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO
-        ? wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO
-        : console.log("UID wasn't passed correctly");
+const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO }) => {
+    let UID = wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO ? wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO : console.log("UID wasn't passed correctly");
     let token = sessionStorage.getItem("token");
     const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>(
         defaultInfoState
@@ -46,9 +42,10 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
         itemsSortedByPercentOfTotalPoints,
         setItemsSortedByPercentOfTotalPoints,
     ] = useState([]);
-    const [currentItem, setCurrentItem] = useState("Place Holder Item");
+    const [currentItem, setCurrentItem] = useState("Not Working");
     const [nextItem, setNextItem] = useState("Place Holder Item");
     const [pointsTillNextItem, setPointsTillNextItem] = useState(0);
+
 
     React.useEffect(() => {
         fetch(`/api/earnableItems/${UID}`, {
@@ -59,14 +56,10 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
                 setUserItems(results);
                 (function () {
                     results.sort((a: any, b: any) => {
-                        if (!a.percent_of_total_points || !b.percent_of_total_points) {
-                            console.log("Problem in grading dashboard for two point o")
-                        } else {
-                            return (
-                                a.percentage_of_total_points_needed -
-                                b.percentage_of_total_points_needed
-                            );
-                        }
+                        return (
+                            a.percentage_of_total_points_needed -
+                            b.percentage_of_total_points_needed
+                        );
                     });
                     setItemsSortedByPercentOfTotalPoints(results);
                 })();
@@ -79,6 +72,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
         })
             .then((res) => res.json())
             .then((results) => {
+                console.log(results[0]);
                 setPersonalInfo(results[0]);
             });
     }, []);
@@ -122,7 +116,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
         // console.log('For Loop Is Here')
         // console.log({ personalInfo });
         // console.log({ totalPointsAvailable });
-        // console.log({ totalPoints });
+        console.log({ totalPoints });
         // console.log({ userItems });
         // console.log({ currentItem })
         // console.log({ userItems });
@@ -134,43 +128,30 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
             theIndex++
         ) {
             const element = itemsSortedByPercentOfTotalPoints[theIndex];
-            if (element.percentage_of_total_points_needed > totalPoints) {
+            const lastElement = itemsSortedByPercentOfTotalPoints[itemsSortedByPercentOfTotalPoints.length - 1];
 
-                console.log(itemsSortedByPercentOfTotalPoints[theIndex - 1])
-
+            if (totalPoints >= Number(totalPointsAvailable) * lastElement.percentage_of_total_points_needed) {
+                setCurrentItem(`${itemsSortedByPercentOfTotalPoints[itemsSortedByPercentOfTotalPoints.length - 1].item_color} 
+                ${itemsSortedByPercentOfTotalPoints[itemsSortedByPercentOfTotalPoints.length - 1].item_name} `);
+                break;
+            }
+            else if (totalPoints === 0) {
+                setCurrentItem(`${itemsSortedByPercentOfTotalPoints[0].item_color} 
+                ${itemsSortedByPercentOfTotalPoints[0].item_name} `);
+            }
+            else if (element.percentage_of_total_points_needed > totalPoints) {
                 setCurrentItem(
                     `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
                     } `
                 );
-                setNextItem(
-                    `${itemsSortedByPercentOfTotalPoints[theIndex].item_color
-                        ? itemsSortedByPercentOfTotalPoints[theIndex].item_color
-                        : itemsSortedByPercentOfTotalPoints[0].item_color
-                    } ${itemsSortedByPercentOfTotalPoints[theIndex].item_name} `
-                );
-
-                let mathForNextItem =
-                    ((itemsSortedByPercentOfTotalPoints[theIndex + 1]
-                        .percentage_of_total_points_needed
-                        ? itemsSortedByPercentOfTotalPoints[theIndex + 1]
-                            .percentage_of_total_points_needed
-                        : 0) /
-                        100) *
-                    Number(totalPointsAvailable);
-
-                let answer = Math.floor(mathForNextItem - totalPoints);
-                setPointsTillNextItem(answer);
-
-                break;
-            } else if (element.percentage_of_total_points_needed === totalPoints) {
-                setCurrentItem(`${element}.item_color} ${element}.item_name} `);
-                break;
             }
-        }
-    }, [totalPointsAvailable]);
 
-    // console.log(nextItem);
-    // console.log(pointsTillNextItem);
+        }
+    }, [totalPointsAvailable, totalPoints, userItems, itemsSortedByPercentOfTotalPoints, personalInfo]);
+
+
+    console.log({ itemsSortedByPercentOfTotalPoints });
+
     return (
         <>
             <h5>Earnable Items:</h5>
@@ -193,15 +174,16 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
                 })}
             </ul>
             <p className="card-text">
-                Current Item Earned: <strong>{currentItem}</strong>
+                Current Item Earned: <strong>{currentItem === "Not Working" ? `Theres been an error you have this many points ${totalPoints}` : currentItem}</strong>
                 <br />
                 You have earned <strong>{totalPoints}</strong> of{" "}
                 <strong>{totalPointsAvailable}</strong> total points available.
             </p>
-
             <p>
-                Number of points until <strong>{nextItem}</strong>:{" "}
-                <strong>{pointsTillNextItem}</strong>
+                Number of points until <strong>{nextItem === "Place Holder Item" ?
+                    `${!itemsSortedByPercentOfTotalPoints[1] ? "A different Color Place Holder" : itemsSortedByPercentOfTotalPoints[1]} 
+                    ${!itemsSortedByPercentOfTotalPoints[1] ? "A different Name Place Holder" : itemsSortedByPercentOfTotalPoints[1]}` :
+                    nextItem}</strong>:{" "}            <strong>{pointsTillNextItem}</strong>
             </p>
             <p className="card-text"></p>
         </>
@@ -209,3 +191,5 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
 };
 
 export default WayneCarlsGradingDashboardForTwoWrestlers;
+
+
