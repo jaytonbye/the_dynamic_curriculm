@@ -177,12 +177,9 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   }, []);
 
 
-
-  console.log({ totalPoints })
-
-  console.log({ totalPointsAvailable })
-
-  console.log({ currentItem });
+  console.log({ itemsSortedByPercentOfTotalPoints })
+  console.log({ nextItem })
+  console.log({ pointsTillNextItem })
 
   return (
     <div>
