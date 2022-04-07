@@ -23,11 +23,7 @@ const singleGrade = async (id: number) => {
 
 //this query returns 1 grade for each of the movements, even movements the wrestler doesn't have graded (it returns null).
 const allCurrentGradesForASingleWrestler = async (user_id: number) => {
-
-  // What we are doing here is we are storing the result of the query in a variable called theQuery.
-  // We do this so we can test if the user has any grades if not we set it to the default of 0.
-  // Otherwise we just return theQuery.
-  let theQuery = Query(
+  return Query(
     `
   Select *, (
     Select grade from grades 
@@ -43,11 +39,6 @@ const allCurrentGradesForASingleWrestler = async (user_id: number) => {
     `,
     [user_id, user_id, user_id]
   );
-  if (!theQuery) {
-    return [{ grade: 0 }];
-  } else {
-    return theQuery;
-  }
 };
 
 const allSpecificCurrentGradesForASingleWrestler = async (

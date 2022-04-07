@@ -15,11 +15,12 @@ import PasswordResetLandingPage from "./PasswordResetLandingPage";
 import ShowAllLogins from "./ShowAllLogins";
 import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
-import ShirtSelector from './ShirtSelector'
+import ShirtSelector from "./ShirtSelector";
 import AddItemAdminPage from "./addItemAdminPage";
-import CoachesViewTwoPointO from './CoachesViewTwoPOintO';
+import CoachesViewTwoPointO from "./CoachesViewTwoPOintO";
 import GradingDashboard2pointO from "./GradingDashboard2pointO";
 import GradingDashBoardForTwoWrestlersTwoPointO from "./GradingDashBoardForTwoWrestlersTwoPointO";
+import GradingDashboardMadeByWayneCarlAndJason from "./GradingDashboardMadeByWayneCarlAndJason";
 
 const App = (props: AppProps) => {
   return (
@@ -71,7 +72,7 @@ const App = (props: AppProps) => {
             <UnitVideosPage />
           </Route>
           <Route exact path="/blah">
-            <GradingDashboard2pointO />
+            <GradingDashboardMadeByWayneCarlAndJason />
           </Route>
           <Route exact path="/GradingDashBoardForTwoWrestlersTwoPointO">
             <GradingDashBoardForTwoWrestlersTwoPointO />
@@ -86,6 +87,6 @@ const App = (props: AppProps) => {
   );
 };
 
-interface AppProps { }
+interface AppProps {}
 
 export default App;
