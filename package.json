@@ -1,6 +1,9 @@
 {
   "name": "barebones-react-typescript-express",
   "version": "1.0.0",
+  "engines": {
+    "node": "15.4.0"
+  },
   "description": "",
   "main": "dist/server.js",
   "scripts": {
