@@ -11,58 +11,58 @@ interface IPersonalInfo {
 }
 
 function GradingDashboardFor2WrestlersTwpPointO(props: any) {
-    const [
-        personalInfoForWrestler1,
-        setPersonalInfoForWrestler1,
-    ] = React.useState<IPersonalInfo>({
-        first_name: "wrestler 1's first name",
-        last_name: "wrestler 1's last name",
-    });
-    const [
-        personalInfoForWrestler2,
-        setPersonalInfoForWrestler2,
-    ] = React.useState<IPersonalInfo>({
-        first_name: "wrestler 2's first name",
-        last_name: "wrestler 2's last name",
-    });
-    const [gradesForWrestler1, setGradesForWrestler1] = React.useState([]);
-    const [gradesForWrestler2, setGradesForWrestler2] = React.useState([]);
-    const [totalPointsForWrestler1, setTotalPointsForWrestler1] = React.useState(
-        0
-    );
-    const [
-        totalPointsAvailableForWrestler1,
-        setTotalPointsAvailableForWrestler1,
-    ] = React.useState(0);
-    const [totalPointsForWrestler2, setTotalPointsForWrestler2] = React.useState(
-        0
-    );
-    const [
-        totalPointsAvailableForWrestler2,
-        setTotalPointsAvailableForWrestler2,
-    ] = React.useState(0);
-    const [shirtColorForWrestler1, setShirtColorForWrestler1] = React.useState(
-        "Black"
-    );
-    const [shirtColorForWrestler2, setShirtColorForWrestler2] = React.useState(
-        "Black"
-    );
-    const [
-        nextShirtColorForWrestler1,
-        setNextShirtColorForWrestler1,
-    ] = React.useState("Blue");
-    const [
-        nextShirtColorForWrestler2,
-        setNextShirtColorForWrestler2,
-    ] = React.useState("Blue");
-    const [
-        pointsNeededForNextShirtColorForWrestler1,
-        setPointsNeededForNextShirtColorForWrestler1,
-    ] = React.useState(0);
-    const [
-        pointsNeededForNextShirtColorForWrestler2,
-        setPointsNeededForNextShirtColorForWrestler2,
-    ] = React.useState(0);
+    // const [
+    //     personalInfoForWrestler1,
+    //     setPersonalInfoForWrestler1,
+    // ] = React.useState<IPersonalInfo>({
+    //     first_name: "wrestler 1's first name",
+    //     last_name: "wrestler 1's last name",
+    // });
+    // const [
+    //     personalInfoForWrestler2,
+    //     setPersonalInfoForWrestler2,
+    // ] = React.useState<IPersonalInfo>({
+    //     first_name: "wrestler 2's first name",
+    //     last_name: "wrestler 2's last name",
+    // });
+    // const [gradesForWrestler1, setGradesForWrestler1] = React.useState([]);
+    // const [gradesForWrestler2, setGradesForWrestler2] = React.useState([]);
+    // const [totalPointsForWrestler1, setTotalPointsForWrestler1] = React.useState(
+    //     0
+    // );
+    // const [
+    //     totalPointsAvailableForWrestler1,
+    //     setTotalPointsAvailableForWrestler1,
+    // ] = React.useState(0);
+    // const [totalPointsForWrestler2, setTotalPointsForWrestler2] = React.useState(
+    //     0
+    // );
+    // const [
+    //     totalPointsAvailableForWrestler2,
+    //     setTotalPointsAvailableForWrestler2,
+    // ] = React.useState(0);
+    // const [shirtColorForWrestler1, setShirtColorForWrestler1] = React.useState(
+    //     "Black"
+    // );
+    // const [shirtColorForWrestler2, setShirtColorForWrestler2] = React.useState(
+    //     "Black"
+    // );
+    // const [
+    //     nextShirtColorForWrestler1,
+    //     setNextShirtColorForWrestler1,
+    // ] = React.useState("Blue");
+    // const [
+    //     nextShirtColorForWrestler2,
+    //     setNextShirtColorForWrestler2,
+    // ] = React.useState("Blue");
+    // const [
+    //     pointsNeededForNextShirtColorForWrestler1,
+    //     setPointsNeededForNextShirtColorForWrestler1,
+    // ] = React.useState(0);
+    // const [
+    //     pointsNeededForNextShirtColorForWrestler2,
+    //     setPointsNeededForNextShirtColorForWrestler2,
+    // ] = React.useState(0);
     const [allLoginsForWrestler1, setAllLoginsForWrestler1] = React.useState([]);
     const [allLoginsForWrestler2, setAllLoginsForWrestler2] = React.useState([]);
 
@@ -87,65 +87,65 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
             });
     }, []);
 
-    React.useEffect(() => {
-        fetch(`/api/personal_info/person/${wrestler1UID}`, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-            .then((res) => res.json())
-            .then((results) => {
-                if (results.length === 0) {
-                    alert("No personal info found for wrestler 1");
-                    history.push("/");
-                } else {
-                    setPersonalInfoForWrestler1(results[0]);
-                }
-            });
-    }, []);
+    // React.useEffect(() => {
+    //     fetch(`/api/personal_info/person/${wrestler1UID}`, {
+    //         headers: { Authorization: `Bearer ${token}` },
+    //     })
+    //         .then((res) => res.json())
+    //         .then((results) => {
+    //             if (results.length === 0) {
+    //                 alert("No personal info found for wrestler 1");
+    //                 history.push("/");
+    //             } else {
+    //                 setPersonalInfoForWrestler1(results[0]);
+    //             }
+    //         });
+    // }, []);
 
-    React.useEffect(() => {
-        fetch(`/api/personal_info/person/${wrestler2UID}`, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-            .then((res) => res.json())
-            .then((results) => {
-                if (results.length === 0) {
-                    alert("No personal info found for wrestler 2");
-                    history.push("/");
-                } else {
-                    setPersonalInfoForWrestler2(results[0]);
-                }
-            });
-    }, []);
+    // React.useEffect(() => {
+    //     fetch(`/api/personal_info/person/${wrestler2UID}`, {
+    //         headers: { Authorization: `Bearer ${token}` },
+    //     })
+    //         .then((res) => res.json())
+    //         .then((results) => {
+    //             if (results.length === 0) {
+    //                 alert("No personal info found for wrestler 2");
+    //                 history.push("/");
+    //             } else {
+    //                 setPersonalInfoForWrestler2(results[0]);
+    //             }
+    //         });
+    // }, []);
 
-    React.useEffect(() => {
-        if (props.wrestler1UID) {
-            fetch(
-                `/api/grades/allCurrentGradesForASingleWrestler/${props.wrestler1UID}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
-                .then((res) => res.json())
-                .then((results) => {
-                    setGradesForWrestler1(results);
-                });
-        }
-    }, [props.wrestler1UID]);
+    // React.useEffect(() => {
+    //     if (props.wrestler1UID) {
+    //         fetch(
+    //             `/api/grades/allCurrentGradesForASingleWrestler/${props.wrestler1UID}`,
+    //             {
+    //                 headers: { Authorization: `Bearer ${token}` },
+    //             }
+    //         )
+    //             .then((res) => res.json())
+    //             .then((results) => {
+    //                 setGradesForWrestler1(results);
+    //             });
+    //     }
+    // }, [props.wrestler1UID]);
 
-    React.useEffect(() => {
-        if (props.wrestler2UID) {
-            fetch(
-                `/api/grades/allCurrentGradesForASingleWrestler/${props.wrestler2UID}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
-                .then((res) => res.json())
-                .then((results) => {
-                    setGradesForWrestler2(results);
-                });
-        }
-    }, [props.wrestler2UID]);
+    // React.useEffect(() => {
+    //     if (props.wrestler2UID) {
+    //         fetch(
+    //             `/api/grades/allCurrentGradesForASingleWrestler/${props.wrestler2UID}`,
+    //             {
+    //                 headers: { Authorization: `Bearer ${token}` },
+    //             }
+    //         )
+    //             .then((res) => res.json())
+    //             .then((results) => {
+    //                 setGradesForWrestler2(results);
+    //             });
+    //     }
+    // }, [props.wrestler2UID]);
 
     let logout = () => {
         sessionStorage.removeItem("token");

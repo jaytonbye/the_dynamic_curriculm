@@ -43,7 +43,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
         setItemsSortedByPercentOfTotalPoints,
     ] = useState([]);
     const [currentItem, setCurrentItem] = useState("Not Working");
-    const [nextItem, setNextItem] = useState("Place Holder Item");
+    const [nextItem, setNextItem] = useState("Not Working");
     const [pointsTillNextItem, setPointsTillNextItem] = useState(0);
 
 
@@ -119,7 +119,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
 
 
     React.useEffect(() => {
-        fetch(`/ api / grades / allCurrentGradesForASingleWrestler / ${UID}`, {
+        fetch(`/api/grades/allCurrentGradesForASingleWrestler/${UID}`, {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((res) => res.json())
@@ -144,11 +144,20 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
                     totalPointsAvailableFrom: totalPointsAvailableForSetter,
                 };
             })
-            .then(async ({ totalPointsFrom, totalPointsAvailableFrom }) => {
-                await setTotalPoints(totalPointsFrom);
-                await setTotalPointsAvailable(totalPointsAvailableFrom);
+            .then(({ totalPointsFrom, totalPointsAvailableFrom }) => {
+                setTotalPoints(totalPointsFrom);
+                setTotalPointsAvailable(totalPointsAvailableFrom);
             });
     }, []);
+
+    console.log({ totalPoints });
+    console.log({ totalPointsAvailable });
+
+
+    // This is a for loop that is supposed to go through all the items until one of the if statements becomes true 
+    // The purpose was to be able to loop through until the points needed for the item was higher than the points the user has
+    // This allows us to simultaneously know the item the user is up to and the next item the user is going for
+    // This is also where the points needed for the next item is calculated
 
     React.useEffect(() => {
         for (
@@ -160,7 +169,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
             const lastItem = itemsSortedByPercentOfTotalPoints[itemsSortedByPercentOfTotalPoints.length - 1];
 
 
-            if (1 === 1) {
+            if ((item.percentage_of_total_points_needed / 100) * Number(totalPointsAvailable) > totalPoints) {
 
 
                 console.log({ itemsSortedByPercentOfTotalPoints })
@@ -179,13 +188,13 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
 
 
                 let mathForNextItem =
-                    ((!itemsSortedByPercentOfTotalPoints[theIndex + 1]
-                        ? itemsSortedByPercentOfTotalPoints[theIndex]
-                            .percentage_of_total_points_needed
-                        : itemsSortedByPercentOfTotalPoints[theIndex + 1]
-                            .percentage_of_total_points_needed) /
-                        100) *
-                    Number(totalPointsAvailable);
+                    !itemsSortedByPercentOfTotalPoints[theIndex + 1]
+                        ? (itemsSortedByPercentOfTotalPoints[theIndex]
+                            .percentage_of_total_points_needed / 100) * Number(totalPointsAvailable)
+                        : (itemsSortedByPercentOfTotalPoints[theIndex + 1]
+                            .percentage_of_total_points_needed /
+                            100) *
+                        Number(totalPointsAvailable);
 
 
 
@@ -193,13 +202,13 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
                 console.log({ answer })
                 setPointsTillNextItem(answer);
 
-            } else if (item.percentage_of_total_points_needed === totalPoints) {
+            } else if ((item.percentage_of_total_points_needed / 100) * Number(totalPointsAvailable) === totalPoints) {
 
 
-                if (!item) {
-                    setCurrentItem("Place Holder Item");
-                } else {
+                if (item) {
                     setCurrentItem(`${item.item_color} ${item.item_name} `);
+                } else {
+                    setCurrentItem("Place Holder Item");
                 }
 
                 break;
@@ -208,7 +217,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
                 setNextItem("Until you master everything");
             }
         }
-    }, [itemsSortedByPercentOfTotalPoints]);
+    }, [itemsSortedByPercentOfTotalPoints, totalPoints, totalPointsAvailable]);
 
     console.log({ itemsSortedByPercentOfTotalPoints })
     console.log({ nextItem })
@@ -242,9 +251,16 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({ wrestlerId
                     You have earned <strong>{totalPoints}</strong> of{" "}
                     <strong>{totalPointsAvailable}</strong> total points available.
                 </p>
+                {/* This is having issues trying other option */}
+                {/* <p>
+                    <strong>{nextItem}: {pointsTillNextItem}</strong>
+                </p> */}
 
                 <p>
-                    <strong>{nextItem}: {pointsTillNextItem}</strong>
+                    Number of points until <strong>{nextItem === "Place Holder Item" ?
+                        `${!itemsSortedByPercentOfTotalPoints[1] ? "A different Color Place Holder" : itemsSortedByPercentOfTotalPoints[1]} 
+                    ${!itemsSortedByPercentOfTotalPoints[1] ? "A different Name Place Holder" : itemsSortedByPercentOfTotalPoints[1]}` :
+                        nextItem}</strong>:{" "}            <strong>{pointsTillNextItem}</strong>
                 </p>
 
                 <p className="card-text"></p>
