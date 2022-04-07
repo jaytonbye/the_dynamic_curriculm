@@ -76,7 +76,9 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
   React.useEffect(() => {
     for (let x = 0; x < earnableItems.length; x++) {
       let pointsRequiredToEarnThisItem =
-        earnableItems[x].percentage_of_total_points_needed;
+        (earnableItems[x].percentage_of_total_points_needed *
+          totalPointsAvailable) /
+        100;
       if (totalPointsEarnedByWrestler < pointsRequiredToEarnThisItem) {
         setNextItemToBeEarned(
           `${earnableItems[x].item_color} ${earnableItems[x].item_name}`
@@ -89,7 +91,9 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
   React.useEffect(() => {
     for (let x = 0; x < earnableItems.length; x++) {
       let pointsRequiredToEarnThisItem =
-        earnableItems[x].percentage_of_total_points_needed;
+        (earnableItems[x].percentage_of_total_points_needed *
+          totalPointsAvailable) /
+        100;
       if (totalPointsEarnedByWrestler >= pointsRequiredToEarnThisItem) {
         setCurrentItemEarned(
           `${earnableItems[x].item_color} ${earnableItems[x].item_name}`
@@ -108,8 +112,9 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
               return (
                 <li key={item.id}>
                   <h6 key={`${item.id}`}>
-                    {item.item_name} - percentage:{" "}
-                    {item.percentage_of_total_points_needed}{" "}
+                    {item.item_color} {item.item_name} -{" "}
+                    {item.percentage_of_total_points_needed} % of total points
+                    available
                   </h6>
                 </li>
               );
@@ -120,8 +125,8 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
             <br />
             You have earned <strong>
               {totalPointsEarnedByWrestler}
-            </strong> of <strong>{totalPointsAvailable}</strong> total points
-            available.
+            </strong> of <strong>{totalPointsAvailable}</strong> total available
+            points.
           </p>
 
           <p>
