@@ -113,8 +113,12 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
                 <li key={item.id}>
                   <h6 key={`${item.id}`}>
                     {item.item_color} {item.item_name} -{" "}
-                    {item.percentage_of_total_points_needed} % of total points
-                    available
+                    {Math.ceil(
+                      (item.percentage_of_total_points_needed *
+                        totalPointsAvailable) /
+                        100
+                    )}{" "}
+                    points required
                   </h6>
                 </li>
               );
