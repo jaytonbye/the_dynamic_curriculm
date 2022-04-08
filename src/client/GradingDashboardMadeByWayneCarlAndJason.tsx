@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Card } from "react-bootstrap";
 
 export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
   const [personalInfo, setPersonalInfo] = useState({
@@ -105,43 +106,51 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
 
   return (
     <>
-      <div>
-        <div className="card-body">
-          <h5>Earnable Items:</h5>
-          <ul>
-            {earnableItems.map((item) => {
-              return (
-                <li key={item.id}>
-                  <h6 key={`${item.id}`}>
-                    {item.item_color} {item.item_name} -{" "}
-                    {Math.ceil(
-                      (item.percentage_of_total_points_needed *
-                        totalPointsAvailable) /
-                        100
-                    )}{" "}
-                    points required
-                  </h6>
-                </li>
-              );
-            })}
-          </ul>
-          <p className="card-text">
-            Current Item Earned: <strong>{currentItemEarned}</strong>
-            <br />
-            You have earned <strong>
-              {totalPointsEarnedByWrestler}
-            </strong> of <strong>{totalPointsAvailable}</strong> total available
-            points.
-          </p>
-
-          <p>
-            Next item:
-            <strong>{nextItemToBeEarned} </strong>
-          </p>
-
-          <p className="card-text"></p>
+      <Card className="w-75 my-2 mx-3 mx-auto">
+        <div className="d-flex flex-wrap justify-content-center m-1">
+          <div className="card mt-1">
+            <h5 className="card-header ">
+              {personalInfo.first_name}{" "}{personalInfo.last_name}'s Wrestler Dashboard
+            </h5>
+          </div>
         </div>
-      </div>
+        <Card.Body>
+          <Card.Title><h5>Earnable Items:</h5></Card.Title>
+          <Card.Text>
+            <ul>
+              {earnableItems.map((item) => {
+                return (
+                  <li key={item.id}>
+                    <h6 key={`${item.id}`}>
+                      {item.item_color} {item.item_name} -{" "}
+                      {Math.ceil(
+                        (item.percentage_of_total_points_needed *
+                          totalPointsAvailable) /
+                        100
+                      )}{" "}
+                      points required
+                    </h6>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="card-text">
+              Current Item Earned: <strong>{currentItemEarned}</strong>
+              <br />
+              You have earned <strong>
+                {totalPointsEarnedByWrestler}
+              </strong> of <strong>{totalPointsAvailable}</strong> total available
+              points.
+            </p>
+          </Card.Text>
+
+          <Card.Footer>
+            <p>
+              Next item: <strong>{nextItemToBeEarned} </strong>
+            </p>
+          </Card.Footer>
+        </Card.Body>
+      </Card>
     </>
   );
 }

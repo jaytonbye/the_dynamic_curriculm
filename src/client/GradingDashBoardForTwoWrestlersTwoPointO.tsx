@@ -157,10 +157,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
   return (
     <>
       <div className="d-flex flex-wrap justify-content-around">
-        <div className="card mt-1">
-          <h5 className="card-header ">
-            Wrestler Dashboard - {props.wrestler1FullName}
-          </h5>
+        <div className="card my-1 p-1" style={{ border: "1.3px solid black" }}>
           <div className="card-body">
             <GradingDashboardMadeByWayneCarlAndJason UID={wrestler1UID} />
             <div
@@ -183,10 +180,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
             wrestlerFullName={props.wrestler1FullName}
           />
         </div>
-        <div className="card mt-1">
-          <h5 className="card-header">
-            Wrestler Dashboard - {props.wrestler2FullName}
-          </h5>
+        <div className="card my-1 p-1" style={{ border: "1.3px solid #ff7824" }}>
           <div className="card-body">
             <h5 className="card-title">
               <strong>{/*{props.first_name} {personalInfo.last_name}*/}</strong>
