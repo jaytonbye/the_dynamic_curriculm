@@ -94,6 +94,7 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
         (earnableItems[x].percentage_of_total_points_needed *
           totalPointsAvailable) /
         100;
+      console.log({ pointsRequiredToEarnThisItem });
       if (totalPointsEarnedByWrestler >= pointsRequiredToEarnThisItem) {
         setCurrentItemEarned(
           `${earnableItems[x].item_color} ${earnableItems[x].item_name}`
