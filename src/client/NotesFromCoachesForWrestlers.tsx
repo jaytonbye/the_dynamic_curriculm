@@ -21,21 +21,21 @@ export default function NotesFromCoachesForWrestlers(props: any) {
       <h3>Recent coaching notes</h3>
       <table className="table " style={{ tableLayout: "fixed" }}>
         <thead className="sticky-top">
-          <tr className="bg-light" style={{ display: "block" }}>
-            <th style={{ width: "10%" }}>Date</th>
-            <th style={{ width: "10%" }}>Coach ID</th>
+          <tr className="bg-light">
+            <th>Date</th>
+            <th>Coach ID</th>
             <th>Notes</th>
           </tr>
         </thead>
         <tbody >
           {notes.map((note) => {
             return (
-              <tr key={note.id} style={{ display: "block" }}>
-                <td style={{ width: "10%" }}>
+              <tr key={note.id}>
+                <td>
                   <Moment format="MM/DD/YYYY">{note.created_at}</Moment>
                 </td>
 
-                <td style={{ width: "10%" }}>{note.from_coach}</td>
+                <td>{note.from_coach}</td>
                 <td style={{ overflow: "hidden" }}>{note.notes}</td>
               </tr>
             );
