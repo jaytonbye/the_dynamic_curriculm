@@ -10,17 +10,12 @@ import CreateAccount from "./CreateAccount";
 import ProfilePage from "./ProfilePage";
 import Tests from "./Tests";
 import AllGradesAllLevels from "./AllGradesAllLevels";
-import AllGradesAllLevelsFor2Wrestlers from "./AllGradesAllLevelsFor2Wrestlers";
 import PasswordResetLandingPage from "./PasswordResetLandingPage";
 import ShowAllLogins from "./ShowAllLogins";
 import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
-import ShirtSelector from "./ShirtSelector";
-import AddItemAdminPage from "./addItemAdminPage";
 import CoachesViewTwoPointO from "./CoachesViewTwoPOintO";
-import GradingDashboard2pointO from "./GradingDashboard2pointO";
 import GradingDashBoardForTwoWrestlersTwoPointO from "./GradingDashBoardForTwoWrestlersTwoPointO";
-import GradingDashboardMadeByWayneCarlAndJason from "./GradingDashboardMadeByWayneCarlAndJason";
 
 const App = (props: AppProps) => {
   return (
@@ -71,9 +66,7 @@ const App = (props: AppProps) => {
           <Route path="/UnitVideosPage">
             <UnitVideosPage />
           </Route>
-          <Route exact path="/blah">
-            <GradingDashboardMadeByWayneCarlAndJason />
-          </Route>
+
           <Route exact path="/GradingDashBoardForTwoWrestlersTwoPointO">
             <GradingDashBoardForTwoWrestlersTwoPointO />
           </Route>

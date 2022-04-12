@@ -4,7 +4,7 @@ import GradesOfX from "./GradesOfX";
 import MoveSearch from "./MoveSearch";
 import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
 import NavigationBar from "./NavigationBar";
-import GradingDashboardMadeByWayneCarlAndJason from "./GradingDashboardMadeByWayneCarlAndJason";
+import GradingDashboardMadeByLuke from "./GradingDashboardMadeByLuke";
 
 function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
@@ -26,7 +26,7 @@ function WrestlersView() {
   return (
     <>
       <NavigationBar />
-      <GradingDashboardMadeByWayneCarlAndJason UID={UID} />
+      <GradingDashboardMadeByLuke UID={UID} />
       <NotesFromCoachesForWrestlers UID={UID} />
       <hr />
       <GradesOfX />

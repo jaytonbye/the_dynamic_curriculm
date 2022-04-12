@@ -63,7 +63,6 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
     })
       .then((res) => res.json())
       .then((results: Array<Object> | any) => {
-        console.log({ results });
         let totalPointsAv = 0;
 
         for (let x = 0; x < results.length; x++) {
@@ -75,11 +74,19 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
   }, []);
 
   React.useEffect(() => {
+    if (!earnableItems.length || !totalPointsEarnedByWrestler) {
+      return;
+    }
+    let pointsRequiredToEarnThisItem = 0;
     for (let x = 0; x < earnableItems.length; x++) {
-      let pointsRequiredToEarnThisItem =
+      pointsRequiredToEarnThisItem =
         (earnableItems[x].percentage_of_total_points_needed *
           totalPointsAvailable) /
         100;
+      console.log({
+        totalPointsEarnedByWrestler,
+        pointsRequiredToEarnThisItem,
+      });
       if (totalPointsEarnedByWrestler < pointsRequiredToEarnThisItem) {
         setNextItemToBeEarned(
           `${earnableItems[x].item_color} ${earnableItems[x].item_name}`
@@ -90,8 +97,13 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
   }, [totalPointsEarnedByWrestler, earnableItems]);
 
   React.useEffect(() => {
+    //the ole "if it ain't ready, return trick"
+    if (!earnableItems.length || !totalPointsEarnedByWrestler) {
+      return;
+    }
+    let pointsRequiredToEarnThisItem;
     for (let x = 0; x < earnableItems.length; x++) {
-      let pointsRequiredToEarnThisItem =
+      pointsRequiredToEarnThisItem =
         (earnableItems[x].percentage_of_total_points_needed *
           totalPointsAvailable) /
         100;
@@ -110,23 +122,26 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
         <div className="d-flex flex-wrap justify-content-center m-1">
           <div className="card mt-1">
             <h5 className="card-header ">
-              {personalInfo.first_name}{" "}{personalInfo.last_name}'s Wrestler Dashboard
+              {personalInfo.first_name} {personalInfo.last_name}'s Wrestler
+              Dashboard
             </h5>
           </div>
         </div>
         <Card.Body>
-          <Card.Title><h5>Earnable Items:</h5></Card.Title>
+          <Card.Title>
+            <h5>Earnable Items:</h5>
+          </Card.Title>
           <Card.Text>
             <ul>
               {earnableItems.map((item) => {
                 return (
-                  <li key={item.id}>
-                    <h6 key={`${item.id}`}>
+                  <li key={`test-${item.id}-${props.UID}`}>
+                    <h6>
                       {item.item_color} {item.item_name} -{" "}
                       {Math.ceil(
                         (item.percentage_of_total_points_needed *
                           totalPointsAvailable) /
-                        100
+                          100
                       )}{" "}
                       points required
                     </h6>
@@ -139,8 +154,8 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
               <br />
               You have earned <strong>
                 {totalPointsEarnedByWrestler}
-              </strong> of <strong>{totalPointsAvailable}</strong> total available
-              points.
+              </strong> of <strong>{totalPointsAvailable}</strong> total
+              available points.
             </p>
           </Card.Text>
 

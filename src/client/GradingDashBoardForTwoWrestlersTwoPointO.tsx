@@ -4,7 +4,7 @@ import Moment from "react-moment";
 import SubmitNoteForWrestler from "./SubmitNoteForWrestler";
 import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
 import WayneCarlsGradingDashboardForTwoWrestlers from "./WayneCarlsGradingDashboardForTwoWrestlers";
-import GradingDashboardMadeByWayneCarlAndJason from "./GradingDashboardMadeByWayneCarlAndJason";
+import GradingDashboardMadeByLuke from "./GradingDashboardMadeByLuke";
 
 interface IPersonalInfo {
   first_name: string;
@@ -159,7 +159,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
       <div className="d-flex flex-wrap justify-content-around">
         <div className="card my-1 p-1" style={{ border: "1.3px solid black" }}>
           <div className="card-body">
-            <GradingDashboardMadeByWayneCarlAndJason UID={wrestler1UID} />
+            <GradingDashboardMadeByLuke UID={wrestler1UID} />
             <div
               className="card-text"
               style={{ color: "black", fontSize: "smaller" }}
@@ -180,12 +180,15 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
             wrestlerFullName={props.wrestler1FullName}
           />
         </div>
-        <div className="card my-1 p-1" style={{ border: "1.3px solid #ff7824" }}>
+        <div
+          className="card my-1 p-1"
+          style={{ border: "1.3px solid #ff7824" }}
+        >
           <div className="card-body">
             <h5 className="card-title">
               <strong>{/*{props.first_name} {personalInfo.last_name}*/}</strong>
             </h5>
-            <GradingDashboardMadeByWayneCarlAndJason UID={wrestler2UID} />
+            <GradingDashboardMadeByLuke UID={wrestler2UID} />
             <div
               className="card-text"
               style={{ color: "black", fontSize: "smaller" }}
