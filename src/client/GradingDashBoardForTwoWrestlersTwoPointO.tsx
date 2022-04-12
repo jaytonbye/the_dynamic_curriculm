@@ -155,9 +155,9 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
   };
 
   return (
-    <>
+    <div className="col-12">
       <div className="d-flex flex-wrap justify-content-around">
-        <div className="card my-1 p-1" style={{ border: "1.3px solid black" }}>
+        <div className="card my-1 p-1 col-sm-12 col-md-6" style={{ border: "1.3px solid black" }}>
           <div className="card-body">
             <GradingDashboardMadeByLuke UID={wrestler1UID} />
             <div
@@ -181,7 +181,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
           />
         </div>
         <div
-          className="card my-1 p-1"
+          className="card my-1 p-1 col-sm-12 col-md-6"
           style={{ border: "1.3px solid #ff7824" }}
         >
           <div className="card-body">
@@ -210,7 +210,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
