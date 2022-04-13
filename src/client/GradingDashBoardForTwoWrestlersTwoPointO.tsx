@@ -174,17 +174,19 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
               })}
             </div>
           </div>
-          <NotesFromCoachesForWrestlers UID={wrestler1UID} />
-          <SubmitNoteForWrestler
-            wrestlerID={wrestler1UID}
-            wrestlerFullName={props.wrestler1FullName}
-          />
+          <div>
+            <NotesFromCoachesForWrestlers UID={wrestler1UID} />
+            <SubmitNoteForWrestler
+              wrestlerID={wrestler1UID}
+              wrestlerFullName={props.wrestler1FullName}
+            />
+          </div>
         </div>
         <div
           className="card my-1 p-1 col-sm-12 col-md-6"
           style={{ border: "1.3px solid #ff7824" }}
         >
-          <div className="card-body">
+          <div className="card-body" style={{ flexGrow: 0 }}>
             <h5 className="card-title">
               <strong>{/*{props.first_name} {personalInfo.last_name}*/}</strong>
             </h5>
@@ -203,11 +205,13 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
               })}
             </div>
           </div>
-          <NotesFromCoachesForWrestlers UID={wrestler2UID} />
-          <SubmitNoteForWrestler
-            wrestlerID={wrestler2UID}
-            wrestlerFullName={props.wrestler2FullName}
-          />
+          <div className="mb-auto">
+            <NotesFromCoachesForWrestlers UID={wrestler2UID} />
+            <SubmitNoteForWrestler
+              wrestlerID={wrestler2UID}
+              wrestlerFullName={props.wrestler2FullName}
+            />
+          </div>
         </div>
       </div>
     </div>
