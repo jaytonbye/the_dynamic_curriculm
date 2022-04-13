@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import Moment from "react-moment";
 import SubmitNoteForWrestler from "./SubmitNoteForWrestler";
 import NotesFromCoachesForWrestlers from "./NotesFromCoachesForWrestlers";
-import WayneCarlsGradingDashboardForTwoWrestlers from "./WayneCarlsGradingDashboardForTwoWrestlers";
 import GradingDashboardMadeByLuke from "./GradingDashboardMadeByLuke";
 
 interface IPersonalInfo {

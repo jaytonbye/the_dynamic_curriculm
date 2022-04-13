@@ -1,7 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./Home";
-import CoachesView from "./CoachesView";
 import WrestlersView from "./WrestlersView";
 import Admin from "./Admin";
 import SingleLevel from "./SingleLevel";
@@ -15,7 +14,6 @@ import ShowAllLogins from "./ShowAllLogins";
 import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
 import CoachesViewTwoPointO from "./CoachesViewTwoPOintO";
-import GradingDashBoardForTwoWrestlersTwoPointO from "./GradingDashBoardForTwoWrestlersTwoPointO";
 
 const App = (props: AppProps) => {
   return (
@@ -26,7 +24,6 @@ const App = (props: AppProps) => {
             <Home />
           </Route>
           <Route exact path="/coachesview">
-            {/* <CoachesView /> */}
             <CoachesViewTwoPointO />
           </Route>
           <Route exact path="/wrestlersview">
@@ -67,9 +64,6 @@ const App = (props: AppProps) => {
             <UnitVideosPage />
           </Route>
 
-          <Route exact path="/GradingDashBoardForTwoWrestlersTwoPointO">
-            <GradingDashBoardForTwoWrestlersTwoPointO />
-          </Route>
           <Route path="*">
             <h1>404 not found error, you probably went to the wrong page...</h1>
             <a href="/WrestlersView">Go back to the homepage!</a>
