@@ -158,7 +158,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
     <div className="col-12">
       <div className="d-flex flex-wrap justify-content-around">
         <div className="card my-1 p-1 col-sm-12 col-md-6" style={{ border: "1.3px solid black" }}>
-          <div className="card-body">
+          <div className="card-body" style={{ flexGrow: 0 }}>
             <GradingDashboardMadeByLuke UID={wrestler1UID} />
             <div
               className="card-text"
