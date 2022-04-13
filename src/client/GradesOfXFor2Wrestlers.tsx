@@ -105,45 +105,45 @@ function GradesOfXFor2Wrestlers(props: any) {
   ) => {
     console.log({ grade });
 
-    // if (grade > max_grade) {
-    //   console.log("whoops");
-    //   alert(
-    //     "GRADE NOT SUBMITTED! You cannot submit a grade higher than the maximum grade"
-    //   );
-    // } else if (grade < 0) {
-    //   alert(
-    //     "GRADE NOT SUBMITTED! You cannot submit a grade of a negative number"
-    //   );
-    // } else {
-    //   const requestOptions = {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //     body: JSON.stringify({
-    //       video_id: video_id,
-    //       coach_user_id: 10, //until we have logins
-    //       student_user_id: user_id,
-    //       grade: grade,
-    //       movement_notes: note,
-    //     }),
-    //   };
-    //   fetch(`/api/grades/`, requestOptions).then((res) => {
-    //     if (res.ok) {
-    //       alert(
-    //         `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
-    //       );
-    //       props.incrementUselessStateFunction();
-    //       incrementUselessState6();
-    //     } else {
-    //       alert("it didn't work!");
-    //     }
-    //   });
-    // }
-    // // clears the state of the notes, so we don't accidentally enter the wrong notes for the next move.
-    // setWrestler1NewNote("");
-    // setWrestler2NewNote("");
+    if (grade > max_grade) {
+      console.log("whoops");
+      alert(
+        "GRADE NOT SUBMITTED! You cannot submit a grade higher than the maximum grade"
+      );
+    } else if (grade < 0) {
+      alert(
+        "GRADE NOT SUBMITTED! You cannot submit a grade of a negative number"
+      );
+    } else {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          video_id: video_id,
+          coach_user_id: 10, //until we have logins
+          student_user_id: user_id,
+          grade: grade,
+          movement_notes: note,
+        }),
+      };
+      fetch(`/api/grades/`, requestOptions).then((res) => {
+        if (res.ok) {
+          alert(
+            `A grade of ${grade} was entered for wrestler with user ID: ${user_id}`
+          );
+          props.incrementUselessStateFunction();
+          incrementUselessState6();
+        } else {
+          alert("it didn't work!");
+        }
+      });
+    }
+    // clears the state of the notes, so we don't accidentally enter the wrong notes for the next move.
+    setWrestler1NewNote("");
+    setWrestler2NewNote("");
   };
 
   return (
