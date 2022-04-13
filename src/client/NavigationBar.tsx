@@ -98,6 +98,9 @@ export default function NavigationBar() {
               Admin Panel
             </button>
           )}
+          <button className="btn btn-outline-info">
+            <a href="https://youtu.be/lsuBHYBj6gE" target="_blank">Warm Up</a>
+          </button>
           <button className="btn btn-outline-success" onClick={logout}>
             Logout
           </button>

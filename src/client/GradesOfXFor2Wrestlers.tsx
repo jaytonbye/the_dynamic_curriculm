@@ -80,6 +80,7 @@ function GradesOfXFor2Wrestlers(props: any) {
   //     );
   // }
 
+
   const onWrestler1GradeChange = (event: any) => {
     setWrestler1NewGrade((previousState: any) => ({
       ...previousState,
