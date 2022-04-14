@@ -99,7 +99,7 @@ export default function NavigationBar() {
             </button>
           )}
           <button className="btn btn-outline-info">
-            <a href="https://youtu.be/K6lIPk6dPjU" target="_blank">Warm Up</a>
+            <a href="https://www.youtube.com/watch?v=J6oUYvNDn2Q" target="_blank">Warm Up</a>
           </button>
           <button className="btn btn-outline-success" onClick={logout}>
             Logout
