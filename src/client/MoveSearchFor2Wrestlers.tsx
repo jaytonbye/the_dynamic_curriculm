@@ -328,6 +328,4 @@ function MoveSearchFor2Wrestlers(props: any) {
   );
 }
 
-//this is a useless comment
-
 export default MoveSearchFor2Wrestlers;
