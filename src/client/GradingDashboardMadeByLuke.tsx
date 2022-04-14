@@ -32,9 +32,9 @@ interface AllUserVideos {
 }
 
 /*
-	This interface represents all the state of this component
-	batched into one object.  This helps prevent unecessary re-renders
-	and prevents state from falling out of sync.
+  This interface represents all the state of this component
+  batched into one object.  This helps prevent unecessary re-renders
+  and prevents state from falling out of sync.
 */
 
 interface ComponentState {
@@ -48,8 +48,8 @@ interface ComponentState {
 }
 
 /*
-	This interface reprensents the arguments for the two utility 
-	functions used to calculate the earned and next items to display
+  This interface reprensents the arguments for the two utility 
+  functions used to calculate the earned and next items to display
 */
 
 interface CalcArguments {
@@ -59,7 +59,7 @@ interface CalcArguments {
 }
 
 /*
-	Utility function meant to obtain the current earned item
+  Utility function meant to obtain the current earned item
 */
 
 function calcCurrentItem({
@@ -83,7 +83,7 @@ function calcCurrentItem({
 }
 
 /*
-	Utility function meant to obtain the next earnable item
+  Utility function meant to obtain the next earnable item
 */
 
 function calcNextItem({
@@ -146,16 +146,7 @@ export default function TestCard(props: { UID: number }) {
         headers: { Authorization: `Bearer ${token}` },
       }),
     ])
-      .then((resArray) => {
-        return Promise.all(resArray.map((res) => {
-          if (res.status !== 200) {
-            alert("1 or more wrestlers does not exist");
-
-          } else {
-            return res.json()
-          }
-        }))
-      })
+      .then((resArray) => Promise.all(resArray.map((res) => res.json())))
       .then(([personalInfo, earnableItems, wrestlerGrades, videos]) => {
         // get total points earned
         const totalPoints = wrestlerGrades.reduce(
@@ -240,7 +231,7 @@ export default function TestCard(props: { UID: number }) {
                   {Math.ceil(
                     (item.percentage_of_total_points_needed *
                       state.totalPointsAvailable) /
-                      100
+                    100
                   )}{" "}
                   <small className="text-muted">points req.</small>
                 </span>
