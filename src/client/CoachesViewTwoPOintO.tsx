@@ -495,6 +495,6 @@ const CoachesView = (props: CoachesViewProps) => {
   );
 };
 
-interface CoachesViewProps {}
+interface CoachesViewProps { }
 
 export default CoachesView;

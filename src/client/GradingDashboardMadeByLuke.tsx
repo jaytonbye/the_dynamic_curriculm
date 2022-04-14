@@ -150,7 +150,14 @@ export default function TestCard(props: { UID: number }) {
         headers: { Authorization: `Bearer ${token}` },
       }),
     ])
-      .then((resArray) => Promise.all(resArray.map((res) => res.json())))
+      .then((resArray) => Promise.all(resArray.map((res) => {
+        if (res.status === 500) {
+          alert("Internal Server Error");
+          console.log("it workeddddd");
+        } else {
+          return res.json()
+        }
+      })))
       .then(([personalInfo, earnableItems, wrestlerGrades, videos]) => {
         // get total points earned
         const totalPoints = wrestlerGrades.reduce(
