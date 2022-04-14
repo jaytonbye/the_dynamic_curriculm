@@ -146,7 +146,16 @@ export default function TestCard(props: { UID: number }) {
         headers: { Authorization: `Bearer ${token}` },
       }),
     ])
-      .then((resArray) => Promise.all(resArray.map((res) => res.json())))
+      .then((resArray) => {
+        return Promise.all(resArray.map((res) => {
+          if (res.status !== 200) {
+            alert("1 or more wrestlers does not exist");
+
+          } else {
+            return res.json()
+          }
+        }))
+      })
       .then(([personalInfo, earnableItems, wrestlerGrades, videos]) => {
         // get total points earned
         const totalPoints = wrestlerGrades.reduce(
