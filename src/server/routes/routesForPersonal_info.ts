@@ -15,6 +15,7 @@ router.get("/person/:id?", async (req, res) => {
       res.json(await db.personal_info.singlePerson(id));
     }
   } catch (e) {
+    console.log("Error in /person/:id? route");
     console.log(e);
     res.sendStatus(500);
   }

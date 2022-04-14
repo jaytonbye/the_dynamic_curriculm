@@ -11,6 +11,7 @@ router.get("/allCurrentGradesForASingleWrestler/:user_id", async (req, res) => {
   try {
     res.json(await db.grades.allCurrentGradesForASingleWrestler(user_id));
   } catch (error) {
+    console.log("error in /allCurrentGradesForASingleWrestler/:user_id");
     console.log(error);
     res.sendStatus(500);
   }

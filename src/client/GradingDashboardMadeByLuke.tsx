@@ -48,7 +48,7 @@ interface ComponentState {
 }
 
 /*
-  This interface reprensents the arguments for the two utility 
+  This interface represents the arguments for the two utility 
   functions used to calculate the earned and next items to display
 */
 
@@ -69,6 +69,10 @@ function calcCurrentItem({
 }: CalcArguments) {
   let pointsRequiredToEarnThisItem = 0;
   let itemIndex = 0;
+  if (earnableItems.length === 0) {
+    alert("No items to earn");
+    return "";
+  }
   for (let x = 0; x < earnableItems.length; x++) {
     pointsRequiredToEarnThisItem =
       (earnableItems[x].percentage_of_total_points_needed *

@@ -10,7 +10,9 @@ router.get("/:id", async (req, res, next) => {
   try {
     res.json(await db.EarnableItemsQueries.selectAllFromEarnable(ID));
   } catch (error) {
+    console.log("error in EarnableItemsRoute.js");
     console.log(error);
+    res.sendStatus(500);
   }
 });
 

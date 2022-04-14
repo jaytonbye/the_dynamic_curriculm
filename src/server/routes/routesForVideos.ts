@@ -6,7 +6,13 @@ const router = Router();
 
 router.get("/:id?", async (req, res) => {
   let UID = Number(req.params.id);
-  res.json(await db.videos.allVideosRelevantToUser(UID));
+  try {
+    res.json(await db.videos.allVideosRelevantToUser(UID));
+  } catch (error) {
+    console.log("Error in /videos/:id? route");
+    console.log(error);
+    res.sendStatus(500);
+  }
 });
 
 router.get("/blah/:id?", async (req, res) => {
