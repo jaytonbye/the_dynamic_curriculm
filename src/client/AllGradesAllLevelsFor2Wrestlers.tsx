@@ -1,6 +1,8 @@
 import React from "react";
 import Moment from "react-moment";
 import classNames from "classnames";
+import { useHistory } from "react-router-dom";
+
 
 export default function AllGradesAllLevels(props: any) {
   const [grades, setGrades] = React.useState([]);
@@ -16,6 +18,7 @@ export default function AllGradesAllLevels(props: any) {
 
   let UID = sessionStorage.getItem("UID");
   let token = sessionStorage.getItem("token");
+  const history = useHistory();
 
   const onWrestler1GradeChange = (event: any) => {
     setWrestler1NewGrade(event.target.value);
@@ -82,14 +85,24 @@ export default function AllGradesAllLevels(props: any) {
   };
 
   React.useEffect(() => {
+
     fetch(
       `/api/grades/gradesForTwoWresltersOnAllLevels/${props.wrestler1Id}&${props.wrestler2Id}&${UID}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 500) {
+          alert("one or both of the users does not exist please select from the drop down menu to avoid this error");
+          history.push("/WrestlersView");
+        } else {
+          return res.json();
+        }
+      }
+      )
       .then((results) => {
+        console.log(results);
         setGrades(results);
       });
   }, [uselessState2]);

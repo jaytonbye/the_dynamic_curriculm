@@ -38,6 +38,7 @@ const CoachesView = (props: CoachesViewProps) => {
   let UID = sessionStorage.getItem("UID");
 
   //for autocomplete of wrestler names
+  // Bull shit hack that needs to be fixed
   const onWrestler1Change = (event: any) => {
     let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
     let wrestlerIdAfterSlice = event.target.value.slice(
@@ -247,9 +248,9 @@ const CoachesView = (props: CoachesViewProps) => {
         <GradingKey />
         <p>
           <strong>
-            Grading should be strict. It's better to undergrade and have a
-            wrestler end up drilling something more than neccessary, than it is
-            to move past something that they haven't truely mastered. The
+            Grading should be strict. It's better to under-grade and have a
+            wrestler end up drilling something more than necessary, than it is
+            to move past something that they haven't truly mastered. The
             purpose of the curriculum is to serve as a path to MASTERY. Do not
             rush it!
           </strong>
