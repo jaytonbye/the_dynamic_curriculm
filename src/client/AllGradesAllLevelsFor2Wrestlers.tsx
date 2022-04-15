@@ -6,10 +6,10 @@ import { useHistory } from "react-router-dom";
 
 export default function AllGradesAllLevels(props: any) {
   const [grades, setGrades] = React.useState([]);
-  const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
-  const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
-  const [wrestler1NewNote, setWrestler1NewNote] = React.useState<string>();
-  const [wrestler2NewNote, setWrestler2NewNote] = React.useState<string>();
+  const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState<any>({});
+  const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState<any>({});
+  const [wrestler1NewNote, setWrestler1NewNote] = React.useState<any>({});
+  const [wrestler2NewNote, setWrestler2NewNote] = React.useState<any>({});
   const [uselessState2, setUselessState2] = React.useState(0);
 
   const incrementUselessState2 = () => {
@@ -20,18 +20,50 @@ export default function AllGradesAllLevels(props: any) {
   let token = sessionStorage.getItem("token");
   const history = useHistory();
 
+  console.log({ wrestler1NewGrade });
+  console.log({ wrestler2NewGrade });
+  console.log({ wrestler1NewNote });
+  console.log({ wrestler2NewNote });
+
+  // This is where I use the trick to make the states object so that each thing is it own state
+
   const onWrestler1GradeChange = (event: any) => {
-    setWrestler1NewGrade(event.target.value);
-  };
-  const onWrestler1NoteChange = (event: any) => {
-    setWrestler1NewNote(event.target.value);
-  };
+    setWrestler1NewGrade((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
   const onWrestler2GradeChange = (event: any) => {
-    setWrestler2NewGrade(event.target.value);
-  };
+    setWrestler2NewGrade((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
+  const onWrestler1NoteChange = (event: any) => {
+    setWrestler1NewNote((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
   const onWrestler2NoteChange = (event: any) => {
-    setWrestler2NewNote(event.target.value);
-  };
+    setWrestler2NewNote((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
+
 
   let submitGrade = (
     video_id: number,
@@ -130,6 +162,7 @@ export default function AllGradesAllLevels(props: any) {
             <th>Submit button</th>
           </tr>
         </thead>
+
         <tbody>
           {grades.map((video) => {
             return (
@@ -208,6 +241,7 @@ export default function AllGradesAllLevels(props: any) {
                     onChange={onWrestler1GradeChange}
                     style={{ width: "50px" }}
                     placeholder={`0-${video.maximum_grade}`}
+                    name={`${video.id}`}
                   />
                 </td>
                 <td
@@ -225,6 +259,7 @@ export default function AllGradesAllLevels(props: any) {
                     cols={10}
                     onChange={onWrestler1NoteChange}
                     placeholder="add notes"
+                    name={`${video.id}`}
                   ></textarea>
                 </td>
                 <td
@@ -240,11 +275,12 @@ export default function AllGradesAllLevels(props: any) {
                   <button
                     className="btn btn-primary"
                     onClick={() => {
+                      // We need to get the specific value that corresponds to the key because we use theTrick ;) and it's and the state is an object
                       submitGrade(
                         video.id,
                         props.wrestler1Id,
-                        wrestler1NewGrade,
-                        wrestler1NewNote,
+                        Number(wrestler1NewGrade[video.id]),
+                        wrestler1NewNote[video.id],
                         Number(UID),
                         video.maximum_grade
                       );
@@ -312,6 +348,7 @@ export default function AllGradesAllLevels(props: any) {
                     onChange={onWrestler2GradeChange}
                     style={{ width: "50px" }}
                     placeholder={`0-${video.maximum_grade}`}
+                    name={`${video.id}`}
                   />
                 </td>
                 <td
@@ -329,6 +366,7 @@ export default function AllGradesAllLevels(props: any) {
                     cols={10}
                     onChange={onWrestler2NoteChange}
                     placeholder="add notes"
+                    name={`${video.id}`}
                   ></textarea>
                 </td>
                 <td
@@ -344,11 +382,12 @@ export default function AllGradesAllLevels(props: any) {
                   <button
                     className="btn btn-primary"
                     onClick={() => {
+                      // We need to get the specific value that corresponds to the key because we use theTrick ;) and it's and the state is an object
                       submitGrade(
                         video.id,
                         props.wrestler2Id,
-                        wrestler2NewGrade,
-                        wrestler2NewNote,
+                        Number(wrestler2NewGrade[video.id]),
+                        wrestler2NewNote[video.id],
                         Number(UID),
                         video.maximum_grade
                       );
