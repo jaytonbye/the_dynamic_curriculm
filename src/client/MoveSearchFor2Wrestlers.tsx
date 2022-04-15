@@ -18,6 +18,11 @@ function MoveSearchFor2Wrestlers(props: any) {
     setUselessState4(uselessState4 + 1);
   };
 
+  // Upon further examination I see that we probably don't need to us theTrick for the state to be updated.
+  // There is only one object for each wrestler so I dont see how the state could linger here?
+
+
+
   let token = sessionStorage.getItem("token");
   let UID = sessionStorage.getItem("UID");
 

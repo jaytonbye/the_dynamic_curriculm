@@ -15,10 +15,10 @@ const CoachesView = (props: CoachesViewProps) => {
   const [personal_info, setPersonalInfo] = React.useState([]);
   const [wrestler1Id, setWrestler1Id] = React.useState<number>();
   const [wrestler2Id, setWrestler2Id] = React.useState<number>();
-  const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
-  const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
-  const [wrestler1NewNote, setWrestler1NewNote] = React.useState();
-  const [wrestler2NewNote, setWrestler2NewNote] = React.useState();
+  const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState<any>({});
+  const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState<any>({});
+  const [wrestler1NewNote, setWrestler1NewNote] = React.useState<any>({});
+  const [wrestler2NewNote, setWrestler2NewNote] = React.useState<any>({});
   const [level, setLevel] = React.useState();
   const [
     gradesForBothWrestlersOnCurrentLevel,
@@ -55,19 +55,43 @@ const CoachesView = (props: CoachesViewProps) => {
     );
     setWrestler2Id(Number(wrestlerIdAfterSlice));
   };
-
   const onWrestler1GradeChange = (event: any) => {
-    setWrestler1NewGrade(event.target.value);
-  };
-  const onWrestler1NoteChange = (event: any) => {
-    setWrestler1NewNote(event.target.value);
-  };
+    setWrestler1NewGrade((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
   const onWrestler2GradeChange = (event: any) => {
-    setWrestler2NewGrade(event.target.value);
-  };
+    setWrestler2NewGrade((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
+  const onWrestler1NoteChange = (event: any) => {
+    setWrestler1NewNote((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
   const onWrestler2NoteChange = (event: any) => {
-    setWrestler2NewNote(event.target.value);
-  };
+    setWrestler2NewNote((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
+
   const onLevelChange = (event: any) => {
     setLevel(event.target.value);
   };
@@ -189,7 +213,7 @@ const CoachesView = (props: CoachesViewProps) => {
           video_id: video_id,
           coach_user_id: UID,
           student_user_id: user_id,
-          grade: grade,
+          grade: Number(grade),
           movement_notes: note,
         }),
       };
@@ -389,6 +413,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     <label>New grade: </label>
                     <input
                       type="number"
+                      name={`${move.id}`}
                       onChange={onWrestler1GradeChange}
                       placeholder="0, 1, 2, or 3"
                     />
@@ -397,6 +422,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     <textarea
                       rows={5}
                       cols={30}
+                      name={`${move.id}`}
                       onChange={onWrestler1NoteChange}
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
@@ -406,8 +432,8 @@ const CoachesView = (props: CoachesViewProps) => {
                         submitGrade(
                           move.id,
                           wrestler1Id,
-                          wrestler1NewGrade,
-                          wrestler1NewNote,
+                          Number(wrestler1NewGrade[move.id]),
+                          wrestler1NewNote[move.id],
                           move.maximum_grade
                         );
                       }}
@@ -445,6 +471,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     <label>New grade: </label>
                     <input
                       type="number"
+                      name={`${move.id}`}
                       onChange={onWrestler2GradeChange}
                       placeholder="0, 1, 2, or 3"
                     />
@@ -453,6 +480,7 @@ const CoachesView = (props: CoachesViewProps) => {
                     <textarea
                       rows={5}
                       cols={30}
+                      name={`${move.id}`}
                       onChange={onWrestler2NoteChange}
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
@@ -462,8 +490,8 @@ const CoachesView = (props: CoachesViewProps) => {
                         submitGrade(
                           move.id,
                           wrestler2Id,
-                          wrestler2NewGrade,
-                          wrestler2NewNote,
+                          Number(wrestler2NewGrade[move.id]),
+                          wrestler2NewNote[move.id],
                           move.maximum_grade
                         );
                       }}

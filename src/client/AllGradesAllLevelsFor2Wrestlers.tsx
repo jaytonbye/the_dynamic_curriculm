@@ -20,10 +20,6 @@ export default function AllGradesAllLevels(props: any) {
   let token = sessionStorage.getItem("token");
   const history = useHistory();
 
-  console.log({ wrestler1NewGrade });
-  console.log({ wrestler2NewGrade });
-  console.log({ wrestler1NewNote });
-  console.log({ wrestler2NewNote });
 
   // This is where I use the trick to make the states object so that each thing is it own state
 

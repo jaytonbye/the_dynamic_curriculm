@@ -17,11 +17,6 @@ function GradesOfXFor2Wrestlers(props: any) {
 
   let token = sessionStorage.getItem("token");
 
-  console.log({ wrestler1NewGrade });
-  console.log({ wrestler2NewGrade });
-  console.log({ wrestler1NewNote });
-  console.log({ wrestler2NewNote });
-
   const onGradeChange = (event: any) => {
     let grade = event.target.value;
     setGradeSelectedForSearch(grade);
