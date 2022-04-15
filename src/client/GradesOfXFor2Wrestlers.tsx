@@ -5,9 +5,9 @@ import classNames from "classnames";
 function GradesOfXFor2Wrestlers(props: any) {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState<any>({});
-  const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState();
-  const [wrestler1NewNote, setWrestler1NewNote] = React.useState<string>();
-  const [wrestler2NewNote, setWrestler2NewNote] = React.useState<string>();
+  const [wrestler2NewGrade, setWrestler2NewGrade] = React.useState<any>({});
+  const [wrestler1NewNote, setWrestler1NewNote] = React.useState<any>({});
+  const [wrestler2NewNote, setWrestler2NewNote] = React.useState<any>({});
   const [uselessState6, setUselessState6] = React.useState(0);
   const [gradeSelectedForSearch, setGradeSelectedForSearch] = React.useState();
 
@@ -16,6 +16,11 @@ function GradesOfXFor2Wrestlers(props: any) {
   };
 
   let token = sessionStorage.getItem("token");
+
+  console.log({ wrestler1NewGrade });
+  console.log({ wrestler2NewGrade });
+  console.log({ wrestler1NewNote });
+  console.log({ wrestler2NewNote });
 
   const onGradeChange = (event: any) => {
     let grade = event.target.value;
@@ -50,52 +55,43 @@ function GradesOfXFor2Wrestlers(props: any) {
     }
   }, [uselessState6]);
 
-  //     const [arrayOfStuff, setArrayOfStuff] = React.useState([1, 2, 3]);
-  //     const [theText, setTheText] = useState({});
-
-  //     let onChangeTextForThisDiv = (e: any) => {
-  // setTheText((previousState) => ({
-  //     ...previousState,
-  //     [e.target.name]: e.target.value,
-  // }));
-  //     };
-
-  //     return (
-  //         <div>
-  //             {arrayOfStuff.map((thing) => {
-  //                 return (
-  //                     <>
-  //                         <div>This is thing {thing}</div>
-  //                         <input
-  //                             type="text"
-  //                             onChange={onChangeTextForThisDiv}
-  //                             name={String(thing)}
-  //                         />
-  //                         <h1>You Just Typed </h1>
-  //                     </>
-  //                 );
-  //             })}
-  //             ;
-  //         </div>
-  //     );
-  // }
-
 
   const onWrestler1GradeChange = (event: any) => {
-    setWrestler1NewGrade((previousState: any) => ({
-      ...previousState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-  const onWrestler1NoteChange = (event: any) => {
-    setWrestler1NewNote(event.target.value);
-  };
+    setWrestler1NewGrade((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
   const onWrestler2GradeChange = (event: any) => {
-    setWrestler2NewGrade(event.target.value);
-  };
+    setWrestler2NewGrade((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
+  const onWrestler1NoteChange = (event: any) => {
+    setWrestler1NewNote((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
   const onWrestler2NoteChange = (event: any) => {
-    setWrestler2NewNote(event.target.value);
-  };
+    setWrestler2NewNote((prevState: any) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
+    }
+    )
+  }
 
   let submitGrade = (
     video_id: number,
@@ -222,7 +218,7 @@ function GradesOfXFor2Wrestlers(props: any) {
 
                     <label>New grade: </label>
                     <input
-                      name={`nameForWrestler1Grade${move.id}`}
+                      name={`${move.id}`}
                       type="number"
                       onChange={onWrestler1GradeChange}
                       placeholder="0, 1, 2, or 3"
@@ -232,6 +228,7 @@ function GradesOfXFor2Wrestlers(props: any) {
                     <textarea
                       rows={5}
                       cols={30}
+                      name={`${move.id}`}
                       onChange={onWrestler1NoteChange}
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
@@ -242,8 +239,8 @@ function GradesOfXFor2Wrestlers(props: any) {
                         submitGrade(
                           move.id,
                           props.wrestler1Id,
-                          wrestler1NewGrade[`nameForWrestler1Grade${move.id}`],
-                          wrestler1NewNote,
+                          wrestler1NewGrade[move.id],
+                          wrestler1NewNote[move.id],
                           move.maximum_grade
                         );
                       }}
@@ -281,7 +278,7 @@ function GradesOfXFor2Wrestlers(props: any) {
 
                     <label>New grade: </label>
                     <input
-                      name={`nameForWrestler2Button${move.id}`}
+                      name={`${move.id}`}
                       type="number"
                       onChange={onWrestler2GradeChange}
                       placeholder="0, 1, 2, or 3"
@@ -291,6 +288,7 @@ function GradesOfXFor2Wrestlers(props: any) {
                     <textarea
                       rows={5}
                       cols={30}
+                      name={`${move.id}`}
                       onChange={onWrestler2NoteChange}
                     ></textarea>
                     <div className="" style={{ width: "50%" }}></div>
@@ -303,8 +301,8 @@ function GradesOfXFor2Wrestlers(props: any) {
                         submitGrade(
                           move.id,
                           props.wrestler2Id,
-                          wrestler2NewGrade,
-                          wrestler2NewNote,
+                          wrestler2NewGrade[move.id],
+                          wrestler2NewNote[move.id],
                           move.maximum_grade
                         );
                       }}
