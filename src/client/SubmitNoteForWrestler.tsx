@@ -107,19 +107,26 @@ export default function SubmitNoteForWrestler(props: any) {
           displayed when he logs in:
         </strong>
       </label>
-      <textarea
-        rows={10}
-        cols={10}
-        onChange={handleChange}
-        placeholder="add notes"
-      ></textarea>
-      <button
-        onClick={() => {
-          submitNote(notes, UID, props.wrestlerID);
-        }}
-      >
-        Submit Note!
-      </button>
+      <hr />
+      <div className="d-flex justify-content-center">
+        <textarea
+          rows={10}
+          cols={99}
+          onChange={handleChange}
+          placeholder="add notes"
+        ></textarea>
+      </div>
+
+      <div className="d-flex justify-content-center">
+        <button
+          className="btn btn-primary my-2 w-75"
+          onClick={() => {
+            submitNote(notes, UID, props.wrestlerID);
+          }}
+        >
+          Submit Note!
+        </button>
+      </div>
     </>
   );
 }
