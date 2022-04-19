@@ -3,7 +3,6 @@ import Moment from "react-moment";
 import classNames from "classnames";
 import { useHistory } from "react-router-dom";
 
-
 export default function AllGradesAllLevels(props: any) {
   const [grades, setGrades] = React.useState([]);
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState<any>({});
@@ -20,7 +19,6 @@ export default function AllGradesAllLevels(props: any) {
   let token = sessionStorage.getItem("token");
   const history = useHistory();
 
-
   // This is where I use the trick to make the states object so that each thing is it own state
 
   const onWrestler1GradeChange = (event: any) => {
@@ -29,37 +27,32 @@ export default function AllGradesAllLevels(props: any) {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
+    });
+  };
   const onWrestler2GradeChange = (event: any) => {
     setWrestler2NewGrade((prevState: any) => {
       return {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
+    });
+  };
   const onWrestler1NoteChange = (event: any) => {
     setWrestler1NewNote((prevState: any) => {
       return {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
+    });
+  };
   const onWrestler2NoteChange = (event: any) => {
     setWrestler2NewNote((prevState: any) => {
       return {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
-
+    });
+  };
 
   let submitGrade = (
     video_id: number,
@@ -107,13 +100,9 @@ export default function AllGradesAllLevels(props: any) {
         }
       });
     }
-    // clears the state of the notes, so we don't accidentally enter the wrong notes for the next move.
-    setWrestler1NewNote("");
-    setWrestler2NewNote("");
   };
 
   React.useEffect(() => {
-
     fetch(
       `/api/grades/gradesForTwoWresltersOnAllLevels/${props.wrestler1Id}&${props.wrestler2Id}&${UID}`,
       {
@@ -122,13 +111,14 @@ export default function AllGradesAllLevels(props: any) {
     )
       .then((res) => {
         if (res.status === 500) {
-          alert("one or both of the users does not exist please select from the drop down menu to avoid this error");
+          alert(
+            "one or both of the users does not exist please select from the drop down menu to avoid this error"
+          );
           history.push("/WrestlersView");
         } else {
           return res.json();
         }
-      }
-      )
+      })
       .then((results) => {
         console.log(results);
         setGrades(results);
