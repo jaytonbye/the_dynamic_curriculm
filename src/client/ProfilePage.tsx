@@ -5,8 +5,8 @@ function Login() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const history = useHistory();
-  let UID = sessionStorage.getItem("UID");
-  let token = sessionStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
+  let token = localStorage.getItem("token");
 
   const handleCreateProfile = (e: any) => {
     e.preventDefault();

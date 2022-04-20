@@ -13,8 +13,8 @@ const ShirtSelector: React.FC = ({ statesFromAddItemAdminPage, setStatesFromAddI
     // Add an item to the database
 
     const onSubmitItem = () => {
-        let token = sessionStorage.getItem("token");
-        let UID = Number(sessionStorage.getItem("UID"));
+        let token = localStorage.getItem("token");
+        let UID = Number(localStorage.getItem("UID"));
         const requestOptions = {
             method: "POST",
             headers: {
@@ -42,7 +42,7 @@ const ShirtSelector: React.FC = ({ statesFromAddItemAdminPage, setStatesFromAddI
     // potentially edit a item
 
     // const onEditMove = (id: number) => {
-    //     let token = sessionStorage.getItem("token");
+    //     let token = localStorage.getItem("token");
     //     const requestOptions = {
     //         method: "PUT",
     //         headers: {
@@ -73,7 +73,7 @@ const ShirtSelector: React.FC = ({ statesFromAddItemAdminPage, setStatesFromAddI
     // Delete an item
 
     const onDeleteItem = (id: number) => {
-        let token = sessionStorage.getItem("token");
+        let token = localStorage.getItem("token");
         const requestOptions = {
             method: "DELETE",
             headers: {

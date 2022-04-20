@@ -67,7 +67,7 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
   const [allLoginsForWrestler2, setAllLoginsForWrestler2] = React.useState([]);
 
   let history = useHistory();
-  let token = sessionStorage.getItem("token");
+  let token = localStorage.getItem("token");
   let wrestler1UID = props.wrestler1UID;
   let wrestler2UID = props.wrestler2UID;
 
@@ -148,8 +148,8 @@ function GradingDashboardFor2WrestlersTwpPointO(props: any) {
   }, [props.wrestler2UID]);
 
   let logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("UID");
+    localStorage.removeItem("token");
+    localStorage.removeItem("UID");
     history.push("/");
   };
 

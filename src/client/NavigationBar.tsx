@@ -5,7 +5,7 @@ export default function NavigationBar() {
   const [counter, setCounter] = React.useState(0);
   const [userRole, setUserRole] = React.useState("");
 
-  let UID = Number(sessionStorage.getItem("UID"));
+  let UID = Number(localStorage.getItem("UID"));
 
   React.useEffect(() => {
     fetch(`/api/users/${UID}`)
@@ -17,8 +17,8 @@ export default function NavigationBar() {
 
   let history = useHistory();
   let logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("UID");
+    localStorage.removeItem("token");
+    localStorage.removeItem("UID");
     history.push("/");
   };
 

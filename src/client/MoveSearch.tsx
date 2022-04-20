@@ -5,8 +5,8 @@ function MoveSearch() {
   let [searchedMoveId, setSearchedMoveId] = React.useState();
   let [searchedMoveObject, setSearchedMoveObject] = React.useState<any>({});
 
-  let UID = sessionStorage.getItem("UID");
-  let token = sessionStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
+  let token = localStorage.getItem("token");
 
   let onMoveChange = (event: any) => {
     let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;

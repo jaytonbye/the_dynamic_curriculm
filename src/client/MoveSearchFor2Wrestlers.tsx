@@ -23,8 +23,8 @@ function MoveSearchFor2Wrestlers(props: any) {
 
 
 
-  let token = sessionStorage.getItem("token");
-  let UID = sessionStorage.getItem("UID");
+  let token = localStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
 
   let onMoveChange = (event: any) => {
     let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;

@@ -34,7 +34,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
   let UID = wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO
     ? wrestlerIdFromGradingDashBoardForTwoWrestlersTwoPointO
     : console.log("UID wasn't passed correctly");
-  let token = sessionStorage.getItem("token");
+  let token = localStorage.getItem("token");
   const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>(
     defaultInfoState
   );
@@ -56,7 +56,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
       .then((res) => res.json())
       .then((results: Array<Object> | any) => {
         setUserItems(results);
-        (function () {})();
+        (function () { })();
       });
   }, []);
 
@@ -165,12 +165,12 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
       const item = itemsSortedByPercentOfTotalPoints[theIndex];
       const lastItem =
         itemsSortedByPercentOfTotalPoints[
-          itemsSortedByPercentOfTotalPoints.length - 1
+        itemsSortedByPercentOfTotalPoints.length - 1
         ];
 
       if (
         (item.percentage_of_total_points_needed / 100) *
-          Number(totalPointsAvailable) >
+        Number(totalPointsAvailable) >
         totalPoints
       ) {
         console.log({ itemsSortedByPercentOfTotalPoints });
@@ -178,9 +178,8 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
         setCurrentItem(
           !itemsSortedByPercentOfTotalPoints[theIndex - 1]
             ? `${itemsSortedByPercentOfTotalPoints[0].item_color} ${itemsSortedByPercentOfTotalPoints[0].item_name}`
-            : `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${
-                itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
-              }`
+            : `${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_color} ${itemsSortedByPercentOfTotalPoints[theIndex - 1].item_name
+            }`
         );
 
         setNextItem(
@@ -191,20 +190,20 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
 
         let mathForNextItem = !itemsSortedByPercentOfTotalPoints[theIndex + 1]
           ? (itemsSortedByPercentOfTotalPoints[theIndex]
-              .percentage_of_total_points_needed /
-              100) *
-            Number(totalPointsAvailable)
+            .percentage_of_total_points_needed /
+            100) *
+          Number(totalPointsAvailable)
           : (itemsSortedByPercentOfTotalPoints[theIndex + 1]
-              .percentage_of_total_points_needed /
-              100) *
-            Number(totalPointsAvailable);
+            .percentage_of_total_points_needed /
+            100) *
+          Number(totalPointsAvailable);
 
         let answer = Math.floor(mathForNextItem - totalPoints);
         console.log({ answer });
         setPointsTillNextItem(answer);
       } else if (
         (item.percentage_of_total_points_needed / 100) *
-          Number(totalPointsAvailable) ===
+        Number(totalPointsAvailable) ===
         totalPoints
       ) {
         if (item) {
@@ -239,7 +238,7 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
                   {item.item_color} {item.item_name} (
                   {Math.round(
                     Number(totalPointsAvailable) *
-                      (item.percentage_of_total_points_needed / 100)
+                    (item.percentage_of_total_points_needed / 100)
                   )}{" "}
                   points)
                 </h6>
@@ -262,16 +261,14 @@ const WayneCarlsGradingDashboardForTwoWrestlers: React.FC<Props> = ({
           Number of points until{" "}
           <strong>
             {nextItem === "Place Holder Item"
-              ? `${
-                  !itemsSortedByPercentOfTotalPoints[1]
-                    ? "A different Color Place Holder"
-                    : itemsSortedByPercentOfTotalPoints[1]
-                } 
-                    ${
-                      !itemsSortedByPercentOfTotalPoints[1]
-                        ? "A different Name Place Holder"
-                        : itemsSortedByPercentOfTotalPoints[1]
-                    }`
+              ? `${!itemsSortedByPercentOfTotalPoints[1]
+                ? "A different Color Place Holder"
+                : itemsSortedByPercentOfTotalPoints[1]
+              } 
+                    ${!itemsSortedByPercentOfTotalPoints[1]
+                ? "A different Name Place Holder"
+                : itemsSortedByPercentOfTotalPoints[1]
+              }`
               : nextItem}
           </strong>
           : <strong>{pointsTillNextItem}</strong>

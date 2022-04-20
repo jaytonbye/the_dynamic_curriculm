@@ -13,7 +13,7 @@ function CreateAccount() {
   const [wrestlersFirstName, setWrestlersFirstName] = React.useState("");
   const [wrestlersLastName, setWrestlersLastName] = React.useState("");
 
-  let UID = Number(sessionStorage.getItem("UID"));
+  let UID = Number(localStorage.getItem("UID"));
 
   //gets the user's tenant so that the wrestlers created are linked to the proper tenant
   React.useEffect(() => {
@@ -28,7 +28,7 @@ function CreateAccount() {
 
   const handleCreateAccount = (e: any) => {
     e.preventDefault();
-    let token = sessionStorage.getItem("token");
+    let token = localStorage.getItem("token");
     try {
       let requestOptions = {
         method: "POST",

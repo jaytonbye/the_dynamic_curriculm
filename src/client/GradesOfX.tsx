@@ -2,8 +2,8 @@ import React from "react";
 
 function GradesOfX() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
-  let token = sessionStorage.getItem("token");
-  let UID = sessionStorage.getItem("UID");
+  let token = localStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
 
   const onGradeChange = (event: any) => {
     let grade = event.target.value;

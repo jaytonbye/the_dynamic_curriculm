@@ -34,8 +34,8 @@ const CoachesView = (props: CoachesViewProps) => {
 
   let history = useHistory();
 
-  let token = sessionStorage.getItem("token");
-  let UID = sessionStorage.getItem("UID");
+  let token = localStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
 
   //for autocomplete of wrestler names
   // Bull shit hack that needs to be fixed
@@ -519,6 +519,6 @@ const CoachesView = (props: CoachesViewProps) => {
   );
 };
 
-interface CoachesViewProps {}
+interface CoachesViewProps { }
 
 export default CoachesView;

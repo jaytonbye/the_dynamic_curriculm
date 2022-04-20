@@ -15,8 +15,8 @@ export default function AllGradesAllLevels(props: any) {
     setUselessState2(uselessState2 + 1);
   };
 
-  let UID = sessionStorage.getItem("UID");
-  let token = sessionStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
+  let token = localStorage.getItem("token");
   const history = useHistory();
 
   // This is where I use the trick to make the states object so that each thing is it own state

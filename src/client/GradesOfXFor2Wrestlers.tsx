@@ -15,7 +15,7 @@ function GradesOfXFor2Wrestlers(props: any) {
     setUselessState6(uselessState6 + 1);
   };
 
-  let token = sessionStorage.getItem("token");
+  let token = localStorage.getItem("token");
 
   const onGradeChange = (event: any) => {
     let grade = event.target.value;

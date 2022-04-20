@@ -46,8 +46,8 @@ function CreateAccount() {
           email,
           password,
         }).then((data) => {
-          sessionStorage.setItem("token", data.token);
-          sessionStorage.setItem("UID", data.UID);
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("UID", data.UID);
         });
         history.push("/profilepage");
       });

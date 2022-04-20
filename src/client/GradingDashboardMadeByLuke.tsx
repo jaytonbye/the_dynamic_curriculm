@@ -112,7 +112,7 @@ function calcNextItem({
 }
 
 export default function TestCard(props: { UID: number }) {
-  let token = sessionStorage.getItem("token");
+  let token = localStorage.getItem("token");
 
   // one batched state to control unecessary re-renders
   // added a loading property to guarentee useEffect labeled "2"

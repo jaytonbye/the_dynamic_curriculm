@@ -6,8 +6,8 @@ export default function SubmitNoteForWrestler(props: any) {
   const [coachesUserInfo, setCoachesUserInfo] = React.useState([]);
   const [coachesPersonalInfo, setCoachesPersonalInfo] = React.useState([]);
 
-  let token = sessionStorage.getItem("token");
-  let UID = Number(sessionStorage.getItem("UID"));
+  let token = localStorage.getItem("token");
+  let UID = Number(localStorage.getItem("UID"));
 
   // Gets the coaches' user info.
   React.useEffect(() => {

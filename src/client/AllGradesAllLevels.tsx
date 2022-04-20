@@ -8,8 +8,8 @@ import GradingDashboard2pointO from "./GradingDashboard2pointO";
 export default function AllGradesAllLevels() {
   const [grades, setGrades] = React.useState([]);
 
-  let UID = sessionStorage.getItem("UID");
-  let token = sessionStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
+  let token = localStorage.getItem("token");
 
   React.useEffect(() => {
     fetch(`/api/grades/allCurrentGradesForASingleWrestler/${UID}`, {

@@ -19,11 +19,11 @@ function Login() {
       password,
     })
       .then((data) => {
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("UID", data.UID);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("UID", data.UID);
 
         // This is a bit hackish, as i'm letting them move forward if they have a token (not if the token is valid).
-        let token = sessionStorage.getItem("token");
+        let token = localStorage.getItem("token");
         let userID = data.UID;
 
         successfulLogin(userID);

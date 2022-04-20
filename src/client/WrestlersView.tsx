@@ -10,8 +10,8 @@ function WrestlersView() {
   const [moves, setMoves] = React.useState([]);
   const [levels, setLevels] = React.useState([]);
 
-  let token = sessionStorage.getItem("token");
-  let UID = Number(sessionStorage.getItem("UID"));
+  let token = localStorage.getItem("token");
+  let UID = Number(localStorage.getItem("UID"));
 
   React.useEffect(() => {
     fetch(`/api/videos/blah/${UID}`, {

@@ -8,9 +8,9 @@ import GradingDashboard2pointO from "./GradingDashboard2pointO";
 
 function SingleLevel() {
   const [movesAndGrades, setMovesAndGrades] = React.useState([]);
-  let token = sessionStorage.getItem("token");
+  let token = localStorage.getItem("token");
   let { level } = useParams<any>();
-  let UID = sessionStorage.getItem("UID");
+  let UID = localStorage.getItem("UID");
 
   //gets us all of the moves and grades for specific wrestler on specific level (currently user 3 level 1)
   React.useEffect(() => {

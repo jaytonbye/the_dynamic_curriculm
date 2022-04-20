@@ -27,8 +27,8 @@ const defaultInfoState = {
 }; //
 
 const GradingDashboard2pointO: React.FC<Props> = () => {
-  let UID = sessionStorage.getItem("UID");
-  let token = sessionStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
+  let token = localStorage.getItem("token");
 
   const [personalInfo, setPersonalInfo] = React.useState<IPersonalInfo>(
     defaultInfoState

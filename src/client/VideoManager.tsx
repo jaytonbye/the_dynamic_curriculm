@@ -29,8 +29,8 @@ export default function VideoManager() {
   };
 
   const onSubmitMove = () => {
-    let token = sessionStorage.getItem("token");
-    let UID = Number(sessionStorage.getItem("UID"));
+    let token = localStorage.getItem("token");
+    let UID = Number(localStorage.getItem("UID"));
     const requestOptions = {
       method: "POST",
       headers: {
@@ -58,7 +58,7 @@ export default function VideoManager() {
   };
 
   const onEditMove = (id: number) => {
-    let token = sessionStorage.getItem("token");
+    let token = localStorage.getItem("token");
     const requestOptions = {
       method: "PUT",
       headers: {
@@ -87,7 +87,7 @@ export default function VideoManager() {
   };
 
   const onDeleteMove = (id: number) => {
-    let token = sessionStorage.getItem("token");
+    let token = localStorage.getItem("token");
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -110,8 +110,8 @@ export default function VideoManager() {
 
   //gets us all of the moves in all levels.
   React.useEffect(() => {
-    let token = sessionStorage.getItem("token");
-    let UID = Number(sessionStorage.getItem("UID"));
+    let token = localStorage.getItem("token");
+    let UID = Number(localStorage.getItem("UID"));
     fetch(`/api/videos/${UID}`, {
       headers: { Authorization: `Bearer ${token}` },
     })

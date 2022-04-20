@@ -16,7 +16,7 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
   const [nextItemToBeEarned, setNextItemToBeEarned] = useState("You did it!");
 
   let UID = props.UID;
-  let token = sessionStorage.getItem("token");
+  let token = localStorage.getItem("token");
 
   React.useEffect(() => {
     fetch(`/api/personal_info/person/${UID}`, {
@@ -141,7 +141,7 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
                       {Math.ceil(
                         (item.percentage_of_total_points_needed *
                           totalPointsAvailable) /
-                          100
+                        100
                       )}{" "}
                       points required
                     </h6>

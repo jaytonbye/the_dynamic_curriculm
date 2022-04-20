@@ -21,8 +21,8 @@ function WrestlerDashboard() {
     setPointsNeededForNextShirtColor,
   ] = React.useState(0);
 
-  let UID = sessionStorage.getItem("UID");
-  let token = sessionStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
+  let token = localStorage.getItem("token");
 
   React.useEffect(() => {
     fetch(`/api/personal_info/person/${UID}`, {

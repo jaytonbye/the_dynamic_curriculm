@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-interface Props {}
+interface Props { }
 
 const ShirtDisplayer: React.FC<Props> = () => {
-  let UID = sessionStorage.getItem("UID");
-  const token = sessionStorage.getItem("token");
+  let UID = localStorage.getItem("UID");
+  const token = localStorage.getItem("token");
 
   const [itemsPlease, setItems] = useState([]);
 
@@ -25,7 +25,7 @@ const ShirtDisplayer: React.FC<Props> = () => {
   }, []);
 
   const onDeleteItem = (id: number) => {
-    let token = sessionStorage.getItem("token");
+    let token = localStorage.getItem("token");
     const requestOptions = {
       method: "DELETE",
       headers: {
