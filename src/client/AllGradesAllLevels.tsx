@@ -93,7 +93,7 @@ export default function AllGradesAllLevels() {
                     notGradeable: video.maximum_grade === 0,
                   })}
                 >
-                  <Moment fromNow>{video.created_at}</Moment>
+                  <Moment fromNow>{video.grade_created_at}</Moment>
                 </td>
               </tr>
             );

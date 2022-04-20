@@ -25,19 +25,23 @@ const singleGrade = async (id: number) => {
 const allCurrentGradesForASingleWrestler = async (user_id: number) => {
   return Query(
     `
-  Select *, (
-    Select grade from grades 
-    WHERE video_id=videos.id AND student_user_id=?
-    ORDER BY grades.created_at DESC Limit 1) as grade,
-    (
-    Select movement_notes from grades 
-    WHERE video_id=videos.id AND student_user_id=?
-    ORDER BY grades.created_at DESC Limit 1) as movement_notes
-    from videos
-    WHERE tenant=(Select tenant from users Where id=?)
-    ORDER BY curriculum_level, number_for_ordering;
+    Select *, (
+      Select grade from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as grade,
+      (
+      Select movement_notes from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as movement_notes,
+      (
+      Select created_at from grades 
+      WHERE video_id=videos.id AND student_user_id=?
+      ORDER BY grades.created_at DESC Limit 1) as grade_created_at
+      from videos
+      WHERE tenant=(Select tenant from users Where id=?)
+      ORDER BY curriculum_level, number_for_ordering;
     `,
-    [user_id, user_id, user_id]
+    [user_id, user_id, user_id, user_id]
   );
 };
 
