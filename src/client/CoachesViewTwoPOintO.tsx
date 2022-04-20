@@ -61,36 +61,32 @@ const CoachesView = (props: CoachesViewProps) => {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
+    });
+  };
   const onWrestler2GradeChange = (event: any) => {
     setWrestler2NewGrade((prevState: any) => {
       return {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
+    });
+  };
   const onWrestler1NoteChange = (event: any) => {
     setWrestler1NewNote((prevState: any) => {
       return {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
+    });
+  };
   const onWrestler2NoteChange = (event: any) => {
     setWrestler2NewNote((prevState: any) => {
       return {
         ...prevState,
         [event.target.name]: event.target.value,
       };
-    }
-    )
-  }
+    });
+  };
 
   const onLevelChange = (event: any) => {
     setLevel(event.target.value);
@@ -274,9 +270,8 @@ const CoachesView = (props: CoachesViewProps) => {
           <strong>
             Grading should be strict. It's better to under-grade and have a
             wrestler end up drilling something more than necessary, than it is
-            to move past something that they haven't truly mastered. The
-            purpose of the curriculum is to serve as a path to MASTERY. Do not
-            rush it!
+            to move past something that they haven't truly mastered. The purpose
+            of the curriculum is to serve as a path to MASTERY. Do not rush it!
           </strong>
         </p>
         <div className="card"></div>
@@ -524,6 +519,6 @@ const CoachesView = (props: CoachesViewProps) => {
   );
 };
 
-interface CoachesViewProps { }
+interface CoachesViewProps {}
 
 export default CoachesView;
