@@ -18,7 +18,7 @@ const CreatPlan = () => {
     e.preventDefault();
     fetch(`/api/lessonplans/addNewLessonPlan`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },      // getting malformed error!!!!! check
       body: JSON.stringify({
         planName,
         userId,
