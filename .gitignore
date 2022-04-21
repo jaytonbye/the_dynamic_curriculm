@@ -10,3 +10,5 @@ public/js/app.js
 
 #environment variables
 .env
+
+.DS_Store

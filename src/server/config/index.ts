@@ -11,6 +11,7 @@ export default {
     database: process.env.DB_DATABASE,
   },
   jwt: { secret: process.env.JWT_SECRET },
+
   mailgun: {
     apiKey: process.env.MAILGUN_API_KEY,
     domain: process.env.MAILGUN_DOMAIN,
