@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-interface Props { }
+interface Props {}
 
 const ShirtDisplayer: React.FC<Props> = () => {
   let UID = localStorage.getItem("UID");
@@ -25,25 +25,27 @@ const ShirtDisplayer: React.FC<Props> = () => {
   }, []);
 
   const onDeleteItem = (id: number) => {
-    let token = localStorage.getItem("token");
-    const requestOptions = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        id: id, //check to see if this can just be id
-      }),
-    };
-    fetch(`/api/earnableItems/delete/${id}`, requestOptions).then((res) => {
-      if (res.ok) {
-        alert("Video deleted");
-        window.location.reload();
-      } else {
-        alert("it didn't work!");
-      }
-    });
+    if (confirm("are you sure you want to delete this item?")) {
+      let token = localStorage.getItem("token");
+      const requestOptions = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: id, //check to see if this can just be id
+        }),
+      };
+      fetch(`/api/earnableItems/delete/${id}`, requestOptions).then((res) => {
+        if (res.ok) {
+          alert("Item deleted");
+          window.location.reload();
+        } else {
+          alert("it didn't work!");
+        }
+      });
+    }
   };
 
   return (

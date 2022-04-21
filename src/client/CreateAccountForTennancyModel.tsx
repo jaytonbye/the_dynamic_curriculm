@@ -27,40 +27,42 @@ function CreateAccount() {
   let history = useHistory();
 
   const handleCreateAccount = (e: any) => {
-    e.preventDefault();
-    let token = localStorage.getItem("token");
-    try {
-      let requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          role: createdAccountsRoll,
-          real_email: realEmail,
-          tenant: userTenant,
-          first_name: wrestlersFirstName,
-          last_name: wrestlersLastName,
-        }),
-      };
+    if (confirm("are you sure all of the wrestler's information is correct?")) {
+      e.preventDefault();
+      let token = localStorage.getItem("token");
+      try {
+        let requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            role: createdAccountsRoll,
+            real_email: realEmail,
+            tenant: userTenant,
+            first_name: wrestlersFirstName,
+            last_name: wrestlersLastName,
+          }),
+        };
 
-      fetch("/api/users/forAdminCreatedAccounts", requestOptions).then(
-        (data) => {
-          apiService("/auth/login", "POST", {
-            email,
-            password,
-          });
-          alert("The account was created!");
-          history.go(0);
-        }
-      );
-    } catch (error) {
-      alert("it didn't work");
-      // error is already logged from apiService
-      // so possibly use history object to navigate to error page?
+        fetch("/api/users/forAdminCreatedAccounts", requestOptions).then(
+          (data) => {
+            apiService("/auth/login", "POST", {
+              email,
+              password,
+            });
+            alert("The account was created!");
+            history.go(0);
+          }
+        );
+      } catch (error) {
+        alert("it didn't work");
+        // error is already logged from apiService
+        // so possibly use history object to navigate to error page?
+      }
     }
   };
 

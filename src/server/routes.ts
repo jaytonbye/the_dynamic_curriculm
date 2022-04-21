@@ -8,6 +8,7 @@ import { hasValidToken } from "./utils/tokenCheck";
 import Contact from "./routes/Contact";
 import routesForNotesFromCoachesForWrestlers from "./routes/routesForNotesFromCoachesForWrestlers";
 import routesForEarnableItems from "./routes/EarnableItemsRoute";
+import routesForLessonPlans from "./routes/routesForLessonPlans";
 
 const router = express.Router();
 
@@ -26,6 +27,6 @@ router.use(
   routesForNotesFromCoachesForWrestlers
 );
 router.use("/earnableItems", routesForEarnableItems);
-
+router.use("/lessonplans", routesForLessonPlans);
 
 export default router;

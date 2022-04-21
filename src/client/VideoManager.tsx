@@ -87,25 +87,31 @@ export default function VideoManager() {
   };
 
   const onDeleteMove = (id: number) => {
-    let token = localStorage.getItem("token");
-    const requestOptions = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        id: id, //check to see if this can just be id
-      }),
-    };
-    fetch(`/api/videos/${id}`, requestOptions).then((res) => {
-      if (res.ok) {
-        alert("Video deleted");
-        window.location.reload();
-      } else {
-        alert("it didn't work!");
-      }
-    });
+    if (
+      confirm(
+        "are you sure you want to delete this move? It will delete ALL of the grades associated with all wrestlers! BE CAREFUL!!!!!"
+      )
+    ) {
+      let token = localStorage.getItem("token");
+      const requestOptions = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: id, //check to see if this can just be id
+        }),
+      };
+      fetch(`/api/videos/${id}`, requestOptions).then((res) => {
+        if (res.ok) {
+          alert("Video deleted");
+          window.location.reload();
+        } else {
+          alert("it didn't work!");
+        }
+      });
+    }
   };
 
   //gets us all of the moves in all levels.
