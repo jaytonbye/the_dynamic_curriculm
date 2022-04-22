@@ -1,13 +1,14 @@
 import * as React from 'react';
 import NavigationBar from '../NavigationBar';
 import CreatePlan from './CreatePlan';
+import ViewPlans from './ViewPlans';
 
 const CreateAndEditPlan = () => {
 
   const [showOrHideCreateLessonPlan, setshowOrHideCreateLessonPlan] = React.useState(
     false
   );
-  const [showOrHideVideoManager, setShowOrHideVideoManager] = React.useState(
+  const [showOrHideAllPlans, setShowOrHideAllPlans] = React.useState(
     false
   );
   const [showOrHideItem, setShowOrHideItem] = React.useState(
@@ -16,15 +17,15 @@ const CreateAndEditPlan = () => {
 
   const showOrHideCreateLessonPlanFunc = () => {
     setshowOrHideCreateLessonPlan(!showOrHideCreateLessonPlan);
-    setShowOrHideVideoManager(false)
+    setShowOrHideAllPlans(false)
     setShowOrHideItem(false)
   };
 
-  // const showOrHideVideoManagerFunction = () => {
-  //   setShowOrHideVideoManager(!showOrHideVideoManager);
-  //   setShowOrHideCreateAccount(false)
-  //   setShowOrHideItem(false)
-  // };
+  const showOrHideAllPlansFunc = () => {
+    setShowOrHideAllPlans(!showOrHideAllPlans);
+    setshowOrHideCreateLessonPlan(false)
+    setShowOrHideItem(false)
+  };
   // const showOrHideItemCreation = () => {
   //   setShowOrHideItem(!showOrHideItem);
   //   setShowOrHideCreateAccount(false)
@@ -40,9 +41,9 @@ const CreateAndEditPlan = () => {
         </button>
         <button
           className="btn btn-danger"
-          // onClick={showOrHideVideoManagerFunction}
+          onClick={showOrHideAllPlansFunc}
         >
-          Click here to show/hide Video Manager
+          View All your Plans
         </button>
         <button
           className="btn btn-secondary mr-2"
@@ -52,9 +53,9 @@ const CreateAndEditPlan = () => {
         </button>
       </div>
       {showOrHideCreateLessonPlan && <CreatePlan />}
-       {/* {showOrHideCreateLessonPlan && <CreateAccountForTennancyModel />} }
-      {showOrHideVideoManager && <VideoManager />}
-      {showOrHideItem && <AddItemAdminPage />} */}
+      {showOrHideAllPlans && <ViewPlans />} 
+      {/* {showOrHideVideoManager && <VideoManager />} */}
+      {/* {showOrHideItem && <AddItemAdminPage />} */}
     </>
     )
 }

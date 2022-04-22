@@ -29,11 +29,12 @@ function WrestlersView() {
       <GradingDashboardMadeByLuke UID={UID} />
       <NotesFromCoachesForWrestlers UID={UID} />
       <hr />
-      <GradesOfX />
-      <hr />
       <Link to={"/AllGradesAllLevels"}>
         <h3>Click here to view all of your grades on all levels</h3>
       </Link>
+      <hr />
+      <GradesOfX />
+      
 
       <hr />
       <h3>Click on a level to view the moves, grades, and coaches' notes</h3>
