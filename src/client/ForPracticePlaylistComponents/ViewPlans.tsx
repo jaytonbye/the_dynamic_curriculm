@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 const ViewPlans = () => {
   let token = localStorage.getItem("token");
   let [allPlansArray, setAllPlansArray] = React.useState<Array<IAllPlans>>([]);
-  let [coachesName, setCoachesName] = React.useState<Array<{firstName:string, lastName:string}>>([])
+  let [coachesName, setCoachesName] = React.useState<
+    Array<{ firstName: string; lastName: string }>
+  >([]);
 
   React.useEffect(() => {
     getAllPlansFunc();
@@ -19,11 +21,11 @@ const ViewPlans = () => {
       .then((res) => res.json())
       .then((res) => {
         fetch(`/api/lessonplans/getCoachName/${res.userId}`)
-        .then(res => res.json())
-        .then(res => setCoachesName(res))
+          .then((res) => res.json())
+          .then((res) => setCoachesName(res));
         fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.userId}`)
           .then((res) => res.json())
-          .then((res) => setAllPlansArray(res))
+          .then((res) => setAllPlansArray(res));
       });
   };
 
@@ -39,10 +41,12 @@ const ViewPlans = () => {
     }
   };
 
-  if(!coachesName[0] && !allPlansArray[0]) {
-    return(
-      <div><h1>Loading ...</h1></div>
-    )
+  if (!coachesName[0] || !allPlansArray[0]) {
+    return (
+      <div>
+        <h1>Loading ...</h1>
+      </div>
+    );
   }
 
   return (
@@ -71,7 +75,7 @@ const ViewPlans = () => {
                     </Link>
                   </td>
                   <td>
-                      {coachesName[0].firstName} {coachesName[0].lastName}
+                    {coachesName[0].firstName} {coachesName[0].lastName}
                   </td>
                   <td>
                     <Moment fromNow>{plan.date_created}</Moment>

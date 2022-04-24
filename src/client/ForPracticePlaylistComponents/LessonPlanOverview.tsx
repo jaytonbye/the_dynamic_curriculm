@@ -6,7 +6,7 @@ const LessonPlanOverview = () => {
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>
   >([]);
-  let [nowPlayingURL, setNowPlayingURL] = React.useState();
+  let [nowPlayingURL, setNowPlayingURL] = React.useState(null);
   let { planId }: any = useParams();
   let token = localStorage.getItem("token");
 
@@ -27,16 +27,20 @@ const LessonPlanOverview = () => {
   return (
     <div>
       <div>
-        <h1>Now Playing</h1>
-        <div>
-          <iframe
-            width="95%"
-            height="35%"
-            src={`https://www.youtube.com/embed/${nowPlayingURL}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
-        </div>
+        {nowPlayingURL && (
+          <div>
+            {/* <h1>Now Playing: {}</h1> */}
+            <div>
+              <iframe
+                width="95%"
+                height="35%"
+                src={`https://www.youtube.com/embed/${nowPlayingURL}`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              ></iframe>
+            </div>
+          </div>
+        )}
       </div>
 
       <hr />
