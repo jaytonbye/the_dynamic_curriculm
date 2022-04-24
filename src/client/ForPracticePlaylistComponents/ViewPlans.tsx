@@ -39,6 +39,12 @@ const ViewPlans = () => {
     }
   };
 
+  if(!coachesName[0] && !allPlansArray[0]) {
+    return(
+      <div><h1>Loading ...</h1></div>
+    )
+  }
+
   return (
     <div>
       <>
@@ -58,7 +64,7 @@ const ViewPlans = () => {
                 <tr key={plan.id}>
                   <td>
                     <Link
-                      to={`/EditALessonPlan/${plan.id}`}
+                      to={`/PlayLessonPlan/${plan.id}`}
                       className="btn-link"
                     >
                       {plan.name_of_lesson_plan}

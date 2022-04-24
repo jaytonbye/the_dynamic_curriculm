@@ -11,20 +11,20 @@ const CreateAndEditPlan = () => {
   const [showOrHideAllPlans, setShowOrHideAllPlans] = React.useState(
     false
   );
-  const [showOrHideItem, setShowOrHideItem] = React.useState(
-    false
-  );
+  // const [showOrHideItem, setShowOrHideItem] = React.useState(
+  //   false
+  // );
 
   const showOrHideCreateLessonPlanFunc = () => {
     setshowOrHideCreateLessonPlan(!showOrHideCreateLessonPlan);
     setShowOrHideAllPlans(false)
-    setShowOrHideItem(false)
+    // setShowOrHideItem(false)
   };
 
   const showOrHideAllPlansFunc = () => {
     setShowOrHideAllPlans(!showOrHideAllPlans);
     setshowOrHideCreateLessonPlan(false)
-    setShowOrHideItem(false)
+    // setShowOrHideItem(false)
   };
   // const showOrHideItemCreation = () => {
   //   setShowOrHideItem(!showOrHideItem);
@@ -36,21 +36,21 @@ const CreateAndEditPlan = () => {
         <>
       <NavigationBar />
       <div className="d-flex justify-content-between">
-        <button className="btn btn-danger ml-2" onClick={showOrHideCreateLessonPlanFunc}>
+        <button className="btn btn-success ml-2" onClick={showOrHideCreateLessonPlanFunc}>
           Create A Lesson Plan
         </button>
         <button
-          className="btn btn-danger"
+          className="btn btn-warning"
           onClick={showOrHideAllPlansFunc}
         >
           View All your Plans
         </button>
-        <button
+        {/* <button
           className="btn btn-secondary mr-2"
           // onClick={showOrHideItemCreation}
         >
           Click here to show/hide add item panel
-        </button>
+        </button> */}
       </div>
       {showOrHideCreateLessonPlan && <CreatePlan />}
       {showOrHideAllPlans && <ViewPlans />} 

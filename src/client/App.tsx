@@ -15,7 +15,6 @@ import UnitVideosPage from "./UnitVideosPage";
 import CreateTeamAccount from "./CreateTeamAccount";
 import CoachesViewTwoPointO from "./CoachesViewTwoPOintO";
 import PlayLessonPlan from "./ForPracticePlaylistComponents/PlayLessonPlan";
-import CreateALessonPlan from "./ForPracticePlaylistComponents/CreateALessonPlan";
 import CreateAndEditPlan from "./ForPracticePlaylistComponents/CreateAndEditPlan";
 import EditLessonPlan from "./ForPracticePlaylistComponents/EditLessonPlan";
 import ViewPlans from "./ForPracticePlaylistComponents/ViewPlans";
@@ -64,7 +63,7 @@ const App = (props: AppProps) => {
           {/* <Route exact path="/PlayLessonPlan">
             <PlayLessonPlan />
           </Route> */}
-          <Route exact path="/PlayLessonPlan">
+          <Route exact path="/PlayLessonPlan/:planId">
             <PlayLessonPlanTwoPointO />
           </Route>
           <Route exact path="/CreateALessonPlan">
