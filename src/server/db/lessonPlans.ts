@@ -2,20 +2,28 @@ import { Query } from "./index";
 import { IGrade } from "../../types";
 
 //  GETs
-const getAllLessonPlansForUser = async (createdBy: any) => {
-  return await Query("SELECT * FROM lesson_plans WHERE created_by = ?", [
-    createdBy,
-  ]);
+const getPlanInfo = async (planId: any) => {
+  return await Query("select * from lesson_plans where id = ?", [planId]);
 };
 
-const getCoachName =async (userId:any) => {
-  return await Query(`
+const getAllLessonPlansForUser = async (createdBy: any) => {
+  return await Query(
+    "SELECT * FROM lesson_plans WHERE created_by = ? order by date_created desc",
+    [createdBy]
+  );
+};
+
+const getCoachName = async (userId: any) => {
+  return await Query(
+    `
   select 
   p.first_name as firstName,
   p.last_name as lastName
   from personal_info p where p.user_id = ?
-  `, [userId])
-}
+  `,
+    [userId]
+  );
+};
 
 const getAllVideosInLessonPlan = async (lessonPlanId: any) => {
   return await Query(
@@ -36,6 +44,7 @@ const getAllVideosInLessonPlan = async (lessonPlanId: any) => {
   join lesson_plan_videos lpv on lp.id = lpv.lesson_plan_id
   join videos v on lpv.video_id = v.id
   where lp.id = ?
+  order by orderNumber;
   `,
     [lessonPlanId]
   );
@@ -84,6 +93,7 @@ const deleteLessonPlan = async (lessonPlanId: any) => {
 
 export default {
   //GETs
+  getPlanInfo,
   getAllLessonPlansForUser,
   getCoachName,
   getAllVideosByTenant,

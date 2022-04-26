@@ -6,7 +6,7 @@ const LessonPlanOverview = () => {
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>
   >([]);
-  let [nowPlayingURL, setNowPlayingURL] = React.useState(null);
+  // let [nowPlayingURL, setNowPlayingURL] = React.useState(null);
   let { planId }: any = useParams();
   let token = localStorage.getItem("token");
 
@@ -16,9 +16,9 @@ const LessonPlanOverview = () => {
       .then((res) => setVideosInLessonPlan(res));
   };
 
-  let handleBringToTopButtonFunc = (e: any) => {
-    setNowPlayingURL(e.target.value);
-  };
+  // let handleBringToTopButtonFunc = (e: any) => {
+  //   setNowPlayingURL(e.target.value);
+  // };
 
   React.useEffect(() => {
     getAllVideosInLessonPlanFunc();
@@ -26,24 +26,6 @@ const LessonPlanOverview = () => {
 
   return (
     <div>
-      <div>
-        {nowPlayingURL && (
-          <div>
-            {/* <h1>Now Playing: {}</h1> */}
-            <div>
-              <iframe
-                width="95%"
-                height="35%"
-                src={`https://www.youtube.com/embed/${nowPlayingURL}`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              ></iframe>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <hr />
 
       <div className="sticky-top bg-white">
         <table className="table">
@@ -59,7 +41,7 @@ const LessonPlanOverview = () => {
           <tbody>
             {videosInLessonPlan.map((video) => {
               return (
-                <tr>
+                <tr key={video.lpvID}>
                   <td>{video.orderNumber}</td>
                   <td>{video.videoName}</td>
 
@@ -74,7 +56,7 @@ const LessonPlanOverview = () => {
                   </td>
 
                   <td>{video.lengthToDisplay}</td>
-                  <td>
+                  {/* <td>
                     <button
                       className="btn btn-info"
                       onClick={handleBringToTopButtonFunc}
@@ -82,7 +64,7 @@ const LessonPlanOverview = () => {
                     >
                       Bring to top
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}
@@ -94,3 +76,21 @@ const LessonPlanOverview = () => {
 };
 
 export default LessonPlanOverview;
+
+
+{/* <div>
+{nowPlayingURL && (
+  <div>
+    {/* <h1>Now Playing: {}</h1> */}
+//     <div>
+//       <iframe
+//         width="95%"
+//         height="35%"
+//         src={`https://www.youtube.com/embed/${nowPlayingURL}`}
+//         title="YouTube video player"
+//         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//       ></iframe>
+//     </div>
+//   </div>
+// )}
+// </div> */}

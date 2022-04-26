@@ -8,6 +8,17 @@ import config from "../config";
 const router = Router();
 
 //      GETS
+router.get("/getLessonPlanInfo/:planId", async (req, res) => {
+  try {
+    let planId = req.params.planId
+    let planInfo = await lessonPlans.getPlanInfo(planId)
+    res.json(planInfo)
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
+})
+
 router.get("/getAllLessonPlansForUser/:createdBy", async (req, res) => {
   try {
     let createdBy = req.params.createdBy;

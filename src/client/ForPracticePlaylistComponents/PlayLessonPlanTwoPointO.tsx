@@ -1,27 +1,45 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { IAllVideosInPlan } from "./EditLessonPlan";
 import LessonPlanOverview from "./LessonPlanOverview";
 import PlayLessonPlan from "./PlayLessonPlan";
 
 const PlayLessonPlanTwoPointO = () => {
+  const [lessonPlanName, setLessonPlanName] = React.useState('no');
+  const [buttonTextToSwitch, setButtonTextToSwitch] =
+    React.useState("Play all");
+  const [showOrHideLessonPlanOverview, setShowOrHideLessonPlanOverview] =
+    React.useState(true);
+  const [showOrHidePlayLessonPlan, setShowOrHidePlayLessonPlan] =
+    React.useState(false);
+  let plandId: any = useParams();
 
-    const [showOrHideLessonPlanOverview, setShowOrHideLessonPlanOverview] = React.useState(
-        false
-      );
-      const [showOrHidePlayLessonPlan, setShowOrHidePlayLessonPlan] = React.useState(
-        false
-      );
+  const setShowOrHidePlayLessonPlanFunc = () => {
+    if (buttonTextToSwitch === "Play all") {
+      setShowOrHidePlayLessonPlan(!showOrHidePlayLessonPlan);
+      setShowOrHideLessonPlanOverview(false);
+      setButtonTextToSwitch("Overview");
+    } else {
+      setShowOrHideLessonPlanOverview(!showOrHideLessonPlanOverview);
+      setShowOrHidePlayLessonPlan(false);
+      setButtonTextToSwitch("Play all");
+    }
+  };
+  React.useEffect(() => {
+    fetch(`/api/lessonplans/getLessonPlanInfo/${plandId.planId}`)
+      .then((res) => res.json())
+      // .then(res => console.log(res[0].name_of_lesson_plan))
+      .then((res: IPlanInfo[]) => setLessonPlanName(res[0].name_of_lesson_plan));
+  }, []);
 
-      const setShowOrHideLessonPlanOverviewFunc = () => {
-        setShowOrHideLessonPlanOverview(!showOrHideLessonPlanOverview);
-        setShowOrHidePlayLessonPlan(false)
-      };
-    
-      const setShowOrHidePlayLessonPlanFunc = () => {
-        setShowOrHidePlayLessonPlan(!showOrHidePlayLessonPlan);
-        setShowOrHideLessonPlanOverview(false)
-      };
-    
+  // if (!lessonPlanName) {
+  //   return (
+  //     <div>
+  //       <h1>Loading ...</h1>
+  //     </div>
+  //   );
+  // }
+// console.log(lessonPlanName)
   return (
     <div>
       <div>
@@ -29,29 +47,35 @@ const PlayLessonPlanTwoPointO = () => {
           Back to Lesson Plans
         </Link>
       </div>
-      <h1>view it</h1>
+      <h1>{lessonPlanName}</h1>
 
       <>
-      <div className="d-flex justify-content-between">
-        <button className="btn btn-success ml-2" onClick={setShowOrHideLessonPlanOverviewFunc}>
+        <div className="d-flex justify-content-between">
+          {/* <button className="btn btn-success ml-2" onClick={setShowOrHideLessonPlanOverviewFunc}>
           Lesson Plan Overview
-        </button>
-        <button
-          className="btn btn-warning"
-          onClick={setShowOrHidePlayLessonPlanFunc}
-        >
-          Play Plans
-        </button>
-      </div>
-      {showOrHideLessonPlanOverview && <LessonPlanOverview />}
-      {showOrHidePlayLessonPlan && <PlayLessonPlan />} 
-    </>
-      
+        </button> */}
+          <button
+            className="btn btn-warning"
+            onClick={setShowOrHidePlayLessonPlanFunc}
+          >
+            {buttonTextToSwitch}
+          </button>
+        </div>
+        {showOrHideLessonPlanOverview && <LessonPlanOverview />}
+        {showOrHidePlayLessonPlan && <PlayLessonPlan />}
+      </>
     </div>
   );
 };
 
 export default PlayLessonPlanTwoPointO;
+
+export interface IPlanInfo {
+  id: number;
+  name_of_lesson_plan: string;
+  created_by: number;
+  date_created: Date;
+}
 
 //possibly need a new column in DB in 'lesson_plans' table = tenant
 //also a bug with coahes name when clckin on view all plan button ****************

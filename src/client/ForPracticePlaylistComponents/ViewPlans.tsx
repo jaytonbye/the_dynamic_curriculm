@@ -20,10 +20,10 @@ const ViewPlans = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        fetch(`/api/lessonplans/getCoachName/${res.userId}`)
+        fetch(`/api/lessonplans/getCoachName/${res.userId}`) // can make a query to get lessonplaans coaches name
           .then((res) => res.json())
           .then((res) => setCoachesName(res));
-        fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.userId}`)
+        fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.userId}`) // 
           .then((res) => res.json())
           .then((res) => setAllPlansArray(res));
       });

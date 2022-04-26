@@ -5,27 +5,34 @@ import ViewPlans from './ViewPlans';
 
 const CreateAndEditPlan = () => {
 
+  const [buttonToCreateOrView, setButtonToCreateOrView] = React.useState('Create A Lesson Plan')
   const [showOrHideCreateLessonPlan, setshowOrHideCreateLessonPlan] = React.useState(
     false
   );
   const [showOrHideAllPlans, setShowOrHideAllPlans] = React.useState(
-    false
+    true
   );
   // const [showOrHideItem, setShowOrHideItem] = React.useState(
   //   false
   // );
 
   const showOrHideCreateLessonPlanFunc = () => {
-    setshowOrHideCreateLessonPlan(!showOrHideCreateLessonPlan);
-    setShowOrHideAllPlans(false)
-    // setShowOrHideItem(false)
+    if(buttonToCreateOrView === 'Create A Lesson Plan'){
+      setshowOrHideCreateLessonPlan(!showOrHideCreateLessonPlan);
+      setShowOrHideAllPlans(false)
+      setButtonToCreateOrView('View All your Plans')
+    }else{
+      setShowOrHideAllPlans(!showOrHideAllPlans);
+      setshowOrHideCreateLessonPlan(false)
+      setButtonToCreateOrView('Create A Lesson Plan')
+
+    }
   };
 
-  const showOrHideAllPlansFunc = () => {
-    setShowOrHideAllPlans(!showOrHideAllPlans);
-    setshowOrHideCreateLessonPlan(false)
-    // setShowOrHideItem(false)
-  };
+  // const showOrHideAllPlansFunc = () => {
+  //   setShowOrHideAllPlans(!showOrHideAllPlans);
+  //   setshowOrHideCreateLessonPlan(false)
+  // };
   // const showOrHideItemCreation = () => {
   //   setShowOrHideItem(!showOrHideItem);
   //   setShowOrHideCreateAccount(false)
@@ -37,25 +44,17 @@ const CreateAndEditPlan = () => {
       <NavigationBar />
       <div className="d-flex justify-content-between">
         <button className="btn btn-success ml-2" onClick={showOrHideCreateLessonPlanFunc}>
-          Create A Lesson Plan
+          {buttonToCreateOrView}
         </button>
-        <button
+        {/* <button
           className="btn btn-warning"
           onClick={showOrHideAllPlansFunc}
         >
           View All your Plans
-        </button>
-        {/* <button
-          className="btn btn-secondary mr-2"
-          // onClick={showOrHideItemCreation}
-        >
-          Click here to show/hide add item panel
         </button> */}
       </div>
       {showOrHideCreateLessonPlan && <CreatePlan />}
       {showOrHideAllPlans && <ViewPlans />} 
-      {/* {showOrHideVideoManager && <VideoManager />} */}
-      {/* {showOrHideItem && <AddItemAdminPage />} */}
     </>
     )
 }
