@@ -72,6 +72,9 @@ const App = (props: AppProps) => {
           <Route exact path="/EditALessonPlan/:planId">
             <EditLessonPlan />
           </Route>
+          <Route exact path="/playEntireLessonPlan/:planId">
+            <PlayLessonPlan />
+          </Route>
 
 
           <Route path="/passwordResetLandingPage/:encryptedIdInUrl">

@@ -5,31 +5,33 @@ import LessonPlanOverview from "./LessonPlanOverview";
 import PlayLessonPlan from "./PlayLessonPlan";
 
 const PlayLessonPlanTwoPointO = () => {
-  const [lessonPlanName, setLessonPlanName] = React.useState('no');
+  const [lessonPlanName, setLessonPlanName] = React.useState("no");
   const [buttonTextToSwitch, setButtonTextToSwitch] =
     React.useState("Play all");
   const [showOrHideLessonPlanOverview, setShowOrHideLessonPlanOverview] =
     React.useState(true);
-  const [showOrHidePlayLessonPlan, setShowOrHidePlayLessonPlan] =
-    React.useState(false);
+  // const [showOrHidePlayLessonPlan, setShowOrHidePlayLessonPlan] =
+  //   React.useState(false);
   let plandId: any = useParams();
 
-  const setShowOrHidePlayLessonPlanFunc = () => {
-    if (buttonTextToSwitch === "Play all") {
-      setShowOrHidePlayLessonPlan(!showOrHidePlayLessonPlan);
-      setShowOrHideLessonPlanOverview(false);
-      setButtonTextToSwitch("Overview");
-    } else {
-      setShowOrHideLessonPlanOverview(!showOrHideLessonPlanOverview);
-      setShowOrHidePlayLessonPlan(false);
-      setButtonTextToSwitch("Play all");
-    }
-  };
+  // const setShowOrHidePlayLessonPlanFunc = () => {
+  //   if (buttonTextToSwitch === "Play all") {
+  //     setShowOrHidePlayLessonPlan(!showOrHidePlayLessonPlan);
+  //     setShowOrHideLessonPlanOverview(false);
+  //     setButtonTextToSwitch("Overview");
+  //   } else {
+  //     setShowOrHideLessonPlanOverview(!showOrHideLessonPlanOverview);
+  //     setShowOrHidePlayLessonPlan(false);
+  //     setButtonTextToSwitch("Play all");
+  //   }
+  // };
   React.useEffect(() => {
     fetch(`/api/lessonplans/getLessonPlanInfo/${plandId.planId}`)
       .then((res) => res.json())
       // .then(res => console.log(res[0].name_of_lesson_plan))
-      .then((res: IPlanInfo[]) => setLessonPlanName(res[0].name_of_lesson_plan));
+      .then((res: IPlanInfo[]) =>
+        setLessonPlanName(res[0].name_of_lesson_plan)
+      );
   }, []);
 
   // if (!lessonPlanName) {
@@ -39,7 +41,7 @@ const PlayLessonPlanTwoPointO = () => {
   //     </div>
   //   );
   // }
-// console.log(lessonPlanName)
+  // console.log(lessonPlanName)
   return (
     <div>
       <div>
@@ -51,18 +53,16 @@ const PlayLessonPlanTwoPointO = () => {
 
       <>
         <div className="d-flex justify-content-between">
-          {/* <button className="btn btn-success ml-2" onClick={setShowOrHideLessonPlanOverviewFunc}>
-          Lesson Plan Overview
-        </button> */}
-          <button
+          <Link
+            to={`/playEntireLessonPlan/${plandId.planId}`}
             className="btn btn-warning"
-            onClick={setShowOrHidePlayLessonPlanFunc}
+            target={"_blank"}
           >
             {buttonTextToSwitch}
-          </button>
+          </Link>
         </div>
         {showOrHideLessonPlanOverview && <LessonPlanOverview />}
-        {showOrHidePlayLessonPlan && <PlayLessonPlan />}
+        {/* {showOrHidePlayLessonPlan && <PlayLessonPlan />} */}
       </>
     </div>
   );
@@ -78,4 +78,3 @@ export interface IPlanInfo {
 }
 
 //possibly need a new column in DB in 'lesson_plans' table = tenant
-//also a bug with coahes name when clckin on view all plan button ****************

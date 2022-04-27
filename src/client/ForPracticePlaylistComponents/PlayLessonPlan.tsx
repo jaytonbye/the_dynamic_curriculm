@@ -38,6 +38,8 @@ export default function PlayLessonPlan() {
                     countDownFunc();
                   }, 1000);
                 } else {
+                  // let sound = new Audio("/bell.mp3");
+                  // sound.play(); // trouble with htis ill come bac
                   setTimeLeft("-");
                 }
               };
@@ -55,29 +57,54 @@ export default function PlayLessonPlan() {
 
   return (
     <>
-      {/* <h1>insert name of video here</h1> */}
-      <h1>{nameOfCurrentVideo}</h1>
-      <iframe
-        width="560"
-        height="315"
-        src={`https://www.youtube.com/embed/${currentVideo}?&autoplay=1&mute=1`}
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      ></iframe>
+      <div>
+        <div
+          className="text-center"
+          style={{
+            position: "absolute",
+            zIndex: "-5",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <iframe
+            width="100%"
+            height="100%"
+            src={`https://www.youtube.com/embed/${currentVideo}?&autoplay=1&mute=1`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          ></iframe>
+        </div>
 
-      <h3 >Up next: {nameOfNextVideo}</h3>
+        <div
+          className="d-flex flex-wrap h-100 text-light"
+          style={{
+            opacity: "75%",
+          }}
+        >
+          <div>
+            <h1 className="bg-dark">{nameOfCurrentVideo}</h1>
+          </div>
 
-      <h3>Time Left: {timeLeft}</h3>
-      <h2>To-do list: </h2>
-      <h3>
-        <a href="https://codepen.io/junyuliang/pen/xxGxOJ">
+          <div
+            className=" d-flex align-items-end flex-wrap"
+            style={{
+              opacity: "75%",
+            }}
+          >
+            <h3 className="col-1 bg-dark">Time Left: {timeLeft}</h3>
+            <h3 className="col-12 bg-dark">Up next: {nameOfNextVideo}</h3>
+          </div>
+        </div>
+
+        {/* <a href="https://codepen.io/junyuliang/pen/xxGxOJ">
           There is a way to do overlays on embeded youtube videos, checkout this
           link:{" "}
         </a>
       </h3>
       <h5>Is there a way to trigger a buzzer sound?</h5>
-      <h5>Size things appropriately</h5>
-      <h5></h5>
+      <h5>Size things appropriately</h5> */}
+      </div>
     </>
   );
 }

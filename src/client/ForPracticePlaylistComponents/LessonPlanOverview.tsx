@@ -34,8 +34,8 @@ const LessonPlanOverview = () => {
               <th>Order</th>
               <th>Move</th>
               <th>Video</th>
-              <th>Duration</th>
-              <th>Play</th>
+              <th>Looped Video</th>
+              <th>Play Time</th>
             </tr>
           </thead>
           <tbody>
@@ -50,6 +50,16 @@ const LessonPlanOverview = () => {
                       width="95%"
                       height="35%"
                       src={`https://www.youtube.com/embed/${video.videoURL}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
+                  </td>
+
+                  <td>
+                    <iframe
+                      width="95%"
+                      height="35%"
+                      src={`https://www.youtube.com/embed/${video.loopedVideoURL}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>
