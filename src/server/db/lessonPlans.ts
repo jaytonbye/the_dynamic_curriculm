@@ -6,24 +6,37 @@ const getPlanInfo = async (planId: any) => {
   return await Query("select * from lesson_plans where id = ?", [planId]);
 };
 
-const getAllLessonPlansForUser = async (createdBy: any) => {
+const getAllLessonPlansForUser = async (tenant: string) => {
   return await Query(
-    "SELECT * FROM lesson_plans WHERE created_by = ? order by date_created desc",
-    [createdBy]
+    `
+    SELECT
+    lp.id,
+    lp.name_of_lesson_plan,
+    lp.created_by,
+    lp.tenant,
+    lp.date_created,
+    pi.first_name as coaches_FN,
+    pi.last_name as coaches_LN
+    from lesson_plans lp
+    join personal_info pi on lp.created_by = pi.id
+    where lp.tenant = ?
+    ORDER BY lp.date_created DESC;
+    `,
+    [tenant]
   );
 };
 
-const getCoachName = async (userId: any) => {
-  return await Query(
-    `
-  select 
-  p.first_name as firstName,
-  p.last_name as lastName
-  from personal_info p where p.user_id = ?
-  `,
-    [userId]
-  );
-};
+// const getCoachName = async (userId: any) => {
+//   return await Query(
+//     `
+//   select 
+//   p.first_name as firstName,
+//   p.last_name as lastName
+//   from personal_info p where p.user_id = ?
+//   `,
+//     [userId]
+//   );
+// };
 
 const getAllVideosInLessonPlan = async (lessonPlanId: any) => {
   return await Query(
@@ -55,10 +68,14 @@ const getAllVideosByTenant = async (tenant: string) => {
 };
 
 //  POSTs
-const addNewPlanToDB = async (planName: string, userId: number) => {
+const addNewPlanToDB = async (
+  planName: string,
+  userId: number,
+  tenant: string
+) => {
   return await Query(
-    "INSERT INTO lesson_plans(name_of_lesson_plan, created_by) VALUES (?, ?)",
-    [planName, userId]
+    "INSERT INTO lesson_plans(name_of_lesson_plan, created_by, tenant) VALUES (?, ?, ?)",
+    [planName, userId, tenant]
   );
 };
 
@@ -95,7 +112,7 @@ export default {
   //GETs
   getPlanInfo,
   getAllLessonPlansForUser,
-  getCoachName,
+  // getCoachName,
   getAllVideosByTenant,
   getAllVideosInLessonPlan,
   //POSTs

@@ -2,6 +2,9 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import { IAllVideosInPlan } from "./EditLessonPlan";
 
+//    ** some wierd error occered when loading this page - couldve been not wating until finished compiling
+//  **connot recreate and didnt effect behavior  just something to watch for
+
 const LessonPlanOverview = () => {
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>

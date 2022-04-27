@@ -1,27 +1,31 @@
-// import e from "express";
 import * as React from "react";
 
 const CreatPlan = () => {
   let token = localStorage.getItem("token");
   let [planName, setPlanName] = React.useState("");
-  let [userId, setUserId] = React.useState();
+  let [userId, setUserId] = React.useState("");
+  let [tenant, setTenant] = React.useState("")
 
   React.useEffect(() => {
     fetch(`/api/lessonplans/validateToketLessonPlanCreate`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
-      .then((res) => setUserId(res.userId));
+      .then((res) => {
+        setUserId(res.userId)
+        setTenant(res.tenant)
+      });
   }, []);
 
   let submitNewPlan = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     fetch(`/api/lessonplans/addNewLessonPlan`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },      // getting malformed error!!!!! check
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         planName,
         userId,
+        tenant
       }),
     }).then(() => alert("Your plan has been added!"));
   };

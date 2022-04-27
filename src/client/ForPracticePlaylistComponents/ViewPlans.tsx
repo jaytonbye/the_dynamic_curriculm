@@ -1,14 +1,14 @@
 import Moment from "react-moment";
 import * as React from "react";
-import { IAllPlans } from "./types";
+// import { IAllPlans } from "./types";
 import { Link } from "react-router-dom";
 
 const ViewPlans = () => {
   let token = localStorage.getItem("token");
   let [allPlansArray, setAllPlansArray] = React.useState<Array<IAllPlans>>([]);
-  let [coachesName, setCoachesName] = React.useState<
-    Array<{ firstName: string; lastName: string }>
-  >([]);
+  // let [coachesName, setCoachesName] = React.useState<
+  //   Array<{ firstName: string; lastName: string }>
+  // >([]);
 
   React.useEffect(() => {
     getAllPlansFunc();
@@ -20,10 +20,10 @@ const ViewPlans = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        fetch(`/api/lessonplans/getCoachName/${res.userId}`) // can make a query to get lessonplaans coaches name
-          .then((res) => res.json())
-          .then((res) => setCoachesName(res));
-        fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.userId}`) // 
+        // fetch(`/api/lessonplans/getCoachName/${res.userId}`) // cannot not get plans with user id(use tenant) can make a query to get lessonplaans coaches name
+        //   .then((res) => res.json())
+        //   .then((res) => setCoachesName(res));
+        fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.tenant}`) // 
           .then((res) => res.json())
           .then((res) => setAllPlansArray(res));
       });
@@ -41,7 +41,8 @@ const ViewPlans = () => {
     }
   };
 
-  if (!coachesName[0] || !allPlansArray[0]) {
+  // !coachesName[0] || 
+  if (!allPlansArray[0]) {
     return (
       <div>
         <h1>Loading ...</h1>
@@ -75,7 +76,7 @@ const ViewPlans = () => {
                     </Link>
                   </td>
                   <td>
-                    {coachesName[0].firstName} {coachesName[0].lastName}
+                    {plan.coaches_FN} {plan.coaches_LN}
                   </td>
                   <td>
                     <Moment fromNow>{plan.date_created}</Moment>
@@ -108,3 +109,13 @@ const ViewPlans = () => {
 };
 
 export default ViewPlans;
+
+export interface IAllPlans {
+  id: number;
+  name_of_lesson_plan: string;
+  created_by: number;
+  tenant: string;
+  date_created: Date;
+  coaches_FN: string;
+  coaches_LN: string;
+}

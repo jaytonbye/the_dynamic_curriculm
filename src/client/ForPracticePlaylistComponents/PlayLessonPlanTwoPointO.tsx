@@ -26,7 +26,7 @@ const PlayLessonPlanTwoPointO = () => {
   //   }
   // };
   React.useEffect(() => {
-    fetch(`/api/lessonplans/getLessonPlanInfo/${plandId.planId}`)
+    fetch(`/api/lessonplans/getLessonPlanInfo/${plandId.planId}`) // try to upack this and rename it it look horrible
       .then((res) => res.json())
       // .then(res => console.log(res[0].name_of_lesson_plan))
       .then((res: IPlanInfo[]) =>

@@ -10,19 +10,19 @@ const router = Router();
 //      GETS
 router.get("/getLessonPlanInfo/:planId", async (req, res) => {
   try {
-    let planId = req.params.planId
-    let planInfo = await lessonPlans.getPlanInfo(planId)
-    res.json(planInfo)
+    let planId = req.params.planId;
+    let planInfo = await lessonPlans.getPlanInfo(planId);
+    res.json(planInfo);
   } catch (error) {
-    console.log(error)
-    res.sendStatus(500)
+    console.log(error);
+    res.sendStatus(500);
   }
-})
+});
 
-router.get("/getAllLessonPlansForUser/:createdBy", async (req, res) => {
+router.get("/getAllLessonPlansForUser/:tenant", async (req, res) => {
   try {
-    let createdBy = req.params.createdBy;
-    let allPlansForUser = await lessonPlans.getAllLessonPlansForUser(createdBy);
+    let tenant = req.params.tenant;
+    let allPlansForUser = await lessonPlans.getAllLessonPlansForUser(tenant);
     res.json(allPlansForUser);
   } catch (error) {
     console.log(error);
@@ -30,16 +30,16 @@ router.get("/getAllLessonPlansForUser/:createdBy", async (req, res) => {
   }
 });
 
-router.get(`/getCoachName/:userId`, async (req, res) => {
-  try {
-    let userId = req.params.userId;
-    let coachesName = await lessonPlans.getCoachName(userId);
-    res.json(coachesName);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
+// router.get(`/getCoachName/:userId`, async (req, res) => {
+//   try {
+//     let userId = req.params.userId;
+//     let coachesName = await lessonPlans.getCoachName(userId);
+//     res.json(coachesName);
+//   } catch (error) {
+//     console.log(error);
+//     res.sendStatus(500);
+//   }
+// });
 
 router.get(`/getAllVideosInPlan/:planId`, async (req, res) => {
   try {
@@ -75,7 +75,8 @@ router.post("/addNewLessonPlan", async (req, res) => {
   try {
     let planName = req.body.planName;
     let userId = req.body.userId;
-    await lessonPlans.addNewPlanToDB(planName, userId);
+    let tenant = req.body.tenant;
+    await lessonPlans.addNewPlanToDB(planName, userId, tenant);
     res.json(200);
     // res.json({userId, planName})
   } catch (error) {

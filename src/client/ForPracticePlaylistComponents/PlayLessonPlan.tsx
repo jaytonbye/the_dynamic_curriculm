@@ -96,6 +96,10 @@ export default function PlayLessonPlan() {
             <h3 className="col-12 bg-dark">Up next: {nameOfNextVideo}</h3>
           </div>
         </div>
+      </div>
+    </>
+  );
+}
 
         {/* <a href="https://codepen.io/junyuliang/pen/xxGxOJ">
           There is a way to do overlays on embeded youtube videos, checkout this
@@ -104,10 +108,8 @@ export default function PlayLessonPlan() {
       </h3>
       <h5>Is there a way to trigger a buzzer sound?</h5>
       <h5>Size things appropriately</h5> */}
-      </div>
-    </>
-  );
-}
+
+
 
 // export default function PlayLessonPlan() {
 //   const [arrayOfYoutubeLinks, setArrayOfYoutubeLinks] = React.useState([

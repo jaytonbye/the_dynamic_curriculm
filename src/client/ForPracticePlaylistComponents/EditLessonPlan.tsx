@@ -22,6 +22,28 @@ const EditLessonPlan = () => {
   let UID = localStorage.getItem("UID");
   let token = localStorage.getItem("token");
 
+
+  let getAllVideosInLessonPlanFunc = () => {
+    fetch(`/api/lessonplans/getAllVideosInPlan/${planId}`)
+      .then((res) => res.json())
+      .then((res) => setVideosInLessonPlan(res));
+  };
+  
+  let addToLessonFunc = () => {
+    fetch(`/api/lessonplans/addNewVideoToLessonPlan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        planId: planId,
+        videoId: searchedMoveId,
+        durationOfVideo: durationToPlayVideo,
+        orderVideo: orderOfVideo,
+      }),
+    })
+      .then(() => alert("Video has been added to the lesson plan!"))
+      .then(() => getAllVideosInLessonPlanFunc());
+  };
+  
   let handleDeleteVideo = (e: any) => {
     e.preventDefault();
     let lessonPlanVideosId = e.target.value;
@@ -37,27 +59,6 @@ const EditLessonPlan = () => {
     } else {
       return;
     }
-  };
-
-  let addToLessonFunc = () => {
-    fetch(`/api/lessonplans/addNewVideoToLessonPlan`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        planId: planId,
-        videoId: searchedMoveId,
-        durationOfVideo: durationToPlayVideo,
-        orderVideo: orderOfVideo,
-      }),
-    })
-      .then(() => alert("Video has been added to the lesson plan!"))
-      .then(() => getAllVideosInLessonPlanFunc());
-  };
-
-  let getAllVideosInLessonPlanFunc = () => {
-    fetch(`/api/lessonplans/getAllVideosInPlan/${planId}`)
-      .then((res) => res.json())
-      .then((res) => setVideosInLessonPlan(res));
   };
 
   let onMoveChange = (event: any) => {
@@ -159,7 +160,7 @@ const EditLessonPlan = () => {
             <tbody>
               {videosInLessonPlan.map((video) => {
                 return (
-                  <tr>
+                  <tr key={video.lpvID}>
                     <td>{video.orderNumber}</td>
                     <td>{video.videoName}</td>
 

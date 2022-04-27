@@ -2,7 +2,10 @@ export interface IAllPlans {
   id: number;
   name_of_lesson_plan: string;
   created_by: number;
+  tenant: string;
   date_created: Date;
+  coaches_FN: string;
+  coaches_LN: string;
 }
 
 // export interface IAllVideosInPlan {
