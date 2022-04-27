@@ -5,13 +5,12 @@ import { IAllVideosInPlan } from "./EditLessonPlan";
 //    ** some wierd error occered when loading this page - couldve been not wating until finished compiling
 //  **connot recreate and didnt effect behavior  just something to watch for
 
-const LessonPlanOverview = () => {
+let LessonPlanOverview = () => {
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>
   >([]);
-  // let [nowPlayingURL, setNowPlayingURL] = React.useState(null);
   let { planId }: any = useParams();
-  let token = localStorage.getItem("token");
+  let token = localStorage.getItem("token"); // token is not used()anyone can tryp in lesson plan id and view
 
   let getAllVideosInLessonPlanFunc = () => {
     fetch(`/api/lessonplans/getAllVideosInPlan/${planId}`)
@@ -19,17 +18,12 @@ const LessonPlanOverview = () => {
       .then((res) => setVideosInLessonPlan(res));
   };
 
-  // let handleBringToTopButtonFunc = (e: any) => {
-  //   setNowPlayingURL(e.target.value);
-  // };
-
   React.useEffect(() => {
     getAllVideosInLessonPlanFunc();
   }, []);
 
   return (
     <div>
-
       <div className="sticky-top bg-white">
         <table className="table">
           <thead>
@@ -46,7 +40,7 @@ const LessonPlanOverview = () => {
               return (
                 <tr key={video.lpvID}>
                   <td>{video.orderNumber}</td>
-                  <td>{video.videoName}</td>
+                  <td className="col-3">{video.videoName}</td>
 
                   <td>
                     <iframe
@@ -54,7 +48,7 @@ const LessonPlanOverview = () => {
                       height="35%"
                       src={`https://www.youtube.com/embed/${video.videoURL}`}
                       title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
                     ></iframe>
                   </td>
 
@@ -67,17 +61,7 @@ const LessonPlanOverview = () => {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>
                   </td>
-
                   <td>{video.lengthToDisplay}</td>
-                  {/* <td>
-                    <button
-                      className="btn btn-info"
-                      onClick={handleBringToTopButtonFunc}
-                      value={video.videoURL}
-                    >
-                      Bring to top
-                    </button>
-                  </td> */}
                 </tr>
               );
             })}
@@ -90,11 +74,24 @@ const LessonPlanOverview = () => {
 
 export default LessonPlanOverview;
 
+{
+  /* <td>
+                    <button
+                      className="btn btn-info"
+                      onClick={handleBringToTopButtonFunc}
+                      value={video.videoURL}
+                    >
+                      Bring to top
+                    </button>
+                  </td> */
+}
 
-{/* <div>
+{
+  /* <div>
 {nowPlayingURL && (
   <div>
-    {/* <h1>Now Playing: {}</h1> */}
+    {/* <h1>Now Playing: {}</h1> */
+}
 //     <div>
 //       <iframe
 //         width="95%"

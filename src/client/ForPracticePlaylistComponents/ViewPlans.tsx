@@ -1,18 +1,12 @@
 import Moment from "react-moment";
 import * as React from "react";
-// import { IAllPlans } from "./types";
 import { Link } from "react-router-dom";
 
-const ViewPlans = () => {
+let ViewPlans = () => {
   let token = localStorage.getItem("token");
   let [allPlansArray, setAllPlansArray] = React.useState<Array<IAllPlans>>([]);
-  // let [coachesName, setCoachesName] = React.useState<
-  //   Array<{ firstName: string; lastName: string }>
-  // >([]);
-
-  React.useEffect(() => {
-    getAllPlansFunc();
-  }, []);
+  let [role, setRole] = React.useState<string>("");
+  let [userId, setUserId] = React.useState<number>();
 
   let getAllPlansFunc = () => {
     fetch(`/api/lessonplans/validateToketLessonPlanCreate`, {
@@ -20,10 +14,9 @@ const ViewPlans = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        // fetch(`/api/lessonplans/getCoachName/${res.userId}`) // cannot not get plans with user id(use tenant) can make a query to get lessonplaans coaches name
-        //   .then((res) => res.json())
-        //   .then((res) => setCoachesName(res));
-        fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.tenant}`) // 
+        setRole(res.role);
+        setUserId(res.userId);
+        fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.tenant}`) //
           .then((res) => res.json())
           .then((res) => setAllPlansArray(res));
       });
@@ -41,7 +34,29 @@ const ViewPlans = () => {
     }
   };
 
-  // !coachesName[0] || 
+  let htmlBasedOnRole = (planID: number, userID: number) => {
+    if (role === "admin" && userID === userId) {
+      return (
+        <td>
+          <button
+            className="btn btn-danger"
+            value={planID}
+            onClick={handleDeleteButtonClick}
+          >
+            Delete Plan
+          </button>
+          <Link className="btn btn-success" to={`/EditALessonPlan/${planID}`}>
+            Edit Plan
+          </Link>
+        </td>
+      );
+    }
+  };
+console.log(allPlansArray)
+  React.useEffect(() => {
+    getAllPlansFunc();
+  }, []);
+
   if (!allPlansArray[0]) {
     return (
       <div>
@@ -81,23 +96,7 @@ const ViewPlans = () => {
                   <td>
                     <Moment fromNow>{plan.date_created}</Moment>
                   </td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      value={plan.id}
-                      onClick={handleDeleteButtonClick}
-                    >
-                      Delete Plan
-                    </button>
-                    <Link
-                      className="btn btn-success"
-                      to={`/EditALessonPlan/${plan.id}`}
-                      //   value={plan.id}
-                      //   onClick={handleDeleteButtonClick}
-                    >
-                      Edit Plan
-                    </Link>
-                  </td>
+                  {htmlBasedOnRole(plan.id, plan.created_by)}
                 </tr>
               );
             })}

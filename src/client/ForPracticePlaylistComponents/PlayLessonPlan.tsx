@@ -3,24 +3,23 @@ import { useParams } from "react-router-dom";
 import { IAllVideosInPlan } from "./EditLessonPlan";
 
 export default function PlayLessonPlan() {
-  // let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
-  //   Array<IAllVideosInPlan>
-  // >([]);
   let { planId }: any = useParams();
-  const [nameOfCurrentVideo, setNameOfCurrentVideo] = React.useState("");
-  const [nameOfNextVideo, setNameOfNextVideo] = React.useState("");
-  const [timeLeft, setTimeLeft] = React.useState<any>(0);
-  const [currentVideo, setCurrentVideo] = React.useState("");
+  let [nameOfCurrentVideo, setNameOfCurrentVideo] = React.useState("");
+  let [nameOfNextVideo, setNameOfNextVideo] = React.useState("");
+  let [timeLeft, setTimeLeft] = React.useState<any>(0);
+  let [movesRemaining, setMovesRemaining] = React.useState<number>(0);
+  let [currentVideo, setCurrentVideo] = React.useState("");
 
   let y = 0;
   React.useEffect(() => {
     fetch(`/api/lessonplans/getAllVideosInPlan/${planId}`)
       .then((res) => res.json())
       .then((videos: IAllVideosInPlan[]) => {
+        // setMovesRemaining(videos.length);
         let loadVideoFunction = () => {
           if (videos[y]) {
+            setMovesRemaining(videos.length - y - 1);
             let timeLeftMSRemoved = videos[y].lengthToDisplay / 1000;
-
             setCurrentVideo(videos[y].videoURL);
             setNameOfCurrentVideo(videos[y].videoName);
             if (videos[y + 1]) {
@@ -34,7 +33,7 @@ export default function PlayLessonPlan() {
                 if (timeLeftMSRemoved > 0) {
                   setTimeout(() => {
                     timeLeftMSRemoved = timeLeftMSRemoved - 1;
-                    setTimeLeft(timeLeftMSRemoved);
+                    setTimeLeft(timeLeftMSRemoved.toFixed(0));
                     countDownFunc();
                   }, 1000);
                 } else {
@@ -54,6 +53,8 @@ export default function PlayLessonPlan() {
         loadVideoFunction();
       });
   }, []);
+
+  console.log(movesRemaining);
 
   return (
     <>
@@ -77,13 +78,13 @@ export default function PlayLessonPlan() {
         </div>
 
         <div
-          className="d-flex flex-wrap h-100 text-light"
+          className="d-flex flex-wrap h-100 text-light col-12"
           style={{
             opacity: "75%",
           }}
         >
-          <div>
-            <h1 className="bg-dark">{nameOfCurrentVideo}</h1>
+          <div className="col-12">
+            <h1 className="bg-dark col-12">{nameOfCurrentVideo}</h1>
           </div>
 
           <div
@@ -93,6 +94,11 @@ export default function PlayLessonPlan() {
             }}
           >
             <h3 className="col-1 bg-dark">Time Left: {timeLeft}</h3>
+            <div className="col-12 p-0">
+              <h3 className="col-3 bg-dark">
+                Movies Remaining: {movesRemaining}
+              </h3>
+            </div>
             <h3 className="col-12 bg-dark">Up next: {nameOfNextVideo}</h3>
           </div>
         </div>
@@ -101,23 +107,23 @@ export default function PlayLessonPlan() {
   );
 }
 
-        {/* <a href="https://codepen.io/junyuliang/pen/xxGxOJ">
+{
+  /* <a href="https://codepen.io/junyuliang/pen/xxGxOJ">
           There is a way to do overlays on embeded youtube videos, checkout this
           link:{" "}
         </a>
       </h3>
       <h5>Is there a way to trigger a buzzer sound?</h5>
-      <h5>Size things appropriately</h5> */}
-
-
+      <h5>Size things appropriately</h5> */
+}
 
 // export default function PlayLessonPlan() {
-//   const [arrayOfYoutubeLinks, setArrayOfYoutubeLinks] = React.useState([
+//   let [arrayOfYoutubeLinks, setArrayOfYoutubeLinks] = React.useState([
 //     "CZxqob5F7MI",
 //     "Lz7uMjZWzvU",
 //     "6YYGnOK54fo",
 //   ]); //hardcoded
-//   const [currentVideo, setCurrentVideo] = React.useState("");
+//   let [currentVideo, setCurrentVideo] = React.useState("");
 
 //   let arrayOfYoutubeLinks2 = ["CZxqob5F7MI", "Lz7uMjZWzvU", "6YYGnOK54fo"];
 //   let y = 0;

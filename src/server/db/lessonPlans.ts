@@ -18,7 +18,7 @@ const getAllLessonPlansForUser = async (tenant: string) => {
     pi.first_name as coaches_FN,
     pi.last_name as coaches_LN
     from lesson_plans lp
-    join personal_info pi on lp.created_by = pi.id
+    join personal_info pi on lp.created_by = pi.user_id
     where lp.tenant = ?
     ORDER BY lp.date_created DESC;
     `,

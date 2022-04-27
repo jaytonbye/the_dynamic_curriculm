@@ -1,14 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-// import { IAllVideosByTenant } from "./types";
 
-// lesson_plan_id int not null,
-// video_id int not null,
-// duration_to_display_video_in_seconds int not null,
-// number_for_ordering float not null,
-
-const EditLessonPlan = () => {
+let EditLessonPlan = () => {
   let [videosByTenant, setVideosByTenant] = React.useState([]);
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>
@@ -18,17 +12,14 @@ const EditLessonPlan = () => {
   let [durationToPlayVideo, setDurationToPlayVideo] = React.useState("");
   let [orderOfVideo, setOrderOfVideo] = React.useState("");
   let { planId }: any = useParams();
-
-  let UID = localStorage.getItem("UID");
   let token = localStorage.getItem("token");
-
 
   let getAllVideosInLessonPlanFunc = () => {
     fetch(`/api/lessonplans/getAllVideosInPlan/${planId}`)
       .then((res) => res.json())
       .then((res) => setVideosInLessonPlan(res));
   };
-  
+
   let addToLessonFunc = () => {
     fetch(`/api/lessonplans/addNewVideoToLessonPlan`, {
       method: "POST",
@@ -43,7 +34,7 @@ const EditLessonPlan = () => {
       .then(() => alert("Video has been added to the lesson plan!"))
       .then(() => getAllVideosInLessonPlanFunc());
   };
-  
+
   let handleDeleteVideo = (e: any) => {
     e.preventDefault();
     let lessonPlanVideosId = e.target.value;
@@ -94,9 +85,11 @@ const EditLessonPlan = () => {
 
   return (
     <>
-    <div>
-        <Link to={"/CreateALessonPlan"} className='btn btn-primary'>Back to Lesson Plans</Link>
-    </div>
+      <div>
+        <Link to={"/CreateALessonPlan"} className="btn btn-primary">
+          Back to Lesson Plans
+        </Link>
+      </div>
       <label className="h4">Search for a specific move to add: </label>
       <input type="text" list="moveList" onChange={onMoveChange} />
       <datalist id="moveList">
