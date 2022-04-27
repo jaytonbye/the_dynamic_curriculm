@@ -30,7 +30,7 @@ let CreateAndEditPlan = () => {
       return (
         <div className="d-flex justify-content-between">
           <button
-            className="btn btn-success ml-2"
+            className="btn btn-success m-3"
             onClick={showOrHideCreateLessonPlanFunc}
           >
             {buttonToCreateOrView}

@@ -88,14 +88,14 @@ export default function PlayLessonPlan() {
           </div>
 
           <div
-            className=" d-flex align-items-end flex-wrap"
+            className=" d-flex align-items-end flex-wrap col-12"
             style={{
               opacity: "75%",
             }}
           >
             <h3 className="col-1 bg-dark">Time Left: {timeLeft}</h3>
             <div className="col-12 p-0">
-              <h3 className="col-3 bg-dark">
+              <h3 className="col-2 bg-dark">
                 Movies Remaining: {movesRemaining}
               </h3>
             </div>

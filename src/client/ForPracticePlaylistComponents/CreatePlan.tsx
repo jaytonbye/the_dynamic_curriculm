@@ -8,6 +8,7 @@ const CreatPlan = () => {
 
   let submitNewPlan = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if(!planName.trim()) return alert("Enter a plan name")
     fetch(`/api/lessonplans/addNewLessonPlan`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -16,7 +17,9 @@ const CreatPlan = () => {
         userId,
         tenant,
       }),
-    }).then(() => alert("Your plan has been added!"));
+    })
+      .then((res) => res.json())
+      .then((res) => alert(res.message)); //.then(res => alert("Your plan has been added!"))
   };
 
   React.useEffect(() => {

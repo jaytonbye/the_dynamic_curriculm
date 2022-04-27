@@ -77,11 +77,14 @@ router.post("/addNewLessonPlan", async (req, res) => {
     let userId = req.body.userId;
     let tenant = req.body.tenant;
     await lessonPlans.addNewPlanToDB(planName, userId, tenant);
-    res.json(200);
+    res.status(200).json({ message: "Your plan has been added!" })
     // res.json({userId, planName})
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    if(error.code === "ER_DUP_ENTRY"){
+      return res.status(500).json({ message: "Plan name already exists" })
+    }
+    return res.status(500).json({ message: "Something went wrong" });
   }
 });
 

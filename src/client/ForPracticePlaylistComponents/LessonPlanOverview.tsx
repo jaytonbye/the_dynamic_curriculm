@@ -23,7 +23,7 @@ let LessonPlanOverview = () => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-3">
       <div className="sticky-top bg-white">
         <table className="table">
           <thead>
@@ -38,14 +38,14 @@ let LessonPlanOverview = () => {
           <tbody>
             {videosInLessonPlan.map((video) => {
               return (
-                <tr key={video.lpvID}>
+                <tr key={video.lpvID} style={{height: "20rem"}}>
                   <td>{video.orderNumber}</td>
                   <td className="col-3">{video.videoName}</td>
 
                   <td>
                     <iframe
                       width="95%"
-                      height="35%"
+                      height="95%"
                       src={`https://www.youtube.com/embed/${video.videoURL}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
@@ -55,7 +55,7 @@ let LessonPlanOverview = () => {
                   <td>
                     <iframe
                       width="95%"
-                      height="35%"
+                      height="95%"
                       src={`https://www.youtube.com/embed/${video.loopedVideoURL}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

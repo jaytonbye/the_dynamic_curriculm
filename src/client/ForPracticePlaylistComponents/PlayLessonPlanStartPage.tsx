@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
+import NavigationBar from "../NavigationBar";
 import LessonPlanOverview from "./LessonPlanOverview";
 
 let PlayLessonPlanStartPage = () => {
@@ -16,6 +17,8 @@ let PlayLessonPlanStartPage = () => {
 
   return (
     <div>
+      <NavigationBar />
+      <div className="m-3">
       <div>
         <Link to={"/CreateALessonPlan"} className="btn btn-primary">
           Back to Lesson Plans
@@ -34,6 +37,7 @@ let PlayLessonPlanStartPage = () => {
         </div>
         <LessonPlanOverview />
       </>
+    </div>
     </div>
   );
 };

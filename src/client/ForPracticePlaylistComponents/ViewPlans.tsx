@@ -6,6 +6,7 @@ let ViewPlans = () => {
   let token = localStorage.getItem("token");
   let [allPlansArray, setAllPlansArray] = React.useState<Array<IAllPlans>>([]);
   let [role, setRole] = React.useState<string>("");
+  let [tenant, setTenant] = React.useState<string>('')
   let [userId, setUserId] = React.useState<number>();
 
   let getAllPlansFunc = () => {
@@ -15,6 +16,7 @@ let ViewPlans = () => {
       .then((res) => res.json())
       .then((res) => {
         setRole(res.role);
+        setTenant(res.tenant)
         setUserId(res.userId);
         fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.tenant}`) //
           .then((res) => res.json())
@@ -52,7 +54,7 @@ let ViewPlans = () => {
       );
     }
   };
-console.log(allPlansArray)
+
   React.useEffect(() => {
     getAllPlansFunc();
   }, []);
@@ -66,16 +68,16 @@ console.log(allPlansArray)
   }
 
   return (
-    <div>
+    <div className="ml-3">
       <>
-        <h2>Your plans</h2>
+        <h1 className="mt-3">Lesson Plans for {tenant}</h1>
         <div className="sticky-top bg-white"></div>
         <table className="table">
           <thead>
             <tr>
               <th>Lesson Plan</th>
               <th>Coach</th>
-              <th>date Created</th>
+              <th>Created</th>
             </tr>
           </thead>
           <tbody>
