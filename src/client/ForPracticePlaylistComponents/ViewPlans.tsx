@@ -37,7 +37,7 @@ let ViewPlans = () => {
   };
 
   let htmlBasedOnRole = (planID: number, userID: number) => {
-    if (role === "admin" && userID === userId) {
+    if (role === "admin" && userID === userId || role === "coach" && userID === userId) {
       return (
         <td>
           <button
@@ -62,7 +62,7 @@ let ViewPlans = () => {
   if (!allPlansArray[0]) {
     return (
       <div>
-        <h1>Loading ...</h1>
+        <h1>No plans for {tenant} ...</h1>
       </div>
     );
   }

@@ -26,7 +26,7 @@ let CreateAndEditPlan = () => {
   };
 
   let createButtonBasedOnRole = () => {
-    if (role === "admin") {
+    if (role === "admin" || role === "coach" ) {
       return (
         <div className="d-flex justify-content-between">
           <button

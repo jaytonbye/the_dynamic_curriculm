@@ -78,28 +78,29 @@ export default function PlayLessonPlan() {
         </div>
 
         <div
-          className="d-flex flex-wrap h-100 text-light col-12"
+          className="d-flex flex-wrap h-100 text-dark col-12"
           style={{
+            padding: "0%",
             opacity: "75%",
           }}
         >
           <div className="col-12">
-            <h1 className="bg-dark col-12">{nameOfCurrentVideo}</h1>
+            <h1 className="bg-light col-12">{nameOfCurrentVideo}</h1>
           </div>
 
           <div
-            className=" d-flex align-items-end flex-wrap col-12"
+            className=" d-flex align-items-end flex-wrap col-12 pb-5"
             style={{
               opacity: "75%",
             }}
           >
-            <h3 className="col-1 bg-dark">Time Left: {timeLeft}</h3>
+            <h3 className="col-1 bg-light">Time Left: {timeLeft}</h3>
             <div className="col-12 p-0">
-              <h3 className="col-2 bg-dark">
+              <h3 className="col-2 bg-light">
                 Movies Remaining: {movesRemaining}
               </h3>
             </div>
-            <h3 className="col-12 bg-dark">Up next: {nameOfNextVideo}</h3>
+            <h5 className="col-12 bg-light text-small">Up next: {nameOfNextVideo}</h5>
           </div>
         </div>
       </div>
