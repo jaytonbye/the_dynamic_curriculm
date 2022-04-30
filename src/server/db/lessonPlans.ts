@@ -26,18 +26,6 @@ const getAllLessonPlansForUser = async (tenant: string) => {
   );
 };
 
-// const getCoachName = async (userId: any) => {
-//   return await Query(
-//     `
-//   select 
-//   p.first_name as firstName,
-//   p.last_name as lastName
-//   from personal_info p where p.user_id = ?
-//   `,
-//     [userId]
-//   );
-// };
-
 const getAllVideosInLessonPlan = async (lessonPlanId: any) => {
   return await Query(
     `
@@ -112,7 +100,6 @@ export default {
   //GETs
   getPlanInfo,
   getAllLessonPlansForUser,
-  // getCoachName,
   getAllVideosByTenant,
   getAllVideosInLessonPlan,
   //POSTs

@@ -30,17 +30,6 @@ router.get("/getAllLessonPlansForUser/:tenant", async (req, res) => {
   }
 });
 
-// router.get(`/getCoachName/:userId`, async (req, res) => {
-//   try {
-//     let userId = req.params.userId;
-//     let coachesName = await lessonPlans.getCoachName(userId);
-//     res.json(coachesName);
-//   } catch (error) {
-//     console.log(error);
-//     res.sendStatus(500);
-//   }
-// });
-
 router.get(`/getAllVideosInPlan/:planId`, async (req, res) => {
   try {
     let planId = req.params.planId;
@@ -77,12 +66,12 @@ router.post("/addNewLessonPlan", async (req, res) => {
     let userId = req.body.userId;
     let tenant = req.body.tenant;
     await lessonPlans.addNewPlanToDB(planName, userId, tenant);
-    res.status(200).json({ message: "Your plan has been added!" })
+    res.status(200).json({ message: "Your plan has been added!" });
     // res.json({userId, planName})
   } catch (error) {
     console.log(error);
-    if(error.code === "ER_DUP_ENTRY"){
-      return res.status(500).json({ message: "Plan name already exists" })
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(500).json({ message: "Plan name already exists" });
     }
     return res.status(500).json({ message: "Something went wrong" });
   }
