@@ -17,7 +17,7 @@ import CoachesViewTwoPointO from "./CoachesViewTwoPOintO";
 import PlayLessonPlan from "./ForPracticePlaylistComponents/PlayLessonPlan";
 import CreateAndEditPlan from "./ForPracticePlaylistComponents/CreateAndEditPlan";
 import EditLessonPlan from "./ForPracticePlaylistComponents/EditLessonPlan";
-import ViewPlans from "./ForPracticePlaylistComponents/ViewPlans";
+import ViewPlans from "./ForPracticePlaylistComponents/components/ViewPlans";
 import PlayLessonPlanStartPage from "./ForPracticePlaylistComponents/PlayLessonPlanStartPage";
 
 const App = (props: AppProps) => {
@@ -59,10 +59,6 @@ const App = (props: AppProps) => {
             <AllGradesAllLevels />
           </Route>
 
-
-          {/* <Route exact path="/PlayLessonPlan">
-            <PlayLessonPlan />
-          </Route> */}
           <Route exact path="/CreateALessonPlan">
             <CreateAndEditPlan />
           </Route>
@@ -75,7 +71,6 @@ const App = (props: AppProps) => {
           <Route exact path="/playEntireLessonPlan/:planId">
             <PlayLessonPlan />
           </Route>
-
 
           <Route path="/passwordResetLandingPage/:encryptedIdInUrl">
             <PasswordResetLandingPage />

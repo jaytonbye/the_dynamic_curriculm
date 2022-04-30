@@ -6,7 +6,7 @@ let ViewPlans = () => {
   let token = localStorage.getItem("token");
   let [allPlansArray, setAllPlansArray] = React.useState<Array<IAllPlans>>([]);
   let [role, setRole] = React.useState<string>("");
-  let [tenant, setTenant] = React.useState<string>('')
+  let [tenant, setTenant] = React.useState<string>("");
   let [userId, setUserId] = React.useState<number>();
 
   let getAllPlansFunc = () => {
@@ -16,7 +16,7 @@ let ViewPlans = () => {
       .then((res) => res.json())
       .then((res) => {
         setRole(res.role);
-        setTenant(res.tenant)
+        setTenant(res.tenant);
         setUserId(res.userId);
         fetch(`/api/lessonplans/getAllLessonPlansForUser/${res.tenant}`) //
           .then((res) => res.json())
@@ -37,7 +37,10 @@ let ViewPlans = () => {
   };
 
   let htmlBasedOnRole = (planID: number, userID: number) => {
-    if (role === "admin" && userID === userId || role === "coach" && userID === userId) {
+    if (
+      (role === "admin" && userID === userId) ||
+      (role === "coach" && userID === userId)
+    ) {
       return (
         <td>
           <button

@@ -23,7 +23,7 @@ export default function NavigationBar() {
   };
 
   let goToUnitVideosPage = () => {
-    history.push("/UnitVideosPage");
+    history.push("/CreateALessonPlan");
   };
 
   let goToTestPage = () => {
@@ -82,7 +82,7 @@ export default function NavigationBar() {
             className="btn btn-outline-primary"
             onClick={goToUnitVideosPage}
           >
-            Unit Videos (for practice)
+            Practice Playlists
           </button>
           <button className="btn btn-outline-primary" onClick={goToTestPage}>
             Tests

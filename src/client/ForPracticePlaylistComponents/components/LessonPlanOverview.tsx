@@ -1,16 +1,12 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { IAllVideosInPlan } from "./EditLessonPlan";
-
-//    ** some wierd error occered when loading this page - couldve been not wating until finished compiling
-//  **connot recreate and didnt effect behavior  just something to watch for
+import { IAllVideosInPlan } from "../EditLessonPlan";
 
 let LessonPlanOverview = () => {
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>
   >([]);
   let { planId }: any = useParams();
-  let token = localStorage.getItem("token"); // token is not used()anyone can tryp in lesson plan id and view
 
   let getAllVideosInLessonPlanFunc = () => {
     fetch(`/api/lessonplans/getAllVideosInPlan/${planId}`)
@@ -38,7 +34,7 @@ let LessonPlanOverview = () => {
           <tbody>
             {videosInLessonPlan.map((video) => {
               return (
-                <tr key={video.lpvID} style={{height: "20rem"}}>
+                <tr key={video.lpvID} style={{ height: "20rem" }}>
                   <td>{video.orderNumber}</td>
                   <td className="col-3">{video.videoName}</td>
 
@@ -61,7 +57,7 @@ let LessonPlanOverview = () => {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>
                   </td>
-                  <td>{video.lengthToDisplay}</td>
+                  <td>{video.lengthToDisplay} seconds</td>
                 </tr>
               );
             })}
@@ -73,34 +69,3 @@ let LessonPlanOverview = () => {
 };
 
 export default LessonPlanOverview;
-
-{
-  /* <td>
-                    <button
-                      className="btn btn-info"
-                      onClick={handleBringToTopButtonFunc}
-                      value={video.videoURL}
-                    >
-                      Bring to top
-                    </button>
-                  </td> */
-}
-
-{
-  /* <div>
-{nowPlayingURL && (
-  <div>
-    {/* <h1>Now Playing: {}</h1> */
-}
-//     <div>
-//       <iframe
-//         width="95%"
-//         height="35%"
-//         src={`https://www.youtube.com/embed/${nowPlayingURL}`}
-//         title="YouTube video player"
-//         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//       ></iframe>
-//     </div>
-//   </div>
-// )}
-// </div> */}

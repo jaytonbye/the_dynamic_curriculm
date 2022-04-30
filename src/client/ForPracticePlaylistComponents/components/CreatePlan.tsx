@@ -8,7 +8,7 @@ const CreatPlan = () => {
 
   let submitNewPlan = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if(!planName.trim()) return alert("Enter a plan name")
+    if (!planName.trim()) return alert("Enter a plan name");
     fetch(`/api/lessonplans/addNewLessonPlan`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

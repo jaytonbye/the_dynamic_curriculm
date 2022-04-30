@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 
-let EditLessonPlan = () => {  
+let EditLessonPlan = () => {
   let [videosByTenant, setVideosByTenant] = React.useState([]);
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>
@@ -23,7 +23,8 @@ let EditLessonPlan = () => {
 
   let addToLessonFunc = () => {
     if (!searchedMoveId) return alert("Select a move");
-    if (!durationToPlayVideo || !Number(durationToPlayVideo)) return alert("Set duration");
+    if (!durationToPlayVideo || !Number(durationToPlayVideo))
+      return alert("Set duration");
     if (!orderOfVideo || !Number(orderOfVideo)) return alert("Set order");
     fetch(`/api/lessonplans/addNewVideoToLessonPlan`, {
       method: "POST",
@@ -124,7 +125,7 @@ let EditLessonPlan = () => {
             ></iframe>
             <div className="d-flex justify-content-between align-items-center flex-wrap">
               <div className="d-flex align-items-center">
-                <label htmlFor="">Duration of video: </label>
+                <label htmlFor="">Duration of video (seconds): </label>
                 <input
                   type="text"
                   name=""
@@ -178,7 +179,7 @@ let EditLessonPlan = () => {
                         ></iframe>
                       </td>
 
-                      <td>{video.lengthToDisplay}</td>
+                      <td>{video.lengthToDisplay} seconds</td>
                       <td>
                         <button
                           className="btn btn-danger"

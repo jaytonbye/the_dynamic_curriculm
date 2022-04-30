@@ -1,7 +1,7 @@
 import * as React from "react";
 import NavigationBar from "../NavigationBar";
-import CreatePlan from "./CreatePlan";
-import ViewPlans from "./ViewPlans";
+import CreatePlan from "./components/CreatePlan";
+import ViewPlans from "./components/ViewPlans";
 
 let CreateAndEditPlan = () => {
   let token = localStorage.getItem("token");
@@ -26,7 +26,7 @@ let CreateAndEditPlan = () => {
   };
 
   let createButtonBasedOnRole = () => {
-    if (role === "admin" || role === "coach" ) {
+    if (role === "admin" || role === "coach") {
       return (
         <div className="d-flex justify-content-between">
           <button
@@ -62,21 +62,3 @@ let CreateAndEditPlan = () => {
 };
 
 export default CreateAndEditPlan;
-
-{
-  /* <div className="d-flex justify-content-between">
-        <button className="btn btn-success ml-2" onClick={showOrHideCreateLessonPlanFunc}>
-          {buttonToCreateOrView}
-        </button> */
-}
-{
-  /* <button
-          className="btn btn-warning"
-          onClick={showOrHideAllPlansFunc}
-        >
-          View All your Plans
-        </button> */
-}
-{
-  /* </div> */
-}
