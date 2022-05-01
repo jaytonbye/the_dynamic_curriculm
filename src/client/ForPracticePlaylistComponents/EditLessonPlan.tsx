@@ -175,7 +175,7 @@ let EditLessonPlan = () => {
                           height="45%"
                           src={`https://www.youtube.com/embed/${video.videoURL}`}
                           title="YouTube video player"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                         ></iframe>
                       </td>
 
