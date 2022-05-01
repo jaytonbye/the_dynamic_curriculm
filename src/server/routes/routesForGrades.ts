@@ -45,8 +45,8 @@ router.get(
 router.get(
   "/allSpecificCurrentGradesForASingleWrestler/:user_id&:grade",
   async (req, res) => {
-    let user_id = Number(req.params.user_id);
-    let grade = Number(req.params.grade);
+    let user_id: any = Number(req.params.user_id);
+    let grade: any = Number(req.params.grade);
     try {
       res.json(
         await db.grades.allSpecificCurrentGradesForASingleWrestler(
@@ -65,8 +65,8 @@ router.get(
 router.get(
   "/gradesForSingleWreslterOnSpecificLevel/:user_id&:level",
   async (req, res) => {
-    let user_id = Number(req.params.user_id);
-    let level = Number(req.params.level);
+    let user_id: any = Number(req.params.user_id);
+    let level: any = Number(req.params.level);
     try {
       res.json(
         await db.grades.gradesForSingleWreslterOnSpecificLevel(user_id, level)
