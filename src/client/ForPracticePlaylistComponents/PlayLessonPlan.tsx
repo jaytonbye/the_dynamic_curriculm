@@ -60,7 +60,7 @@ export default function PlayLessonPlan() {
           className="text-center"
           style={{
             position: "absolute",
-            zIndex: "-5",
+            zIndex: -5,
             height: "100%",
             width: "100%",
           }}

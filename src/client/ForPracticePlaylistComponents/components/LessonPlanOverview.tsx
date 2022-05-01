@@ -44,7 +44,7 @@ let LessonPlanOverview = () => {
                       height="95%"
                       src={`https://www.youtube.com/embed/${video.videoURL}`}
                       title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                     ></iframe>
                   </td>
 
@@ -54,7 +54,7 @@ let LessonPlanOverview = () => {
                       height="95%"
                       src={`https://www.youtube.com/embed/${video.loopedVideoURL}`}
                       title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                     ></iframe>
                   </td>
                   <td>{video.lengthToDisplay} seconds</td>
