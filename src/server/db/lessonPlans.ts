@@ -80,7 +80,7 @@ const addNewVideoToLessonPlan = async (
 };
 
 //  DELETEs
-const deleteSingleVideoFromLessonPlan = async (lessonPlanVideosId) => {
+const deleteSingleVideoFromLessonPlan = async (lessonPlanVideosId: any) => {
   return await Query("delete from lesson_plan_videos where id = ?", [
     lessonPlanVideosId,
   ]);
