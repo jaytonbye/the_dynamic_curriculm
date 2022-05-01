@@ -101,7 +101,7 @@ router.delete(
   `/deleteSingleVideoFromLessonPlan/:lessonPlanVideosID`,
   async (req, res) => {
     try {
-      let lessonPlanVideosId = req.params.lessonPlanVideosID;
+      let lessonPlanVideosId:any = req.params.lessonPlanVideosID;
       await lessonPlans.deleteSingleVideoFromLessonPlan(lessonPlanVideosId);
       res.sendStatus(200);
     } catch (error) {
