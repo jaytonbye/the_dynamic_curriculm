@@ -19,7 +19,7 @@ export default function PlayLessonPlan() {
           if (videos[y]) {
             setMovesRemaining(videos.length - y - 1);
             let timeLeftMSRemoved = videos[y].lengthToDisplay;
-            setCurrentVideo(videos[y].videoURL);
+            setCurrentVideo(videos[y].loopedVideoURL);
             setNameOfCurrentVideo(videos[y].videoName);
             if (videos[y + 1]) {
               setNameOfNextVideo(videos[y + 1].videoName);
