@@ -60,7 +60,8 @@ function MoveSearch() {
             height="35%"
             src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
             title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+            allowFullScreen
           ></iframe>
         </div>
         <div className="col-12">
@@ -70,6 +71,7 @@ function MoveSearch() {
             src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_looped_video}`}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
           ></iframe>
         </div>
         <h5>
