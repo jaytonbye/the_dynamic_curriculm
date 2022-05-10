@@ -221,13 +221,11 @@ export default function TestCard(props: { UID: number }) {
     }));
   }, [state.loading]); // <- ensures this only re-runs on that boolean toggling and never again
 
-  console.log(state.earnableItems); //////////////////
   const returnsEarnableItemsOrNothingIfNoItemsToEarnFunc: any = (
     earningItemsForFunc: Array<EarnableItems>
   ) => {
-
-    if(earningItemsForFunc.length > 0){
-      return(
+    if (earningItemsForFunc.length > 0) {
+      return (
         <ListGroup className="my-3">
           {earningItemsForFunc.map((item) => (
             <ListGroup.Item
@@ -248,14 +246,10 @@ export default function TestCard(props: { UID: number }) {
             </ListGroup.Item>
           ))}
         </ListGroup>
-        )
+      );
+    } else {
+      return <h3>No Items to earn</h3>;
     }
-
-    else{
-      return <h3>No Items to earn</h3>
-    }
-    
-    
   };
 
   return (
