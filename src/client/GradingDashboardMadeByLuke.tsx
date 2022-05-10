@@ -221,10 +221,14 @@ export default function TestCard(props: { UID: number }) {
     }));
   }, [state.loading]); // <- ensures this only re-runs on that boolean toggling and never again
 
+  // we switched the order of what we test here
+
   const returnsEarnableItemsOrNothingIfNoItemsToEarnFunc: any = (
     earningItemsForFunc: Array<EarnableItems>
   ) => {
-    if (earningItemsForFunc.length > 0) {
+    if (earningItemsForFunc.length!) {
+      return <h3>No Items to earn</h3>;
+    } else {
       return (
         <ListGroup className="my-3">
           {earningItemsForFunc.map((item) => (
@@ -239,7 +243,7 @@ export default function TestCard(props: { UID: number }) {
                 {Math.ceil(
                   (item.percentage_of_total_points_needed *
                     state.totalPointsAvailable) /
-                    100
+                  100
                 )}{" "}
                 <small className="text-muted">points req.</small>
               </span>
@@ -247,10 +251,8 @@ export default function TestCard(props: { UID: number }) {
           ))}
         </ListGroup>
       );
-    } else {
-      return <h3>No Items to earn</h3>;
-    }
-  };
+    };
+  }
 
   return (
     <>
@@ -290,4 +292,3 @@ export default function TestCard(props: { UID: number }) {
   );
 }
 
-//happy coding
