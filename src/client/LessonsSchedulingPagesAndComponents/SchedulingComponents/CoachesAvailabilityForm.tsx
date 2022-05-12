@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import CoachesAvailabilityChart from "./CoachesAvailabilityChart";
 
 //so far it all works niceley
 //note: may be a better way to do this(via values within each option in the select menu but this works for now just a bit messy)
@@ -30,7 +31,8 @@ const CoachesAvailabilityForm = () => {
     50,
     55,
   ];
-  let [coaches_UID, setCoaches_UID] = useState<number>(localStorage.UID); //not user inputed
+  let token = localStorage.getItem("token");
+  let [coaches_UID, setCoaches_UID] = useState<number>(); //not user inputed
   let [dayOfWeek, setDayOfWeek] = useState<string>();
   let [startTimeHour, setStartTimeHour] = useState<number | string>();
   let [startTimeMinute, setStartTimeMinute] = useState<number>();
@@ -40,7 +42,13 @@ const CoachesAvailabilityForm = () => {
   let [endTimeAMPM, setEndTimeAMPM] = useState<string>();
 
   // useEffect here to get user ID will help if i have to use tenant down the road
-  useEffect(() =>{}, [])
+  useEffect(() => {
+    fetch(`/api/schedulingLessons/validateToketInputAvailability`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((res) => setCoaches_UID(res.userId));
+  }, []);
 
   let handleSubmitAvailability = () => {
     if (
@@ -96,7 +104,15 @@ const CoachesAvailabilityForm = () => {
           //   startTime: `${startTimeHour}:${startTimeMinute}:00`,     // it was working on first click but it added a 0 in front of it? probably missing somthing try again
           //   endTime: `${endTimeHour}:${endTimeMinute}:00`,
         }),
-      });
+      })
+        // .then(res => res.json())
+        .then((res) => {
+          if (res.status === 200) {
+            alert("Your availability has been added successfully!");
+          } else {
+            alert("Something went wrong while adding your availability"); //no way to test this right now
+          }
+        });
       //   console.log(`
       //   weekday: ${dayOfWeek},
       //   start time: ${startHourFinal}:${startTimeMinute}:00,
@@ -199,6 +215,11 @@ const CoachesAvailabilityForm = () => {
             Submit availability
           </button>
         </div>
+      </div>
+      <hr />
+      <div>
+        {coaches_UID ? <CoachesAvailabilityChart coachId={coaches_UID} /> : "Loading ..."}
+        
       </div>
     </div>
   );

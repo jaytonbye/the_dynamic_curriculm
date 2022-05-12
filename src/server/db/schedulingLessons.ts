@@ -10,7 +10,7 @@ const getCoachesWeeklyAvailibityByCoachesId = async (coachesId: number | string)
     `select * from coaches_availability
    where coaches_user_id = ?
    order by 
-   field(day_of_week, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"),
+   field(day_of_week, "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"),
    start_time asc;`,
     [coachesId]
   );
