@@ -5,7 +5,7 @@ export default function AccountsDisplayer(props: any) {
 
 
     const onDeleteItem = (id: number) => {
-        if (confirm("are you sure you want to delete this item?")) {
+        if (confirm("Are you sure you want to delete this item? This cannot be undone. And will remove all grades and data associated with the user.")) {
             let token = localStorage.getItem("token");
             const requestOptions = {
                 method: "DELETE",
@@ -16,10 +16,10 @@ export default function AccountsDisplayer(props: any) {
             };
             fetch(`/api/users/${id}`, requestOptions).then((res) => {
                 if (res.ok) {
-                    alert("Item deleted");
+                    alert("User deleted");
                     window.location.reload();
                 } else {
-                    alert("it didn't work!");
+                    alert("it didn't work! Contact support if this keeps happening.");
                 }
             });
         }
