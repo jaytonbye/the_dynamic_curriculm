@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 //so far it all works niceley
@@ -40,6 +40,7 @@ const CoachesAvailabilityForm = () => {
   let [endTimeAMPM, setEndTimeAMPM] = useState<string>();
 
   // useEffect here to get user ID will help if i have to use tenant down the road
+  useEffect(() =>{}, [])
 
   let handleSubmitAvailability = () => {
     if (

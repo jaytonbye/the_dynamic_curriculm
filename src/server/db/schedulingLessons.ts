@@ -1,9 +1,20 @@
 import { Query } from "./index";
 
+//    GET           //
 const getAvails = async () => {
   return await Query("select * from coaches_availability");
 };
 
+const getCoachesWeeklyAvailibityByCoachesId = async (coachesId: number | string) => {
+  return await Query(
+    `select * from coaches_availability
+   where coaches_user_id = ?
+   order by 
+   field(day_of_week, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"),
+   start_time asc;`,
+    [coachesId]
+  );
+};
 //      POST        //
 const postNewAvailability = async (
   coachesUid: number,
@@ -21,6 +32,7 @@ const postNewAvailability = async (
 export default {
   //  GET
   getAvails,
+  getCoachesWeeklyAvailibityByCoachesId,
   //  POST
   postNewAvailability,
 };
