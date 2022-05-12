@@ -19,19 +19,31 @@ function Admin() {
 
   const showOrHideAccountCreation = () => {
     setShowOrHideCreateAccount(!showOrHideCreateAccount);
-    setShowOrHideVideoManager(false)
-    setShowOrHideItem(false)
+    if (showOrHideVideoManager) {
+      setShowOrHideVideoManager(false)
+    }
+    if (showOrHideItem) {
+      setShowOrHideItem(false)
+    }
   };
 
   const showOrHideVideoManagerFunction = () => {
     setShowOrHideVideoManager(!showOrHideVideoManager);
-    setShowOrHideCreateAccount(false)
-    setShowOrHideItem(false)
+    if (showOrHideCreateAccount) {
+      setShowOrHideCreateAccount(false)
+    }
+    if (showOrHideItem) {
+      setShowOrHideItem(false)
+    }
   };
   const showOrHideItemCreation = () => {
     setShowOrHideItem(!showOrHideItem);
-    setShowOrHideCreateAccount(false)
-    setShowOrHideVideoManager(false)
+    if (showOrHideCreateAccount) {
+      setShowOrHideCreateAccount(false)
+    }
+    if (showOrHideVideoManager) {
+      setShowOrHideVideoManager(false)
+    }
   };
 
   return (
