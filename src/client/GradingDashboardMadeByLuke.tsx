@@ -226,7 +226,7 @@ export default function TestCard(props: { UID: number }) {
   const returnsEarnableItemsOrNothingIfNoItemsToEarnFunc: any = (
     earningItemsForFunc: Array<EarnableItems>
   ) => {
-    if (earningItemsForFunc.length!) {
+    if (!earningItemsForFunc.length) {
       return <h3>No Items to earn</h3>;
     } else {
       return (
