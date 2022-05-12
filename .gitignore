@@ -12,5 +12,5 @@ public/js/app.js
 .env
 
 #harry
-.DS_Store
+**/.DS_Store
 harryNotes/

@@ -97,6 +97,9 @@ function calcNextItem({
 }: CalcArguments) {
   let pointsRequiredToEarnThisItem = 0;
   let itemIndex = 0;
+  if (earnableItems.length === 0) {
+    return;
+  }
   for (let x = 0; x < earnableItems.length; x++) {
     pointsRequiredToEarnThisItem =
       (earnableItems[x].percentage_of_total_points_needed *
@@ -107,7 +110,6 @@ function calcNextItem({
       break;
     }
   }
-
   return `${earnableItems[itemIndex].item_color} ${earnableItems[itemIndex].item_name}`;
 }
 
@@ -150,14 +152,18 @@ export default function TestCard(props: { UID: number }) {
         headers: { Authorization: `Bearer ${token}` },
       }),
     ])
-      .then((resArray) => Promise.all(resArray.map((res) => {
-        if (res.status === 500) {
-          alert("Internal Server Error");
-          console.log("it workeddddd");
-        } else {
-          return res.json()
-        }
-      })))
+      .then((resArray) =>
+        Promise.all(
+          resArray.map((res) => {
+            if (res.status === 500) {
+              alert("Internal Server Error");
+              console.log("it workeddddd");
+            } else {
+              return res.json();
+            }
+          })
+        )
+      )
       .then(([personalInfo, earnableItems, wrestlerGrades, videos]) => {
         // get total points earned
         const totalPoints = wrestlerGrades.reduce(
@@ -194,11 +200,8 @@ export default function TestCard(props: { UID: number }) {
     if (state.loading) return;
 
     //is the object destructuring
-    const {
-      earnableItems,
-      totalPointsAvailable,
-      totalPointsEarnedByWrestler,
-    } = state;
+    const { earnableItems, totalPointsAvailable, totalPointsEarnedByWrestler } =
+      state;
 
     const currentItemEarned = calcCurrentItem({
       earnableItems,
@@ -218,6 +221,39 @@ export default function TestCard(props: { UID: number }) {
     }));
   }, [state.loading]); // <- ensures this only re-runs on that boolean toggling and never again
 
+  // we switched the order of what we test here
+
+  const returnsEarnableItemsOrNothingIfNoItemsToEarnFunc: any = (
+    earningItemsForFunc: Array<EarnableItems>
+  ) => {
+    if (earningItemsForFunc.length!) {
+      return <h3>No Items to earn</h3>;
+    } else {
+      return (
+        <ListGroup className="my-3">
+          {earningItemsForFunc.map((item) => (
+            <ListGroup.Item
+              key={`key-${item.id}-${props.UID}`}
+              className="py-3 d-flex justify-content-between align-items-center"
+            >
+              <span>
+                {item.item_color} {item.item_name}
+              </span>
+              <span>
+                {Math.ceil(
+                  (item.percentage_of_total_points_needed *
+                    state.totalPointsAvailable) /
+                  100
+                )}{" "}
+                <small className="text-muted">points req.</small>
+              </span>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      );
+    };
+  }
+
   return (
     <>
       <Card>
@@ -229,26 +265,11 @@ export default function TestCard(props: { UID: number }) {
         </Card.Header>
         <Card.Body>
           <Card.Title className="fw-light">Earnable Items</Card.Title>
-          <ListGroup className="my-3">
-            {state.earnableItems.map((item) => (
-              <ListGroup.Item
-                key={`key-${item.id}-${props.UID}`}
-                className="py-3 d-flex justify-content-between align-items-center"
-              >
-                <span>
-                  {item.item_color} {item.item_name}
-                </span>
-                <span>
-                  {Math.ceil(
-                    (item.percentage_of_total_points_needed *
-                      state.totalPointsAvailable) /
-                    100
-                  )}{" "}
-                  <small className="text-muted">points req.</small>
-                </span>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+
+          {returnsEarnableItemsOrNothingIfNoItemsToEarnFunc(
+            state.earnableItems
+          )}
+
           <Card.Text>
             {state.personalInfo.first_name} has earned{" "}
             <strong>{state.totalPointsEarnedByWrestler}</strong> of{" "}
@@ -271,4 +292,3 @@ export default function TestCard(props: { UID: number }) {
   );
 }
 
-//happy coding

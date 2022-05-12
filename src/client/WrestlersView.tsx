@@ -22,7 +22,7 @@ function WrestlersView() {
         setLevels(results);
       });
   }, []);
-
+  
   return (
     <>
       <NavigationBar />

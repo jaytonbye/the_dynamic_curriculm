@@ -65,7 +65,7 @@ const deleteCorrespondingGrades = async (id: number) => {
 const getNumberOfVideosInEachLevel = async (UID: number) => {
   return Query(
     `Select DISTINCT curriculum_level from videos
-    Where tenant= (Select tenant from users Where id=?);`,
+    Where tenant= (Select tenant from users Where id=?) order by curriculum_level;`,
     [UID]
   );
 };

@@ -57,6 +57,7 @@ function SingleLevel() {
                       src={`https://www.youtube.com/embed/${move.url_to_video}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
                     ></iframe>
                   </div>
                   <div>
@@ -64,6 +65,7 @@ function SingleLevel() {
                       src={`https://www.youtube.com/embed/${move.url_to_looped_video}`}
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
                     ></iframe>
                   </div>
                 </div>
