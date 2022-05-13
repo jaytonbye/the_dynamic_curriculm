@@ -245,7 +245,7 @@ export default function TestCard(props: { UID: number }) {
                     state.totalPointsAvailable) /
                   100
                 )}{" "}
-                <small className="text-muted">points req.</small>
+                <small className="text-muted">points required</small>
               </span>
             </ListGroup.Item>
           ))}
