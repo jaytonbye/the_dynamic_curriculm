@@ -72,7 +72,7 @@ function SingleLevel() {
                 <div>
                   <p>
                     <strong>Your grade here: </strong>
-                    {move.grade}
+                    {move.grade === 3 ? "★★★" : move.grade === 2 ? "★★" : move.grade === 1 ? "★" : move.grade === 0 ? "0" : "Not Graded"}
                   </p>
                 </div>
                 <div>

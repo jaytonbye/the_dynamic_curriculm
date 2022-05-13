@@ -75,7 +75,7 @@ function MoveSearch() {
           ></iframe>
         </div>
         <h5>
-          <strong>Your grade here:</strong> {searchedMoveObject.grade}
+          <strong>Your grade here:</strong> {searchedMoveObject.grade === 3 ? "★★★" : searchedMoveObject.grade === 2 ? "★★" : searchedMoveObject.grade === 1 ? "★" : searchedMoveObject.grade === 0 ? "0" : "Not Graded"}
         </h5>
         <h5>
           <strong>Coach's notes:</strong>
