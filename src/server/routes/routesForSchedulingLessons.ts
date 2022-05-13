@@ -49,4 +49,16 @@ router.post("/postNewAvailability", async (req, res) => {
   }
 });
 
+//    DELETE     //
+router.delete("/deleteTimeSlotAvailabilityForCoachByAvailId/:availabilityId",async (req, res) => {
+  try {
+    let availabilityId = req.params.availabilityId;
+    await schedulingLessons.deleteTimeSlotAvailabilityForCoach(availabilityId)
+    res.sendStatus(200)
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
+})
+
 export default router;

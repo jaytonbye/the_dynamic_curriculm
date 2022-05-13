@@ -5,7 +5,9 @@ const getAvails = async () => {
   return await Query("select * from coaches_availability");
 };
 
-const getCoachesWeeklyAvailibityByCoachesId = async (coachesId: number | string) => {
+const getCoachesWeeklyAvailibityByCoachesId = async (
+  coachesId: number | string
+) => {
   return await Query(
     `select * from coaches_availability
    where coaches_user_id = ?
@@ -29,10 +31,19 @@ const postNewAvailability = async (
   );
 };
 
+//  DELETE          //
+const deleteTimeSlotAvailabilityForCoach = async (timeSlotId: number | string) => {
+  return await Query(`delete from coaches_availability where id = ?;`, [
+    timeSlotId,
+  ]);
+};
+
 export default {
   //  GET
   getAvails,
   getCoachesWeeklyAvailibityByCoachesId,
   //  POST
   postNewAvailability,
+  //  DELETE
+  deleteTimeSlotAvailabilityForCoach,
 };

@@ -31,6 +31,10 @@ const CoachesAvailabilityForm = () => {
     50,
     55,
   ];
+  let [
+    conditionUsedOnlyForRenderingOutsideComponent,
+    setConditionUsedOnlyForRenderingOutsideComponent,
+  ] = useState<boolean>(true);
   let token = localStorage.getItem("token");
   let [coaches_UID, setCoaches_UID] = useState<number>(); //not user inputed
   let [dayOfWeek, setDayOfWeek] = useState<string>();
@@ -124,6 +128,9 @@ const CoachesAvailabilityForm = () => {
       //   end time: ${endTimeHour}:${endTimeMinute}:${endTimeAMPM}
       //   `);
     }
+    setConditionUsedOnlyForRenderingOutsideComponent(
+      !conditionUsedOnlyForRenderingOutsideComponent
+    );
   };
 
   let timeInputFormHTML = (
@@ -177,11 +184,11 @@ const CoachesAvailabilityForm = () => {
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// html
   return (
     <div>
-      <div>
-        <h3>Availability</h3>
-
+      <h3>Availability</h3>
+      <hr />
+      <div className="">
         <div>
-          <label className="h4 mt-5 mb-5 mr-2">Select weekday:</label>
+          <label className="h2 mt-1 mb-1">Select weekday:</label>
           <select
             onChange={(e) => {
               setDayOfWeek(e.target.value);
@@ -197,15 +204,25 @@ const CoachesAvailabilityForm = () => {
             })}
           </select>
         </div>
-        <div>
-          <label className="h4 mt-5 mb-5 mr-2">Start time:</label>
-          {timeInputFormHTML(
-            setStartTimeHour,
-            setStartTimeMinute,
-            setStartTimeAMPM
-          )}
-          <label className="h4 mt-5 mb-5 mr-2">End time:</label>
-          {timeInputFormHTML(setEndTimeHour, setEndTimeMinute, setEndTimeAMPM)}
+        <div className="w-50">
+          <div className="d-flex flex-wrap">
+            <div className="col-10">
+              <label className="h2 mt-3 mb-3 mr-2">Start time:</label>
+              {timeInputFormHTML(
+                setStartTimeHour,
+                setStartTimeMinute,
+                setStartTimeAMPM
+              )}
+            </div>
+            <div className="col-10">
+              <label className="h2 mt-3 mb-3 mr-2">End time:</label>
+              {timeInputFormHTML(
+                setEndTimeHour,
+                setEndTimeMinute,
+                setEndTimeAMPM
+              )}
+            </div>
+          </div>
         </div>
         <div>
           <button
@@ -218,8 +235,16 @@ const CoachesAvailabilityForm = () => {
       </div>
       <hr />
       <div>
-        {coaches_UID ? <CoachesAvailabilityChart coachId={coaches_UID} /> : "Loading ..."}
-        
+        {coaches_UID ? (
+          <CoachesAvailabilityChart
+            coachId={coaches_UID}
+            conditionUseForReRendering={
+              conditionUsedOnlyForRenderingOutsideComponent
+            }
+          />
+        ) : (
+          "Loading ..."
+        )}
       </div>
     </div>
   );
