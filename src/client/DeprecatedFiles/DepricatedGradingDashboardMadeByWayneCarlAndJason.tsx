@@ -143,7 +143,7 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
                           totalPointsAvailable) /
                         100
                       )}{" "}
-                      points required
+                      stars required
                     </h6>
                   </li>
                 );
@@ -155,7 +155,7 @@ export default function GradingDashboardMadeByWayneCarlAndJason(props: any) {
               You have earned <strong>
                 {totalPointsEarnedByWrestler}
               </strong> of <strong>{totalPointsAvailable}</strong> total
-              available points.
+              available stars.
             </p>
           </Card.Text>
 

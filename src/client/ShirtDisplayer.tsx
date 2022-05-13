@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-interface Props {}
+interface Props { }
 
 const ShirtDisplayer: React.FC<Props> = () => {
   let UID = localStorage.getItem("UID");
@@ -56,7 +56,7 @@ const ShirtDisplayer: React.FC<Props> = () => {
             <th>Id</th>
             <th>Item Color</th>
             <th>Name</th>
-            <th>% of total points</th>
+            <th>% of total stars</th>
           </tr>
         </thead>
         <tbody>

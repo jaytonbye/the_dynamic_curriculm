@@ -33,6 +33,7 @@ export default function PasswordReset() {
         console.log("attempting to send message");
         let userId = arrayOfUsers[x].id;
 
+        // Not sure what this is for? I would assume this might have to do 
         var ciphertext1 = CryptoJS.AES.encrypt(
           userId.toString(),
           "123abc"
