@@ -226,7 +226,7 @@ export default function TestCard(props: { UID: number }) {
   const returnsEarnableItemsOrNothingIfNoItemsToEarnFunc: any = (
     earningItemsForFunc: Array<EarnableItems>
   ) => {
-    if (earningItemsForFunc.length!) {
+    if (!earningItemsForFunc.length) {
       return <h3>No Items to earn</h3>;
     } else {
       return (
@@ -245,7 +245,7 @@ export default function TestCard(props: { UID: number }) {
                     state.totalPointsAvailable) /
                   100
                 )}{" "}
-                <small className="text-muted">points req.</small>
+                <small className="text-muted">stars required</small>
               </span>
             </ListGroup.Item>
           ))}
@@ -274,7 +274,7 @@ export default function TestCard(props: { UID: number }) {
             {state.personalInfo.first_name} has earned{" "}
             <strong>{state.totalPointsEarnedByWrestler}</strong> of{" "}
             <strong>{state.totalPointsAvailable}</strong> total available
-            points.
+            stars.
           </Card.Text>
           <Card.Text>
             <small className="text-muted">current item earned</small>{" "}

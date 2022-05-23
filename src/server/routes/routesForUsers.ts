@@ -18,6 +18,21 @@ router.get("/:id?", async (req, res) => {
   }
 });
 
+// WC added this route to display all users for a specific tenant
+router.post("/getAllAccounts", hasValidAdminToken, async (req, res) => {
+  let tenant = req.body.tenant;
+  try {
+    if (tenant) {
+      res.json(await db.users.find("tenant", tenant));
+    } else {
+      res.status(400).send("No tenant specified");
+    }
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     let email = req.body.email;

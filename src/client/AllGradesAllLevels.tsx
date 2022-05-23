@@ -21,6 +21,8 @@ export default function AllGradesAllLevels() {
       });
   }, []);
 
+
+
   return (
     <>
       <NavigationBar />
@@ -71,7 +73,7 @@ export default function AllGradesAllLevels() {
                     notGradeable: video.maximum_grade === 0,
                   })}
                 >
-                  {video.grade}
+                  {video.grade === 3 ? "★★★" : video.grade === 2 ? "★★" : video.grade === 1 ? "★" : "Not Graded"}
                 </td>
                 <td
                   className={classNames({

@@ -132,7 +132,7 @@ const ShirtSelector: React.FC = ({
           />
           <br />
           <label htmlFor="itemPercent">
-            Percent of total points till earned
+            Percent of total stars till earned
           </label>
           <input
             type="number"

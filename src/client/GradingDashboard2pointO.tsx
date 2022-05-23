@@ -177,9 +177,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
   }, []);
 
 
-  console.log({ itemsSortedByPercentOfTotalPoints })
-  console.log({ nextItem })
-  console.log({ pointsTillNextItem })
+
 
   return (
     <div>
@@ -202,7 +200,7 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
                       Number(totalPointsAvailable) *
                       (item.percentage_of_total_points_needed / 100)
                     )}{" "}
-                    points)
+                    stars)
                   </h6>
                 </li>
               );
@@ -212,11 +210,11 @@ const GradingDashboard2pointO: React.FC<Props> = () => {
             Current Item Earned: <strong>{currentItem}</strong>
             <br />
             You have earned <strong>{totalPoints}</strong> of{" "}
-            <strong>{totalPointsAvailable}</strong> total points available.
+            <strong>{totalPointsAvailable}</strong> total stars available.
           </p>
 
           <p>
-            Number of points until <strong>{nextItem === "Place Holder Item" ?
+            Number of stars until <strong>{nextItem === "Place Holder Item" ?
               `${!itemsSortedByPercentOfTotalPoints[1] ? "A different Color Place Holder" : itemsSortedByPercentOfTotalPoints[1]} 
                     ${!itemsSortedByPercentOfTotalPoints[1] ? "A different Name Place Holder" : itemsSortedByPercentOfTotalPoints[1]}` :
               nextItem}</strong>:{" "}            <strong>{pointsTillNextItem}</strong>
