@@ -1,12 +1,54 @@
 import * as React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
 import NavigationBar from "../NavigationBar";
 import CoachesAvailabilityForm from "./SchedulingComponents/CoachesAvailabilityForm";
+import ScheduleNewLessonForm from "./SchedulingComponents/ScheduleNewLessonForm";
 
 const LessonsSchedulingStartPage = () => {
+  let [
+    showOrHideScheduleNewLessonComponent,
+    setShowOrHideScheduleNewLessonComponent,
+  ] = useState<boolean>(true);
+  let [
+    showOrHideCochesAvailabilityComponent,
+    setShowOrHideCochesAvailabilityComponent,
+  ] = useState<boolean>(false);
+
+  let showCoachesAvailabilityFormFunc = () => {
+    setShowOrHideCochesAvailabilityComponent(
+      !showOrHideCochesAvailabilityComponent
+    );
+    setShowOrHideScheduleNewLessonComponent(false);
+  };
+
+  let showScheduleNewLessonComponentFunc = () => {
+    setShowOrHideScheduleNewLessonComponent(
+      !showOrHideScheduleNewLessonComponent
+    );
+    setShowOrHideCochesAvailabilityComponent(false);
+  };
+
   return (
     <div>
-      <CoachesAvailabilityForm />
+      <div>
+        <button
+          onClick={showCoachesAvailabilityFormFunc}
+          className="btn btn-primary"
+        >
+          Show/edit Availability
+        </button>
+        <button
+          onClick={showScheduleNewLessonComponentFunc}
+          className="btn btn-success"
+        >
+          schedule new lesson
+        </button>
+      </div>
+
+      <div>
+        {showOrHideCochesAvailabilityComponent && <CoachesAvailabilityForm />}
+        {showOrHideScheduleNewLessonComponent && <ScheduleNewLessonForm />}
+      </div>
     </div>
   );
 };
