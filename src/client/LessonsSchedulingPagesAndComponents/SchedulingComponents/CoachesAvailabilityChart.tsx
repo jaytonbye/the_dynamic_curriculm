@@ -65,7 +65,7 @@ const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
       let newData = (
         <div key={day.id} className="border pt-3 pb-3 text-center">
           {timeToAmPm(day.start_time)}-{timeToAmPm(day.stop_time)}
-          <button value={day.id} onClick={deleteTimeSlot}>
+          <button value={day.id} onClick={deleteTimeSlot} className="btn-danger">
             remove
           </button>
         </div>

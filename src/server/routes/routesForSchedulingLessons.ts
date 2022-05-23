@@ -18,16 +18,22 @@ router.get("/getitall", async (req, res) => {
   let responsers = await schedulingLessons.getAvails();
   res.json(responsers);
 });
-router.get("/getCoachesWeeklyAvailibityByCoachesId/:coachesId", async(req, res) => {
-  try {
-    let coachesId: number | string = req.params.coachesId;
-    let coachesWeeklyAvailability =  await schedulingLessons.getCoachesWeeklyAvailibityByCoachesId(coachesId)
-    res.json(coachesWeeklyAvailability)
-  } catch (error) {
-    console.log(error)
-    res.sendStatus(500)
+router.get(
+  "/getCoachesWeeklyAvailibityByCoachesId/:coachesId",
+  async (req, res) => {
+    try {
+      let coachesId: number | string = req.params.coachesId;
+      let coachesWeeklyAvailability =
+        await schedulingLessons.getCoachesWeeklyAvailibityByCoachesId(
+          coachesId
+        );
+      res.json(coachesWeeklyAvailability);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
   }
-})
+);
 
 //  POST    //
 router.post("/postNewAvailability", async (req, res) => {
@@ -49,16 +55,46 @@ router.post("/postNewAvailability", async (req, res) => {
   }
 });
 
-//    DELETE     //
-router.delete("/deleteTimeSlotAvailabilityForCoachByAvailId/:availabilityId",async (req, res) => {
+router.post("/scheduleNewPrivateLesson", async (req, res) => {
   try {
-    let availabilityId = req.params.availabilityId;
-    await schedulingLessons.deleteTimeSlotAvailabilityForCoach(availabilityId)
-    res.sendStatus(200)
+    let coachId = req.body.coaches_UID;
+    let wrestlersId = req.body.wrestlerId;
+    let dateOfLesson = req.body.dateOfLesson;
+    let startTime = req.body.startTime;
+    let duration = req.body.duration;
+    let seriesStartDate = req.body.seriesStartDate;
+    let seriesEndDate = req.body.seriesEndDate;
+    await schedulingLessons.postNewPrivateLesson(
+      coachId,
+      wrestlersId,
+      dateOfLesson,
+      startTime,
+      duration,
+      seriesStartDate,
+      seriesEndDate
+    );
+    res.sendStatus(200);
   } catch (error) {
-    console.log(error)
-    res.sendStatus(500)
+    console.log(error);
+    res.sendStatus(500);
   }
-})
+});
+
+//    DELETE     //
+router.delete(
+  "/deleteTimeSlotAvailabilityForCoachByAvailId/:availabilityId",
+  async (req, res) => {
+    try {
+      let availabilityId = req.params.availabilityId;
+      await schedulingLessons.deleteTimeSlotAvailabilityForCoach(
+        availabilityId
+      );
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
 
 export default router;

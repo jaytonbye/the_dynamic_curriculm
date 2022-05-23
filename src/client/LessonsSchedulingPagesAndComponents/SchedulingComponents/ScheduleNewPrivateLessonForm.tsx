@@ -1,9 +1,20 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-// hovering over lables are triggering re render of component ... dafuq?
+//*****
+//**********refactor? its alot of code and may get even bigger use props and outside component ... curreclty, this code is a bit overwhelming on first look but is simple once broken down
+// *******
 
-const ScheduleNewLessonForm = () => {
+// hovering over lables are triggering re render of component ... dafuq?
+// ask about foregn key
+//make it look better
+// test this shit = mkae sure you are adding corrent corresponding values
+
+// ask about Since we can’t API with the WAR Zone date yet,
+//we should probably add a column on the user table for “stats/info”
+//where we can manually type in the wrestler’s age, weight, and WAR.
+
+const ScheduleNewPrivateLessonForm = () => {
   let yearArray: number[] = [
     2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,
   ];
@@ -71,16 +82,17 @@ const ScheduleNewLessonForm = () => {
   ];
 
   let token = localStorage.getItem("token");
+  let [personal_info, setPersonalInfo] = useState<Array<any>>([]);
   let [coaches_UID, setCoaches_UID] = useState<number>(); // not inputed
-  let [wrestlers_UID, setWrestlers_UID] = useState<number>();
+  let [wrestlerId, setWrestlerId] = useState<number>();
   let [lessonDateMonth, setLessonDateMonth] = useState<number | string>();
   let [lessonDateDay, setLessonDateDay] = useState<number | string>();
   let [lessonDateYear, setLessonDateYear] = useState<number>();
   let [lessonTimeHour, setLessonTimeHour] = useState<number | string>();
   let [lessonTimeMinute, setLessonTimeMinute] = useState<number | string>();
   let [lessonTimeAMPM, setLessonTimeAMPM] = useState<string>();
-  let [durationHours, setDurationHours] = useState<number | string>();
-  let [durationMinutes, setDurationMinutes] = useState<number | string>();
+  let [durationHours, setDurationHours] = useState<number | string>(2);
+  let [durationMinutes, setDurationMinutes] = useState<number | string>("00");
   let [seriesStartDateMonth, setSeriesStartDateMonth] = useState<
     number | string
   >();
@@ -90,13 +102,113 @@ const ScheduleNewLessonForm = () => {
   let [seriesEndDateDay, setSeriesEndDateDay] = useState<number | string>();
   let [seriesEndDateYear, setSeriesEndDateYear] = useState<number>();
 
+  //gets all of the user_profiles for proper tenant - this gets everyone, wrestlers, coaches and admin, not my code just copied and pasted
   useEffect(() => {
     fetch(`/api/schedulingLessons/validateToketInputAvailability`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
-      .then((res) => setCoaches_UID(res.userId));
+      .then((res) => {
+        setCoaches_UID(res.userId);
+        fetch(`/api/personal_info/${res.userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then((res) => res.json())
+          .then((results) => {
+            setPersonalInfo(results);
+          });
+      });
   }, []);
+
+  const onWrestlerChange = (event: any) => {
+    let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
+    let wrestlerIdAfterSlice = event.target.value.slice(
+      whereToSliceFrom,
+      event.target.value.length
+    );
+    setWrestlerId(Number(wrestlerIdAfterSlice));
+  };
+
+  //makes sure everything is filled out and if its a series it then makes sure everyhting in the series section is filled out
+  let handleSubmitLessonPlan = (e: any) => {
+    e.preventDefault();
+    if (
+      !coaches_UID ||
+      !wrestlerId ||
+      !lessonDateMonth ||
+      !lessonDateDay ||
+      !lessonDateYear ||
+      !lessonTimeHour ||
+      !lessonTimeMinute ||
+      !lessonTimeAMPM
+    ) {
+      alert("fill out entire form");
+    } else if (
+      seriesStartDateMonth ||
+      seriesStartDateDay ||
+      seriesStartDateYear ||
+      seriesEndDateMonth ||
+      seriesEndDateDay ||
+      seriesEndDateYear
+    ) {
+      if (
+        !seriesStartDateMonth ||
+        !seriesStartDateDay ||
+        !seriesStartDateYear ||
+        !seriesEndDateMonth ||
+        !seriesEndDateDay ||
+        !seriesEndDateYear
+      ) {
+        alert("if this is a series, please complete the entire series form");
+      } else {
+        submitIntoServerFunc(true);
+      }
+    } else {
+      submitIntoServerFunc(false);
+    }
+  };
+
+  let submitIntoServerFunc = (conditionForSeries: boolean) => {
+    let newLessonInfo: {};
+    if (!conditionForSeries) {
+      newLessonInfo = {
+        coaches_UID,
+        wrestlerId,
+        dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+        startTime: timeConfigureForDatabaseFunc(),
+        duration: `${durationHours}.${durationMinutes}`,
+        seriesStartDate: null,
+        seriesEndDate: null,
+      };
+    } else {
+      newLessonInfo = {
+        coaches_UID,
+        wrestlerId,
+        dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+        startTime: timeConfigureForDatabaseFunc(),
+        duration: `${durationHours}.${durationMinutes}`,
+        seriesStartDate: `${seriesStartDateYear}-${seriesStartDateMonth}-${seriesStartDateDay}`,
+        seriesEndDate: `${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`,
+      };
+    }
+    fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newLessonInfo),
+    }).then((res) => alert("Private lesson has been added"));
+  };
+
+  let timeConfigureForDatabaseFunc = () => {
+    let lessonHourFinal: number | string = lessonTimeHour;
+    if (lessonTimeAMPM === "pm") {
+      lessonHourFinal = 12 + Number(lessonTimeHour);
+    } else {
+      if (lessonTimeHour < 10) {
+        lessonHourFinal = "0" + lessonTimeHour;
+      }
+    }
+    return `${lessonHourFinal}:${lessonTimeMinute}:00`;
+  };
 
   let dateFormHTMLFunc = (setMonth: any, setDay: any, setYear: any) => {
     return (
@@ -138,8 +250,26 @@ const ScheduleNewLessonForm = () => {
   return (
     <div>
       <div>
-        <label htmlFor="">Select a wrestler:</label>
-        <select></select>
+        <div className="mt-1">
+          <label className="h4 ">Select a wrestler: </label>
+          <input type="text" list="wrestler1List" onChange={onWrestlerChange} />
+          <datalist id="wrestler1List">
+            {personal_info.map((wrestler) => {
+              return (
+                <option
+                  key={wrestler.user_id}
+                  value={
+                    wrestler.first_name +
+                    " " +
+                    wrestler.last_name +
+                    " -+- " +
+                    String(wrestler.user_id)
+                  }
+                ></option>
+              );
+            })}
+          </datalist>
+        </div>
       </div>
 
       <div>
@@ -183,10 +313,12 @@ const ScheduleNewLessonForm = () => {
       </div>
 
       <div>
-        <h3>duration</h3>
+        <h3>duration hours:minutes</h3>
 
-        <select onChange={(e) => setDurationHours(e.target.value)}>
-          <option value="">hours</option>
+        <select
+          onChange={(e) => setDurationHours(e.target.value)}
+          defaultValue="2"
+        >
           {hourArray.map((hour) => {
             return (
               <option key={hour} value={hour}>
@@ -195,8 +327,10 @@ const ScheduleNewLessonForm = () => {
             );
           })}
         </select>
-        <select onChange={(e) => setDurationMinutes(e.target.value)}>
-          <option value="">minutes</option>
+        <select
+          onChange={(e) => setDurationMinutes(e.target.value)}
+          defaultValue="00"
+        >
           {minuteArray.map((minute) => {
             return (
               <option key={minute} value={minute}>
@@ -228,8 +362,14 @@ const ScheduleNewLessonForm = () => {
           </p>
         </div>
       </div>
+
+      <div>
+        <button onClick={handleSubmitLessonPlan} className="btn btn-success">
+          Submit Lesson
+        </button>
+      </div>
     </div>
   );
 };
 
-export default ScheduleNewLessonForm;
+export default ScheduleNewPrivateLessonForm;

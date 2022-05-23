@@ -31,8 +31,35 @@ const postNewAvailability = async (
   );
 };
 
+const postNewPrivateLesson = async (
+  coachId: number | string,
+  wrestlerId: number | string,
+  dateOfLesson: number | string,
+  startTime: number | string,
+  duration: number | string,
+  seriesStartDate: number | string,
+  seriesEndDate: number | string
+) => {
+  return await Query(
+    `insert into private_lesson_bookings(coaches_user_id, wrestler_user_id,
+    date_of_lesson, start_time, duration, series_start_date, series_end_date)
+    values(?, ?, ?, ?, ?, ?, ?);`,
+    [
+      coachId,
+      wrestlerId,
+      dateOfLesson,
+      startTime,
+      duration,
+      seriesStartDate,
+      seriesEndDate,
+    ]
+  );
+};
+
 //  DELETE          //
-const deleteTimeSlotAvailabilityForCoach = async (timeSlotId: number | string) => {
+const deleteTimeSlotAvailabilityForCoach = async (
+  timeSlotId: number | string
+) => {
   return await Query(`delete from coaches_availability where id = ?;`, [
     timeSlotId,
   ]);
@@ -44,6 +71,7 @@ export default {
   getCoachesWeeklyAvailibityByCoachesId,
   //  POST
   postNewAvailability,
+  postNewPrivateLesson,
   //  DELETE
   deleteTimeSlotAvailabilityForCoach,
 };

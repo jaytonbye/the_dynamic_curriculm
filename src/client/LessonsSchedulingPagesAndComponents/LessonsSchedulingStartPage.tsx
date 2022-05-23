@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import NavigationBar from "../NavigationBar";
 import CoachesAvailabilityForm from "./SchedulingComponents/CoachesAvailabilityForm";
-import ScheduleNewLessonForm from "./SchedulingComponents/ScheduleNewLessonForm";
+import ScheduleNewPrivateLessonForm from "./SchedulingComponents/ScheduleNewPrivateLessonForm";
 
 const LessonsSchedulingStartPage = () => {
   let [
@@ -47,7 +47,7 @@ const LessonsSchedulingStartPage = () => {
 
       <div>
         {showOrHideCochesAvailabilityComponent && <CoachesAvailabilityForm />}
-        {showOrHideScheduleNewLessonComponent && <ScheduleNewLessonForm />}
+        {showOrHideScheduleNewLessonComponent && <ScheduleNewPrivateLessonForm />}
       </div>
     </div>
   );
