@@ -30,24 +30,30 @@ const LessonsSchedulingStartPage = () => {
 
   return (
     <div>
-      <div>
-        <button
-          onClick={showCoachesAvailabilityFormFunc}
-          className="btn btn-primary"
-        >
-          Show/edit Availability
-        </button>
-        <button
-          onClick={showScheduleNewLessonComponentFunc}
-          className="btn btn-success"
-        >
-          schedule new lesson
-        </button>
-      </div>
+      <NavigationBar />
+      <div className="m-3">
+        <hr />
+        <div className="mb-3">
+          <button
+            onClick={showCoachesAvailabilityFormFunc}
+            className="btn btn-primary"
+          >
+            Show/edit Availability
+          </button>
+          <button
+            onClick={showScheduleNewLessonComponentFunc}
+            className="btn btn-success"
+          >
+            schedule new lesson
+          </button>
+        </div>
 
-      <div>
-        {showOrHideCochesAvailabilityComponent && <CoachesAvailabilityForm />}
-        {showOrHideScheduleNewLessonComponent && <ScheduleNewPrivateLessonForm />}
+        <div>
+          {showOrHideCochesAvailabilityComponent && <CoachesAvailabilityForm />}
+          {showOrHideScheduleNewLessonComponent && (
+            <ScheduleNewPrivateLessonForm />
+          )}
+        </div>
       </div>
     </div>
   );

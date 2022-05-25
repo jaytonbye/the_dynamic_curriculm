@@ -15,6 +15,27 @@ import { useState, useEffect } from "react";
 //where we can manually type in the wrestler’s age, weight, and WAR.
 
 const ScheduleNewPrivateLessonForm = () => {
+
+
+  //                            *******************************************
+  let x = new Date(2022, 8, 20);    // the parse creates amount of milliseconcs from 1970 or something... this will probably be the way... import the function
+  let xz = Date.parse(`${x.getFullYear()}-${x.getMonth()}-${x.getDate()}`)
+  console.log(xz)
+  console.log(x);
+  let y = new Date(x.setDate(x.getDate() +20));
+  let yz = Date.parse(`${y.getFullYear()}-${y.getMonth()}-${y.getDate()}`)
+  console.log(yz)
+  // let y = new Date(`${x.getFullYear()}, ${(x.getMonth() + 1)}, ${x.getDate()}`) // what the fuck is up with that + 1 shit homie
+  console.log(y)
+  if(xz < yz){
+    console.log("1")
+  }else{
+    console.log("2")
+  }
+  console.log(`${x.getFullYear()}, ${(x.getMonth() + 1)}, ${x.getDate()}`)
+  //                            *******************************************
+
+  
   let yearArray: number[] = [
     2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,
   ];
@@ -91,13 +112,8 @@ const ScheduleNewPrivateLessonForm = () => {
   let [lessonTimeHour, setLessonTimeHour] = useState<number | string>();
   let [lessonTimeMinute, setLessonTimeMinute] = useState<number | string>();
   let [lessonTimeAMPM, setLessonTimeAMPM] = useState<string>();
-  let [durationHours, setDurationHours] = useState<number | string>(2);
+  let [durationHours, setDurationHours] = useState<number | string>(1);
   let [durationMinutes, setDurationMinutes] = useState<number | string>("00");
-  let [seriesStartDateMonth, setSeriesStartDateMonth] = useState<
-    number | string
-  >();
-  let [seriesStartDateDay, setSeriesStartDateDay] = useState<number | string>();
-  let [seriesStartDateYear, setSeriesStartDateYear] = useState<number>();
   let [seriesEndDateMonth, setSeriesEndDateMonth] = useState<number | string>();
   let [seriesEndDateDay, setSeriesEndDateDay] = useState<number | string>();
   let [seriesEndDateYear, setSeriesEndDateYear] = useState<number>();
@@ -143,22 +159,8 @@ const ScheduleNewPrivateLessonForm = () => {
       !lessonTimeAMPM
     ) {
       alert("fill out entire form");
-    } else if (
-      seriesStartDateMonth ||
-      seriesStartDateDay ||
-      seriesStartDateYear ||
-      seriesEndDateMonth ||
-      seriesEndDateDay ||
-      seriesEndDateYear
-    ) {
-      if (
-        !seriesStartDateMonth ||
-        !seriesStartDateDay ||
-        !seriesStartDateYear ||
-        !seriesEndDateMonth ||
-        !seriesEndDateDay ||
-        !seriesEndDateYear
-      ) {
+    } else if (seriesEndDateMonth || seriesEndDateDay || seriesEndDateYear) {
+      if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
         alert("if this is a series, please complete the entire series form");
       } else {
         submitIntoServerFunc(true);
@@ -177,8 +179,7 @@ const ScheduleNewPrivateLessonForm = () => {
         dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
         startTime: timeConfigureForDatabaseFunc(),
         duration: `${durationHours}.${durationMinutes}`,
-        seriesStartDate: null,
-        seriesEndDate: null,
+        seriesName: null,
       };
     } else {
       newLessonInfo = {
@@ -187,15 +188,22 @@ const ScheduleNewPrivateLessonForm = () => {
         dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
         startTime: timeConfigureForDatabaseFunc(),
         duration: `${durationHours}.${durationMinutes}`,
-        seriesStartDate: `${seriesStartDateYear}-${seriesStartDateMonth}-${seriesStartDateDay}`,
-        seriesEndDate: `${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`,
+        seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`,
       };
     }
     fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newLessonInfo),
-    }).then((res) => alert("Private lesson has been added"));
+    }).then((res) => {
+      if (res.ok) {
+        alert("Private lesson has been added");
+      } else {
+        alert(
+          "Somthing went wrong! Make sure all of the information is correct."
+        );
+      }
+    });
   };
 
   let timeConfigureForDatabaseFunc = () => {
@@ -317,7 +325,7 @@ const ScheduleNewPrivateLessonForm = () => {
 
         <select
           onChange={(e) => setDurationHours(e.target.value)}
-          defaultValue="2"
+          defaultValue="1"
         >
           {hourArray.map((hour) => {
             return (
@@ -342,16 +350,8 @@ const ScheduleNewPrivateLessonForm = () => {
       </div>
 
       <div>
-        <h3>series</h3>
+        <h3>series select end date</h3>
         <div>
-          <p>
-            series start date:{" "}
-            {dateFormHTMLFunc(
-              setSeriesStartDateMonth,
-              setSeriesStartDateDay,
-              setSeriesStartDateYear
-            )}
-          </p>
           <p>
             series end date:{" "}
             {dateFormHTMLFunc(

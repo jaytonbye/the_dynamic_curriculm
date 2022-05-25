@@ -62,16 +62,14 @@ router.post("/scheduleNewPrivateLesson", async (req, res) => {
     let dateOfLesson = req.body.dateOfLesson;
     let startTime = req.body.startTime;
     let duration = req.body.duration;
-    let seriesStartDate = req.body.seriesStartDate;
-    let seriesEndDate = req.body.seriesEndDate;
+    let seriesName = req.body.seriesName;
     await schedulingLessons.postNewPrivateLesson(
       coachId,
       wrestlersId,
       dateOfLesson,
       startTime,
       duration,
-      seriesStartDate,
-      seriesEndDate
+      seriesName
     );
     res.sendStatus(200);
   } catch (error) {
