@@ -37,13 +37,14 @@ const postNewPrivateLesson = async (
   dateOfLesson: number | string,
   startTime: number | string,
   duration: number | string,
+  notes: string,
   seriesName: string
 ) => {
   return await Query(
     `insert into private_lesson_bookings(coaches_user_id, wrestler_user_id,
-    date_of_lesson, start_time, duration, series_name)
-    values(?, ?, ?, ?, ?, ?);`,
-    [coachId, wrestlerId, dateOfLesson, startTime, duration, seriesName]
+    date_of_lesson, start_time, duration, notes, series_name)
+    values(?, ?, ?, ?, ?, ?, ?);`,
+    [coachId, wrestlerId, dateOfLesson, startTime, duration, notes, seriesName]
   );
 };
 

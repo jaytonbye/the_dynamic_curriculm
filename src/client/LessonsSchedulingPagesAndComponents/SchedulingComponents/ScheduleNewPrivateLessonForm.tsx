@@ -98,6 +98,9 @@ const ScheduleNewPrivateLessonForm = () => {
   let [seriesEndDateMonth, setSeriesEndDateMonth] = useState<number | string>();
   let [seriesEndDateDay, setSeriesEndDateDay] = useState<number | string>();
   let [seriesEndDateYear, setSeriesEndDateYear] = useState<number>();
+  let [wieght, setWeight] = useState<string>("N/A");
+  let [age, setAge] = useState<string>("N/A");
+  let [war, setWar] = useState<string>("N/A");
 
   //gets all of the user_profiles for proper tenant - this gets everyone, wrestlers, coaches and admin, not my code just copied and pasted
   useEffect(() => {
@@ -160,6 +163,7 @@ const ScheduleNewPrivateLessonForm = () => {
         dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
         startTime: timeConfigureForDatabaseFunc(),
         duration: `${durationHours}.${durationMinutes}`,
+        notes: `Weight:${wieght} Age:${age} War:${war}`,
         seriesName: null,
       };
       insertIntoDatabaseFunc(newLessonInfo, false);
@@ -170,15 +174,16 @@ const ScheduleNewPrivateLessonForm = () => {
         dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
         startTime: timeConfigureForDatabaseFunc(),
         duration: `${durationHours}.${durationMinutes}`,
+        notes: `Weight:${wieght} Age:${age} War:${war}`,
         seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
       };
-      let lessonDateForIncrementFunc = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
-      let lessonEndDateForIncrementFunc = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
+      let lessonDateForIncrement = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
+      let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
       insertIntoDatabaseFunc(
         newLessonInfo,
         true,
-        lessonDateForIncrementFunc,
-        lessonEndDateForIncrementFunc
+        lessonDateForIncrement,
+        seriesEndDateEntire
       );
     }
   };
@@ -198,8 +203,8 @@ const ScheduleNewPrivateLessonForm = () => {
   let insertIntoDatabaseFunc = (
     lessonInfo: IPrivateLessonInfo,
     isASeries: boolean,
-    lessonDateForIncrementFunc?: string,
-    lessonEndDateForIncrementFunc?: string
+    lessonDateForIncrement?: string,
+    seriesEndDateEntire?: string
   ) => {
     fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
       method: "POST",
@@ -212,8 +217,8 @@ const ScheduleNewPrivateLessonForm = () => {
         } else {
           let seriesIncrementResult: IDateIncResult | boolean =
             seriesWeeklyIncrementFunc(
-              lessonDateForIncrementFunc,
-              lessonEndDateForIncrementFunc
+              lessonDateForIncrement,
+              seriesEndDateEntire
             );
           if (seriesIncrementResult) {
             lessonInfo.dateOfLesson = seriesIncrementResult.dateForDB;
@@ -221,7 +226,7 @@ const ScheduleNewPrivateLessonForm = () => {
               lessonInfo,
               true,
               seriesIncrementResult.dateForFuncLoop,
-              lessonEndDateForIncrementFunc
+              seriesEndDateEntire
             );
           } else {
             alert("Private lesson series has been added");
@@ -381,6 +386,40 @@ const ScheduleNewPrivateLessonForm = () => {
       </div>
 
       <div>
+        <h3>notes here optional:</h3>
+        <div>
+          <label>Weight:</label>
+          <input
+            className="col-1"
+            maxLength={15}
+            onChange={(e) => {
+              setWeight(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <label>Age:</label>
+          <input
+            className="col-1"
+            maxLength={15}
+            onChange={(e) => {
+              setAge(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <label>WAR:</label>
+          <input
+            className="col-1"
+            maxLength={15}
+            onChange={(e) => {
+              setWar(e.target.value);
+            }}
+          />
+        </div>
+      </div>
+
+      <div>
         <button onClick={handleSubmitLessonPlan} className="btn btn-success">
           Submit Lesson
         </button>
@@ -397,6 +436,7 @@ export interface IPrivateLessonInfo {
   dateOfLesson: string;
   startTime: string;
   duration: string;
+  notes: string;
   seriesName: string;
 }
 export interface IDateIncResult {

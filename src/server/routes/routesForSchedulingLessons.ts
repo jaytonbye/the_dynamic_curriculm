@@ -62,6 +62,7 @@ router.post("/scheduleNewPrivateLesson", async (req, res) => {
     let dateOfLesson = req.body.dateOfLesson;
     let startTime = req.body.startTime;
     let duration = req.body.duration;
+    let notes = req.body.notes;
     let seriesName = req.body.seriesName;
     await schedulingLessons.postNewPrivateLesson(
       coachId,
@@ -69,6 +70,7 @@ router.post("/scheduleNewPrivateLesson", async (req, res) => {
       dateOfLesson,
       startTime,
       duration,
+      notes,
       seriesName
     );
     res.sendStatus(200);
