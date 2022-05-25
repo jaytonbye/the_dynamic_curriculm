@@ -1,8 +1,10 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import seriesWeeklyIncrementFunc from "../ServicesForPrivateLessonScheduling/dateHandling";
 
 //*****
 //**********refactor? its alot of code and may get even bigger use props and outside component ... curreclty, this code is a bit overwhelming on first look but is simple once broken down
+// get the HTML at the very least to another component this is a fuckin cross country road map
 // *******
 
 // hovering over lables are triggering re render of component ... dafuq?
@@ -15,27 +17,6 @@ import { useState, useEffect } from "react";
 //where we can manually type in the wrestler’s age, weight, and WAR.
 
 const ScheduleNewPrivateLessonForm = () => {
-
-
-  //                            *******************************************
-  let x = new Date(2022, 8, 20);    // the parse creates amount of milliseconcs from 1970 or something... this will probably be the way... import the function
-  let xz = Date.parse(`${x.getFullYear()}-${x.getMonth()}-${x.getDate()}`)
-  console.log(xz)
-  console.log(x);
-  let y = new Date(x.setDate(x.getDate() +20));
-  let yz = Date.parse(`${y.getFullYear()}-${y.getMonth()}-${y.getDate()}`)
-  console.log(yz)
-  // let y = new Date(`${x.getFullYear()}, ${(x.getMonth() + 1)}, ${x.getDate()}`) // what the fuck is up with that + 1 shit homie
-  console.log(y)
-  if(xz < yz){
-    console.log("1")
-  }else{
-    console.log("2")
-  }
-  console.log(`${x.getFullYear()}, ${(x.getMonth() + 1)}, ${x.getDate()}`)
-  //                            *******************************************
-
-  
   let yearArray: number[] = [
     2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,
   ];
@@ -171,7 +152,7 @@ const ScheduleNewPrivateLessonForm = () => {
   };
 
   let submitIntoServerFunc = (conditionForSeries: boolean) => {
-    let newLessonInfo: {};
+    let newLessonInfo: IPrivateLessonInfo;
     if (!conditionForSeries) {
       newLessonInfo = {
         coaches_UID,
@@ -181,29 +162,25 @@ const ScheduleNewPrivateLessonForm = () => {
         duration: `${durationHours}.${durationMinutes}`,
         seriesName: null,
       };
+      insertIntoDatabaseFunc(newLessonInfo, false);
     } else {
-      newLessonInfo = {
+      let newLessonInfo = {
         coaches_UID,
         wrestlerId,
         dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
         startTime: timeConfigureForDatabaseFunc(),
         duration: `${durationHours}.${durationMinutes}`,
-        seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`,
+        seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
       };
+      let lessonDateForIncrementFunc = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
+      let lessonEndDateForIncrementFunc = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
+      insertIntoDatabaseFunc(
+        newLessonInfo,
+        true,
+        lessonDateForIncrementFunc,
+        lessonEndDateForIncrementFunc
+      );
     }
-    fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newLessonInfo),
-    }).then((res) => {
-      if (res.ok) {
-        alert("Private lesson has been added");
-      } else {
-        alert(
-          "Somthing went wrong! Make sure all of the information is correct."
-        );
-      }
-    });
   };
 
   let timeConfigureForDatabaseFunc = () => {
@@ -216,6 +193,46 @@ const ScheduleNewPrivateLessonForm = () => {
       }
     }
     return `${lessonHourFinal}:${lessonTimeMinute}:00`;
+  };
+
+  let insertIntoDatabaseFunc = (
+    lessonInfo: IPrivateLessonInfo,
+    isASeries: boolean,
+    lessonDateForIncrementFunc?: string,
+    lessonEndDateForIncrementFunc?: string
+  ) => {
+    fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(lessonInfo),
+    }).then((res) => {
+      if (res.ok) {
+        if (isASeries === false) {
+          alert("Private lesson has been added");
+        } else {
+          let seriesIncrementResult: IDateIncResult | boolean =
+            seriesWeeklyIncrementFunc(
+              lessonDateForIncrementFunc,
+              lessonEndDateForIncrementFunc
+            );
+          if (seriesIncrementResult) {
+            lessonInfo.dateOfLesson = seriesIncrementResult.dateForDB;
+            insertIntoDatabaseFunc(
+              lessonInfo,
+              true,
+              seriesIncrementResult.dateForFuncLoop,
+              lessonEndDateForIncrementFunc
+            );
+          } else {
+            alert("Private lesson series has been added");
+          }
+        }
+      } else {
+        alert(
+          "Somthing went wrong! Make sure all of the information is correct."
+        );
+      }
+    });
   };
 
   let dateFormHTMLFunc = (setMonth: any, setDay: any, setYear: any) => {
@@ -373,3 +390,16 @@ const ScheduleNewPrivateLessonForm = () => {
 };
 
 export default ScheduleNewPrivateLessonForm;
+
+export interface IPrivateLessonInfo {
+  coaches_UID: number;
+  wrestlerId: number;
+  dateOfLesson: string;
+  startTime: string;
+  duration: string;
+  seriesName: string;
+}
+export interface IDateIncResult {
+  dateForDB: string;
+  dateForFuncLoop: string;
+}
