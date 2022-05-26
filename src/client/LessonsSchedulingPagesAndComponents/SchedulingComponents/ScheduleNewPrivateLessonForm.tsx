@@ -1,88 +1,24 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import seriesWeeklyIncrementFunc from "../ServicesForPrivateLessonScheduling/dateHandling";
-
-//*****
-//**********refactor? its alot of code and may get even bigger use props and outside component ... curreclty, this code is a bit overwhelming on first look but is simple once broken down
-// get the HTML at the very least to another component this is a fuckin cross country road map
-// *******
+import * as scheduleLessonFunctions from "../ServicesForPrivateLessonScheduling/privateLessonScheduleFuncs";
+import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeValues";
+import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
+import {
+  IPrivateLessonInfo,
+  IDateIncResult,
+} from "../ServicesForPrivateLessonScheduling/interfaces";
 
 // hovering over lables are triggering re render of component ... dafuq?
 // ask about foregn key
 //make it look better
 // test this shit = mkae sure you are adding corrent corresponding values
 
-// ask about Since we can’t API with the WAR Zone date yet,
-//we should probably add a column on the user table for “stats/info”
-//where we can manually type in the wrestler’s age, weight, and WAR.
-
 const ScheduleNewPrivateLessonForm = () => {
-  let yearArray: number[] = [
-    2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,
-  ];
-  let monthArray: Array<number | string> = [
-    "0" + 1,
-    "0" + 2,
-    "0" + 3,
-    "0" + 4,
-    "0" + 5,
-    "0" + 6,
-    "0" + 7,
-    "0" + 8,
-    "0" + 9,
-    10,
-    11,
-    12,
-  ];
-  let dayArray: Array<number | string> = [
-    "0" + 1,
-    "0" + 2,
-    "0" + 3,
-    "0" + 4,
-    "0" + 5,
-    "0" + 6,
-    "0" + 7,
-    "0" + 8,
-    "0" + 9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    29,
-    30,
-    31,
-  ];
-  let hourArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  let minuteArray: Array<number | string> = [
-    "00",
-    "0" + 5,
-    10,
-    15,
-    20,
-    25,
-    30,
-    35,
-    40,
-    45,
-    50,
-    55,
-  ];
-
+  let yearArray: number[] = dateTimeValues.yearArrayValues;
+  let monthArray: Array<number | string> = dateTimeValues.monthArrayValues;
+  let dayArray: Array<number | string> = dateTimeValues.dayArrayValues;
+  let hourArray: number[] = dateTimeValues.hourArrayValues;
+  let minuteArray: Array<number | string> = dateTimeValues.minuteArrayValues;
   let token = localStorage.getItem("token");
   let [personal_info, setPersonalInfo] = useState<Array<any>>([]);
   let [coaches_UID, setCoaches_UID] = useState<number>(); // not inputed
@@ -129,116 +65,134 @@ const ScheduleNewPrivateLessonForm = () => {
     setWrestlerId(Number(wrestlerIdAfterSlice));
   };
 
-  //makes sure everything is filled out and if its a series it then makes sure everyhting in the series section is filled out
   let handleSubmitLessonPlan = (e: any) => {
     e.preventDefault();
-    if (
-      !coaches_UID ||
-      !wrestlerId ||
-      !lessonDateMonth ||
-      !lessonDateDay ||
-      !lessonDateYear ||
-      !lessonTimeHour ||
-      !lessonTimeMinute ||
-      !lessonTimeAMPM
-    ) {
-      alert("fill out entire form");
-    } else if (seriesEndDateMonth || seriesEndDateDay || seriesEndDateYear) {
-      if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
-        alert("if this is a series, please complete the entire series form");
-      } else {
-        submitIntoServerFunc(true);
-      }
-    } else {
-      submitIntoServerFunc(false);
-    }
+    scheduleLessonFunctions.submitPrivateLessonFunc(
+      coaches_UID,
+      wrestlerId,
+      lessonDateMonth,
+      lessonDateDay,
+      lessonDateYear,
+      lessonTimeHour,
+      lessonTimeMinute,
+      lessonTimeAMPM,
+      durationHours,
+      durationMinutes,
+      seriesEndDateMonth,
+      seriesEndDateDay,
+      seriesEndDateYear,
+      wieght,
+      age,
+      war
+    );
   };
 
-  let submitIntoServerFunc = (conditionForSeries: boolean) => {
-    let newLessonInfo: IPrivateLessonInfo;
-    if (!conditionForSeries) {
-      newLessonInfo = {
-        coaches_UID,
-        wrestlerId,
-        dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
-        startTime: timeConfigureForDatabaseFunc(),
-        duration: `${durationHours}.${durationMinutes}`,
-        notes: `Weight:${wieght} Age:${age} War:${war}`,
-        seriesName: null,
-      };
-      insertIntoDatabaseFunc(newLessonInfo, false);
-    } else {
-      let newLessonInfo = {
-        coaches_UID,
-        wrestlerId,
-        dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
-        startTime: timeConfigureForDatabaseFunc(),
-        duration: `${durationHours}.${durationMinutes}`,
-        notes: `Weight:${wieght} Age:${age} War:${war}`,
-        seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
-      };
-      let lessonDateForIncrement = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
-      let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
-      insertIntoDatabaseFunc(
-        newLessonInfo,
-        true,
-        lessonDateForIncrement,
-        seriesEndDateEntire
-      );
-    }
-  };
+  // //makes sure everything is filled out and if its a series it then makes sure everyhting in the series section is filled out
+  // let handleSubmitLessonPlan = (e: any) => {
+  //   e.preventDefault();
+  //   if (
+  //     !coaches_UID ||
+  //     !wrestlerId ||
+  //     !lessonDateMonth ||
+  //     !lessonDateDay ||
+  //     !lessonDateYear ||
+  //     !lessonTimeHour ||
+  //     !lessonTimeMinute ||
+  //     !lessonTimeAMPM
+  //   ) {
+  //     alert("fill out entire form");
+  //   } else if (seriesEndDateMonth || seriesEndDateDay || seriesEndDateYear) {
+  //     if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
+  //       alert("if this is a series, please complete the entire series form");
+  //     } else {
+  //       submitIntoServerFunc(true);
+  //     }
+  //   } else {
+  //     submitIntoServerFunc(false);
+  //   }
+  // };
 
-  let timeConfigureForDatabaseFunc = () => {
-    let lessonHourFinal: number | string = lessonTimeHour;
-    if (lessonTimeAMPM === "pm") {
-      lessonHourFinal = 12 + Number(lessonTimeHour);
-    } else {
-      if (lessonTimeHour < 10) {
-        lessonHourFinal = "0" + lessonTimeHour;
-      }
-    }
-    return `${lessonHourFinal}:${lessonTimeMinute}:00`;
-  };
+  // let submitIntoServerFunc = (conditionForSeries: boolean) => {
+  //   let newLessonInfo: IPrivateLessonInfo;
+  //   if (!conditionForSeries) {
+  //     newLessonInfo = {
+  //       coaches_UID,
+  //       wrestlerId,
+  //       dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+  //       startTime: timeConfigureForDatabaseFunc(),
+  //       duration: `${durationHours}.${durationMinutes}`,
+  //       notes: `Weight:${wieght} Age:${age} War:${war}`,
+  //       seriesName: null,
+  //     };
+  //     insertIntoDatabaseFunc(newLessonInfo, false);
+  //   } else {
+  //     let newLessonInfo = {
+  //       coaches_UID,
+  //       wrestlerId,
+  //       dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+  //       startTime: timeConfigureForDatabaseFunc(),
+  //       duration: `${durationHours}.${durationMinutes}`,
+  //       notes: `Weight:${wieght} Age:${age} War:${war}`,
+  //       seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
+  //     };
+  //     let lessonDateForIncrement = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
+  //     let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
+  //     insertIntoDatabaseFunc(
+  //       newLessonInfo,
+  //       true,
+  //       lessonDateForIncrement,
+  //       seriesEndDateEntire
+  //     );
+  //   }
+  // };
 
-  let insertIntoDatabaseFunc = (
-    lessonInfo: IPrivateLessonInfo,
-    isASeries: boolean,
-    lessonDateForIncrement?: string,
-    seriesEndDateEntire?: string
-  ) => {
-    fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lessonInfo),
-    }).then((res) => {
-      if (res.ok) {
-        if (isASeries === false) {
-          alert("Private lesson has been added");
-        } else {
-          let seriesIncrementResult: IDateIncResult | boolean =
-            seriesWeeklyIncrementFunc(
-              lessonDateForIncrement,
-              seriesEndDateEntire
-            );
-          if (seriesIncrementResult) {
-            lessonInfo.dateOfLesson = seriesIncrementResult.dateForDB;
-            insertIntoDatabaseFunc(
-              lessonInfo,
-              true,
-              seriesIncrementResult.dateForFuncLoop,
-              seriesEndDateEntire
-            );
-          } else {
-            alert("Private lesson series has been added");
-          }
-        }
-      } else {
-        alert(
-          "Somthing went wrong! Make sure all of the information is correct."
-        );
-      }
-    });
-  };
+  // let timeConfigureForDatabaseFunc = () => {
+  //   return dateTimeHandlingFunctions.timeAMPMToMilitary(
+  //     lessonTimeHour,
+  //     lessonTimeMinute,
+  //     lessonTimeAMPM
+  //   );
+  // };
+
+  // let insertIntoDatabaseFunc = (
+  //   lessonInfo: IPrivateLessonInfo,
+  //   isASeries: boolean,
+  //   lessonDateForIncrement?: string,
+  //   seriesEndDateEntire?: string
+  // ) => {
+  //   fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(lessonInfo),
+  //   }).then((res) => {
+  //     if (res.ok) {
+  //       if (isASeries === false) {
+  //         alert("Private lesson has been added");
+  //       } else {
+  //         let seriesIncrementResult: IDateIncResult | boolean =
+  //           dateTimeHandlingFunctions.seriesWeeklyIncrementFunc(
+  //             lessonDateForIncrement,
+  //             seriesEndDateEntire
+  //           );
+  //         if (seriesIncrementResult) {
+  //           lessonInfo.dateOfLesson = seriesIncrementResult.dateForDB;
+  //           insertIntoDatabaseFunc(
+  //             lessonInfo,
+  //             true,
+  //             seriesIncrementResult.dateForFuncLoop,
+  //             seriesEndDateEntire
+  //           );
+  //         } else {
+  //           alert("Private lesson series has been added");
+  //         }
+  //       }
+  //     } else {
+  //       alert(
+  //         "Somthing went wrong! Make sure all of the information is correct."
+  //       );
+  //     }
+  //   });
+  // };
 
   let dateFormHTMLFunc = (setMonth: any, setDay: any, setYear: any) => {
     return (
@@ -276,7 +230,7 @@ const ScheduleNewPrivateLessonForm = () => {
       </>
     );
   };
-
+  /////////////////////////////////////////////////////////////////////////////
   return (
     <div>
       <div>
@@ -429,17 +383,3 @@ const ScheduleNewPrivateLessonForm = () => {
 };
 
 export default ScheduleNewPrivateLessonForm;
-
-export interface IPrivateLessonInfo {
-  coaches_UID: number;
-  wrestlerId: number;
-  dateOfLesson: string;
-  startTime: string;
-  duration: string;
-  notes: string;
-  seriesName: string;
-}
-export interface IDateIncResult {
-  dateForDB: string;
-  dateForFuncLoop: string;
-}

@@ -1,5 +1,7 @@
 import * as React from "react";
+import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import { useState, useEffect } from "react";
+import { IAvailabilityForCoachesId } from "../ServicesForPrivateLessonScheduling/interfaces";
 
 //note: make time deletable     havent i done this already? what the fuck was I talking about??
 
@@ -36,21 +38,6 @@ const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
     }
   };
 
-  let timeToAmPm = (time: string) => {
-    let hour: number;
-    let minute: string = time.slice(3, 5);
-    let amOrPm: string;
-    let hourToNumber: number = Number(time.slice(0, 2));
-    if (hourToNumber > 12) {
-      hour = hourToNumber - 12;
-      amOrPm = "pm";
-    } else {
-      hour = hourToNumber;
-      amOrPm = "am";
-    }
-    return `${hour}:${minute}${amOrPm}`;
-  };
-
   let returnsTableDataStructured = (
     availabilityParaForFunc: IAvailabilityForCoachesId[]
   ) => {
@@ -64,8 +51,13 @@ const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
     availabilityParaForFunc.map((day) => {
       let newData = (
         <div key={day.id} className="border pt-3 pb-3 text-center">
-          {timeToAmPm(day.start_time)}-{timeToAmPm(day.stop_time)}
-          <button value={day.id} onClick={deleteTimeSlot} className="btn-danger">
+          {dateTimeHandlingFunctions.timeMilitaryToAMPM(day.start_time)}-
+          {dateTimeHandlingFunctions.timeMilitaryToAMPM(day.stop_time)}
+          <button
+            value={day.id}
+            onClick={deleteTimeSlot}
+            className="btn-danger"
+          >
             remove
           </button>
         </div>
@@ -143,12 +135,4 @@ export default CoachesAvailabilityChart;
 interface ICoachIdForProp {
   coachId: number;
   conditionUseForReRendering?: boolean;
-}
-interface IAvailabilityForCoachesId {
-  id: number;
-  coaches_user_id: number;
-  day_of_week: string;
-  start_time: string;
-  stop_time: string;
-  date_created: number;
 }

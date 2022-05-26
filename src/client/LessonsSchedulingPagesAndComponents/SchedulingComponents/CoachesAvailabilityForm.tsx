@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeValues";
+import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import CoachesAvailabilityChart from "./CoachesAvailabilityChart";
@@ -7,30 +9,9 @@ import CoachesAvailabilityChart from "./CoachesAvailabilityChart";
 //note: may be a better way to do this(via values within each option in the select menu but this works for now just a bit messy)
 
 const CoachesAvailabilityForm = () => {
-  let weekdayArray: string[] = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
-  let hourArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  let minuteArray: Array<number | string> = [
-    "00",
-    "0" + 5,
-    10,
-    15,
-    20,
-    25,
-    30,
-    35,
-    40,
-    45,
-    50,
-    55,
-  ];
+  let weekdayArray: string[] = dateTimeValues.weekdayArrayDaysOfWeekStrings;
+  let hourArray: number[] = dateTimeValues.hourArrayValues;
+  let minuteArray: Array<number | string> = dateTimeValues.minuteArrayValues;
   let [
     conditionUsedOnlyForRenderingOutsideComponent,
     setConditionUsedOnlyForRenderingOutsideComponent,
@@ -67,22 +48,16 @@ const CoachesAvailabilityForm = () => {
       alert("Please make sure to fill out the entire form");
       return;
     } else {
-      let startHourFinal: number | string = startTimeHour; // there was a delay isse with the use state; at least it seemed so when console.logging **** try this without using the "finals"
-      let endHourFinal: number | string = endTimeMinute;
-      if (startTimeAMPM === "pm") {
-        startHourFinal = 12 + Number(startTimeHour);
-      } else {
-        if (startTimeHour < 10) {
-          startHourFinal = "0" + startTimeHour;
-        }
-      }
-      if (endTimeAMPM === "pm") {
-        endHourFinal = 12 + Number(endTimeHour);
-      } else {
-        if (endTimeHour < 10) {
-          endHourFinal = "0" + endTimeHour;
-        }
-      }
+      let startTimeFull = dateTimeHandlingFunctions.timeAMPMToMilitary(
+        startTimeHour,
+        startTimeMinute,
+        startTimeAMPM
+      );
+      let endTimeFull = dateTimeHandlingFunctions.timeAMPMToMilitary(
+        endTimeHour,
+        endTimeMinute,
+        endTimeAMPM
+      );
       //   if (startTimeAMPM === "pm") {
       //     setStartTimeHour(12 + Number(startTimeHour));
       //   } else {
@@ -103,8 +78,8 @@ const CoachesAvailabilityForm = () => {
         body: JSON.stringify({
           coaches_UID,
           dayOfWeek,
-          startTime: `${startHourFinal}:${startTimeMinute}:00`,
-          endTime: `${endHourFinal}:${endTimeMinute}:00`,
+          startTime: startTimeFull,
+          endTime: endTimeFull,
           //   startTime: `${startTimeHour}:${startTimeMinute}:00`,     // it was working on first click but it added a 0 in front of it? probably missing somthing try again
           //   endTime: `${endTimeHour}:${endTimeMinute}:00`,
         }),
