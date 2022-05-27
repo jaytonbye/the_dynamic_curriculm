@@ -35,6 +35,21 @@ router.get(
   }
 );
 
+router.get(
+  "/getCoachesFullPrivateLessonsSchedule/:coachesId",
+  async (req, res) => {
+    try {
+      let coachesId: string = req.params.coachesId;
+      let coachesFullPrivateLessonsSchedule =
+        await schedulingLessons.getCoachesFullPrivateLessonsSchedule(coachesId);
+      res.json(coachesFullPrivateLessonsSchedule);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
+
 //  POST    //
 router.post("/postNewAvailability", async (req, res) => {
   try {
@@ -88,6 +103,38 @@ router.delete(
       let availabilityId = req.params.availabilityId;
       await schedulingLessons.deleteTimeSlotAvailabilityForCoach(
         availabilityId
+      );
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
+
+router.delete(
+  "/deleteIndividualPrivateLesson/:privateLessonId",
+  async (req, res) => {
+    try {
+      let privateLessonId = req.params.privateLessonId;
+      await schedulingLessons.deleteIndividualPrivateLesson(privateLessonId);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
+
+router.delete(
+  "/deletePrivateLessonSeriesMovingForward/:seriesName/:privateLessonId",
+  async (req, res) => {
+    try {
+      let seriesName = req.params.seriesName;
+      let privateLessonId = req.params.privateLessonId;
+      await schedulingLessons.deletePrivateLessonSeriesMovingForward(
+        seriesName,
+        privateLessonId
       );
       res.sendStatus(200);
     } catch (error) {

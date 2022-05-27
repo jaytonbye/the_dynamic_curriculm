@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import * as scheduleLessonFunctions from "../ServicesForPrivateLessonScheduling/privateLessonScheduleFuncs";
 import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeValues";
+import CoachesFullPrivateLessonsSchedule from "./CoachesFullPrivateLessonsSchedule";
 import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import {
   IPrivateLessonInfo,
@@ -377,6 +378,12 @@ const ScheduleNewPrivateLessonForm = () => {
         <button onClick={handleSubmitLessonPlan} className="btn btn-success">
           Submit Lesson
         </button>
+      </div>
+
+      <hr />
+
+      <div>
+        <CoachesFullPrivateLessonsSchedule coachesId={coaches_UID} />
       </div>
     </div>
   );

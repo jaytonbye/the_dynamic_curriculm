@@ -1,3 +1,4 @@
+import { isAwaitExpression } from "typescript";
 import { Query } from "./index";
 
 //    GET           //
@@ -14,6 +15,43 @@ const getCoachesWeeklyAvailibityByCoachesId = async (
    order by 
    field(day_of_week, "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"),
    start_time asc;`,
+    [coachesId]
+  );
+};
+
+const getCoachesFullPrivateLessonsSchedule = async (
+  coachesId: number | string
+) => {
+  return await Query(
+    `
+    SELECT 
+    plb.id AS private_lesson_id,
+    plb.coaches_user_id,
+    pi.first_name AS coaches_first_name,
+    pi.last_name AS coaches_last_name,
+    plb.wrestler_user_id,
+    (SELECT 
+            pi.first_name
+        FROM
+            personal_info pi
+        WHERE
+            plb.wrestler_user_id = pi.user_id) AS wrestler_first_name,
+    (SELECT 
+            pi.last_name
+        FROM
+            personal_info pi
+        WHERE
+            plb.wrestler_user_id = pi.user_id) AS wrestler_last_name,
+    plb.date_of_lesson,
+    plb.start_time,
+    plb.duration,
+    plb.series_name,
+    plb.notes
+    FROM private_lesson_bookings plb
+    JOIN personal_info pi ON plb.coaches_user_id = pi.user_id
+    WHERE plb.coaches_user_id = ?
+    ORDER BY plb.date_of_lesson, plb.start_time;;
+    `,
     [coachesId]
   );
 };
@@ -57,13 +95,37 @@ const deleteTimeSlotAvailabilityForCoach = async (
   ]);
 };
 
+const deleteIndividualPrivateLesson = async (
+  privateLessonId: number | string
+) => {
+  return await Query(
+    `
+  delete from private_lesson_bookings where id = ?;`,
+    [privateLessonId]
+  );
+};
+
+const deletePrivateLessonSeriesMovingForward = async (
+  seriesName: string,
+  privateLessonId: string | number
+) => {
+  return await Query(
+    `delete from private_lesson_bookings
+  where series_name = ? and id >= ?;`,
+    [seriesName, privateLessonId]
+  );
+};
+
 export default {
   //  GET
   getAvails,
   getCoachesWeeklyAvailibityByCoachesId,
+  getCoachesFullPrivateLessonsSchedule,
   //  POST
   postNewAvailability,
   postNewPrivateLesson,
   //  DELETE
   deleteTimeSlotAvailabilityForCoach,
+  deleteIndividualPrivateLesson,
+  deletePrivateLessonSeriesMovingForward,
 };
