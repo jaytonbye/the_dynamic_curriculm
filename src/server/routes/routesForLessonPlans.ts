@@ -96,12 +96,30 @@ router.post(`/addNewVideoToLessonPlan`, async (req, res) => {
   }
 });
 
+//  PUTS
+router.put("/putLessonPlanNewName", async (req, res) => {
+  try {
+    let newLessonPlanName = req.body.newLessonPlanName;
+    let planId = req.body.planId;
+    await lessonPlans.putNewLessonPlanName(newLessonPlanName, planId);
+    res
+      .status(200)
+      .json({ message: `Your new lesson plan name is ${newLessonPlanName}` });
+  } catch (error) {
+    console.log(error);
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(500).json({ message: "Plan name already exists" });
+    }
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+});
+
 //    DELETEs
 router.delete(
   `/deleteSingleVideoFromLessonPlan/:lessonPlanVideosID`,
   async (req, res) => {
     try {
-      let lessonPlanVideosId:any = req.params.lessonPlanVideosID;
+      let lessonPlanVideosId: any = req.params.lessonPlanVideosID;
       await lessonPlans.deleteSingleVideoFromLessonPlan(lessonPlanVideosId);
       res.sendStatus(200);
     } catch (error) {
