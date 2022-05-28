@@ -149,7 +149,7 @@ export default function VideoManager() {
           <label htmlFor="">Insert into curriculum level: </label>
           <input type="number" onChange={onCurriculumLevelChange} />
           <br />
-          <label htmlFor="">Maximum Grade: </label>
+          <label htmlFor="">Maximum Grade (Don't go over 3): </label>
           <input type="number" onChange={onMaximum_gradeChange} />
           <br />
           <button

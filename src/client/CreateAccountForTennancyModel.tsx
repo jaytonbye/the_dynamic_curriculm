@@ -1,5 +1,6 @@
 import React, { EventHandler } from "react";
 import { Link, useHistory } from "react-router-dom";
+import AccountsDisplayer from "./AccountsDisplayer";
 import { apiService } from "./services/api-services";
 
 function CreateAccount() {
@@ -7,6 +8,7 @@ function CreateAccount() {
   const [password, setPassword] = React.useState("");
   const [realEmail, setRealEmail] = React.useState("");
   const [userTenant, setUserTenant] = React.useState("");
+  const [allAccounts, setAllAccounts] = React.useState([]);
   const [createdAccountsRoll, setCreatedAccountsRoll] = React.useState(
     "wrestler"
   );
@@ -65,6 +67,36 @@ function CreateAccount() {
       }
     }
   };
+
+  React.useEffect(() => {
+    let token = localStorage.getItem("token");
+    try {
+      let requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          tenant: userTenant,
+        }),
+      };
+
+      fetch("/api/users/getAllAccounts", requestOptions).then(
+        (data) => {
+          data.json().then((results) => {
+            setAllAccounts(results);
+          }
+          );
+        })
+
+    } catch (error) {
+      alert("it didn't work");
+      // error is already logged from apiService
+      // so possibly use history object to navigate to error page?
+    }
+  }, [userTenant])
+
 
   return (
     <>
@@ -128,6 +160,10 @@ function CreateAccount() {
           </form>
         </section>
       </main>
+      <hr />
+
+      <AccountsDisplayer accounts={allAccounts} />
+
     </>
   );
 }

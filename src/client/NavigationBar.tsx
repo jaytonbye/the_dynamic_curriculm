@@ -75,9 +75,9 @@ export default function NavigationBar() {
           >
             Home
           </button>
-          <Link to={`/coachesview`} className="btn btn-outline-primary">
+          {userRole === "admin" || userRole === "coach" && <Link to={`/coachesview`} className="btn btn-outline-primary">
             I'm a coach...
-          </Link>
+          </Link>}
           <button
             className="btn btn-outline-primary"
             onClick={goToUnitVideosPage}
