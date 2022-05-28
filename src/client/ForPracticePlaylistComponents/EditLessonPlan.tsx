@@ -226,7 +226,7 @@ let EditLessonPlan = () => {
                   return (
                     <tr key={video.lpvID}>
                       <td>{video.orderNumber}</td>
-                      <td>{video.videoName}</td>
+                      <td className="col-3">{video.videoName}</td>
 
                       <td className="col-5">
                         <iframe
