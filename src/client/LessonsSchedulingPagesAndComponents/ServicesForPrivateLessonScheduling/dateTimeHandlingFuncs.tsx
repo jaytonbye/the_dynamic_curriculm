@@ -4,10 +4,15 @@ const timeAMPMToMilitary = (
   amOrPm: string
 ) => {
   if (amOrPm === "pm") {
-    hour = 12 + Number(hour);
+    if (Number(hour) !== 12) {
+      hour = 12 + Number(hour);
+    }
   } else {
-    if (hour < 10) {
+    if (Number(hour) < 10) {
       hour = "0" + hour;
+    }
+    if (Number(hour) === 12) {
+      hour = "00";
     }
   }
   return `${hour}:${minute}:00`;
@@ -18,11 +23,19 @@ const timeMilitaryToAMPM = (time: string) => {
   let minute: string = time.slice(3, 5);
   let amOrPm: string;
   let hourToNumber: number = Number(time.slice(0, 2));
-  if (hourToNumber > 12) {
-    hour = hourToNumber - 12;
+  if (hourToNumber > 11) {
+    if (hourToNumber !== 12) {
+      hour = hourToNumber - 12;
+    } else {
+      hour = hourToNumber;
+    }
     amOrPm = "pm";
   } else {
-    hour = hourToNumber;
+    if (hourToNumber === 0) {
+      hour = 12;
+    } else {
+      hour = hourToNumber;
+    }
     amOrPm = "am";
   }
   return `${hour}:${minute}${amOrPm}`;

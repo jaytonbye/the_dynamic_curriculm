@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import * as scheduleLessonFunctions from "../ServicesForPrivateLessonScheduling/privateLessonScheduleFuncs";
 import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeValues";
 import CoachesFullPrivateLessonsSchedule from "./CoachesFullPrivateLessonsSchedule";
+import CoachesFullPrivateLessonsScheduleCalendarView from "./CoachesFullPrivateLessonsScheduleCalendarView";
 import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import {
   IPrivateLessonInfo,
@@ -10,7 +11,6 @@ import {
 } from "../ServicesForPrivateLessonScheduling/interfaces";
 
 // hovering over lables are triggering re render of component ... dafuq?
-// ask about foregn key
 //make it look better
 // test this shit = mkae sure you are adding corrent corresponding values
 
@@ -383,7 +383,8 @@ const ScheduleNewPrivateLessonForm = () => {
       <hr />
 
       <div>
-        <CoachesFullPrivateLessonsSchedule coachesId={coaches_UID} />
+        <CoachesFullPrivateLessonsScheduleCalendarView />
+        {/* <CoachesFullPrivateLessonsSchedule coachesId={coaches_UID} /> */}
       </div>
     </div>
   );

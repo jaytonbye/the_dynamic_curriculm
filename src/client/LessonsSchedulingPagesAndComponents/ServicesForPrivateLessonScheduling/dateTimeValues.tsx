@@ -72,6 +72,20 @@ let weekdayArrayDaysOfWeekStrings: string[] = [
   "friday",
   "saturday",
 ];
+let monthsNames: string[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export {
   yearArrayValues,
@@ -80,4 +94,5 @@ export {
   hourArrayValues,
   minuteArrayValues,
   weekdayArrayDaysOfWeekStrings,
+  monthsNames,
 };
