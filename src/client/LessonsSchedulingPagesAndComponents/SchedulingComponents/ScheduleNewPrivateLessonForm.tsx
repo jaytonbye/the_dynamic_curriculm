@@ -2,8 +2,8 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import * as scheduleLessonFunctions from "../ServicesForPrivateLessonScheduling/privateLessonScheduleFuncs";
 import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeValues";
-import CoachesFullPrivateLessonsSchedule from "./CoachesFullPrivateLessonsSchedule";
-import CoachesFullPrivateLessonsScheduleCalendarView from "./CoachesFullPrivateLessonsScheduleCalendarView";
+import CoachesFullPrivateLessonsSchedule from "./CalendarComponents/CoachesFullPrivateLessonsSchedule";
+import CoachesFullPrivateLessonsScheduleCalendarView from "./CalendarComponents/CoachesFullPrivateLessonsScheduleCalendarView";
 import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import {
   IPrivateLessonInfo,
@@ -383,7 +383,9 @@ const ScheduleNewPrivateLessonForm = () => {
       <hr />
 
       <div>
-        <CoachesFullPrivateLessonsScheduleCalendarView />
+        <CoachesFullPrivateLessonsScheduleCalendarView
+          coachesId={coaches_UID}
+        />
         {/* <CoachesFullPrivateLessonsSchedule coachesId={coaches_UID} /> */}
       </div>
     </div>

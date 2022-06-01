@@ -1,4 +1,4 @@
-import { isAwaitExpression } from "typescript";
+import { isAwaitExpression, readBuilderProgram } from "typescript";
 import { Query } from "./index";
 
 //    GET           //
@@ -55,6 +55,51 @@ const getCoachesFullPrivateLessonsSchedule = async (
     [coachesId]
   );
 };
+
+const getCoachesFullPrivateLessonsScheduleByWeek = async (
+  coachesId: number | string,
+  weekStartDate: string,
+  weekEndDate: string
+) => {
+  return await Query(
+    `
+    SELECT 
+    plb.id AS private_lesson_id,
+    plb.coaches_user_id,
+    pi.first_name AS coaches_first_name,
+    pi.last_name AS coaches_last_name,
+    plb.wrestler_user_id,
+    (SELECT 
+            pi.first_name
+        FROM
+            personal_info pi
+        WHERE
+            plb.wrestler_user_id = pi.user_id) AS wrestler_first_name,
+    (SELECT 
+            pi.last_name
+        FROM
+            personal_info pi
+        WHERE
+            plb.wrestler_user_id = pi.user_id) AS wrestler_last_name,
+    plb.date_of_lesson,
+    plb.start_time,
+    plb.duration,
+    plb.series_name,
+    plb.notes
+FROM
+    private_lesson_bookings plb
+        JOIN
+    personal_info pi ON plb.coaches_user_id = pi.user_id
+WHERE
+    plb.coaches_user_id = ?
+    and date_of_lesson>=date(?) 
+    and date_of_lesson<=date(?)
+    ORDER BY plb.date_of_lesson, plb.start_time;
+  `,
+    [coachesId, weekStartDate, weekEndDate]
+  );
+};
+
 //      POST        //
 const postNewAvailability = async (
   coachesUid: number,
@@ -121,6 +166,7 @@ export default {
   getAvails,
   getCoachesWeeklyAvailibityByCoachesId,
   getCoachesFullPrivateLessonsSchedule,
+  getCoachesFullPrivateLessonsScheduleByWeek,
   //  POST
   postNewAvailability,
   postNewPrivateLesson,

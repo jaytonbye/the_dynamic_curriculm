@@ -50,6 +50,27 @@ router.get(
   }
 );
 
+router.get(
+  "/getCoachesFullPrivateLessonsScheduleByWeek/:coachesId/:weekStartDate/:weekEndDate",
+  async (req, res) => {
+    try {
+      let coachesId = req.params.coachesId;
+      let weekStartDate = req.params.weekStartDate;
+      let weekEndDate = req.params.weekEndDate;
+      let coachesPrivateLessonsScheduleForTheSelectedWeek =
+        await schedulingLessons.getCoachesFullPrivateLessonsScheduleByWeek(
+          coachesId,
+          weekStartDate,
+          weekEndDate
+        );
+      res.json(coachesPrivateLessonsScheduleForTheSelectedWeek);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+);
+
 //  POST    //
 router.post("/postNewAvailability", async (req, res) => {
   try {

@@ -64,7 +64,39 @@ const seriesWeeklyIncrementFunc = (
   }
 };
 
-export { timeAMPMToMilitary, timeMilitaryToAMPM, seriesWeeklyIncrementFunc };
+//    FOR CALENDAR
+let startTimeValueForStyleSheet = (startTime: string) => {
+  let hour = Number(startTime.slice(0, 2));
+  let minute = Number(startTime.slice(3, 5));
+  let minuteIntoPercentageOfHour = String(minute / 60).slice(2, 4);
+  let timeToBeMultipliedForStyleValue = Number(
+    `${hour}.${minuteIntoPercentageOfHour}`
+  );
+  let finalResultForStylSheetStartTime =
+    Math.round(timeToBeMultipliedForStyleValue * 12) + 1;
+  return finalResultForStylSheetStartTime;
+};
+
+let amountOfTimeInPixelsForStyleSheet = (//this didnt end up working with the milt time instead lets use a for loop to count or somthing
+  startTime: string,
+  endTime: string
+) => {
+  let startTimeHour = Number(startTime.slice(0, 2));
+  let startTimeMinute = Number(startTime.slice(3, 5));
+  let endTimeHour = Number(endTime.slice(0, 2));
+  let endTimeMinute = Number(endTime.slice(3, 5));
+  let amountOfTimeHours = (endTimeHour - startTimeHour) * 60;
+  let amountOfTimeMinutes = endTimeMinute - startTimeMinute;
+  return `h ${amountOfTimeHours}m ${amountOfTimeMinutes}`;
+};
+
+export {
+  timeAMPMToMilitary,
+  timeMilitaryToAMPM,
+  seriesWeeklyIncrementFunc,
+  startTimeValueForStyleSheet,
+  amountOfTimeInPixelsForStyleSheet,
+};
 
 interface IDateIncResult {
   dateForDB: string;
