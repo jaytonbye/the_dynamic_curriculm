@@ -217,23 +217,41 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
         {/* sep the days */}
 
         {/*  */}
-        <div className="slot test-slot">
+        {/* <div className="slot test-slot" style={{ width: "8.39%" }}>
           <div className="event-status">
             <span>lesson info here</span>
           </div>
         </div>
+
+        <div
+          className="slot test-slot"
+          style={{ width: "8.39%", marginLeft: "8.39%" }}
+        >
+          <div className="event-status">
+            <span>lesson info here</span>
+          </div>
+        </div>
+
+        <div
+          className="slot test-slot"
+          style={{ width: "8.39%", marginLeft: "8.39%" }}
+        >
+          <div className="event-status">
+            <span>lesson info here</span>
+          </div>
+        </div> */}
         {/*  */}
 
         {!coachesAvailability || !coachesAvailability[0] ? (
           <></>
         ) : (
           coachesAvailability.map((availableDay) => {
-            console.log(
-              dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheet(
-                availableDay.start_time,
-                availableDay.stop_time
-              )
-            );
+            // console.log(
+            //   dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
+            //     availableDay.start_time,
+            //     availableDay.stop_time
+            //   )
+            // );
             return (
               <div
                 className={`slot all-availability-slots ${availableDay.day_of_week}`}
@@ -242,6 +260,10 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
                     dateTimeHandlingFunctions.startTimeValueForStyleSheet(
                       availableDay.start_time
                     ),
+                  height: `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
+                    availableDay.start_time,
+                    availableDay.stop_time
+                  )}px`,
                 }}
                 key={availableDay.id}
               >

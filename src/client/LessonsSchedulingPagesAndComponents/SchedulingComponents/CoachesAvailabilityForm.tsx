@@ -4,6 +4,7 @@ import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonSchedulin
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import CoachesAvailabilityChart from "./CoachesAvailabilityChart";
+import e from "express";
 
 //so far it all works niceley
 //note: may be a better way to do this(via values within each option in the select menu but this works for now just a bit messy)
@@ -58,6 +59,12 @@ const CoachesAvailabilityForm = () => {
         endTimeMinute,
         endTimeAMPM
       );
+      let checkForValidAvailability =
+        dateTimeHandlingFunctions.makesSureStartEndTimesAreValidAndOnSameDay(
+          startTimeFull,
+          endTimeFull,
+          false
+        );
       //   if (startTimeAMPM === "pm") {
       //     setStartTimeHour(12 + Number(startTimeHour));
       //   } else {
@@ -72,40 +79,44 @@ const CoachesAvailabilityForm = () => {
       //       setEndTimeHour("0" + endTimeHour);
       //     }
       //   }
-      fetch(`/api/schedulingLessons/postNewAvailability`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          coaches_UID,
-          dayOfWeek,
-          startTime: startTimeFull,
-          endTime: endTimeFull,
-          //   startTime: `${startTimeHour}:${startTimeMinute}:00`,     // it was working on first click but it added a 0 in front of it? probably missing somthing try again
-          //   endTime: `${endTimeHour}:${endTimeMinute}:00`,
-        }),
-      })
-        // .then(res => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alert("Your availability has been added successfully!");
-          } else {
-            alert("Something went wrong while adding your availability"); //no way to test this right now
-          }
-        });
-      //   console.log(`
-      //   weekday: ${dayOfWeek},
-      //   start time: ${startHourFinal}:${startTimeMinute}:00,
-      //   end time: ${endHourFinal}:${endTimeMinute}:00
-      //   `);
-      //       console.log(`
-      //   weekday: ${dayOfWeek},
-      //   start time: ${startTimeHour}:${startTimeMinute}:${startTimeAMPM},
-      //   end time: ${endTimeHour}:${endTimeMinute}:${endTimeAMPM}
-      //   `);
+      if (checkForValidAvailability) {
+        fetch(`/api/schedulingLessons/postNewAvailability`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            coaches_UID,
+            dayOfWeek,
+            startTime: startTimeFull,
+            endTime: endTimeFull,
+            //   startTime: `${startTimeHour}:${startTimeMinute}:00`,     // it was working on first click but it added a 0 in front of it? probably missing somthing try again
+            //   endTime: `${endTimeHour}:${endTimeMinute}:00`,
+          }),
+        })
+          // .then(res => res.json())
+          .then((res) => {
+            if (res.status === 200) {
+              alert("Your availability has been added successfully!");
+            } else {
+              alert("Something went wrong while adding your availability"); //no way to test this right now
+            }
+          });
+        //   console.log(`
+        //   weekday: ${dayOfWeek},
+        //   start time: ${startHourFinal}:${startTimeMinute}:00,
+        //   end time: ${endHourFinal}:${endTimeMinute}:00
+        //   `);
+        //       console.log(`
+        //   weekday: ${dayOfWeek},
+        //   start time: ${startTimeHour}:${startTimeMinute}:${startTimeAMPM},
+        //   end time: ${endTimeHour}:${endTimeMinute}:${endTimeAMPM}
+        //   `);
+      } else {
+        alert("Invalid time: Start time must be earlier than end time");
+      }
+      setConditionUsedOnlyForRenderingOutsideComponent(
+        !conditionUsedOnlyForRenderingOutsideComponent
+      );
     }
-    setConditionUsedOnlyForRenderingOutsideComponent(
-      !conditionUsedOnlyForRenderingOutsideComponent
-    );
   };
 
   let timeInputFormHTML = (

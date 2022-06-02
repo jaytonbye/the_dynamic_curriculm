@@ -131,7 +131,8 @@ ul {
     height: 120px; //length of time (min * 2 = #ofpx)
     grid-row: 144; //strat time
     grid-column: 2; //day of week
-    width: 16.78%;
+    // width: 16.78%;
+    border-style: solid;
     //for start time hour*12 + 1
     // when its like 3:30... still * 12 + 1 however, 3:30 would first = 3.5 instead
 }
@@ -140,6 +141,7 @@ ul {
 
 .all-availability-slots{
     background: lightgray;
+    border-style: solid;
 }
 .sunday {
     height: 120px;

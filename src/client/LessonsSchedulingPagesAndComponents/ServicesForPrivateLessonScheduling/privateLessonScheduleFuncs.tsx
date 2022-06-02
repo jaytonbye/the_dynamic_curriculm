@@ -23,7 +23,7 @@ let submitPrivateLessonFunc = (
   age: string,
   war: string
 ) => {
-  let testFunc = () => {
+  let submitPrivateLessonInnerFunc = () => {
     if (
       !coaches_UID ||
       !wrestlerId ||
@@ -46,37 +46,50 @@ let submitPrivateLessonFunc = (
     }
   };
 
+  //i fucked with the starttimes incase shit breaks
+  //must check toi make sure series enbd date is valid, right now it takes invalid date and automatically adds next date past invalid date
   let submitIntoServerFunc = (conditionForSeries: boolean) => {
-    let newLessonInfo: IPrivateLessonInfo;
-    if (!conditionForSeries) {
-      newLessonInfo = {
-        coaches_UID,
-        wrestlerId,
-        dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
-        startTime: timeConfigureForDatabaseFunc(),
-        duration: `${durationHours}.${durationMinutes}`,
-        notes: `Weight:${wieght} Age:${age} War:${war}`,
-        seriesName: null,
-      };
-      insertIntoDatabaseFunc(newLessonInfo, false);
-    } else {
-      let newLessonInfo = {
-        coaches_UID,
-        wrestlerId,
-        dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
-        startTime: timeConfigureForDatabaseFunc(),
-        duration: `${durationHours}.${durationMinutes}`,
-        notes: `Weight:${wieght} Age:${age} War:${war}`,
-        seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
-      };
-      let lessonDateForIncrement = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
-      let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
-      insertIntoDatabaseFunc(
-        newLessonInfo,
-        true,
-        lessonDateForIncrement,
-        seriesEndDateEntire
+    let startTime = timeConfigureForDatabaseFunc();
+    let makesSureAmountOfTimeIsValindAndIsOnlyOnOneDay =
+      dateTimeHandlingFunctions.makesSureStartEndTimesAreValidAndOnSameDay(
+        startTime,
+        `${durationHours}.${durationMinutes}`,
+        true
       );
+    if (makesSureAmountOfTimeIsValindAndIsOnlyOnOneDay) {
+      let newLessonInfo: IPrivateLessonInfo;
+      if (!conditionForSeries) {
+        newLessonInfo = {
+          coaches_UID,
+          wrestlerId,
+          dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+          startTime,
+          duration: `${durationHours}.${durationMinutes}`,
+          notes: `Weight:${wieght} Age:${age} War:${war}`,
+          seriesName: null,
+        };
+        insertIntoDatabaseFunc(newLessonInfo, false);
+      } else {
+        let newLessonInfo = {
+          coaches_UID,
+          wrestlerId,
+          dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+          startTime,
+          duration: `${durationHours}.${durationMinutes}`,
+          notes: `Weight:${wieght} Age:${age} War:${war}`,
+          seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
+        };
+        let lessonDateForIncrement = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
+        let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
+        insertIntoDatabaseFunc(
+          newLessonInfo,
+          true,
+          lessonDateForIncrement,
+          seriesEndDateEntire
+        );
+      }
+    } else {
+      alert("Invalid time: Lesson must be on same day");
     }
   };
 
@@ -127,7 +140,7 @@ let submitPrivateLessonFunc = (
       }
     });
   };
-  testFunc();
+  submitPrivateLessonInnerFunc();
 };
 
 export { submitPrivateLessonFunc };

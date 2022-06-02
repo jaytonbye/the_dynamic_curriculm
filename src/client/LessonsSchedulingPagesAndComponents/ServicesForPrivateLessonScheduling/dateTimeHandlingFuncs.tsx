@@ -41,6 +41,43 @@ const timeMilitaryToAMPM = (time: string) => {
   return `${hour}:${minute}${amOrPm}`;
 };
 
+const makesSureStartEndTimesAreValidAndOnSameDay = (
+  startTime: string,
+  endTimeOrDuration: string,
+  isForPrivateLesson: boolean
+) => {
+  if (isForPrivateLesson) {
+    let durationHours =
+      Number(endTimeOrDuration) < 10
+        ? endTimeOrDuration.slice(0, 1)
+        : endTimeOrDuration.slice(0, 2);
+    let totalHoursToMinutes =
+      (Number(startTime.slice(0, 2)) + Number(durationHours)) * 60;
+    let totalAmountOfMinutes =
+      totalHoursToMinutes +
+      Number(endTimeOrDuration.slice(-2)) +
+      Number(startTime.slice(3, 5));
+    if (Number(totalAmountOfMinutes) <= 1440) {
+      return true;
+    } else {
+      return false;
+    }
+    return false;
+  } else {
+    let startTimeAsNumber = Number(
+      `${startTime.slice(0, 2)}${startTime.slice(3, 5)}`
+    );
+    let endTimeAsNumber = Number(
+      `${endTimeOrDuration.slice(0, 2)}${endTimeOrDuration.slice(3, 5)}`
+    );
+    if (startTimeAsNumber < endTimeAsNumber) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
+
 const seriesWeeklyIncrementFunc = (
   dateToIncrement: string,
   endDate: string
@@ -77,7 +114,8 @@ let startTimeValueForStyleSheet = (startTime: string) => {
   return finalResultForStylSheetStartTime;
 };
 
-let amountOfTimeInPixelsForStyleSheet = (//this didnt end up working with the milt time instead lets use a for loop to count or somthing
+let amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability = (
+  //this didnt end up working with the milt time instead lets use a for loop to count or somthing
   startTime: string,
   endTime: string
 ) => {
@@ -87,15 +125,16 @@ let amountOfTimeInPixelsForStyleSheet = (//this didnt end up working with the mi
   let endTimeMinute = Number(endTime.slice(3, 5));
   let amountOfTimeHours = (endTimeHour - startTimeHour) * 60;
   let amountOfTimeMinutes = endTimeMinute - startTimeMinute;
-  return `h ${amountOfTimeHours}m ${amountOfTimeMinutes}`;
+  return (amountOfTimeHours + amountOfTimeMinutes) * 2;
 };
 
 export {
   timeAMPMToMilitary,
   timeMilitaryToAMPM,
+  makesSureStartEndTimesAreValidAndOnSameDay,
   seriesWeeklyIncrementFunc,
   startTimeValueForStyleSheet,
-  amountOfTimeInPixelsForStyleSheet,
+  amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability,
 };
 
 interface IDateIncResult {
