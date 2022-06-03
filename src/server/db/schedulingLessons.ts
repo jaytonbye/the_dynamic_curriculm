@@ -82,6 +82,7 @@ const getCoachesFullPrivateLessonsScheduleByWeek = async (
         WHERE
             plb.wrestler_user_id = pi.user_id) AS wrestler_last_name,
     plb.date_of_lesson,
+    WEEKDAY(plb.date_of_lesson) as weekday_as_number,
     plb.start_time,
     plb.duration,
     plb.series_name,

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const timeAMPMToMilitary = (
   hour: number | string,
   minute: number | string,
@@ -41,6 +43,16 @@ const timeMilitaryToAMPM = (time: string) => {
   return `${hour}:${minute}${amOrPm}`;
 };
 
+let validateDate = (dateToValidate: string) => {
+  let isDateValid = moment(dateToValidate).format("MMMM, DD, YYYY");
+  // console.log(isDateValid)
+  if (isDateValid === "Invalid date") {
+    return false;
+  } else {
+    return true;
+  }
+};
+
 const makesSureStartEndTimesAreValidAndOnSameDay = (
   startTime: string,
   endTimeOrDuration: string,
@@ -62,7 +74,7 @@ const makesSureStartEndTimesAreValidAndOnSameDay = (
     } else {
       return false;
     }
-    return false;
+    // return false;
   } else {
     let startTimeAsNumber = Number(
       `${startTime.slice(0, 2)}${startTime.slice(3, 5)}`
@@ -115,22 +127,36 @@ let startTimeValueForStyleSheet = (startTime: string) => {
 };
 
 let amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability = (
-  //this didnt end up working with the milt time instead lets use a for loop to count or somthing
   startTime: string,
-  endTime: string
+  endTimeOrDuration: string | number,
+  isAPrivateLesson: boolean
 ) => {
-  let startTimeHour = Number(startTime.slice(0, 2));
-  let startTimeMinute = Number(startTime.slice(3, 5));
-  let endTimeHour = Number(endTime.slice(0, 2));
-  let endTimeMinute = Number(endTime.slice(3, 5));
-  let amountOfTimeHours = (endTimeHour - startTimeHour) * 60;
-  let amountOfTimeMinutes = endTimeMinute - startTimeMinute;
-  return (amountOfTimeHours + amountOfTimeMinutes) * 2;
+  if (!isAPrivateLesson) {
+    let startTimeHour = Number(startTime.slice(0, 2));
+    let startTimeMinute = Number(startTime.slice(3, 5));
+    let endTimeHour = Number(String(endTimeOrDuration).slice(0, 2));
+    let endTimeMinute = Number(String(endTimeOrDuration).slice(3, 5));
+    let amountOfTimeHours = (endTimeHour - startTimeHour) * 60;
+    let amountOfTimeMinutes = endTimeMinute - startTimeMinute;
+    return (amountOfTimeHours + amountOfTimeMinutes) * 2;
+  } else {
+    let durationHours =
+      Number(endTimeOrDuration) < 10
+        ? String(endTimeOrDuration).slice(0, 1)
+        : String(endTimeOrDuration).slice(0, 2);
+    let totalHoursToMinutes = Number(durationHours) * 60;
+    let totalAmountOfMinutes =
+      totalHoursToMinutes +
+      Number(String(endTimeOrDuration).slice(-2)) +
+      Number(startTime.slice(3, 5));
+    return totalAmountOfMinutes * 2;
+  }
 };
 
 export {
   timeAMPMToMilitary,
   timeMilitaryToAMPM,
+  validateDate,
   makesSureStartEndTimesAreValidAndOnSameDay,
   seriesWeeklyIncrementFunc,
   startTimeValueForStyleSheet,

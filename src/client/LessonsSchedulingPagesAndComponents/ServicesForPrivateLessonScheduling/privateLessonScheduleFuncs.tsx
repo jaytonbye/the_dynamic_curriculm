@@ -39,10 +39,29 @@ let submitPrivateLessonFunc = (
       if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
         alert("if this is a series, please complete the entire series form");
       } else {
-        submitIntoServerFunc(true); //series
+        let validateLessonDate = dateTimeHandlingFunctions.validateDate(
+          `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`
+        );
+        let validateSeriesEndDate = dateTimeHandlingFunctions.validateDate(
+          `${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`
+        );
+        if (validateLessonDate && validateSeriesEndDate) {
+          submitIntoServerFunc(true); //series
+        } else {
+          alert("Invalid date(s)");
+          return;
+        }
       }
     } else {
-      submitIntoServerFunc(false); //not a series
+      let validateLessonDate = dateTimeHandlingFunctions.validateDate(
+        `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`
+      );
+      if (validateLessonDate) {
+        submitIntoServerFunc(false); //not a series
+      } else {
+        alert("Invalid date");
+        return;
+      }
     }
   };
 
@@ -135,6 +154,7 @@ let submitPrivateLessonFunc = (
         }
       } else {
         alert(
+          //no that i validate the date it is musch less likey this code is hit and is now possibly not needed
           "Somthing went wrong! Make sure all of the information is correct."
         );
       }

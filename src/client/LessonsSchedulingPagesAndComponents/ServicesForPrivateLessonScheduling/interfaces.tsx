@@ -29,6 +29,7 @@ export interface IFullPrivateLessonsSchedule {
   wrestler_first_name: string;
   wrestler_last_name: string;
   date_of_lesson: string;
+  weekday_as_number: number | string;
   start_time: string;
   duration: number | string;
   series_name: string;

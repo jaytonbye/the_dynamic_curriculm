@@ -78,6 +78,7 @@ ul {
     position: absolute;
     background: gold;
     border-radius: 5px;
+    border-width: 2px;
     z-index: 5;
     color: black;
     font-size: 12px;
@@ -119,6 +120,7 @@ ul {
 .seperator-fri-sat {
     grid-column: 7;
 }
+
 // .seperator-sat-end {
 //     grid-column: 8;
 // }
@@ -139,48 +141,52 @@ ul {
 
 //availability slots 
 
-.all-availability-slots{
+.all-availability-slots {
     background: lightgray;
     border-style: solid;
 }
-.sunday {
-    height: 120px;
+.lesson-slot{
+    background: lightgreen;
+}
+
+.sunday,
+.weekday6 {
     grid-column: 1;
     width: 14.4%;
 }
 
-.monday {
-    height: 120px;
+.monday,
+.weekday0 {
     grid-column: 2;
     width: 16.78%;
 }
 
-.tuesday {
-    height: 120px;
+.tuesday,
+.weekday1 {
     grid-column: 3;
     width: 20.1%;
 }
 
-.wednesday {
-    height: 120px;
+.wednesday,
+.weekday2 {
     grid-column: 4;
     width: 25.1%;
 }
 
-.thursday {
-    height: 120px;
+.thursday,
+.weekday3 {
     grid-column: 5;
     width: 33.5%;
 }
 
-.friday {
-    height: 120px;
+.friday,
+.weekday4 {
     grid-column: 6;
     width: 50.2%;
 }
 
-.saturday {
-    height: 120px;
+.saturday,
+.weekday5 {
     grid-column: 7;
     width: 110%;
 }

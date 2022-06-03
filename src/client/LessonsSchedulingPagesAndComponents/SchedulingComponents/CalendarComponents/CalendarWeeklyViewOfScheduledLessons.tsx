@@ -7,13 +7,21 @@ import {
   IAvailabilityForCoachesId,
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import "./Styles/CalendarWeeklyView.scss";
+
+// you should try to send the coach avail from component instead of running the fetch in here... try it again bukko
 // props: IProps
 const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
   let [coachesAvailability, setCoachesAvailability] =
     useState<Array<IAvailabilityForCoachesId>>(null);
-  console.log(coachesAvailability);
+  let [coachesWeeklyScheduleForTheWeek, setCoachesWeeklyScheduleForTheWeek] =
+    useState<Array<IFullPrivateLessonsSchedule>>(
+      props.weeklyPrivateLessonsSchedule
+    );
+  // console.log(coachesAvailability);
+  console.log(coachesWeeklyScheduleForTheWeek);
 
   useEffect(() => {
+    setCoachesWeeklyScheduleForTheWeek(props.weeklyPrivateLessonsSchedule);
     if (props.coachesId > 0 && coachesAvailability === null) {
       fetch(
         `/api/schedulingLessons/getCoachesWeeklyAvailibityByCoachesId/${props.coachesId}`
@@ -21,7 +29,7 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
         .then((res) => res.json())
         .then((res) => setCoachesAvailability(res));
     }
-  }, [props.coachesId]);
+  }, [props.coachesId, props.weeklyPrivateLessonsSchedule]);
 
   if (
     props.daysOfWeek === undefined ||
@@ -262,7 +270,8 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
                     ),
                   height: `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
                     availableDay.start_time,
-                    availableDay.stop_time
+                    availableDay.stop_time,
+                    false
                   )}px`,
                 }}
                 key={availableDay.id}
@@ -279,6 +288,32 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
                   </span>
                 </div>
               </div>
+            );
+          })
+        )}
+
+        {!coachesWeeklyScheduleForTheWeek ||
+        !coachesWeeklyScheduleForTheWeek[0] ? (
+          <></>
+        ) : (
+          coachesWeeklyScheduleForTheWeek.map((privateLesson) => {
+            return (
+              <div
+                key={privateLesson.private_lesson_id}
+                className={`slot lesson-slot private-lesson-slot weekday${privateLesson.weekday_as_number}`}
+                style={{
+                  gridRow:
+                    dateTimeHandlingFunctions.startTimeValueForStyleSheet(
+                      privateLesson.start_time
+                    ),
+                  height:
+                    dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
+                      privateLesson.start_time,
+                      privateLesson.duration,
+                      true
+                    ),
+                }}
+              ></div>
             );
           })
         )}
@@ -318,8 +353,8 @@ export default CalendarWeeklyViewOfScheduledLessons;
 
 interface IProps {
   coachesId: number;
-  coachesAvailability?: IAvailabilityForCoachesId[];
-  // weeklyPrivateLessonsSchedule: IFullPrivateLessonsSchedule[];
+  // coachesAvailability?: IAvailabilityForCoachesId[];
+  weeklyPrivateLessonsSchedule: IFullPrivateLessonsSchedule[];
   daysOfWeek: string[];
   propUsedOnlyForReRender?: boolean;
 }

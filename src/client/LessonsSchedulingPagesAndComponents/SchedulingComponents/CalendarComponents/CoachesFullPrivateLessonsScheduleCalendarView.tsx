@@ -34,6 +34,7 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
   //   useState<Array<IAvailabilityForCoachesId>>();
 
   // console.log(coachesAvailability);
+  // console.log(weeklySchedule)
 
   useEffect(() => {
     // setCoachesAvailbilityFunc();
@@ -201,8 +202,9 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
         /> */}
         {
           <CalendarWeeklyViewOfScheduledLessons
-            daysOfWeek={arrayOfNumbersEqualToDayOfWeek}
             coachesId={props.coachesId}
+            daysOfWeek={arrayOfNumbersEqualToDayOfWeek}
+            weeklyPrivateLessonsSchedule={weeklySchedule}
           />
         }
       </div>
