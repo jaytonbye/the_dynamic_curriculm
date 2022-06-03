@@ -79,6 +79,19 @@ const addNewVideoToLessonPlan = async (
   );
 };
 
+//   PUTS
+const putNewLessonPlanName = async (
+  newLessonPlanName: string,
+  planId: string | number
+) => {
+  return await Query(
+    `
+  UPDATE lesson_plans SET name_of_lesson_plan = ? where id = ?;
+  `,
+    [newLessonPlanName, planId]
+  );
+};
+
 //  DELETEs
 const deleteSingleVideoFromLessonPlan = async (lessonPlanVideosId: any) => {
   return await Query("delete from lesson_plan_videos where id = ?", [
@@ -105,6 +118,7 @@ export default {
   //POSTs
   addNewPlanToDB,
   addNewVideoToLessonPlan,
+  putNewLessonPlanName,
   //DELETEs
   deleteSingleVideoFromLessonPlan,
   deleteAllVideoInLessonPlan,

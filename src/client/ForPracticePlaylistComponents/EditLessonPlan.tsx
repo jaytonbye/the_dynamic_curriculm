@@ -1,9 +1,12 @@
+import { json } from "express";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 
 let EditLessonPlan = () => {
+  let [lessonPlanName, setLessonPlanName] = React.useState<string>();
+  let [lessonPlanNewName, setLessonPlanNewName] = React.useState<string>();
   let [videosByTenant, setVideosByTenant] = React.useState([]);
   let [videosInLessonPlan, setVideosInLessonPlan] = React.useState<
     Array<IAllVideosInPlan>
@@ -14,6 +17,15 @@ let EditLessonPlan = () => {
   let [orderOfVideo, setOrderOfVideo] = React.useState("");
   let { planId }: any = useParams();
   let token = localStorage.getItem("token");
+
+  let getPlanInfo = () => {
+    fetch(`/api/lessonplans/getLessonPlanInfo/${planId}`)
+      .then((res) => res.json())
+      .then((res: IPlanInfo[]) => {
+        setLessonPlanName(res[0].name_of_lesson_plan);
+        setLessonPlanNewName(res[0].name_of_lesson_plan);
+      });
+  };
 
   let getAllVideosInLessonPlanFunc = () => {
     fetch(`/api/lessonplans/getAllVideosInPlan/${planId}`)
@@ -57,6 +69,22 @@ let EditLessonPlan = () => {
     }
   };
 
+  let handleLessonPlanNameChange = (e: any) => {
+    e.preventDefault();
+    if (!lessonPlanNewName.trim()) return alert("Enter a plan name");
+    fetch(`/api/lessonplans/putLessonPlanNewName`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        newLessonPlanName: lessonPlanNewName,
+        planId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => alert(res.message))
+      .then(() => getPlanInfo());
+  };
+
   let onMoveChange = (event: any) => {
     let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
     let moveIdAfterSlice = event.target.value.slice(
@@ -76,6 +104,7 @@ let EditLessonPlan = () => {
         fetch(`/api/lessonplans/getAllVideosByTenant/${res.tenant}`)
           .then((res) => res.json())
           .then((res) => setVideosByTenant(res))
+          .then(() => getPlanInfo())
           .then(() => getAllVideosInLessonPlanFunc())
       );
   }, []);
@@ -97,6 +126,24 @@ let EditLessonPlan = () => {
             Back to Lesson Plans
           </Link>
         </div>
+
+        <div className="mt-5 text-center">
+          <h3>
+            <strong>Lesson plan:</strong>{" "}
+            <input
+              onChange={(e) => setLessonPlanNewName(e.target.value)}
+              type="text"
+              defaultValue={lessonPlanName}
+            />
+            <button
+              onClick={handleLessonPlanNameChange}
+              className="btn btn-success"
+            >
+              Update plan name
+            </button>
+          </h3>
+        </div>
+        <hr />
         <div className="text-center">
           <label className="h4 mt-5 mb-5 mr-2">Select a move:</label>
           <input type="text" list="moveList" onChange={onMoveChange} />
@@ -115,14 +162,25 @@ let EditLessonPlan = () => {
         <div className="container">
           <h5>{searchedMoveObject.name_of_video}</h5>
           <div className="col-12">
-            <iframe
-              className="mb-2"
-              width="100%"
-              height="65%"
-              src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            ></iframe>
+            <div>
+              <iframe
+                className="mb-2"
+                width="100%"
+                height="65%"
+                src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_video}`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              ></iframe>
+              <h6>Looped:</h6>
+              <iframe
+                className="mb-2"
+                width="100%"
+                height="65%"
+                src={`https://www.youtube.com/embed/${searchedMoveObject.url_to_looped_video}`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              ></iframe>
+            </div>
             <div className="d-flex justify-content-between align-items-center flex-wrap">
               <div className="d-flex align-items-center">
                 <label htmlFor="">Duration of video (seconds): </label>
@@ -158,6 +216,7 @@ let EditLessonPlan = () => {
                   <th>Order</th>
                   <th>Move</th>
                   <th>Video</th>
+                  <th>Looped Video</th>
                   <th>Duration</th>
                   <th>Remove</th>
                 </tr>
@@ -167,13 +226,23 @@ let EditLessonPlan = () => {
                   return (
                     <tr key={video.lpvID}>
                       <td>{video.orderNumber}</td>
-                      <td>{video.videoName}</td>
+                      <td className="col-3">{video.videoName}</td>
 
                       <td className="col-5">
                         <iframe
                           width="95%"
                           height="45%"
                           src={`https://www.youtube.com/embed/${video.videoURL}`}
+                          title="YouTube video player"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
+                        ></iframe>
+                      </td>
+
+                      <td className="col-5">
+                        <iframe
+                          width="95%"
+                          height="45%"
+                          src={`https://www.youtube.com/embed/${video.loopedVideoURL}`}
                           title="YouTube video player"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                         ></iframe>
@@ -226,4 +295,12 @@ export interface IAllVideosInPlan {
   videoName: string;
   videoURL: string;
   loopedVideoURL: string;
+}
+
+interface IPlanInfo {
+  created_by: number;
+  date_created: string;
+  id: number;
+  name_of_lesson_plan: string;
+  tenant: string;
 }
