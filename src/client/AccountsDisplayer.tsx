@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function AccountsDisplayer(props: any) {
 
+    const [roles, setRoles] = React.useState([]);
+
+    React.useEffect(() => {
+        fetch('./Objects.json')
+            .then((res) => res.json())
+            .then((roles) => setRoles(roles))
+            .catch((err) => {
+                console.log(err);
+            });
+
+    }, [])
 
 
     const onDeleteItem = (id: number) => {
@@ -43,15 +54,25 @@ export default function AccountsDisplayer(props: any) {
                                 <td>{account.id}</td>
                                 <td>{account.email}</td>
                                 <td>{account.real_email}</td>
-                                <td>{account.role}</td>
-                                {/* <td>
-                                        <button
-                                            className="btn btn-success"
-                                            onClick={() => onEditMove(account.id)}
-                                        >
-                                            Submit Update
-                                        </button>
-                                    </td> */}
+                                <td>
+                                    <td>{account.role}</td>
+                                    <datalist id="roles">
+                                        {roles.map((wrestler) => {
+                                            return (
+                                                <option
+                                                    key={wrestler.user_id}
+                                                    value={
+                                                        wrestler.first_name +
+                                                        " " +
+                                                        wrestler.last_name +
+                                                        " -+- " +
+                                                        String(wrestler.user_id)
+                                                    }
+                                                ></option>
+                                            );
+                                        })}
+                                    </datalist>
+                                </td>
                                 <td>
                                     <button
                                         className="btn btn-danger"

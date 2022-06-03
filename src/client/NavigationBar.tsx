@@ -75,7 +75,10 @@ export default function NavigationBar() {
           >
             Home
           </button>
-          {userRole === "admin" || userRole === "coach" && <Link to={`/coachesview`} className="btn btn-outline-primary">
+          {userRole === "admin" && <Link to={`/coachesview`} className="btn btn-outline-primary">
+            I'm a coach...
+          </Link>}
+          {userRole === "coach" && <Link to={`/coachesview`} className="btn btn-outline-primary">
             I'm a coach...
           </Link>}
           <button
