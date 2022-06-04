@@ -6,6 +6,7 @@ import {
   IFullPrivateLessonsSchedule,
   IAvailabilityForCoachesId,
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
+import * as calCssValues from "../../ServicesForPrivateLessonScheduling/CalendarCssValues";
 import "./Styles/CalendarWeeklyView.scss";
 
 // you should try to send the coach avail from component instead of running the fetch in here... try it again bukko
@@ -17,6 +18,9 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
     useState<Array<IFullPrivateLessonsSchedule>>(
       props.weeklyPrivateLessonsSchedule
     );
+  let marginLeftMultiplyNumber = 0;
+  let privateLessonDate: string;
+  let privateLessonTime: string;
   // console.log(coachesAvailability);
   console.log(coachesWeeklyScheduleForTheWeek);
 
@@ -30,6 +34,82 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
         .then((res) => setCoachesAvailability(res));
     }
   }, [props.coachesId, props.weeklyPrivateLessonsSchedule]);
+
+  let returnsPercentageForLessonSlotWidth = (
+    dayOfWeekAsNumber: number | string,
+    amountOfTimeOfMatchingTimes: any
+  ) => {
+    if (Number(dayOfWeekAsNumber) === calCssValues.sunAsNum) {
+      //sunday
+      return calCssValues.sundaySixWidth / Number(amountOfTimeOfMatchingTimes);
+    }
+    if (Number(dayOfWeekAsNumber) === calCssValues.monAsNum) {
+      //monday
+      return calCssValues.mondayZeroWdith / Number(amountOfTimeOfMatchingTimes);
+    }
+    if (Number(dayOfWeekAsNumber) === calCssValues.tuesAsNum) {
+      //tuesday
+      return calCssValues.tuesdayOneWidth / Number(amountOfTimeOfMatchingTimes);
+    }
+    if (Number(dayOfWeekAsNumber) === calCssValues.wedAsNum) {
+      //wednesday
+      return (
+        calCssValues.wednesdayTwoWidth / Number(amountOfTimeOfMatchingTimes)
+      );
+    }
+    if (Number(dayOfWeekAsNumber) === calCssValues.thursAsNum) {
+      //thrus
+      return (
+        calCssValues.thursdayThreeWidth / Number(amountOfTimeOfMatchingTimes)
+      );
+    }
+    if (Number(dayOfWeekAsNumber) === calCssValues.friAsNum) {
+      //fri
+      return calCssValues.fridayFourWidth / Number(amountOfTimeOfMatchingTimes);
+    }
+    if (Number(dayOfWeekAsNumber) === calCssValues.satAsNum) {
+      //sat
+      return (
+        calCssValues.SaturdayFiveWidth / Number(amountOfTimeOfMatchingTimes)
+      );
+    }
+  };
+
+  let returnsMarginLeftForPrivateLessonPlacementWithinWeekday = (
+    privLessonDateFuncParam: string,
+    privLessonTimeFuncParam: string,
+    amountOfTimesLessonOccurs: any,
+    dayOfWeekAsNum: any
+  ) => {
+    if (amountOfTimesLessonOccurs === 1) {
+      return 0;
+    } else {
+      if (
+        privLessonDateFuncParam !== privateLessonDate &&
+        privLessonTimeFuncParam !== privateLessonTime
+      ) {
+        marginLeftMultiplyNumber = 0;
+        privateLessonDate = privLessonDateFuncParam;
+        privateLessonTime = privLessonTimeFuncParam;
+        //math here
+        let widthPercentageForWeekdayConfigured =
+          returnsPercentageForLessonSlotWidth(
+            dayOfWeekAsNum,
+            amountOfTimesLessonOccurs
+          );
+        return widthPercentageForWeekdayConfigured * marginLeftMultiplyNumber;
+      } else {
+        marginLeftMultiplyNumber++;
+        //math here
+        let widthPercentageForWeekdayConfigured =
+          returnsPercentageForLessonSlotWidth(
+            dayOfWeekAsNum,
+            amountOfTimesLessonOccurs
+          );
+        return widthPercentageForWeekdayConfigured * marginLeftMultiplyNumber;
+      }
+    }
+  };
 
   if (
     props.daysOfWeek === undefined ||
@@ -307,13 +387,40 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
                       privateLesson.start_time
                     ),
                   height:
-                    dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
+                    `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
                       privateLesson.start_time,
                       privateLesson.duration,
                       true
-                    ),
+                    )}px`,
+                  width: `${returnsPercentageForLessonSlotWidth(
+                    privateLesson.weekday_as_number,
+                    privateLesson.amount_of_times_this_lessons_exact_date_and_time_occur
+                  )}%`,
+                  marginLeft: `${returnsMarginLeftForPrivateLessonPlacementWithinWeekday(
+                    privateLesson.date_of_lesson,
+                    privateLesson.start_time,
+                    privateLesson.amount_of_times_this_lessons_exact_date_and_time_occur,
+                    privateLesson.weekday_as_number
+                  )}%`,
+                  // marginLeft: `${
+                  //   (110 /
+                  //     Number(
+                  //       privateLesson.amount_of_times_this_lessons_exact_date_and_time_occur
+                  //     )) *
+                  //   3
+                  // }%`,
+                  // marginLeft: 0
                 }}
-              ></div>
+              >
+                <div>
+                  <span>
+                    {privateLesson.wrestler_first_name}{" "}
+                    {privateLesson.wrestler_last_name}{" "}
+                    {privateLesson.start_time} {privateLesson.notes}
+                    {privateLesson.duration}
+                  </span>
+                </div>
+              </div>
             );
           })
         )}

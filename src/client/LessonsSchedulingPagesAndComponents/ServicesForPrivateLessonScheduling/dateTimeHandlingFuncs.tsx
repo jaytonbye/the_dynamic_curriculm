@@ -139,16 +139,28 @@ let amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability = (
     let amountOfTimeHours = (endTimeHour - startTimeHour) * 60;
     let amountOfTimeMinutes = endTimeMinute - startTimeMinute;
     return (amountOfTimeHours + amountOfTimeMinutes) * 2;
-  } else {
-    let durationHours =
-      Number(endTimeOrDuration) < 10
-        ? String(endTimeOrDuration).slice(0, 1)
-        : String(endTimeOrDuration).slice(0, 2);
-    let totalHoursToMinutes = Number(durationHours) * 60;
+  } else {//                            *****needs to be redone because you are an idiot
+    let durationHoursToMitnues: number;
+    let startTime: number
+    if(Number(endTimeOrDuration) < 10){
+      durationHoursToMitnues = Number(String(endTimeOrDuration).slice(0, 1)) * 60
+    }else{
+      durationHoursToMitnues = Number(String(endTimeOrDuration).slice(0, 2)) * 60
+    }
+    let durationMinutesIfAny = String(Number(endTimeOrDuration).toFixed(2)).slice(-2)
+    // let durationHours =
+    //   Number(endTimeOrDuration) < 10
+    //     ? String(endTimeOrDuration).slice(0, 1)
+    //     : String(endTimeOrDuration).slice(0, 2);
+    // let totalHoursToMinutes = Number(durationHours) * 60;
+    // let totalAmountOfMinutes =
+    //   durationHoursToMitnues +
+    //   Number(String(endTimeOrDuration).slice(-2)) +
+    //   Number(startTime.slice(3, 5));
     let totalAmountOfMinutes =
-      totalHoursToMinutes +
-      Number(String(endTimeOrDuration).slice(-2)) +
-      Number(startTime.slice(3, 5));
+    durationHoursToMitnues +
+    Number(durationMinutesIfAny)
+      // console.log(totalAmountOfMinutes * 2)
     return totalAmountOfMinutes * 2;
   }
 };

@@ -85,6 +85,12 @@ const getCoachesFullPrivateLessonsScheduleByWeek = async (
     WEEKDAY(plb.date_of_lesson) as weekday_as_number,
     plb.start_time,
     plb.duration,
+    (select count(*) from private_lesson_bookings pb
+        where pb.date_of_lesson = plb.date_of_lesson
+        and pb.start_time = plb.start_time) as amount_of_times_this_lessons_exact_date_and_time_occur,
+    (select count(*) -1 from private_lesson_bookings pb
+        where pb.date_of_lesson = plb.date_of_lesson
+        and pb.start_time = plb.start_time) as amount_of_times_this_lessons_exact_date_and_time_occur_minus_one,
     plb.series_name,
     plb.notes
 FROM

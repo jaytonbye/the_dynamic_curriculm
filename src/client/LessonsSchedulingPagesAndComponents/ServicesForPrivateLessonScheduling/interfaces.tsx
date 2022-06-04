@@ -32,6 +32,11 @@ export interface IFullPrivateLessonsSchedule {
   weekday_as_number: number | string;
   start_time: string;
   duration: number | string;
+  amount_of_times_this_lessons_exact_date_and_time_occur: number | string;
+  amount_of_times_this_lessons_exact_date_and_time_occur_minus_one:
+    | number
+    | string;
   series_name: string;
   notes: string;
+  amountOfMatchingTimes?: number | string;
 }
