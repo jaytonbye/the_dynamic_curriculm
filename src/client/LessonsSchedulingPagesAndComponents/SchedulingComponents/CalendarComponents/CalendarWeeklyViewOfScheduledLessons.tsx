@@ -8,6 +8,7 @@ import {
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import * as calCssValues from "../../ServicesForPrivateLessonScheduling/CalendarCssValues";
 import "./Styles/CalendarWeeklyView.scss";
+import PrivateLessonDivTimeSlot from "./PrivateLessonDivTimeSlot";
 
 // you should try to send the coach avail from component instead of running the fetch in here... try it again bukko
 // props: IProps
@@ -21,6 +22,7 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
   let marginLeftMultiplyNumber = 0;
   let privateLessonDate: string;
   let privateLessonTime: string;
+
   // console.log(coachesAvailability);
   console.log(coachesWeeklyScheduleForTheWeek);
 
@@ -386,12 +388,11 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
                     dateTimeHandlingFunctions.startTimeValueForStyleSheet(
                       privateLesson.start_time
                     ),
-                  height:
-                    `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
-                      privateLesson.start_time,
-                      privateLesson.duration,
-                      true
-                    )}px`,
+                  height: `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
+                    privateLesson.start_time,
+                    privateLesson.duration,
+                    true
+                  )}px`,
                   width: `${returnsPercentageForLessonSlotWidth(
                     privateLesson.weekday_as_number,
                     privateLesson.amount_of_times_this_lessons_exact_date_and_time_occur
@@ -405,21 +406,14 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
                   // marginLeft: `${
                   //   (110 /
                   //     Number(
-                  //       privateLesson.amount_of_times_this_lessons_exact_date_and_time_occur
+                  //       props.amount_of_times_this_lessons_exact_date_and_time_occur
                   //     )) *
                   //   3
                   // }%`,
                   // marginLeft: 0
                 }}
               >
-                <div>
-                  <span>
-                    {privateLesson.wrestler_first_name}{" "}
-                    {privateLesson.wrestler_last_name}{" "}
-                    {privateLesson.start_time} {privateLesson.notes}
-                    {privateLesson.duration}
-                  </span>
-                </div>
+                {<PrivateLessonDivTimeSlot privateLesson={privateLesson} />}
               </div>
             );
           })

@@ -29,12 +29,16 @@ ul {
 
 .weekdays {
     background: lightblue;
+    position: sticky;
+    top: 0;
+    // align-self: ;
 }
 
 .header {
     background: gray;
     grid-area: header;
     margin-left: 10px;
+    position: sticky;
 }
 
 .timeslots-container {
@@ -146,7 +150,7 @@ ul {
     border-style: solid;
 }
 .lesson-slot{
-    background: lightgreen;
+    // background: lightgreen;
     border-style: solid;
     border-width: 2px;
 }
