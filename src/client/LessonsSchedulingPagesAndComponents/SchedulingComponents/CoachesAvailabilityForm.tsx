@@ -10,6 +10,7 @@ import e from "express";
 //note: may be a better way to do this(via values within each option in the select menu but this works for now just a bit messy)
 
 const CoachesAvailabilityForm = () => {
+  let[fuckyou, setFuckyou] = useState()////take this outr
   let weekdayArray: string[] = dateTimeValues.weekdayArrayDaysOfWeekStrings;
   let hourArray: number[] = dateTimeValues.hourArrayValues;
   let minuteArray: Array<number | string> = dateTimeValues.minuteArrayValues;
@@ -170,6 +171,7 @@ const CoachesAvailabilityForm = () => {
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// html
   return (
     <div>
+      <input onChange={(e: any) => setFuckyou(e.target.value)} type="time" id="appt" name="appt" />
       <h3>Availability</h3>
       <hr />
       <div className="">

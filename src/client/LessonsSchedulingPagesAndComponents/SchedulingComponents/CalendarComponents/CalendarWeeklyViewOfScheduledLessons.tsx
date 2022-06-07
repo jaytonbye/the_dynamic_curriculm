@@ -85,7 +85,25 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
     dayOfWeekAsNum: any
   ) => {
     if (amountOfTimesLessonOccurs === 1) {
-      return 0;
+      if (dayOfWeekAsNum === calCssValues.sunAsNum) {
+        return .4;
+      } //sunday
+      if (dayOfWeekAsNum === calCssValues.monAsNum) {
+        return .3;
+      } //monday
+      if (dayOfWeekAsNum === calCssValues.tuesAsNum) {
+        return .4;
+      } //tuesday
+      if (dayOfWeekAsNum === calCssValues.wedAsNum) {
+        return .5;
+      } //wednesday
+      if (dayOfWeekAsNum === calCssValues.thursAsNum) {
+        return .9
+      } //thursday
+      if (dayOfWeekAsNum === calCssValues.friAsNum) {
+        return 1.2;
+      } //friday
+      return 3.2; //satday
     } else {
       if (
         privLessonDateFuncParam !== privateLessonDate &&
@@ -123,7 +141,7 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
   }
 
   return (
-    <div className="calendar-container">
+    <div className="calendar-container" >
       <div className="header">
         <ul className="weekdays" style={{ margin: "0px" }}>
           <li>Sunday</li>

@@ -101,14 +101,17 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
           >
             Cancel lesson
           </button>
-          <button
-            id={props.privateLesson.series_name}
-            value={props.privateLesson.private_lesson_id}
-            onClick={handleCancelSeries}
-            className="series btn-danger ml-1 mr-1 mb-1"
-          >
-            Cancel series
-          </button>
+
+          {props.privateLesson.series_name ? (
+            <button
+              id={props.privateLesson.series_name}
+              value={props.privateLesson.private_lesson_id}
+              onClick={handleCancelSeries}
+              className="series btn-danger ml-1 mr-1 mb-1"
+            >
+              Cancel series
+            </button>
+          ) : null}
         </div>
       </div>
     </div>

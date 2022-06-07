@@ -28,17 +28,22 @@ ul {
 }
 
 .weekdays {
+    // top: 0;
+    // position: sticky;
     background: lightblue;
-    position: sticky;
     top: 0;
     // align-self: ;
 }
 
 .header {
+    overflow: auto;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
     background: gray;
     grid-area: header;
     margin-left: 10px;
-    position: sticky;
+    // position: sticky;
 }
 
 .timeslots-container {
@@ -151,7 +156,8 @@ ul {
     border-color: red;
     border-width: 2px;
 }
-.lesson-slot{
+
+.lesson-slot {
     // background: lightgreen;
     border-style: solid;
     border-width: 2px;
@@ -200,37 +206,44 @@ ul {
     width: 110%;
 }
 
-.popup-div{
+.popup-div {
     position: absolute;
     z-index: 2;
     background-color: orange;
     width: 100px;
 }
-.pirvate-lesson-wd-6{
+
+.pirvate-lesson-wd-6 {
     margin-left: 5px;
     margin-right: 1%;
 }
-.pirvate-lesson-wd-0{
+
+.pirvate-lesson-wd-0 {
     margin-left: 1%;
     margin-right: 1%;
 }
-.pirvate-lesson-wd-1{
+
+.pirvate-lesson-wd-1 {
     margin-left: 1%;
     margin-right: 1%;
 }
-.pirvate-lesson-wd-2{
+
+.pirvate-lesson-wd-2 {
     margin-left: 1%;
     margin-right: 1%;
 }
-.pirvate-lesson-wd-3{
+
+.pirvate-lesson-wd-3 {
     margin-left: 1%;
     margin-right: 1%;
 }
-.pirvate-lesson-wd-4{
+
+.pirvate-lesson-wd-4 {
     margin-left: 1%;
     margin-right: 1%;
 }
-.pirvate-lesson-wd-5{
+
+.pirvate-lesson-wd-5 {
     margin-left: 1%;
     margin-right: 1%;
 }

@@ -8,13 +8,13 @@ let friAsNum = 4;
 let satAsNum = 5;
 
 //width sould be %
-let sundaySixWidth = 14.4;
-let mondayZeroWdith = 16.78;
-let tuesdayOneWidth = 20.1;
-let wednesdayTwoWidth = 25.1;
-let thursdayThreeWidth = 33.5;
-let fridayFourWidth = 50.2;
-let SaturdayFiveWidth = 110;
+let sundaySixWidth = 13.7;//14.4
+let mondayZeroWdith = 16.3;//16.78
+let tuesdayOneWidth = 19.4;//20.1
+let wednesdayTwoWidth = 24.5;//25.1
+let thursdayThreeWidth = 32.7;//33.5
+let fridayFourWidth = 48.5;//50.2
+let SaturdayFiveWidth = 104;//110
 
 export {
   sunAsNum,
