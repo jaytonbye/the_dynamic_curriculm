@@ -39,7 +39,7 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
   useEffect(() => {
     // setCoachesAvailbilityFunc();
     processWeekForView(todaysDateToBeManipulated);
-  }, [todaysDateToBeManipulated]);
+  }, [todaysDateToBeManipulated, props.coachesId]);
 
   // let setCoachesAvailbilityFunc = () => {
   // console.log("ok");

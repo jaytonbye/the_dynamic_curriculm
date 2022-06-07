@@ -19,6 +19,7 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
     useState<Array<IFullPrivateLessonsSchedule>>(
       props.weeklyPrivateLessonsSchedule
     );
+  let usedForZIndex = 1000;
   let marginLeftMultiplyNumber = 0;
   let privateLessonDate: string;
   let privateLessonTime: string;
@@ -379,11 +380,14 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
           <></>
         ) : (
           coachesWeeklyScheduleForTheWeek.map((privateLesson) => {
+            usedForZIndex--;
             return (
               <div
                 key={privateLesson.private_lesson_id}
                 className={`slot lesson-slot private-lesson-slot weekday${privateLesson.weekday_as_number}`}
                 style={{
+                  position: "absolute",
+                  zIndex: usedForZIndex,
                   gridRow:
                     dateTimeHandlingFunctions.startTimeValueForStyleSheet(
                       privateLesson.start_time
