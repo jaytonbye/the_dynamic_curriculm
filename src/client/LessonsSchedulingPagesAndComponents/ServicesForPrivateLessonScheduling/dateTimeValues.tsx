@@ -48,7 +48,7 @@ let dayArrayValues: Array<number | string> = [
   30,
   31,
 ];
-let hourArrayValues: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+let hourArrayValues: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 let minuteArrayValues: Array<number | string> = [
   "00",
   "0" + 5,

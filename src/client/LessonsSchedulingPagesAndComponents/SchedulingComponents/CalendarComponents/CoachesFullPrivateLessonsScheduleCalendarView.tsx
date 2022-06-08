@@ -7,12 +7,11 @@ import {
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import moment from "moment";
 import CalendarWeeklyViewOfScheduledLessons from "./../CalendarComponents/CalendarWeeklyViewOfScheduledLessons";
+import CoachesFullPrivateLessonsSchedule from "./CoachesFullPrivateLessonsSchedule";
 
 // may need a state for month number eeg: Aug(8)
 
 const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
-  //   let testing = moment("2022-4-1").startOf("week").format("MM/DD/YYYY");
-  //   let testing2 = moment(testing).endOf("week").format("MM/DD/YYYY");
   let dateFormatToProcess: string = "YYYY-MM-DD";
   let dateFormatToView: string = "MMMM, DD, YYYY";
 
@@ -24,12 +23,21 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
   );
   let [weekStartDate, setWeekStartDate] = useState<string>();
   let [weekEndDate, setWeekEndDate] = useState<string>();
-  let [selectedMonth, setSelectedMonth] = useState(moment().format("MM"));
-  let [selectedYear, setSelectedYear] = useState(moment().format("YYYY"));
+  // let [selectedMonth, setSelectedMonth] = useState(moment().format("MM"));
+  // let [selectedYear, setSelectedYear] = useState(moment().format("YYYY"));
+  let [selectedDate, setSelectedDate] = useState<string>();
   let [arrayOfNumbersEqualToDayOfWeek, setArrayOfNumbersEqualToDayOfWeek] =
     useState<string[]>();
   let [weeklySchedule, setWeeklySchedule] =
     useState<Array<IFullPrivateLessonsSchedule>>();
+  let [showOrHideWeeklyCalView, setShowOrHideWeeklyCalView] =
+    useState<boolean>(true);
+  let [
+    showOrHideArchiveOfLessonsListView,
+    setShowOrHideArchiveOfLessonsListView,
+  ] = useState<boolean>(false);
+  let [buttonTextToToggleArcCalViews, setButtonTextToToggleArcCalViews] =
+    useState<string>("Show archives");
   // let [coachesAvailability, setCoachesAvailability] =
   //   useState<Array<IAvailabilityForCoachesId>>();
 
@@ -40,6 +48,17 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
     // setCoachesAvailbilityFunc();
     processWeekForView(todaysDateToBeManipulated);
   }, [todaysDateToBeManipulated, props.coachesId]);
+
+  let viewToggleWeeklyCalOrArchiveListView = () => {
+    console.log("wtf");
+    setShowOrHideWeeklyCalView(!showOrHideWeeklyCalView);
+    setShowOrHideArchiveOfLessonsListView(!showOrHideArchiveOfLessonsListView);
+    if (showOrHideWeeklyCalView) {
+      setButtonTextToToggleArcCalViews("Show calendar");
+    } else {
+      setButtonTextToToggleArcCalViews("Show archives");
+    }
+  };
 
   // let setCoachesAvailbilityFunc = () => {
   // console.log("ok");
@@ -80,10 +99,15 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
 
   let handleSearchMonthAndYear = (e: any) => {
     e.preventDefault();
-    // console.log(`m${selectedMonth}y${selectedYear}`);
-    setTodaysDateToBeManipulated(
-      moment(`${selectedYear}-${selectedMonth}-01`).format(dateFormatToProcess)
-    );
+    if (!selectedDate) {
+      alert("Select a date to search");
+      return;
+    } else {
+      // console.log(`m${selectedMonth}y${selectedYear}`);
+      setTodaysDateToBeManipulated(
+        moment(`${selectedDate}`).format(dateFormatToProcess)
+      );
+    }
   };
 
   let handleLeftArrowWeekCycle = () => {
@@ -120,93 +144,132 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
   return (
     <div style={{ marginBottom: "20rem" }}>
       <div>Today's date: {todaysDateForViewOnly}</div>
-
-      <div className="d-flex justify-content-center m-3 align-items-center">
-        <div className="col-2 text-center">
-          <select
-            defaultValue={dateTimeValues.monthsNames[Number(selectedMonth) - 1]}
-          >
-            {dateTimeValues.monthsNames.map((month) => {
-              return (
-                <option
-                  key={month}
-                  id={String(
-                    dateTimeValues.monthArrayValues[
-                      dateTimeValues.monthsNames.indexOf(month)
-                    ]
-                  )}
-                  onClick={(e: any) => setSelectedMonth(e.target.id)}
-                  value={month}
-                >
-                  {month}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-
-        <div className="col-2 text-center">
-          <select defaultValue={selectedYear}>
-            {dateTimeValues.yearArrayValues.map((year) => {
-              return (
-                <option
-                  key={year}
-                  value={year}
-                  onClick={(e: any) => setSelectedYear(e.target.value)}
-                >
-                  {year}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <button className="btn btn-primary" onClick={handleSearchMonthAndYear}>
-          Search
+      <div className="d-flex justify-content-center">
+        <button
+          onClick={viewToggleWeeklyCalOrArchiveListView}
+          className=" btn-info"
+        >
+          {buttonTextToToggleArcCalViews}
         </button>
       </div>
-
-      <div className="d-flex align-items-center justify-content-center text-center">
-        <div className="col-1">
-          <button
-            className="btn btn-outline-dark left-arrow"
-            onClick={handleLeftArrowWeekCycle}
-          >
-            {" "}
-            &larr;
-          </button>
-        </div>
-
+      {showOrHideWeeklyCalView && (
         <div>
-          <div>
-            <div>Showing dates:</div>
-            {weekStartDate} - {weekEndDate}
+          <h2 className="text-center">
+            <u>Lesson schedule</u>
+          </h2>
+
+          <div className="mt-1 mb-1 text-center d-flex justify-content-center align-items-end">
+            <div className="pl-2 pr-2 pt-1 pb-1 card">
+              <div>
+                <h5>Search date:</h5>
+                <input
+                  onChange={(e: any) => setSelectedDate(e.target.value)}
+                  type="date"
+                />
+              </div>
+
+              <div>
+                <button
+                  className="btn btn-dark ml-2"
+                  onClick={handleSearchMonthAndYear}
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="d-flex align-items-center justify-content-center text-center">
+            <div className="col-1">
+              <button
+                className="btn btn-outline-dark left-arrow"
+                onClick={handleLeftArrowWeekCycle}
+              >
+                {" "}
+                &larr;
+              </button>
+            </div>
+            <div>
+              <div className="col-12">
+                <div>Showing dates:</div>
+                {weekStartDate} - {weekEndDate}
+              </div>
+            </div>
+
+            <div className="col-1">
+              <button
+                className="btn btn-outline-dark right-arrow"
+                onClick={handleRightArrowWeekCycle}
+              >
+                {" "}
+                &#8594;
+              </button>
+            </div>
+          </div>
+          <div className="d-flex mt-3 mb-3 justify-content-center text-center">
+            <div
+              className="coaches-availability-legend ml-3 mr-3"
+              style={{
+                height: "30px",
+                width: "70px",
+                backgroundColor: "lightgray",
+                borderColor: "red",
+                borderStyle: "solid",
+                borderWidth: "2px",
+                borderRadius: "5px",
+              }}
+            >
+              <small>Availability</small>
+            </div>
+            <div
+              className="lesson-series-legend ml-3 mr-3"
+              style={{
+                height: "30px",
+                width: "70px",
+                backgroundColor: "limegreen",
+                borderColor: "black",
+                borderStyle: "solid",
+                borderWidth: "2px",
+                borderRadius: "5px",
+              }}
+            >
+              <small>Lesson</small>
+            </div>
+            <div
+              className="private-lesson-legend ml-3 mr-3"
+              style={{
+                height: "30px",
+                width: "70px",
+                backgroundColor: "coral",
+                borderColor: "aqua",
+                borderStyle: "solid",
+                borderWidth: "2px",
+                borderRadius: "5px",
+              }}
+            >
+              <small>Series</small>
+            </div>
           </div>
         </div>
-
-        <div className="col-1">
-          <button
-            className="btn btn-outline-dark right-arrow"
-            onClick={handleRightArrowWeekCycle}
-          >
-            {" "}
-            &#8594;
-          </button>
-        </div>
-      </div>
-
+      )}
       {/*  */}
       <div>
         {/* <CalendarWeeklyViewOfScheduledLessons
           coachesId={props.coachesId}
           weeklyPrivateLessonsSchedule={weeklySchedule}
         /> */}
-        {
+
+        {showOrHideWeeklyCalView && (
           <CalendarWeeklyViewOfScheduledLessons
             coachesId={props.coachesId}
             daysOfWeek={arrayOfNumbersEqualToDayOfWeek}
             weeklyPrivateLessonsSchedule={weeklySchedule}
           />
-        }
+        )}
+
+        {showOrHideArchiveOfLessonsListView && (
+          <CoachesFullPrivateLessonsSchedule coachesId={props.coachesId} />
+        )}
       </div>
     </div>
   );
@@ -217,4 +280,45 @@ export default CoachesFullPrivateLessonsScheduleCalendarView;
 interface IProps {
   coachesId: number;
   propUsedOnlyForReRender?: boolean;
+}
+
+{
+  /* <select
+                defaultValue={
+                  dateTimeValues.monthsNames[Number(selectedMonth) - 1]
+                }
+              >
+                {dateTimeValues.monthsNames.map((month) => {
+                  return (
+                    <option
+                      key={month}
+                      id={String(
+                        dateTimeValues.monthArrayValues[
+                          dateTimeValues.monthsNames.indexOf(month)
+                        ]
+                      )}
+                      onClick={(e: any) => setSelectedMonth(e.target.id)}
+                      value={month}
+                    >
+                      {month}
+                    </option>
+                  );
+                })}
+              </select> */
+}
+
+{
+  /* <select defaultValue={selectedYear}>
+                {dateTimeValues.yearArrayValues.map((year) => {
+                  return (
+                    <option
+                      key={year}
+                      value={year}
+                      onClick={(e: any) => setSelectedYear(e.target.value)}
+                    >
+                      {year}
+                    </option>
+                  );
+                })}
+              </select> */
 }

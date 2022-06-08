@@ -7,22 +7,29 @@ import {
   IFullPrivateLessonsSchedule,
   IAvailabilityForCoachesId,
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
+import moment from "moment";
 
 const PrivateLessonDivTimeSlot = (props: IProps) => {
   // let [triggersReRender, setTriggersReRender] = useState<boolean>(false);
   let [privateLessonsSlotBgColor, setPrivateLessonsSlotBgColor] =
-    useState<string>("green");
+    useState<string>("limegreen");
+  let [divTextColor, setDivTextColor] = useState<string>("black");
+  let [seriesBGColor, setSeriesBGColor] = useState<string>("coral");
   let [popupDivDisplay, setPopupDivDisplay] = useState<string>("none");
   let [zIndexForPopus, setZIndexForPopus] = useState<string>("0");
 
   let mouseEnteredDiv = () => {
-    setPrivateLessonsSlotBgColor("blue");
+    setDivTextColor("white");
+    setSeriesBGColor("darkblue");
+    setPrivateLessonsSlotBgColor("darkblue");
     setPopupDivDisplay("block");
     setZIndexForPopus("3");
   };
 
   let mouseExitedDiv = () => {
-    setPrivateLessonsSlotBgColor("green");
+    setDivTextColor("black");
+    setSeriesBGColor("coral");
+    setPrivateLessonsSlotBgColor("limegreen");
     setPopupDivDisplay("none");
     setZIndexForPopus("0");
   };
@@ -68,30 +75,43 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
 
   return (
     <div
+    className="text-center"
       onMouseEnter={mouseEnteredDiv}
       onMouseLeave={mouseExitedDiv}
       style={{
         position: "relative",
-        background: privateLessonsSlotBgColor,
+        color: divTextColor,
+        background: `${
+          props.privateLesson.series_name
+            ? seriesBGColor
+            : privateLessonsSlotBgColor
+        }`,
         height: "100%",
         zIndex: zIndexForPopus,
       }}
     >
-      <div>
+      <div style={{ overflow: "hidden" }}>
         <span>
           {props.privateLesson.wrestler_first_name}{" "}
-          {props.privateLesson.wrestler_last_name}{" "}
+          {props.privateLesson.wrestler_last_name}{" "}<br/>
+          {dateTimeHandlingFunctions.timeMilitaryToAMPM(
+            props.privateLesson.start_time
+          )}
           {/* {props.privateLesson.start_time} {props.privateLesson.notes}
           {props.privateLesson.duration} */}
         </span>
       </div>
 
-      <div className="popup-div" style={{ display: popupDivDisplay }}>
+      <div className="text-left popup-div" style={{ display: popupDivDisplay }}>
         <span>
-          {props.privateLesson.wrestler_first_name}{" "}
-          {props.privateLesson.wrestler_last_name}{" "}
-          {props.privateLesson.start_time} {props.privateLesson.notes}
-          {props.privateLesson.duration}
+          {props.privateLesson.wrestler_first_name} <br />
+          {props.privateLesson.wrestler_last_name} <br />
+          {props.privateLesson.notes}
+          <br />
+          {dateTimeHandlingFunctions.timeMilitaryToAMPM(
+            props.privateLesson.start_time
+          )}{" "}<br/>
+          {moment(props.privateLesson.date_of_lesson).format("MM/DD/YYYY")}
         </span>
         <div style={{ width: "99%" }}>
           <button

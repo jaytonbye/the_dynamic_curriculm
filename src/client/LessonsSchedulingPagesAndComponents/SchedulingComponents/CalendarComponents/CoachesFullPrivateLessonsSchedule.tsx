@@ -66,61 +66,67 @@ const CoachesFullPrivateLessonsSchedule = (props: IProps) => {
 
   return (
     <div>
+      <h2 className="text-center">
+        <u>Private lesson archives</u>
+      </h2>
       <div>
-        {fullPrivateLessonsSchedule.map((privateLesson) => {
-          return (
-            <div
-              className="d-flex justify-content-center align-items-center border border-dark mt-3"
-              key={privateLesson.private_lesson_id}
-            >
-              <div className="card-body col-5">
-                <h5 className="card-title">
-                  <strong>Date: </strong>
-                  {privateLesson.date_of_lesson.slice(0, 10)}
-                </h5>
-                <h6 className="card-text">
-                  <strong>Time: </strong>
-                  {dateTimeHandlingFunctions.timeMilitaryToAMPM(
-                    privateLesson.start_time
-                  )}
-                </h6>
-                <h6 className="card-text">
-                  <strong>Duration: </strong> {privateLesson.duration} hrs/min
-                </h6>
-                <h6 className="card-text">
-                  <strong>Wrestler: </strong>
-                  {privateLesson.wrestler_first_name}
-                  {privateLesson.wrestler_last_name}
-                </h6>
-                <p className="card-text">{privateLesson.notes}</p>
-              </div>
-
-              <div className="col-5">
-                <div className="m-2">
-                  <button
-                    onClick={handleCancelIndividualLesson}
-                    value={privateLesson.private_lesson_id}
-                    className="btn btn-danger"
-                  >
-                    Cancel this private lesson
-                  </button>
+        {fullPrivateLessonsSchedule
+          .slice(0)
+          .reverse()
+          .map((privateLesson) => {
+            return (
+              <div
+                className="d-flex justify-content-center align-items-center border border-dark mt-3"
+                key={privateLesson.private_lesson_id}
+              >
+                <div className="card-body col-5">
+                  <h5 className="card-title">
+                    <strong>Date: </strong>
+                    {privateLesson.date_of_lesson.slice(0, 10)}
+                  </h5>
+                  <h6 className="card-text">
+                    <strong>Time: </strong>
+                    {dateTimeHandlingFunctions.timeMilitaryToAMPM(
+                      privateLesson.start_time
+                    )}
+                  </h6>
+                  <h6 className="card-text">
+                    <strong>Duration: </strong> {privateLesson.duration} hrs/min
+                  </h6>
+                  <h6 className="card-text">
+                    <strong>Wrestler: </strong>
+                    {privateLesson.wrestler_first_name}{" "}
+                    {privateLesson.wrestler_last_name}
+                  </h6>
+                  <p className="card-text">{privateLesson.notes}</p>
                 </div>
-                {privateLesson.series_name ? (
+
+                <div className="col-5">
                   <div className="m-2">
                     <button
-                      onClick={handleCancelSeries}
-                      id={privateLesson.series_name}
+                      onClick={handleCancelIndividualLesson}
                       value={privateLesson.private_lesson_id}
                       className="btn btn-danger"
                     >
-                      Cancel Series
+                      Cancel lesson
                     </button>
                   </div>
-                ) : null}
+                  {privateLesson.series_name ? (
+                    <div className="m-2">
+                      <button
+                        onClick={handleCancelSeries}
+                        id={privateLesson.series_name}
+                        value={privateLesson.private_lesson_id}
+                        className="btn btn-danger"
+                      >
+                        Cancel Series
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

@@ -19,7 +19,6 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
     useState<Array<IFullPrivateLessonsSchedule>>(
       props.weeklyPrivateLessonsSchedule
     );
-  let usedForZIndex = 1000;
   let marginLeftMultiplyNumber = 0;
   let privateLessonDate: string;
   let privateLessonTime: string;
@@ -86,19 +85,19 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
   ) => {
     if (amountOfTimesLessonOccurs === 1) {
       if (dayOfWeekAsNum === calCssValues.sunAsNum) {
-        return .4;
+        return 0.4;
       } //sunday
       if (dayOfWeekAsNum === calCssValues.monAsNum) {
-        return .3;
+        return 0.3;
       } //monday
       if (dayOfWeekAsNum === calCssValues.tuesAsNum) {
-        return .4;
+        return 0.4;
       } //tuesday
       if (dayOfWeekAsNum === calCssValues.wedAsNum) {
-        return .5;
+        return 0.5;
       } //wednesday
       if (dayOfWeekAsNum === calCssValues.thursAsNum) {
-        return .9
+        return 0.9;
       } //thursday
       if (dayOfWeekAsNum === calCssValues.friAsNum) {
         return 1.2;
@@ -141,7 +140,7 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
   }
 
   return (
-    <div className="calendar-container" >
+    <div className="calendar-container">
       <div className="header">
         <ul className="weekdays" style={{ margin: "0px" }}>
           <li>Sunday</li>
@@ -398,14 +397,16 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
           <></>
         ) : (
           coachesWeeklyScheduleForTheWeek.map((privateLesson) => {
-            usedForZIndex--;
+            // usedForZIndex--;
             return (
               <div
                 key={privateLesson.private_lesson_id}
-                className={`slot lesson-slot private-lesson-slot weekday${privateLesson.weekday_as_number}`}
+                className={`slot lesson-slot private-lesson-slot weekday${
+                  privateLesson.weekday_as_number
+                } ${privateLesson.series_name ? "series-slot" : ""}`}
                 style={{
                   position: "absolute",
-                  zIndex: usedForZIndex,
+                  // zIndex: usedForZIndex,
                   gridRow:
                     dateTimeHandlingFunctions.startTimeValueForStyleSheet(
                       privateLesson.start_time

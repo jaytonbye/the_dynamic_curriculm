@@ -104,7 +104,7 @@ const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
 
   return (
     <div>
-      <h1>Current Availability</h1>
+      <h3 className="text-center">Current availability:</h3>
 
       <div>
         <div className="sticky-top bg-white">

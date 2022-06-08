@@ -1,3 +1,4 @@
+import moment from "moment";
 import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import {
   IPrivateLessonInfo,
@@ -8,67 +9,60 @@ import {
 let submitPrivateLessonFunc = (
   coaches_UID: number,
   wrestlerId: number,
-  lessonDateMonth: number | string,
-  lessonDateDay: number | string,
-  lessonDateYear: number,
-  lessonTimeHour: number | string,
-  lessonTimeMinute: number | string,
-  lessonTimeAMPM: string,
+  lessonStartDate: string,
+  lessonStartTime: string,
   durationHours: number | string,
   durationMinutes: number | string,
-  seriesEndDateMonth: number | string,
-  seriesEndDateDay: number | string,
-  seriesEndDateYear: number,
+  seriesEndDate: string,
   wieght: string,
   age: string,
   war: string
 ) => {
   let submitPrivateLessonInnerFunc = () => {
-    if (
-      !coaches_UID ||
-      !wrestlerId ||
-      !lessonDateMonth ||
-      !lessonDateDay ||
-      !lessonDateYear ||
-      !lessonTimeHour ||
-      !lessonTimeMinute ||
-      !lessonTimeAMPM
-    ) {
+    if (!coaches_UID || !wrestlerId || !lessonStartDate || !lessonStartTime) {
       alert("fill out entire form");
-    } else if (seriesEndDateMonth || seriesEndDateDay || seriesEndDateYear) {
-      if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
-        alert("if this is a series, please complete the entire series form");
-      } else {
-        let validateLessonDate = dateTimeHandlingFunctions.validateDate(
-          `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`
-        );
-        let validateSeriesEndDate = dateTimeHandlingFunctions.validateDate(
-          `${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`
-        );
-        if (validateLessonDate && validateSeriesEndDate) {
-          submitIntoServerFunc(true); //series
-        } else {
-          alert("Invalid date(s)");
-          return;
-        }
-      }
     } else {
-      let validateLessonDate = dateTimeHandlingFunctions.validateDate(
-        `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`
-      );
-      if (validateLessonDate) {
+      if (seriesEndDate) {
+        submitIntoServerFunc(true);
+      } //series
+      else {
         submitIntoServerFunc(false); //not a series
-      } else {
-        alert("Invalid date");
-        return;
       }
     }
   };
+  // if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
+  //   alert("if this is a series, please complete the entire series form");
+  // } else {
+  //   submitIntoServerFunc(true); //series
+  // let validateLessonDate = dateTimeHandlingFunctions.validateDate(
+  //   lessonStartDate
+  // );
+  // let validateSeriesEndDate = dateTimeHandlingFunctions.validateDate(
+  //   `${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`
+  // );
+  // if (validateLessonDate && validateSeriesEndDate) {
+  //   submitIntoServerFunc(true); //series
+  // } else {
+  //   alert("Invalid date(s)");
+  //   return;
+  // }
+  // }
+  // } else {
+  //   submitIntoServerFunc(false); //not a series
+  // let validateLessonDate = dateTimeHandlingFunctions.validateDate(
+  //   lessonStartDate
+  // );
+  // if (validateLessonDate) {
+  //   submitIntoServerFunc(false); //not a series
+  // } else {
+  //   alert("Invalid date");
+  //   return;
+  // }
 
   //i fucked with the starttimes incase shit breaks
   //must check toi make sure series enbd date is valid, right now it takes invalid date and automatically adds next date past invalid date
   let submitIntoServerFunc = (conditionForSeries: boolean) => {
-    let startTime = timeConfigureForDatabaseFunc();
+    let startTime = `${lessonStartTime}:00`;
     let makesSureAmountOfTimeIsValindAndIsOnlyOnOneDay =
       dateTimeHandlingFunctions.makesSureStartEndTimesAreValidAndOnSameDay(
         startTime,
@@ -81,7 +75,7 @@ let submitPrivateLessonFunc = (
         newLessonInfo = {
           coaches_UID,
           wrestlerId,
-          dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+          dateOfLesson: lessonStartDate,
           startTime,
           duration: `${durationHours}.${durationMinutes}`,
           notes: `Weight:${wieght} Age:${age} War:${war}`,
@@ -92,14 +86,16 @@ let submitPrivateLessonFunc = (
         let newLessonInfo = {
           coaches_UID,
           wrestlerId,
-          dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
+          dateOfLesson: lessonStartDate,
           startTime,
           duration: `${durationHours}.${durationMinutes}`,
           notes: `Weight:${wieght} Age:${age} War:${war}`,
-          seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
+          seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonStartDate}EndDate${seriesEndDate}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
         };
-        let lessonDateForIncrement = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
-        let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
+        // let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
+        let lessonDateForIncrement =
+          moment(lessonStartDate).format("YYYY, MM, DD");
+        let seriesEndDateEntire = moment(seriesEndDate).format("YYYY, MM, DD");
         insertIntoDatabaseFunc(
           newLessonInfo,
           true,
@@ -112,13 +108,13 @@ let submitPrivateLessonFunc = (
     }
   };
 
-  let timeConfigureForDatabaseFunc = () => {
-    return dateTimeHandlingFunctions.timeAMPMToMilitary(
-      lessonTimeHour,
-      lessonTimeMinute,
-      lessonTimeAMPM
-    );
-  };
+  // let timeConfigureForDatabaseFunc = () => {
+  //   return dateTimeHandlingFunctions.timeAMPMToMilitary(
+  //     lessonTimeHour,
+  //     lessonTimeMinute,
+  //     lessonTimeAMPM
+  //   );
+  // };
 
   let insertIntoDatabaseFunc = (
     lessonInfo: IPrivateLessonInfo,

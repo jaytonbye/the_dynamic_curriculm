@@ -1,18 +1,35 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavigationBar from "../NavigationBar";
+import CoachesFullPrivateLessonsScheduleCalendarView from "./SchedulingComponents/CalendarComponents/CoachesFullPrivateLessonsScheduleCalendarView";
 import CoachesAvailabilityForm from "./SchedulingComponents/CoachesAvailabilityForm";
 import ScheduleNewPrivateLessonForm from "./SchedulingComponents/ScheduleNewPrivateLessonForm";
 
 const LessonsSchedulingStartPage = () => {
+  let token = localStorage.getItem("token");
+  let [UID, setUID] = useState();
+  let [tenant, setTenant] = useState<string>();
+  let [role, setRole] = useState<string>();
   let [
     showOrHideScheduleNewLessonComponent,
     setShowOrHideScheduleNewLessonComponent,
-  ] = useState<boolean>(true);
+  ] = useState<boolean>(false);
   let [
     showOrHideCochesAvailabilityComponent,
     setShowOrHideCochesAvailabilityComponent,
   ] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetch(`/api/schedulingLessons/validateToketInputAvailability`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setUID(res.userId);
+        setTenant(res.tenant);
+        setRole(res.role);
+      });
+  }, []);
 
   let showCoachesAvailabilityFormFunc = () => {
     setShowOrHideCochesAvailabilityComponent(
@@ -36,15 +53,15 @@ const LessonsSchedulingStartPage = () => {
         <div className="mb-3">
           <button
             onClick={showCoachesAvailabilityFormFunc}
-            className="btn btn-primary"
+            className="btn btn-warning mr-2"
           >
-            Show/edit Availability
+            Edit Availability
           </button>
           <button
             onClick={showScheduleNewLessonComponentFunc}
-            className="btn btn-success"
+            className="btn btn-success mr-2"
           >
-            schedule new lesson
+            Schedule lesson
           </button>
         </div>
 
@@ -53,6 +70,11 @@ const LessonsSchedulingStartPage = () => {
           {showOrHideScheduleNewLessonComponent && (
             <ScheduleNewPrivateLessonForm />
           )}
+          <div>
+            {role === "admin" || role === "coach" ? (
+              <CoachesFullPrivateLessonsScheduleCalendarView coachesId={UID} />
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
