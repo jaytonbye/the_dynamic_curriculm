@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import NavigationBar from "../NavigationBar";
-import CoachesFullPrivateLessonsScheduleCalendarView from "./SchedulingComponents/CalendarComponents/CoachesFullPrivateLessonsScheduleCalendarView";
-import CoachesAvailabilityForm from "./SchedulingComponents/CoachesAvailabilityForm";
+import CoachesPrivateLessonScheduleWeeklyCalendarHeader from "./SchedulingComponents/CalendarComponents/CoachesPrivateLessonScheduleWeeklyCalendarHeader";
+import CoachAvailabilityForm from "./SchedulingComponents/CoachAvailabilityForm";
 import ScheduleNewPrivateLessonForm from "./SchedulingComponents/ScheduleNewPrivateLessonForm";
 
 const LessonsSchedulingStartPage = () => {
@@ -10,6 +10,8 @@ const LessonsSchedulingStartPage = () => {
   let [UID, setUID] = useState();
   let [tenant, setTenant] = useState<string>();
   let [role, setRole] = useState<string>();
+  let [boolUsedToRenderFromStartPage, setBoolUsedToRenderFromStartPage] =
+    useState<boolean>(true);
   let [
     showOrHideScheduleNewLessonComponent,
     setShowOrHideScheduleNewLessonComponent,
@@ -30,6 +32,10 @@ const LessonsSchedulingStartPage = () => {
         setRole(res.role);
       });
   }, []);
+
+  let funcFromStartPageToChangeRenderBool = () => {
+    setBoolUsedToRenderFromStartPage(!boolUsedToRenderFromStartPage);
+  };
 
   let showCoachesAvailabilityFormFunc = () => {
     setShowOrHideCochesAvailabilityComponent(
@@ -66,13 +72,20 @@ const LessonsSchedulingStartPage = () => {
         </div>
 
         <div>
-          {showOrHideCochesAvailabilityComponent && <CoachesAvailabilityForm />}
+          {showOrHideCochesAvailabilityComponent && (
+            <CoachAvailabilityForm
+            funcFromStartPageToRenderComp={funcFromStartPageToChangeRenderBool}
+            />
+          )}
           {showOrHideScheduleNewLessonComponent && (
-            <ScheduleNewPrivateLessonForm />
+            <ScheduleNewPrivateLessonForm funcFromStartPageToRenderComp={funcFromStartPageToChangeRenderBool} />
           )}
           <div>
             {role === "admin" || role === "coach" ? (
-              <CoachesFullPrivateLessonsScheduleCalendarView coachesId={UID} />
+              <CoachesPrivateLessonScheduleWeeklyCalendarHeader
+                coachesId={UID}
+                boolForRenderFromStartPage={boolUsedToRenderFromStartPage}
+              />
             ) : null}
           </div>
         </div>

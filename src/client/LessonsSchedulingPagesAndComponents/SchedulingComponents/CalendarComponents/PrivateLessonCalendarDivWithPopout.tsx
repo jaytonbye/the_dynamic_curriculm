@@ -19,19 +19,35 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
   let [zIndexForPopus, setZIndexForPopus] = useState<string>("0");
 
   let mouseEnteredDiv = () => {
-    setDivTextColor("white");
-    setSeriesBGColor("darkblue");
-    setPrivateLessonsSlotBgColor("darkblue");
-    setPopupDivDisplay("block");
-    setZIndexForPopus("3");
+    handlePopupDiv(true);
   };
 
   let mouseExitedDiv = () => {
-    setDivTextColor("black");
-    setSeriesBGColor("coral");
-    setPrivateLessonsSlotBgColor("limegreen");
-    setPopupDivDisplay("none");
-    setZIndexForPopus("0");
+    handlePopupDiv(false);
+  };
+
+  let showOrHidePopupDiv = () => {
+    if (popupDivDisplay === "none") {
+      handlePopupDiv(true);
+    } else {
+      handlePopupDiv(false);
+    }
+  };
+
+  let handlePopupDiv = (isHidden: boolean) => {
+    if (isHidden) {
+      setDivTextColor("white");
+      setSeriesBGColor("darkblue");
+      setPrivateLessonsSlotBgColor("darkblue");
+      setPopupDivDisplay("block");
+      setZIndexForPopus("3");
+    } else {
+      setDivTextColor("black");
+      setSeriesBGColor("coral");
+      setPrivateLessonsSlotBgColor("limegreen");
+      setPopupDivDisplay("none");
+      setZIndexForPopus("0");
+    }
   };
 
   let handleCancelIndividualLesson = (e: any) => {
@@ -46,7 +62,7 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
         {
           method: "DELETE",
         }
-      );
+      ).then(() => props.boolUsedOnlyToReRenderComponentFunc());
       // .then(() => setTriggersReRender(!triggersReRender));
     } else {
       return;
@@ -66,7 +82,7 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
         {
           method: "DELETE",
         }
-      );
+      ).then(() => props.boolUsedOnlyToReRenderComponentFunc());
       // .then(() => setTriggersReRender(!triggersReRender));
     } else {
       return;
@@ -75,9 +91,10 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
 
   return (
     <div
-    className="text-center"
+      className="text-center"
       onMouseEnter={mouseEnteredDiv}
       onMouseLeave={mouseExitedDiv}
+      onClick={showOrHidePopupDiv}
       style={{
         position: "relative",
         color: divTextColor,
@@ -93,16 +110,22 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
       <div style={{ overflow: "hidden" }}>
         <span>
           {props.privateLesson.wrestler_first_name}{" "}
-          {props.privateLesson.wrestler_last_name}{" "}<br/>
+          {props.privateLesson.wrestler_last_name} <br />
           {dateTimeHandlingFunctions.timeMilitaryToAMPM(
             props.privateLesson.start_time
           )}
+          {/* <br /> */}
+          {/* <small>click/tap for more info</small> */}
           {/* {props.privateLesson.start_time} {props.privateLesson.notes}
           {props.privateLesson.duration} */}
         </span>
       </div>
 
-      <div className="text-left popup-div" style={{ display: popupDivDisplay }}>
+      <div
+        className="text-left popup-div"
+        style={{ display: popupDivDisplay }}
+        onClick={showOrHidePopupDiv}
+      >
         <span>
           {props.privateLesson.wrestler_first_name} <br />
           {props.privateLesson.wrestler_last_name} <br />
@@ -110,7 +133,8 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
           <br />
           {dateTimeHandlingFunctions.timeMilitaryToAMPM(
             props.privateLesson.start_time
-          )}{" "}<br/>
+          )}{" "}
+          <br />
           {moment(props.privateLesson.date_of_lesson).format("MM/DD/YYYY")}
         </span>
         <div style={{ width: "99%" }}>
@@ -142,4 +166,5 @@ export default PrivateLessonDivTimeSlot;
 
 interface IProps {
   privateLesson: IFullPrivateLessonsSchedule;
+  boolUsedOnlyToReRenderComponentFunc: any;
 }

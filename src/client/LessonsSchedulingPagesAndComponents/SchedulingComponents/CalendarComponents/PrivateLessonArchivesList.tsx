@@ -6,7 +6,7 @@ import { IFullPrivateLessonsSchedule } from "../../ServicesForPrivateLessonSched
 //had to use id= on the buttons to get the values for the delete value
 // somtimes i get this in the browser console "Uncaught (in promise) TypeError: NetworkError when attempting to fetch resource."
 
-const CoachesFullPrivateLessonsSchedule = (props: IProps) => {
+const PrivateLessonArchivesList = (props: IProps) => {
   let [fullPrivateLessonsSchedule, setFullPrivateLessonsSchedule] =
     useState<IFullPrivateLessonsSchedule[]>();
   let [triggersReRender, setTriggersReRender] = useState<boolean>(true);
@@ -132,7 +132,7 @@ const CoachesFullPrivateLessonsSchedule = (props: IProps) => {
   );
 };
 
-export default CoachesFullPrivateLessonsSchedule;
+export default PrivateLessonArchivesList;
 
 interface IProps {
   coachesId: number;

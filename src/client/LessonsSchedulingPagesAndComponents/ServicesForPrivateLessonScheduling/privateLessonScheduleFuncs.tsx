@@ -16,7 +16,8 @@ let submitPrivateLessonFunc = (
   seriesEndDate: string,
   wieght: string,
   age: string,
-  war: string
+  war: string,
+  funcFromStartPageToRenderComp: Function
 ) => {
   let submitPrivateLessonInnerFunc = () => {
     if (!coaches_UID || !wrestlerId || !lessonStartDate || !lessonStartTime) {
@@ -130,6 +131,7 @@ let submitPrivateLessonFunc = (
       if (res.ok) {
         if (isASeries === false) {
           alert("Private lesson has been added");
+          funcFromStartPageToRenderComp()
         } else {
           let seriesIncrementResult: IDateIncResult | boolean =
             dateTimeHandlingFunctions.seriesWeeklyIncrementFunc(
@@ -146,6 +148,7 @@ let submitPrivateLessonFunc = (
             );
           } else {
             alert("Private lesson series has been added");
+            funcFromStartPageToRenderComp()
           }
         }
       } else {

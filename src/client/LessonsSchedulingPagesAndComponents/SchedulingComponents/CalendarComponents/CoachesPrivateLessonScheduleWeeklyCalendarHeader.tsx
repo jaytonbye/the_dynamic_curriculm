@@ -6,12 +6,12 @@ import {
   IAvailabilityForCoachesId,
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import moment from "moment";
-import CalendarWeeklyViewOfScheduledLessons from "./../CalendarComponents/CalendarWeeklyViewOfScheduledLessons";
-import CoachesFullPrivateLessonsSchedule from "./CoachesFullPrivateLessonsSchedule";
+import CoachesPrivateLessonScheduleWeeklyCalendar from "./../CalendarComponents/CoachesPrivateLessonScheduleWeeklyCalendar";
+import PrivateLessonArchivesList from "./PrivateLessonArchivesList";
 
 // may need a state for month number eeg: Aug(8)
 
-const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
+const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   let dateFormatToProcess: string = "YYYY-MM-DD";
   let dateFormatToView: string = "MMMM, DD, YYYY";
 
@@ -38,6 +38,9 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
   ] = useState<boolean>(false);
   let [buttonTextToToggleArcCalViews, setButtonTextToToggleArcCalViews] =
     useState<string>("Show archives");
+  let [boolUsedOnlyToReRenderComponent, setBoolUsedOnlyToReRenderComponent] =
+    useState<boolean>(true);
+  let [testBool, setTestBool] = useState<boolean>(true);
   // let [coachesAvailability, setCoachesAvailability] =
   //   useState<Array<IAvailabilityForCoachesId>>();
 
@@ -47,10 +50,18 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
   useEffect(() => {
     // setCoachesAvailbilityFunc();
     processWeekForView(todaysDateToBeManipulated);
-  }, [todaysDateToBeManipulated, props.coachesId]);
+  }, [
+    todaysDateToBeManipulated,
+    props.coachesId,
+    boolUsedOnlyToReRenderComponent,
+    props.boolForRenderFromStartPage,
+  ]);
+
+  let funcUsedForReRender = () => {
+    setBoolUsedOnlyToReRenderComponent(!boolUsedOnlyToReRenderComponent);
+  };
 
   let viewToggleWeeklyCalOrArchiveListView = () => {
-    console.log("wtf");
     setShowOrHideWeeklyCalView(!showOrHideWeeklyCalView);
     setShowOrHideArchiveOfLessonsListView(!showOrHideArchiveOfLessonsListView);
     if (showOrHideWeeklyCalView) {
@@ -143,7 +154,9 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
 
   return (
     <div style={{ marginBottom: "20rem" }}>
-      <div>Today's date: {todaysDateForViewOnly}</div>
+      <div>
+        <strong>Today's date: {todaysDateForViewOnly}</strong>
+      </div>
       <div className="d-flex justify-content-center">
         <button
           onClick={viewToggleWeeklyCalOrArchiveListView}
@@ -260,26 +273,28 @@ const CoachesFullPrivateLessonsScheduleCalendarView = (props: IProps) => {
         /> */}
 
         {showOrHideWeeklyCalView && (
-          <CalendarWeeklyViewOfScheduledLessons
+          <CoachesPrivateLessonScheduleWeeklyCalendar
             coachesId={props.coachesId}
             daysOfWeek={arrayOfNumbersEqualToDayOfWeek}
             weeklyPrivateLessonsSchedule={weeklySchedule}
+            boolFuncForReRender={funcUsedForReRender}
           />
         )}
 
         {showOrHideArchiveOfLessonsListView && (
-          <CoachesFullPrivateLessonsSchedule coachesId={props.coachesId} />
+          <PrivateLessonArchivesList coachesId={props.coachesId} />
         )}
       </div>
     </div>
   );
 };
 
-export default CoachesFullPrivateLessonsScheduleCalendarView;
+export default CoachesPrivateLessonScheduleWeeklyCalendarHeader;
 
 interface IProps {
   coachesId: number;
   propUsedOnlyForReRender?: boolean;
+  boolForRenderFromStartPage: boolean;
 }
 
 {

@@ -2,8 +2,8 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import * as scheduleLessonFunctions from "../ServicesForPrivateLessonScheduling/privateLessonScheduleFuncs";
 import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeValues";
-import CoachesFullPrivateLessonsSchedule from "./CalendarComponents/CoachesFullPrivateLessonsSchedule";
-import CoachesFullPrivateLessonsScheduleCalendarView from "./CalendarComponents/CoachesFullPrivateLessonsScheduleCalendarView";
+import PrivateLessonArchivesList from "./CalendarComponents/PrivateLessonArchivesList";
+import CoachesPrivateLessonScheduleWeeklyCalendarHeader from "./CalendarComponents/CoachesPrivateLessonScheduleWeeklyCalendarHeader";
 import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import {
   IPrivateLessonInfo,
@@ -14,7 +14,7 @@ import {
 //make it look better
 // test this shit = mkae sure you are adding corrent corresponding values
 
-const ScheduleNewPrivateLessonForm = () => {
+const ScheduleNewPrivateLessonForm = (props: IProps) => {
   let hourArray: number[] = dateTimeValues.hourArrayValues;
   let minuteArray: Array<number | string> = dateTimeValues.minuteArrayValues;
   let token = localStorage.getItem("token");
@@ -59,7 +59,7 @@ const ScheduleNewPrivateLessonForm = () => {
 
   let handleSubmitLessonPlan = (e: any) => {
     e.preventDefault();
-    scheduleLessonFunctions.submitPrivateLessonFunc(
+    let submitResultResult = scheduleLessonFunctions.submitPrivateLessonFunc(
       coaches_UID,
       wrestlerId,
       lessonStartDate,
@@ -69,158 +69,173 @@ const ScheduleNewPrivateLessonForm = () => {
       seriesEndDate,
       wieght,
       age,
-      war
+      war,
+      props.funcFromStartPageToRenderComp
     );
   };
 
   /////////////////////////////////////////////////////////////////////////////
   return (
-    <div>
-      <div>
-        <div className="mt-1">
-          <h3 className="text-center mb-5">
-            <u>Schedule a new lesson or series</u>
-            <br />
-          </h3>
-          <label className="h4 mr-2">Select a wrestler: </label>
-          <input type="text" list="wrestler1List" onChange={onWrestlerChange} />
-          <datalist id="wrestler1List">
-            {personal_info.map((wrestler) => {
-              return (
-                <option
-                  key={wrestler.user_id}
-                  value={
-                    wrestler.first_name +
-                    " " +
-                    wrestler.last_name +
-                    " -+- " +
-                    String(wrestler.user_id)
-                  }
-                ></option>
-              );
-            })}
-          </datalist>
-        </div>
-      </div>
-
-      <div>
-        <div className="d-flex flex-wrap align-items-center mt-3 mb-3">
-          <h5 className="mr-2">Date:</h5>
-          <input
-            onChange={(e: any) => setLessonStartDate(e.target.value)}
-            type="date"
-            id="birthday"
-            name="birthday"
-          />
+    <div className="">
+      <div className="m-auto p-0 d-flex flex-wrap card col-12 col-md-10">
+        <div className="d-flex col-12 justify-content-center">
+          <div className="mt-1">
+            <h3 className="text-center mb-5">
+              <u>Schedule a new lesson or series</u>
+              <br />
+            </h3>
+            <div className="d-flex flex-wrap justify-content-center">
+              <label className="h4 text-center">Select a wrestler: </label>
+              <input
+              className="col-12"
+                type="text"
+                list="wrestler1List"
+                onChange={onWrestlerChange}
+              />
+              <datalist id="wrestler1List">
+                {personal_info.map((wrestler) => {
+                  return (
+                    <option
+                      key={wrestler.user_id}
+                      value={
+                        wrestler.first_name +
+                        " " +
+                        wrestler.last_name +
+                        " -+- " +
+                        String(wrestler.user_id)
+                      }
+                    ></option>
+                  );
+                })}
+              </datalist>
+            </div>
+          </div>
         </div>
 
-        <div className="d-flex flex-wrap align-itmes-center mt-3 mb-3">
-          <h5 className="mr-2">start time:</h5>
-          <input
-            onChange={(e: any) => setLessonStartTime(e.target.value)}
-            type="time"
-            id="appt"
-            name="appt"
-          />
-        </div>
-
-        <div className="d-flex flex-wrap align-itmes-center mt-3 mb-3">
-          <h5 className="mr-2">Duration:</h5>
-          <select
-            onChange={(e) => setDurationHours(e.target.value)}
-            defaultValue="1"
-          >
-            {hourArray.map((hour) => {
-              return (
-                <option key={hour} value={hour}>
-                  {hour}
-                </option>
-              );
-            })}
-          </select>
-          <select
-            onChange={(e) => setDurationMinutes(e.target.value)}
-            defaultValue="00"
-          >
-            {minuteArray.map((minute) => {
-              return (
-                <option key={minute} value={minute}>
-                  {minute}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-
-        <div>
-          <div className="d-flex flex-wrap align-itmes-center mt-3 mb-3">
-            <h5 className="mr-2">series end date: </h5>
+        <div className="">
+          <div className="d-flex flex-wrap justify-content-center align-items-center mt-3 mb-3">
+            <h5 className="mr-2">Date:</h5>
             <input
-              onChange={(e: any) => setSeriesEndDate(e.target.value)}
+              onChange={(e: any) => setLessonStartDate(e.target.value)}
               type="date"
               id="birthday"
               name="birthday"
             />
           </div>
-        </div>
 
-        <div className="">
-          <h5>Wreslter info (optional):</h5>
-          <div className="d-flex flex-wrap col-sm-12 justify-content-start p-0">
-            <div className="m-1">
+          <div className="d-flex flex-wrap justify-content-center align-itmes-center mt-3 mb-3">
+            <h5 className="mr-2">start time:</h5>
+            <input
+              onChange={(e: any) => setLessonStartTime(e.target.value)}
+              type="time"
+              id="appt"
+              name="appt"
+            />
+          </div>
+
+          <div className="d-flex flex-wrap justify-content-center align-itmes-center mt-3 mb-3">
+            <h5 className="mr-2">Duration:</h5>
+            <select
+              onChange={(e) => setDurationHours(e.target.value)}
+              defaultValue="1"
+            >
+              {hourArray.map((hour) => {
+                return (
+                  <option key={hour} value={hour}>
+                    {hour}
+                  </option>
+                );
+              })}
+            </select>
+            <select
+              onChange={(e) => setDurationMinutes(e.target.value)}
+              defaultValue="00"
+            >
+              {minuteArray.map((minute) => {
+                return (
+                  <option key={minute} value={minute}>
+                    {minute}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <div>
+            <div className="d-flex flex-wrap justify-content-center align-itmes-center mt-3 mb-3">
+              <h5 className="mr-2">series end date: </h5>
               <input
-                className="col-12"
-                placeholder="Weight"
-                maxLength={15}
-                onChange={(e) => {
-                  setWeight(e.target.value);
-                }}
-              />
-            </div>
-            <div className="m-1">
-              <input
-                className="col-12"
-                placeholder="Age"
-                maxLength={15}
-                onChange={(e) => {
-                  setAge(e.target.value);
-                }}
-              />
-            </div>
-            <div className="m-1">
-              <input
-                className="col-12"
-                placeholder="WAR"
-                maxLength={15}
-                onChange={(e) => {
-                  setWar(e.target.value);
-                }}
+                onChange={(e: any) => setSeriesEndDate(e.target.value)}
+                type="date"
+                id="birthday"
+                name="birthday"
               />
             </div>
           </div>
+
+          <div className=" d-flex justify-content-center flex-wrap">
+            <h5 className="text-center">Wreslter info (optional):</h5>
+            <div className="col-9 w-75 d-flex flex-wrap col-sm-12 justify-content-center p-0">
+              <div className="m-1">
+                <input
+                  className="col-12"
+                  placeholder="Weight"
+                  maxLength={15}
+                  onChange={(e) => {
+                    setWeight(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="m-1">
+                <input
+                  className="col-12"
+                  placeholder="Age"
+                  maxLength={15}
+                  onChange={(e) => {
+                    setAge(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="m-1">
+                <input
+                  className="col-12"
+                  placeholder="WAR"
+                  maxLength={15}
+                  onChange={(e) => {
+                    setWar(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 mb-3 d-flex justify-content-center">
+            <button
+              onClick={handleSubmitLessonPlan}
+              className="btn btn-success"
+            >
+              Submit Lesson
+            </button>
+          </div>
         </div>
 
-        <div className="mt-3">
-          <button onClick={handleSubmitLessonPlan} className="btn btn-success">
-            Submit Lesson
-          </button>
-        </div>
-      </div>
-
-      <hr />
-
-      <div>
-        {/* <CoachesFullPrivateLessonsScheduleCalendarView
+        <div>
+          {/* <CoachesFullPrivateLessonsScheduleCalendarView
           coachesId={coaches_UID}
         /> */}
-        {/* <CoachesFullPrivateLessonsSchedule coachesId={coaches_UID} /> */}
+          {/* <CoachesFullPrivateLessonsSchedule coachesId={coaches_UID} /> */}
+        </div>
       </div>
-      <hr style={{height: "2px", backgroundColor: "black"}}/>
+        <hr style={{ height: "2px", backgroundColor: "black" }} />
     </div>
   );
 };
 
 export default ScheduleNewPrivateLessonForm;
+
+interface IProps {
+  funcFromStartPageToRenderComp: Function;
+}
 
 // //makes sure everything is filled out and if its a series it then makes sure everyhting in the series section is filled out
 // let handleSubmitLessonPlan = (e: any) => {

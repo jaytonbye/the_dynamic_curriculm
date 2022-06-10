@@ -5,7 +5,7 @@ import { IAvailabilityForCoachesId } from "../ServicesForPrivateLessonScheduling
 
 //note: make time deletable     havent i done this already? what the fuck was I talking about??
 
-const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
+const CoachAvailabilityChart = (props: ICoachIdForProp) => {
   let [availability, setAvailability] =
     useState<Array<IAvailabilityForCoachesId>>();
 
@@ -33,6 +33,7 @@ const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
           method: "DELETE",
         }
       ).then(() => {
+        props.funcFromStartPageToChangeRenderBool()
         getAvailabilityFunc();
       });
     }
@@ -104,7 +105,7 @@ const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
 
   return (
     <div>
-      <h3 className="text-center">Current availability:</h3>
+      <h3 className="text-center mt-2">Current availability:</h3>
 
       <div>
         <div className="sticky-top bg-white">
@@ -130,9 +131,10 @@ const CoachesAvailabilityChart = (props: ICoachIdForProp) => {
   );
 };
 
-export default CoachesAvailabilityChart;
+export default CoachAvailabilityChart;
 
 interface ICoachIdForProp {
   coachId: number;
   conditionUseForReRendering?: boolean;
+  funcFromStartPageToChangeRenderBool: any
 }

@@ -8,11 +8,12 @@ import {
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import * as calCssValues from "../../ServicesForPrivateLessonScheduling/CalendarCssValues";
 import "./Styles/CalendarWeeklyView.scss";
-import PrivateLessonDivTimeSlot from "./PrivateLessonDivTimeSlot";
+import PrivateLessonCalendarDivWithPopout from "./PrivateLessonCalendarDivWithPopout";
+import { convertCompilerOptionsFromJson } from "typescript";
 
 // you should try to send the coach avail from component instead of running the fetch in here... try it again bukko
 // props: IProps
-const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
+const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
   let [coachesAvailability, setCoachesAvailability] =
     useState<Array<IAvailabilityForCoachesId>>(null);
   let [coachesWeeklyScheduleForTheWeek, setCoachesWeeklyScheduleForTheWeek] =
@@ -24,11 +25,15 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
   let privateLessonTime: string;
 
   // console.log(coachesAvailability);
-  console.log(coachesWeeklyScheduleForTheWeek);
+  // console.log(coachesWeeklyScheduleForTheWeek);
 
   useEffect(() => {
     setCoachesWeeklyScheduleForTheWeek(props.weeklyPrivateLessonsSchedule);
-    if (props.coachesId > 0 && coachesAvailability === null) {
+    if (
+      (props.coachesId > 0 && coachesAvailability === null) ||
+      props.coachesId > 0
+    ) {
+      //did i fuck it all up?? watch fro future
       fetch(
         `/api/schedulingLessons/getCoachesWeeklyAvailibityByCoachesId/${props.coachesId}`
       )
@@ -36,6 +41,10 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
         .then((res) => setCoachesAvailability(res));
     }
   }, [props.coachesId, props.weeklyPrivateLessonsSchedule]);
+
+  // let funcUsedForReRender = () => {
+  //   setBoolUsedOnlyToReRenderComponent(!boolUsedOnlyToReRenderComponent);
+  // };
 
   let returnsPercentageForLessonSlotWidth = (
     dayOfWeekAsNumber: number | string,
@@ -436,7 +445,17 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
                   // marginLeft: 0
                 }}
               >
-                {<PrivateLessonDivTimeSlot privateLesson={privateLesson} />}
+                {
+                  <PrivateLessonCalendarDivWithPopout
+                    privateLesson={privateLesson}
+                    boolUsedOnlyToReRenderComponentFunc={
+                      props.boolFuncForReRender
+                    }
+                    // boolUsedOnlyToReRenderComponent={
+                    //   funcUsedForReRender
+                    // }
+                  />
+                }
               </div>
             );
           })
@@ -473,7 +492,7 @@ const CalendarWeeklyViewOfScheduledLessons = (props: IProps) => {
   // </div>;
 };
 
-export default CalendarWeeklyViewOfScheduledLessons;
+export default CoachesPrivateLessonScheduleWeeklyCalendar;
 
 interface IProps {
   coachesId: number;
@@ -481,4 +500,5 @@ interface IProps {
   weeklyPrivateLessonsSchedule: IFullPrivateLessonsSchedule[];
   daysOfWeek: string[];
   propUsedOnlyForReRender?: boolean;
+  boolFuncForReRender: any;
 }

@@ -3,14 +3,14 @@ import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeV
 import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import CoachesAvailabilityChart from "./CoachesAvailabilityChart";
+import CoachesAvailabilityChart from "./CoachAvailabilityChart";
 import e from "express";
 import moment from "moment";
 
 //so far it all works niceley
 //note: may be a better way to do this(via values within each option in the select menu but this works for now just a bit messy)
 
-const CoachesAvailabilityForm = () => {
+const CoachAvailabilityForm = (props: IProps) => {
   let weekdayArray: string[] = dateTimeValues.weekdayArrayDaysOfWeekStrings;
   let [
     conditionUsedOnlyForRenderingOutsideComponent,
@@ -54,26 +54,31 @@ const CoachesAvailabilityForm = () => {
             startTime: startTimeFull,
             endTime: endTimeFull,
           }),
-        }).then((res) => {
-          if (res.status === 200) {
-            alert("Your availability has been added successfully!");
-          } else {
-            alert("Something went wrong while adding your availability"); //no way to test this right now
-          }
-        });
+        })
+          .then((res) => {
+            setConditionUsedOnlyForRenderingOutsideComponent(
+              !conditionUsedOnlyForRenderingOutsideComponent
+            );
+            if (res.status === 200) {
+              alert("Your availability has been added successfully!");
+            } else {
+              alert("Something went wrong while adding your availability"); //no way to test this right now
+            }
+          })
+          .then(() => props.funcFromStartPageToRenderComp());
       } else {
         alert("Invalid time: Start time must be earlier than end time");
       }
-      setConditionUsedOnlyForRenderingOutsideComponent(
-        !conditionUsedOnlyForRenderingOutsideComponent
-      );
+      // setConditionUsedOnlyForRenderingOutsideComponent(
+      //   !conditionUsedOnlyForRenderingOutsideComponent
+      // );
     }
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// html
   return (
     <div>
-      <div className="card p-3 d-flex justify-content-center text-center">
+      <div className="m-auto mb-5 card p-3 d-flex justify-content-center text-center col-md-7 col-12">
         <div className="mb-3">
           <h3 className="">
             <u>Add availability</u>
@@ -127,7 +132,6 @@ const CoachesAvailabilityForm = () => {
           </div>
         </div>
       </div>
-      <hr />
       <div>
         {coaches_UID ? (
           <CoachesAvailabilityChart
@@ -135,17 +139,24 @@ const CoachesAvailabilityForm = () => {
             conditionUseForReRendering={
               conditionUsedOnlyForRenderingOutsideComponent
             }
+            funcFromStartPageToChangeRenderBool={
+              props.funcFromStartPageToRenderComp
+            }
           />
         ) : (
           "Loading ..."
         )}
       </div>
-      <hr style={{height: "2px", backgroundColor: "black"}}/>
+      <hr style={{ height: "2px", backgroundColor: "black" }} />
     </div>
   );
 };
 
-export default CoachesAvailabilityForm;
+export default CoachAvailabilityForm;
+
+interface IProps {
+  funcFromStartPageToRenderComp: any;
+}
 
 //   console.log(`
 //   weekday: ${dayOfWeek},
