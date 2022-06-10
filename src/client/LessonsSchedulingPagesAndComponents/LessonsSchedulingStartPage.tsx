@@ -7,7 +7,7 @@ import ScheduleNewPrivateLessonForm from "./SchedulingComponents/ScheduleNewPriv
 
 const LessonsSchedulingStartPage = () => {
   let token = localStorage.getItem("token");
-  let [UID, setUID] = useState();
+  let [UID, setUID] = useState<number>();
   let [tenant, setTenant] = useState<string>();
   let [role, setRole] = useState<string>();
   let [boolUsedToRenderFromStartPage, setBoolUsedToRenderFromStartPage] =

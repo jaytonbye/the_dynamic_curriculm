@@ -5,7 +5,7 @@ export interface IPrivateLessonInfo {
   startTime: string;
   duration: string;
   notes: string;
-  seriesName: string;
+  seriesName: string | null;
 }
 export interface IDateIncResult {
   dateForDB: string;

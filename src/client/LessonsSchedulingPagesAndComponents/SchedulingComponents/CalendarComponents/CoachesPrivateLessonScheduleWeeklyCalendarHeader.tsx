@@ -142,7 +142,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   let returnsArrayOfNumberThatAreDaysOfTheWeekBeingViewed = (
     startOfWeekDate: string
   ) => {
-    let daysOfWeekBeingViewedForCal = [];
+    let daysOfWeekBeingViewedForCal: string[] = [];
     daysOfWeekBeingViewedForCal.push(moment(startOfWeekDate).format("DD"));
     for (let i = 1; i < 7; i++) {
       daysOfWeekBeingViewedForCal.push(
@@ -292,7 +292,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
 export default CoachesPrivateLessonScheduleWeeklyCalendarHeader;
 
 interface IProps {
-  coachesId: number;
+  coachesId: number | any;
   propUsedOnlyForReRender?: boolean;
   boolForRenderFromStartPage: boolean;
 }

@@ -120,8 +120,8 @@ let submitPrivateLessonFunc = (
   let insertIntoDatabaseFunc = (
     lessonInfo: IPrivateLessonInfo,
     isASeries: boolean,
-    lessonDateForIncrement?: string,
-    seriesEndDateEntire?: string
+    lessonDateForIncrement?: string | any,
+    seriesEndDateEntire?: string | any
   ) => {
     fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
       method: "POST",

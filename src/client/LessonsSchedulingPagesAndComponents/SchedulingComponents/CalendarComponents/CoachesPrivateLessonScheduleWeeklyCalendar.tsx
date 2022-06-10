@@ -15,7 +15,7 @@ import { convertCompilerOptionsFromJson } from "typescript";
 // props: IProps
 const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
   let [coachesAvailability, setCoachesAvailability] =
-    useState<Array<IAvailabilityForCoachesId>>(null);
+    useState<Array<IAvailabilityForCoachesId>>([]);
   let [coachesWeeklyScheduleForTheWeek, setCoachesWeeklyScheduleForTheWeek] =
     useState<Array<IFullPrivateLessonsSchedule>>(
       props.weeklyPrivateLessonsSchedule
@@ -121,7 +121,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
         privateLessonDate = privLessonDateFuncParam;
         privateLessonTime = privLessonTimeFuncParam;
         //math here
-        let widthPercentageForWeekdayConfigured =
+        let widthPercentageForWeekdayConfigured: any =
           returnsPercentageForLessonSlotWidth(
             dayOfWeekAsNum,
             amountOfTimesLessonOccurs
@@ -130,7 +130,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
       } else {
         marginLeftMultiplyNumber++;
         //math here
-        let widthPercentageForWeekdayConfigured =
+        let widthPercentageForWeekdayConfigured:any =
           returnsPercentageForLessonSlotWidth(
             dayOfWeekAsNum,
             amountOfTimesLessonOccurs
@@ -497,8 +497,8 @@ export default CoachesPrivateLessonScheduleWeeklyCalendar;
 interface IProps {
   coachesId: number;
   // coachesAvailability?: IAvailabilityForCoachesId[];
-  weeklyPrivateLessonsSchedule: IFullPrivateLessonsSchedule[];
-  daysOfWeek: string[];
+  weeklyPrivateLessonsSchedule: IFullPrivateLessonsSchedule[] | any;
+  daysOfWeek: string[] | any;
   propUsedOnlyForReRender?: boolean;
   boolFuncForReRender: any;
 }
