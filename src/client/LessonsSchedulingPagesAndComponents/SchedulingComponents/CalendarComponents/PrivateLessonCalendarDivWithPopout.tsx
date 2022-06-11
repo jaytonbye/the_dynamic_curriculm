@@ -9,7 +9,7 @@ import {
 } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import moment from "moment";
 
-const PrivateLessonDivTimeSlot = (props: IProps) => {
+const PrivateLessonCalendarDivWithPopout = (props: IProps) => {
   // let [triggersReRender, setTriggersReRender] = useState<boolean>(false);
   let [privateLessonsSlotBgColor, setPrivateLessonsSlotBgColor] =
     useState<string>("limegreen");
@@ -137,34 +137,37 @@ const PrivateLessonDivTimeSlot = (props: IProps) => {
           <br />
           {moment(props.privateLesson.date_of_lesson).format("MM/DD/YYYY")}
         </span>
-        <div style={{ width: "99%" }}>
-          <button
-            value={props.privateLesson.private_lesson_id}
-            onClick={handleCancelIndividualLesson}
-            className="single btn-danger ml-1 mr-1 mb-1"
-          >
-            Cancel lesson
-          </button>
-
-          {props.privateLesson.series_name ? (
+        {props.isAdminBoolFromHeader && (
+          <div style={{ width: "99%" }}>
             <button
-              id={props.privateLesson.series_name}
               value={props.privateLesson.private_lesson_id}
-              onClick={handleCancelSeries}
-              className="series btn-danger ml-1 mr-1 mb-1"
+              onClick={handleCancelIndividualLesson}
+              className="single btn-danger ml-1 mr-1 mb-1"
             >
-              Cancel series
+              Cancel lesson
             </button>
-          ) : null}
-        </div>
+
+            {props.privateLesson.series_name ? (
+              <button
+                id={props.privateLesson.series_name}
+                value={props.privateLesson.private_lesson_id}
+                onClick={handleCancelSeries}
+                className="series btn-danger ml-1 mr-1 mb-1"
+              >
+                Cancel series
+              </button>
+            ) : null}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default PrivateLessonDivTimeSlot;
+export default PrivateLessonCalendarDivWithPopout;
 
 interface IProps {
   privateLesson: IFullPrivateLessonsSchedule;
   boolUsedOnlyToReRenderComponentFunc: any;
+  isAdminBoolFromHeader: boolean;
 }

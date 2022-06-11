@@ -2,6 +2,23 @@ import { isAwaitExpression, readBuilderProgram } from "typescript";
 import { Query } from "./index";
 
 //    GET           //
+const getAllCoachesAndAdminsByTenant = async (tenant: string) => {
+  return await Query(
+    `
+    select 
+      u.id as user_id,
+      u.role,
+      u.tenant,
+      pi.first_name,
+      pi.last_name
+      from users u 
+      join personal_info pi on u.id = pi.user_id
+      where u.tenant = ? and (u.role = "admin" or u.role= "coach");
+  `,
+    [tenant]
+  );
+};
+
 const getAvails = async () => {
   return await Query("select * from coaches_availability");
 };
@@ -170,6 +187,7 @@ const deletePrivateLessonSeriesMovingForward = async (
 
 export default {
   //  GET
+  getAllCoachesAndAdminsByTenant,
   getAvails,
   getCoachesWeeklyAvailibityByCoachesId,
   getCoachesFullPrivateLessonsSchedule,

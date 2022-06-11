@@ -1,3 +1,11 @@
+export interface IAllCoachesAndAdminsByTenant {
+  user_id: number;
+  role: string;
+  tenant: string;
+  first_name: string;
+  last_name: string;
+}
+
 export interface IPrivateLessonInfo {
   coaches_UID: number;
   wrestlerId: number;

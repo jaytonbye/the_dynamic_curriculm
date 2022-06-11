@@ -10,13 +10,24 @@ const router = Router();
 //  GET     //
 router.get("/validateToketInputAvailability", (req, res) => {
   // this return info provided in token
-  let token = req.headers.authorization?.split(" ")[1]; //removes bearer from the string
+  let token: string | any = req.headers.authorization?.split(" ")[1]; //removes bearer from the string
   let isValidToken = verify(token, config.jwt.secret);
   res.json(isValidToken);
 });
 router.get("/getitall", async (req, res) => {
   let responsers = await schedulingLessons.getAvails();
   res.json(responsers);
+});
+router.get("/getAllCoachesAndAdminsByTenant/:tenant", async (req, res) => {
+  try {
+    let tenant = req.params.tenant;
+    let allCoachesAndAdmins =
+      await schedulingLessons.getAllCoachesAndAdminsByTenant(tenant);
+    res.json(allCoachesAndAdmins);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
 });
 router.get(
   "/getCoachesWeeklyAvailibityByCoachesId/:coachesId",

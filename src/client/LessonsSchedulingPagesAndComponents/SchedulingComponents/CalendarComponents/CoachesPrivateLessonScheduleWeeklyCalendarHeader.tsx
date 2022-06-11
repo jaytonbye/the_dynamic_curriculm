@@ -157,16 +157,18 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
       <div>
         <strong>Today's date: {todaysDateForViewOnly}</strong>
       </div>
-      <div className="d-flex justify-content-center">
+      {props.isAdminBool &&
+        <div className="d-flex justify-content-center">
         <button
           onClick={viewToggleWeeklyCalOrArchiveListView}
           className=" btn-info"
         >
           {buttonTextToToggleArcCalViews}
         </button>
-      </div>
+      </div>}
       {showOrHideWeeklyCalView && (
-        <div>
+        <div className="text-center">
+          <h5 className="mb-0 mt-1">{props.coachesName}</h5>
           <h2 className="text-center">
             <u>Lesson schedule</u>
           </h2>
@@ -183,7 +185,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
 
               <div>
                 <button
-                  className="btn btn-dark ml-2"
+                  className="btn btn-secondary ml-2"
                   onClick={handleSearchMonthAndYear}
                 >
                   Search
@@ -278,11 +280,13 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
             daysOfWeek={arrayOfNumbersEqualToDayOfWeek}
             weeklyPrivateLessonsSchedule={weeklySchedule}
             boolFuncForReRender={funcUsedForReRender}
+            isAdminBoolFromHeader={props.isAdminBool}
           />
         )}
 
         {showOrHideArchiveOfLessonsListView && (
-          <PrivateLessonArchivesList coachesId={props.coachesId} />
+          <PrivateLessonArchivesList coachesId={props.coachesId}
+          boolFuncForReRender={funcUsedForReRender} />
         )}
       </div>
     </div>
@@ -294,7 +298,9 @@ export default CoachesPrivateLessonScheduleWeeklyCalendarHeader;
 interface IProps {
   coachesId: number | any;
   propUsedOnlyForReRender?: boolean;
-  boolForRenderFromStartPage: boolean;
+  boolForRenderFromStartPage?: boolean;
+  coachesName?: string;
+  isAdminBool: boolean;
 }
 
 {

@@ -4,12 +4,21 @@ import NavigationBar from "../NavigationBar";
 import CoachesPrivateLessonScheduleWeeklyCalendarHeader from "./SchedulingComponents/CalendarComponents/CoachesPrivateLessonScheduleWeeklyCalendarHeader";
 import CoachAvailabilityForm from "./SchedulingComponents/CoachAvailabilityForm";
 import ScheduleNewPrivateLessonForm from "./SchedulingComponents/ScheduleNewPrivateLessonForm";
+import ViewAllCoachesSchedules from "./SchedulingComponents/ViewAllCoachesSchedules";
 
 const LessonsSchedulingStartPage = () => {
   let token = localStorage.getItem("token");
   let [UID, setUID] = useState<number>();
   let [tenant, setTenant] = useState<string>();
   let [role, setRole] = useState<string>();
+  let [showAvailabilityButton, setShowAvailabilityButton] =
+    useState<boolean>(true);
+  let [showscheduleLessonButton, setShowscheduleLessonButton] =
+    useState<boolean>(true);
+  let [
+    textForViewAllCoachesOrViewYourSched,
+    setTextForViewAllCoachesOrViewYourSched,
+  ] = useState<string>("All coaches");
   let [boolUsedToRenderFromStartPage, setBoolUsedToRenderFromStartPage] =
     useState<boolean>(true);
   let [
@@ -20,6 +29,9 @@ const LessonsSchedulingStartPage = () => {
     showOrHideCochesAvailabilityComponent,
     setShowOrHideCochesAvailabilityComponent,
   ] = useState<boolean>(false);
+  let [showOrHideViewAllCoaches, setShowOrHideViewAllCoaches] =
+    useState<boolean>(false);
+  let [showOrHideCalendar, setShowOrHideCalendar] = useState<boolean>(true);
 
   useEffect(() => {
     fetch(`/api/schedulingLessons/validateToketInputAvailability`, {
@@ -30,6 +42,9 @@ const LessonsSchedulingStartPage = () => {
         setUID(res.userId);
         setTenant(res.tenant);
         setRole(res.role);
+        if (res.role === "wrestler") {
+          setShowOrHideViewAllCoaches(true);
+        }
       });
   }, []);
 
@@ -42,6 +57,8 @@ const LessonsSchedulingStartPage = () => {
       !showOrHideCochesAvailabilityComponent
     );
     setShowOrHideScheduleNewLessonComponent(false);
+    setShowOrHideViewAllCoaches(false);
+    setShowOrHideCalendar(true);
   };
 
   let showScheduleNewLessonComponentFunc = () => {
@@ -49,6 +66,28 @@ const LessonsSchedulingStartPage = () => {
       !showOrHideScheduleNewLessonComponent
     );
     setShowOrHideCochesAvailabilityComponent(false);
+    setShowOrHideViewAllCoaches(false);
+    setShowOrHideCalendar(true);
+  };
+
+  let showOrHideViewAllCoachesFunc = () => {
+    if (!showOrHideViewAllCoaches) {
+      setTextForViewAllCoachesOrViewYourSched("Your schedule");
+      setShowOrHideViewAllCoaches(true);
+      setShowOrHideScheduleNewLessonComponent(false);
+      setShowOrHideCochesAvailabilityComponent(false);
+      setShowOrHideCalendar(false);
+      setShowAvailabilityButton(false);
+      setShowscheduleLessonButton(false);
+    } else {
+      setTextForViewAllCoachesOrViewYourSched("All coaches");
+      setShowOrHideViewAllCoaches(false);
+      setShowOrHideScheduleNewLessonComponent(false);
+      setShowOrHideCochesAvailabilityComponent(false);
+      setShowOrHideCalendar(true);
+      setShowAvailabilityButton(true);
+      setShowscheduleLessonButton(true);
+    }
   };
 
   return (
@@ -56,37 +95,62 @@ const LessonsSchedulingStartPage = () => {
       <NavigationBar />
       <div className="m-3">
         <hr />
-        <div className="mb-3">
-          <button
-            onClick={showCoachesAvailabilityFormFunc}
-            className="btn btn-warning mr-2"
-          >
-            Edit Availability
-          </button>
-          <button
-            onClick={showScheduleNewLessonComponentFunc}
-            className="btn btn-success mr-2"
-          >
-            Schedule lesson
-          </button>
-        </div>
+        {role === "admin" || role === "coach" ? (
+          <div className="mb-3">
+            {showAvailabilityButton && (
+              <button
+                onClick={showCoachesAvailabilityFormFunc}
+                className="btn btn-warning mr-2"
+              >
+                Edit Availability
+              </button>
+            )}
+            {showscheduleLessonButton && (
+              <button
+                onClick={showScheduleNewLessonComponentFunc}
+                className="btn btn-success mr-2"
+              >
+                Schedule lesson
+              </button>
+            )}
+            <button
+              onClick={showOrHideViewAllCoachesFunc}
+              className="btn btn-success"
+            >
+              {textForViewAllCoachesOrViewYourSched}
+            </button>
+          </div>
+        ) : null}
 
         <div>
+          {showOrHideViewAllCoaches && (
+            <ViewAllCoachesSchedules tenant={tenant} />
+          )}
+
           {showOrHideCochesAvailabilityComponent && (
             <CoachAvailabilityForm
-            funcFromStartPageToRenderComp={funcFromStartPageToChangeRenderBool}
+              funcFromStartPageToRenderComp={
+                funcFromStartPageToChangeRenderBool
+              }
             />
           )}
           {showOrHideScheduleNewLessonComponent && (
-            <ScheduleNewPrivateLessonForm funcFromStartPageToRenderComp={funcFromStartPageToChangeRenderBool} />
+            <ScheduleNewPrivateLessonForm
+              funcFromStartPageToRenderComp={
+                funcFromStartPageToChangeRenderBool
+              }
+            />
           )}
           <div>
-            {role === "admin" || role === "coach" ? (
-              <CoachesPrivateLessonScheduleWeeklyCalendarHeader
-                coachesId={UID}
-                boolForRenderFromStartPage={boolUsedToRenderFromStartPage}
-              />
-            ) : null}
+            {role === "admin" || role === "coach"
+              ? showOrHideCalendar && (
+                  <CoachesPrivateLessonScheduleWeeklyCalendarHeader
+                    coachesId={UID}
+                    boolForRenderFromStartPage={boolUsedToRenderFromStartPage}
+                    isAdminBool={true}
+                  />
+                )
+              : null}
           </div>
         </div>
       </div>

@@ -31,7 +31,10 @@ const PrivateLessonArchivesList = (props: IProps) => {
         {
           method: "DELETE",
         }
-      ).then(() => setTriggersReRender(!triggersReRender));
+      ).then(() => {
+        props.boolFuncForReRender();
+        setTriggersReRender(!triggersReRender);
+      });
     } else {
       return;
     }
@@ -50,7 +53,10 @@ const PrivateLessonArchivesList = (props: IProps) => {
         {
           method: "DELETE",
         }
-      ).then(() => setTriggersReRender(!triggersReRender));
+      ).then(() => {
+        props.boolFuncForReRender();
+        setTriggersReRender(!triggersReRender);
+      });
     } else {
       return;
     }
@@ -137,4 +143,5 @@ export default PrivateLessonArchivesList;
 interface IProps {
   coachesId: number;
   propUsedOnlyForReRender?: boolean;
+  boolFuncForReRender: Function;
 }

@@ -14,8 +14,9 @@ import { convertCompilerOptionsFromJson } from "typescript";
 // you should try to send the coach avail from component instead of running the fetch in here... try it again bukko
 // props: IProps
 const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
-  let [coachesAvailability, setCoachesAvailability] =
-    useState<Array<IAvailabilityForCoachesId>>([]);
+  let [coachesAvailability, setCoachesAvailability] = useState<
+    Array<IAvailabilityForCoachesId>
+  >([]);
   let [coachesWeeklyScheduleForTheWeek, setCoachesWeeklyScheduleForTheWeek] =
     useState<Array<IFullPrivateLessonsSchedule>>(
       props.weeklyPrivateLessonsSchedule
@@ -130,7 +131,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
       } else {
         marginLeftMultiplyNumber++;
         //math here
-        let widthPercentageForWeekdayConfigured:any =
+        let widthPercentageForWeekdayConfigured: any =
           returnsPercentageForLessonSlotWidth(
             dayOfWeekAsNum,
             amountOfTimesLessonOccurs
@@ -451,6 +452,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
                     boolUsedOnlyToReRenderComponentFunc={
                       props.boolFuncForReRender
                     }
+                    isAdminBoolFromHeader={props.isAdminBoolFromHeader}
                     // boolUsedOnlyToReRenderComponent={
                     //   funcUsedForReRender
                     // }
@@ -501,4 +503,5 @@ interface IProps {
   daysOfWeek: string[] | any;
   propUsedOnlyForReRender?: boolean;
   boolFuncForReRender: any;
+  isAdminBoolFromHeader: boolean;
 }
