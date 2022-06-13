@@ -2,17 +2,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import * as scheduleLessonFunctions from "../ServicesForPrivateLessonScheduling/privateLessonScheduleFuncs";
 import * as dateTimeValues from "../ServicesForPrivateLessonScheduling/dateTimeValues";
-import PrivateLessonArchivesList from "./CalendarComponents/PrivateLessonArchivesList";
-import CoachesPrivateLessonScheduleWeeklyCalendarHeader from "./CalendarComponents/CoachesPrivateLessonScheduleWeeklyCalendarHeader";
-import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
-import {
-  IPrivateLessonInfo,
-  IDateIncResult,
-} from "../ServicesForPrivateLessonScheduling/interfaces";
-
-// hovering over lables are triggering re render of component ... dafuq?
-//make it look better
-// test this shit = mkae sure you are adding corrent corresponding values
 
 const ScheduleNewPrivateLessonForm = (props: IProps) => {
   let hourArray: number[] = dateTimeValues.hourArrayValues;
@@ -74,7 +63,6 @@ const ScheduleNewPrivateLessonForm = (props: IProps) => {
     );
   };
 
-  /////////////////////////////////////////////////////////////////////////////
   return (
     <div className="">
       <div className="m-auto p-0 d-flex flex-wrap card col-12 col-md-10">
@@ -87,7 +75,7 @@ const ScheduleNewPrivateLessonForm = (props: IProps) => {
             <div className="d-flex flex-wrap justify-content-center">
               <label className="h4 text-center">Select a wrestler: </label>
               <input
-              className="col-12"
+                className="col-12"
                 type="text"
                 list="wrestler1List"
                 onChange={onWrestlerChange}
@@ -219,14 +207,9 @@ const ScheduleNewPrivateLessonForm = (props: IProps) => {
           </div>
         </div>
 
-        <div>
-          {/* <CoachesFullPrivateLessonsScheduleCalendarView
-          coachesId={coaches_UID}
-        /> */}
-          {/* <CoachesFullPrivateLessonsSchedule coachesId={coaches_UID} /> */}
-        </div>
+        <div></div>
       </div>
-        <hr style={{ height: "2px", backgroundColor: "black" }} />
+      <hr style={{ height: "2px", backgroundColor: "black" }} />
     </div>
   );
 };
@@ -237,146 +220,4 @@ interface IProps {
   funcFromStartPageToRenderComp: Function;
 }
 
-// //makes sure everything is filled out and if its a series it then makes sure everyhting in the series section is filled out
-// let handleSubmitLessonPlan = (e: any) => {
-//   e.preventDefault();
-//   if (
-//     !coaches_UID ||
-//     !wrestlerId ||
-//     !lessonDateMonth ||
-//     !lessonDateDay ||
-//     !lessonDateYear ||
-//     !lessonTimeHour ||
-//     !lessonTimeMinute ||
-//     !lessonTimeAMPM
-//   ) {
-//     alert("fill out entire form");
-//   } else if (seriesEndDateMonth || seriesEndDateDay || seriesEndDateYear) {
-//     if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
-//       alert("if this is a series, please complete the entire series form");
-//     } else {
-//       submitIntoServerFunc(true);
-//     }
-//   } else {
-//     submitIntoServerFunc(false);
-//   }
-// };
-
-// let submitIntoServerFunc = (conditionForSeries: boolean) => {
-//   let newLessonInfo: IPrivateLessonInfo;
-//   if (!conditionForSeries) {
-//     newLessonInfo = {
-//       coaches_UID,
-//       wrestlerId,
-//       dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
-//       startTime: timeConfigureForDatabaseFunc(),
-//       duration: `${durationHours}.${durationMinutes}`,
-//       notes: `Weight:${wieght} Age:${age} War:${war}`,
-//       seriesName: null,
-//     };
-//     insertIntoDatabaseFunc(newLessonInfo, false);
-//   } else {
-//     let newLessonInfo = {
-//       coaches_UID,
-//       wrestlerId,
-//       dateOfLesson: `${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}`,
-//       startTime: timeConfigureForDatabaseFunc(),
-//       duration: `${durationHours}.${durationMinutes}`,
-//       notes: `Weight:${wieght} Age:${age} War:${war}`,
-//       seriesName: `CoachID${coaches_UID}WrestlerID${wrestlerId}StartDate${lessonDateYear}-${lessonDateMonth}-${lessonDateDay}EndDate${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}Timestamp${new Date().getHours()}${new Date().getMinutes()}${new Date().getSeconds()}${new Date().getMilliseconds()}`,
-//     };
-//     let lessonDateForIncrement = `${lessonDateYear}, ${lessonDateMonth}, ${lessonDateDay}`;
-//     let seriesEndDateEntire = `${seriesEndDateYear}, ${seriesEndDateMonth}, ${seriesEndDateDay}`;
-//     insertIntoDatabaseFunc(
-//       newLessonInfo,
-//       true,
-//       lessonDateForIncrement,
-//       seriesEndDateEntire
-//     );
-//   }
-// };
-
-// let timeConfigureForDatabaseFunc = () => {
-//   return dateTimeHandlingFunctions.timeAMPMToMilitary(
-//     lessonTimeHour,
-//     lessonTimeMinute,
-//     lessonTimeAMPM
-//   );
-// };
-
-// let insertIntoDatabaseFunc = (
-//   lessonInfo: IPrivateLessonInfo,
-//   isASeries: boolean,
-//   lessonDateForIncrement?: string,
-//   seriesEndDateEntire?: string
-// ) => {
-//   fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(lessonInfo),
-//   }).then((res) => {
-//     if (res.ok) {
-//       if (isASeries === false) {
-//         alert("Private lesson has been added");
-//       } else {
-//         let seriesIncrementResult: IDateIncResult | boolean =
-//           dateTimeHandlingFunctions.seriesWeeklyIncrementFunc(
-//             lessonDateForIncrement,
-//             seriesEndDateEntire
-//           );
-//         if (seriesIncrementResult) {
-//           lessonInfo.dateOfLesson = seriesIncrementResult.dateForDB;
-//           insertIntoDatabaseFunc(
-//             lessonInfo,
-//             true,
-//             seriesIncrementResult.dateForFuncLoop,
-//             seriesEndDateEntire
-//           );
-//         } else {
-//           alert("Private lesson series has been added");
-//         }
-//       }
-//     } else {
-//       alert(
-//         "Somthing went wrong! Make sure all of the information is correct."
-//       );
-//     }
-//   });
-// };
-
-// let dateFormHTMLFunc = (setMonth: any, setDay: any, setYear: any) => {
-//   return (
-//     <>
-//       <select onChange={(e) => setMonth(e.target.value)}>
-//         <option value="">month</option>
-//         {monthArray.map((month) => {
-//           return (
-//             <option key={month} value={month}>
-//               {month}
-//             </option>
-//           );
-//         })}
-//       </select>
-//       <select onChange={(e) => setDay(e.target.value)}>
-//         <option value="">day</option>
-//         {dayArray.map((day) => {
-//           return (
-//             <option key={day} value={day}>
-//               {day}
-//             </option>
-//           );
-//         })}
-//       </select>
-//       <select onChange={(e) => setYear(e.target.value)}>
-//         <option value="">year</option>
-//         {yearArray.map((year) => {
-//           return (
-//             <option key={year} value={year}>
-//               {year}
-//             </option>
-//           );
-//         })}
-//       </select>
-//     </>
-//   );
-// };
+// hovering over lables are triggering re render of component ???

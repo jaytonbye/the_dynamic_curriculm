@@ -7,16 +7,16 @@ import {
 
 //**********refactor this func? its alot of code and may get even bigger use props and outside component ... curreclty, this code is a bit overwhelming on first look but is simple once broken down
 let submitPrivateLessonFunc = (
-  coaches_UID: number,
-  wrestlerId: number,
-  lessonStartDate: string,
-  lessonStartTime: string,
-  durationHours: number | string,
-  durationMinutes: number | string,
-  seriesEndDate: string,
-  wieght: string,
-  age: string,
-  war: string,
+  coaches_UID: number | any,
+  wrestlerId: number | any,
+  lessonStartDate: string | any,
+  lessonStartTime: string | any,
+  durationHours: number | string | any,
+  durationMinutes: number | string | any,
+  seriesEndDate: string | any,
+  wieght: string | any,
+  age: string | any,
+  war: string | any,
   funcFromStartPageToRenderComp: Function
 ) => {
   let submitPrivateLessonInnerFunc = () => {
@@ -31,37 +31,7 @@ let submitPrivateLessonFunc = (
       }
     }
   };
-  // if (!seriesEndDateMonth || !seriesEndDateDay || !seriesEndDateYear) {
-  //   alert("if this is a series, please complete the entire series form");
-  // } else {
-  //   submitIntoServerFunc(true); //series
-  // let validateLessonDate = dateTimeHandlingFunctions.validateDate(
-  //   lessonStartDate
-  // );
-  // let validateSeriesEndDate = dateTimeHandlingFunctions.validateDate(
-  //   `${seriesEndDateYear}-${seriesEndDateMonth}-${seriesEndDateDay}`
-  // );
-  // if (validateLessonDate && validateSeriesEndDate) {
-  //   submitIntoServerFunc(true); //series
-  // } else {
-  //   alert("Invalid date(s)");
-  //   return;
-  // }
-  // }
-  // } else {
-  //   submitIntoServerFunc(false); //not a series
-  // let validateLessonDate = dateTimeHandlingFunctions.validateDate(
-  //   lessonStartDate
-  // );
-  // if (validateLessonDate) {
-  //   submitIntoServerFunc(false); //not a series
-  // } else {
-  //   alert("Invalid date");
-  //   return;
-  // }
 
-  //i fucked with the starttimes incase shit breaks
-  //must check toi make sure series enbd date is valid, right now it takes invalid date and automatically adds next date past invalid date
   let submitIntoServerFunc = (conditionForSeries: boolean) => {
     let startTime = `${lessonStartTime}:00`;
     let makesSureAmountOfTimeIsValindAndIsOnlyOnOneDay =
@@ -109,14 +79,6 @@ let submitPrivateLessonFunc = (
     }
   };
 
-  // let timeConfigureForDatabaseFunc = () => {
-  //   return dateTimeHandlingFunctions.timeAMPMToMilitary(
-  //     lessonTimeHour,
-  //     lessonTimeMinute,
-  //     lessonTimeAMPM
-  //   );
-  // };
-
   let insertIntoDatabaseFunc = (
     lessonInfo: IPrivateLessonInfo,
     isASeries: boolean,
@@ -131,7 +93,7 @@ let submitPrivateLessonFunc = (
       if (res.ok) {
         if (isASeries === false) {
           alert("Private lesson has been added");
-          funcFromStartPageToRenderComp()
+          funcFromStartPageToRenderComp();
         } else {
           let seriesIncrementResult: IDateIncResult | boolean =
             dateTimeHandlingFunctions.seriesWeeklyIncrementFunc(
@@ -148,7 +110,7 @@ let submitPrivateLessonFunc = (
             );
           } else {
             alert("Private lesson series has been added");
-            funcFromStartPageToRenderComp()
+            funcFromStartPageToRenderComp();
           }
         }
       } else {

@@ -33,7 +33,7 @@ const CoachAvailabilityChart = (props: ICoachIdForProp) => {
           method: "DELETE",
         }
       ).then(() => {
-        props.funcFromStartPageToChangeRenderBool()
+        props.funcFromStartPageToChangeRenderBool();
         getAvailabilityFunc();
       });
     }
@@ -98,7 +98,6 @@ const CoachAvailabilityChart = (props: ICoachIdForProp) => {
     );
   };
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   if (!availability) {
     return <p>loading...</p>;
   }
@@ -136,5 +135,5 @@ export default CoachAvailabilityChart;
 interface ICoachIdForProp {
   coachId: number;
   conditionUseForReRendering?: boolean;
-  funcFromStartPageToChangeRenderBool: any
+  funcFromStartPageToChangeRenderBool: any;
 }

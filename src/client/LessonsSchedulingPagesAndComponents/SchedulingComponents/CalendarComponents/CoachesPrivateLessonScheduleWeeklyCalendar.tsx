@@ -1,5 +1,4 @@
 import * as React from "react";
-import classNames from "classnames";
 import * as dateTimeHandlingFunctions from "../../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import { useEffect, useState } from "react";
 import {
@@ -9,7 +8,6 @@ import {
 import * as calCssValues from "../../ServicesForPrivateLessonScheduling/CalendarCssValues";
 import "./Styles/CalendarWeeklyView.scss";
 import PrivateLessonCalendarDivWithPopout from "./PrivateLessonCalendarDivWithPopout";
-import { convertCompilerOptionsFromJson } from "typescript";
 
 // you should try to send the coach avail from component instead of running the fetch in here... try it again bukko
 // props: IProps
@@ -25,16 +23,12 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
   let privateLessonDate: string;
   let privateLessonTime: string;
 
-  // console.log(coachesAvailability);
-  // console.log(coachesWeeklyScheduleForTheWeek);
-
   useEffect(() => {
     setCoachesWeeklyScheduleForTheWeek(props.weeklyPrivateLessonsSchedule);
     if (
       (props.coachesId > 0 && coachesAvailability === null) ||
       props.coachesId > 0
     ) {
-      //did i fuck it all up?? watch fro future
       fetch(
         `/api/schedulingLessons/getCoachesWeeklyAvailibityByCoachesId/${props.coachesId}`
       )
@@ -42,10 +36,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
         .then((res) => setCoachesAvailability(res));
     }
   }, [props.coachesId, props.weeklyPrivateLessonsSchedule]);
-
-  // let funcUsedForReRender = () => {
-  //   setBoolUsedOnlyToReRenderComponent(!boolUsedOnlyToReRenderComponent);
-  // };
 
   let returnsPercentageForLessonSlotWidth = (
     dayOfWeekAsNumber: number | string,
@@ -121,7 +111,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
         marginLeftMultiplyNumber = 0;
         privateLessonDate = privLessonDateFuncParam;
         privateLessonTime = privLessonTimeFuncParam;
-        //math here
         let widthPercentageForWeekdayConfigured: any =
           returnsPercentageForLessonSlotWidth(
             dayOfWeekAsNum,
@@ -130,7 +119,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
         return widthPercentageForWeekdayConfigured * marginLeftMultiplyNumber;
       } else {
         marginLeftMultiplyNumber++;
-        //math here
         let widthPercentageForWeekdayConfigured: any =
           returnsPercentageForLessonSlotWidth(
             dayOfWeekAsNum,
@@ -324,52 +312,17 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
       </div>
 
       <div className="event-container">
-        {/* sep the days */}
         <div className="seperator-sun-mon"></div>
         <div className="seperator-mon-tue"></div>
         <div className="seperator-tue-wed"></div>
         <div className="seperator-wed-thurs"></div>
         <div className="seperator-thurs-fri"></div>
         <div className="seperator-fri-sat"></div>
-        {/* <div className="seperator-sat-end"></div> */}
-        {/* sep the days */}
-
-        {/*  */}
-        {/* <div className="slot test-slot" style={{ width: "8.39%" }}>
-          <div className="event-status">
-            <span>lesson info here</span>
-          </div>
-        </div>
-
-        <div
-          className="slot test-slot"
-          style={{ width: "8.39%", marginLeft: "8.39%" }}
-        >
-          <div className="event-status">
-            <span>lesson info here</span>
-          </div>
-        </div>
-
-        <div
-          className="slot test-slot"
-          style={{ width: "8.39%", marginLeft: "8.39%" }}
-        >
-          <div className="event-status">
-            <span>lesson info here</span>
-          </div>
-        </div> */}
-        {/*  */}
 
         {!coachesAvailability || !coachesAvailability[0] ? (
           <></>
         ) : (
           coachesAvailability.map((availableDay) => {
-            // console.log(
-            //   dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
-            //     availableDay.start_time,
-            //     availableDay.stop_time
-            //   )
-            // );
             return (
               <div
                 className={`slot all-availability-slots ${availableDay.day_of_week}`}
@@ -436,14 +389,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
                     privateLesson.amount_of_times_this_lessons_exact_date_and_time_occur,
                     privateLesson.weekday_as_number
                   )}%`,
-                  // marginLeft: `${
-                  //   (110 /
-                  //     Number(
-                  //       props.amount_of_times_this_lessons_exact_date_and_time_occur
-                  //     )) *
-                  //   3
-                  // }%`,
-                  // marginLeft: 0
                 }}
               >
                 {
@@ -453,9 +398,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
                       props.boolFuncForReRender
                     }
                     isAdminBoolFromHeader={props.isAdminBoolFromHeader}
-                    // boolUsedOnlyToReRenderComponent={
-                    //   funcUsedForReRender
-                    // }
                   />
                 }
               </div>
@@ -465,40 +407,12 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
       </div>
     </div>
   );
-
-  //   useEffect(() => {}, [props.weeklyPrivateLessonsSchedule]);
-
-  //   console.log(props.weeklyPrivateLessonsSchedule);
-
-  // if (
-  //   props.weeklyPrivateLessonsSchedule === undefined ||
-  //   !props.weeklyPrivateLessonsSchedule[0]
-  // ) {
-  //   return <div>No scheduled Lessons</div>;
-  // }
-
-  // return <div>
-  //     {props.weeklyPrivateLessonsSchedule.map(privateLesson => {
-  //         return(
-  //             <div className="card">
-  //                 <div className="card-body">
-  //                     <h3 className="card-title">{privateLesson.date_of_lesson}</h3>
-  //                     <p className="card-text">{privateLesson.start_time}</p>
-  //                     <p className="card-text">{privateLesson.wrestler_first_name}</p>
-  //                     <p className="card-text">{privateLesson.wrestler_last_name}</p>
-  //                 </div>
-
-  //             </div>
-  //         )
-  //     })}
-  // </div>;
 };
 
 export default CoachesPrivateLessonScheduleWeeklyCalendar;
 
 interface IProps {
   coachesId: number;
-  // coachesAvailability?: IAvailabilityForCoachesId[];
   weeklyPrivateLessonsSchedule: IFullPrivateLessonsSchedule[] | any;
   daysOfWeek: string[] | any;
   propUsedOnlyForReRender?: boolean;

@@ -75,7 +75,6 @@ const CoachAvailabilityForm = (props: IProps) => {
     }
   };
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// html
   return (
     <div>
       <div className="m-auto mb-5 card p-3 d-flex justify-content-center text-center col-md-7 col-12">
@@ -157,14 +156,3 @@ export default CoachAvailabilityForm;
 interface IProps {
   funcFromStartPageToRenderComp: any;
 }
-
-//   console.log(`
-//   weekday: ${dayOfWeek},
-//   start time: ${startHourFinal}:${startTimeMinute}:00,
-//   end time: ${endHourFinal}:${endTimeMinute}:00
-//   `);
-//       console.log(`
-//   weekday: ${dayOfWeek},
-//   start time: ${startTimeHour}:${startTimeMinute}:${startTimeAMPM},
-//   end time: ${endTimeHour}:${endTimeMinute}:${endTimeAMPM}
-//   `);

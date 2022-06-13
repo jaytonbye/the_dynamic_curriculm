@@ -1,16 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
 import * as dateTimeHandlingFunctions from "../../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
-import * as calCssValues from "../../ServicesForPrivateLessonScheduling/CalendarCssValues";
 import "./Styles/CalendarWeeklyView.scss";
-import {
-  IFullPrivateLessonsSchedule,
-  IAvailabilityForCoachesId,
-} from "../../ServicesForPrivateLessonScheduling/interfaces";
+import { IFullPrivateLessonsSchedule } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import moment from "moment";
 
 const PrivateLessonCalendarDivWithPopout = (props: IProps) => {
-  // let [triggersReRender, setTriggersReRender] = useState<boolean>(false);
   let [privateLessonsSlotBgColor, setPrivateLessonsSlotBgColor] =
     useState<string>("limegreen");
   let [divTextColor, setDivTextColor] = useState<string>("black");
@@ -63,7 +58,6 @@ const PrivateLessonCalendarDivWithPopout = (props: IProps) => {
           method: "DELETE",
         }
       ).then(() => props.boolUsedOnlyToReRenderComponentFunc());
-      // .then(() => setTriggersReRender(!triggersReRender));
     } else {
       return;
     }
@@ -83,7 +77,6 @@ const PrivateLessonCalendarDivWithPopout = (props: IProps) => {
           method: "DELETE",
         }
       ).then(() => props.boolUsedOnlyToReRenderComponentFunc());
-      // .then(() => setTriggersReRender(!triggersReRender));
     } else {
       return;
     }
@@ -114,10 +107,6 @@ const PrivateLessonCalendarDivWithPopout = (props: IProps) => {
           {dateTimeHandlingFunctions.timeMilitaryToAMPM(
             props.privateLesson.start_time
           )}
-          {/* <br /> */}
-          {/* <small>click/tap for more info</small> */}
-          {/* {props.privateLesson.start_time} {props.privateLesson.notes}
-          {props.privateLesson.duration} */}
         </span>
       </div>
 

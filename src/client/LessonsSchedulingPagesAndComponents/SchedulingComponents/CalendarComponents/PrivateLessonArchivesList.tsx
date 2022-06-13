@@ -3,7 +3,6 @@ import * as dateTimeHandlingFunctions from "../../ServicesForPrivateLessonSchedu
 import { useState, useEffect } from "react";
 import { IFullPrivateLessonsSchedule } from "../../ServicesForPrivateLessonScheduling/interfaces";
 
-//had to use id= on the buttons to get the values for the delete value
 // somtimes i get this in the browser console "Uncaught (in promise) TypeError: NetworkError when attempting to fetch resource."
 
 const PrivateLessonArchivesList = (props: IProps) => {

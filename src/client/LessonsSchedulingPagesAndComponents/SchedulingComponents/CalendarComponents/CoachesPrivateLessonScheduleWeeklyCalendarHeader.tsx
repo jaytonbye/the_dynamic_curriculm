@@ -1,15 +1,9 @@
 import * as React from "react";
-import * as dateTimeValues from "../../ServicesForPrivateLessonScheduling/dateTimeValues";
 import { useState, useEffect } from "react";
-import {
-  IFullPrivateLessonsSchedule,
-  IAvailabilityForCoachesId,
-} from "../../ServicesForPrivateLessonScheduling/interfaces";
+import { IFullPrivateLessonsSchedule } from "../../ServicesForPrivateLessonScheduling/interfaces";
 import moment from "moment";
 import CoachesPrivateLessonScheduleWeeklyCalendar from "./../CalendarComponents/CoachesPrivateLessonScheduleWeeklyCalendar";
 import PrivateLessonArchivesList from "./PrivateLessonArchivesList";
-
-// may need a state for month number eeg: Aug(8)
 
 const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   let dateFormatToProcess: string = "YYYY-MM-DD";
@@ -23,8 +17,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   );
   let [weekStartDate, setWeekStartDate] = useState<string>();
   let [weekEndDate, setWeekEndDate] = useState<string>();
-  // let [selectedMonth, setSelectedMonth] = useState(moment().format("MM"));
-  // let [selectedYear, setSelectedYear] = useState(moment().format("YYYY"));
   let [selectedDate, setSelectedDate] = useState<string>();
   let [arrayOfNumbersEqualToDayOfWeek, setArrayOfNumbersEqualToDayOfWeek] =
     useState<string[]>();
@@ -40,15 +32,8 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
     useState<string>("Show archives");
   let [boolUsedOnlyToReRenderComponent, setBoolUsedOnlyToReRenderComponent] =
     useState<boolean>(true);
-  let [testBool, setTestBool] = useState<boolean>(true);
-  // let [coachesAvailability, setCoachesAvailability] =
-  //   useState<Array<IAvailabilityForCoachesId>>();
-
-  // console.log(coachesAvailability);
-  // console.log(weeklySchedule)
 
   useEffect(() => {
-    // setCoachesAvailbilityFunc();
     processWeekForView(todaysDateToBeManipulated);
   }, [
     todaysDateToBeManipulated,
@@ -70,16 +55,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
       setButtonTextToToggleArcCalViews("Show archives");
     }
   };
-
-  // let setCoachesAvailbilityFunc = () => {
-  // console.log("ok");
-  //   fetch(
-  //     `/api/schedulingLessons/getCoachesWeeklyAvailibityByCoachesId/${props.coachesId}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then((res) => setCoachesAvailability(res))
-  //     .then(() => processWeekForView(todaysDateToBeManipulated));
-  // };
 
   let processWeekForView = (dateToProcess: any) => {
     setWeekStartDate(
@@ -114,7 +89,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
       alert("Select a date to search");
       return;
     } else {
-      // console.log(`m${selectedMonth}y${selectedYear}`);
       setTodaysDateToBeManipulated(
         moment(`${selectedDate}`).format(dateFormatToProcess)
       );
@@ -122,7 +96,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   };
 
   let handleLeftArrowWeekCycle = () => {
-    // console.log("left");
     setTodaysDateToBeManipulated(
       moment(todaysDateToBeManipulated)
         .subtract(7, "days")
@@ -131,7 +104,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   };
 
   let handleRightArrowWeekCycle = () => {
-    // console.log("right");
     setTodaysDateToBeManipulated(
       moment(todaysDateToBeManipulated)
         .add(7, "days")
@@ -157,15 +129,16 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
       <div>
         <strong>Today's date: {todaysDateForViewOnly}</strong>
       </div>
-      {props.isAdminBool &&
+      {props.isAdminBool && (
         <div className="d-flex justify-content-center">
-        <button
-          onClick={viewToggleWeeklyCalOrArchiveListView}
-          className=" btn-info"
-        >
-          {buttonTextToToggleArcCalViews}
-        </button>
-      </div>}
+          <button
+            onClick={viewToggleWeeklyCalOrArchiveListView}
+            className=" btn-info"
+          >
+            {buttonTextToToggleArcCalViews}
+          </button>
+        </div>
+      )}
       {showOrHideWeeklyCalView && (
         <div className="text-center">
           <h5 className="mb-0 mt-1">{props.coachesName}</h5>
@@ -269,11 +242,6 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
       )}
       {/*  */}
       <div>
-        {/* <CalendarWeeklyViewOfScheduledLessons
-          coachesId={props.coachesId}
-          weeklyPrivateLessonsSchedule={weeklySchedule}
-        /> */}
-
         {showOrHideWeeklyCalView && (
           <CoachesPrivateLessonScheduleWeeklyCalendar
             coachesId={props.coachesId}
@@ -285,8 +253,10 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
         )}
 
         {showOrHideArchiveOfLessonsListView && (
-          <PrivateLessonArchivesList coachesId={props.coachesId}
-          boolFuncForReRender={funcUsedForReRender} />
+          <PrivateLessonArchivesList
+            coachesId={props.coachesId}
+            boolFuncForReRender={funcUsedForReRender}
+          />
         )}
       </div>
     </div>
@@ -301,45 +271,4 @@ interface IProps {
   boolForRenderFromStartPage?: boolean;
   coachesName?: string;
   isAdminBool: boolean;
-}
-
-{
-  /* <select
-                defaultValue={
-                  dateTimeValues.monthsNames[Number(selectedMonth) - 1]
-                }
-              >
-                {dateTimeValues.monthsNames.map((month) => {
-                  return (
-                    <option
-                      key={month}
-                      id={String(
-                        dateTimeValues.monthArrayValues[
-                          dateTimeValues.monthsNames.indexOf(month)
-                        ]
-                      )}
-                      onClick={(e: any) => setSelectedMonth(e.target.id)}
-                      value={month}
-                    >
-                      {month}
-                    </option>
-                  );
-                })}
-              </select> */
-}
-
-{
-  /* <select defaultValue={selectedYear}>
-                {dateTimeValues.yearArrayValues.map((year) => {
-                  return (
-                    <option
-                      key={year}
-                      value={year}
-                      onClick={(e: any) => setSelectedYear(e.target.value)}
-                    >
-                      {year}
-                    </option>
-                  );
-                })}
-              </select> */
 }
