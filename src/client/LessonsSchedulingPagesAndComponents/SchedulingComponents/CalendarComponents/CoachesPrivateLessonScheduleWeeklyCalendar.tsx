@@ -105,7 +105,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
       return 3.2; //satday
     } else {
       if (
-        privLessonDateFuncParam !== privateLessonDate &&
+        privLessonDateFuncParam !== privateLessonDate ||
         privLessonTimeFuncParam !== privateLessonTime
       ) {
         marginLeftMultiplyNumber = 0;

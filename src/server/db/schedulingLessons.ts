@@ -67,7 +67,7 @@ const getCoachesFullPrivateLessonsSchedule = async (
     FROM private_lesson_bookings plb
     JOIN personal_info pi ON plb.coaches_user_id = pi.user_id
     WHERE plb.coaches_user_id = ?
-    ORDER BY plb.date_of_lesson, plb.start_time;;
+    ORDER BY plb.date_of_lesson, plb.start_time;
     `,
     [coachesId]
   );
@@ -104,7 +104,7 @@ const getCoachesFullPrivateLessonsScheduleByWeek = async (
     plb.duration,
     (select count(*) from private_lesson_bookings pb
         where pb.date_of_lesson = plb.date_of_lesson
-        and pb.start_time = plb.start_time) as amount_of_times_this_lessons_exact_date_and_time_occur,
+        and pb.start_time = plb.start_time  and pb.coaches_user_id = ?) as amount_of_times_this_lessons_exact_date_and_time_occur,
     (select count(*) -1 from private_lesson_bookings pb
         where pb.date_of_lesson = plb.date_of_lesson
         and pb.start_time = plb.start_time) as amount_of_times_this_lessons_exact_date_and_time_occur_minus_one,
@@ -120,7 +120,7 @@ WHERE
     and date_of_lesson<=date(?)
     ORDER BY plb.date_of_lesson, plb.start_time;
   `,
-    [coachesId, weekStartDate, weekEndDate]
+    [coachesId, coachesId, weekStartDate, weekEndDate]
   );
 };
 
