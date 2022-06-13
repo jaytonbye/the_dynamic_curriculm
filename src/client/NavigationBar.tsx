@@ -26,6 +26,10 @@ export default function NavigationBar() {
     history.push("/CreateALessonPlan");
   };
 
+  let goToPrivateLessonsScheduling = () => {
+    history.push("LessonsScheduling");
+  };
+
   let goToTestPage = () => {
     history.push("/Tests");
   };
@@ -75,17 +79,31 @@ export default function NavigationBar() {
           >
             Home
           </button>
+<<<<<<< HEAD
           {userRole === "admin" && <Link to={`/coachesview`} className="btn btn-outline-primary">
             I'm a coach...
           </Link>}
           {userRole === "coach" && <Link to={`/coachesview`} className="btn btn-outline-primary">
             I'm a coach...
           </Link>}
+=======
+          {userRole === "admin" && (
+            <Link to={`/coachesview`} className="btn btn-outline-primary">
+              I'm a coach...
+            </Link>
+          )}
+>>>>>>> schedulingComponent
           <button
             className="btn btn-outline-primary"
             onClick={goToUnitVideosPage}
           >
             Practice Playlists
+          </button>
+          <button
+            className="btn btn-outline-primary"
+            onClick={goToPrivateLessonsScheduling}
+          >
+            Lessons Scheduling
           </button>
           <button className="btn btn-outline-primary" onClick={goToTestPage}>
             Tests
@@ -102,7 +120,12 @@ export default function NavigationBar() {
             </button>
           )}
           <button className="btn btn-outline-info">
-            <a href="https://www.youtube.com/watch?v=J6oUYvNDn2Q" target="_blank">Warm Up</a>
+            <a
+              href="https://www.youtube.com/watch?v=J6oUYvNDn2Q"
+              target="_blank"
+            >
+              Warm Up
+            </a>
           </button>
           <button className="btn btn-outline-success" onClick={logout}>
             Logout
