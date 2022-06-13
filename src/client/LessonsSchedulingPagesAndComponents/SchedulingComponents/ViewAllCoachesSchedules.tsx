@@ -7,7 +7,7 @@ const ViewAllCoachesSchedules = (props: IProps) => {
   let [listOfAllByTenantCoaches, setListOfAllByTenantCoaches] =
     useState<Array<IAllCoachesAndAdminsByTenant>>();
   let [selectedCoachUID, setSelectedCoachUID] = useState<number>();
-  let [selectedCoachName, setSelectedCoachName] = useState<string>();
+  let [selectedCoachName, setSelectedCoachName] = useState<string>("Select a coach");
 
   useEffect(() => {
     fetch(
