@@ -90,6 +90,39 @@ const makesSureStartEndTimesAreValidAndOnSameDay = (
   }
 };
 
+let makeSureSeriesDoesNotExceedFiveYears = (
+  seriesStartDate: string,
+  seriesEndDate: string
+) => {
+  let startDate = moment(seriesStartDate);
+  let endDate = moment(seriesEndDate);
+  let yearEndMinusStart =
+    Number(endDate.format("YYYY")) - Number(startDate.format("YYYY"));
+  let monthEndMinusStart =
+    Number(endDate.format("MM")) - Number(startDate.format("MM"));
+  let dayEndMinusStart =
+    Number(endDate.format("DD")) - Number(startDate.format("DD"));
+  if (yearEndMinusStart < 5) {
+    return true; //passed
+  } else if (yearEndMinusStart === 5) {
+    if (monthEndMinusStart < 0) {
+      return true;
+    } else if (monthEndMinusStart === 0) {
+      if (dayEndMinusStart < 0) {
+        return true;
+      } else if (dayEndMinusStart === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
+
 const seriesWeeklyIncrementFunc = (
   dateToIncrement: string,
   endDate: string
@@ -164,6 +197,7 @@ export {
   timeMilitaryToAMPM,
   validateDate,
   makesSureStartEndTimesAreValidAndOnSameDay,
+  makeSureSeriesDoesNotExceedFiveYears,
   seriesWeeklyIncrementFunc,
   startTimeValueForStyleSheet,
   amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability,

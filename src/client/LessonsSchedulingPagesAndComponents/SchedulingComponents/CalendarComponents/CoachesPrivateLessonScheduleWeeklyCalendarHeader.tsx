@@ -4,6 +4,7 @@ import { IFullPrivateLessonsSchedule } from "../../ServicesForPrivateLessonSched
 import moment from "moment";
 import CoachesPrivateLessonScheduleWeeklyCalendar from "./../CalendarComponents/CoachesPrivateLessonScheduleWeeklyCalendar";
 import PrivateLessonArchivesList from "./PrivateLessonArchivesList";
+import { ContextExclusionPlugin } from "webpack";
 
 const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   let dateFormatToProcess: string = "YYYY-MM-DD";
@@ -111,6 +112,10 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
     );
   };
 
+  let goToTodaysDate = () => {
+    setTodaysDateToBeManipulated(moment().format(dateFormatToProcess));
+  };
+
   let returnsArrayOfNumberThatAreDaysOfTheWeekBeingViewed = (
     startOfWeekDate: string
   ) => {
@@ -127,7 +132,10 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   return (
     <div style={{ marginBottom: "20rem" }}>
       <div>
-        <strong>Today's date: {todaysDateForViewOnly}</strong>
+        <strong onClick={goToTodaysDate} style={{ backgroundColor: "yellow" }}>
+          Today's date: {todaysDateForViewOnly}
+        </strong>
+        <hr />
       </div>
       {props.isAdminBool && (
         <div className="d-flex justify-content-center">
@@ -156,13 +164,22 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 />
               </div>
 
-              <div>
-                <button
-                  className="btn btn-secondary ml-2"
-                  onClick={handleSearchMonthAndYear}
+              <div className="d-flex justify-content-center flex-wrap">
+                <div className="col-12">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={handleSearchMonthAndYear}
+                  >
+                    Search
+                  </button>
+                </div>
+                <div
+                  className="mt-1 col-12"
+                  style={{ fontSize: "10px" }}
+                  onClick={goToTodaysDate}
                 >
-                  Search
-                </button>
+                  <button><u>todays date</u></button>
+                </div>
               </div>
             </div>
           </div>

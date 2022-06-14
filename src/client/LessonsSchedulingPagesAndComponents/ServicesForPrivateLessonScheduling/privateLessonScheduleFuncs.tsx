@@ -1,4 +1,6 @@
 import moment from "moment";
+import { convertCompilerOptionsFromJson } from "typescript";
+import { ContextExclusionPlugin } from "webpack";
 import * as dateTimeHandlingFunctions from "../ServicesForPrivateLessonScheduling/dateTimeHandlingFuncs";
 import {
   IPrivateLessonInfo,
@@ -85,43 +87,98 @@ let submitPrivateLessonFunc = (
     lessonDateForIncrement?: string | any,
     seriesEndDateEntire?: string | any
   ) => {
-    fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lessonInfo),
-    }).then((res) => {
-      if (res.ok) {
-        if (isASeries === false) {
+    if (isASeries === false) {
+      fetch(`/api/schedulingLessons/scheduleNewPrivateLesson`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lessonInfo),
+      }).then((res) => {
+        if (res.ok) {
           alert("Private lesson has been added");
           funcFromStartPageToRenderComp();
+          return;
         } else {
+          alert(
+            //no that i validate the date it is musch less likey this code is hit and is now possibly not needed
+            "Somthing went wrong! Make sure all of the information is correct."
+          );
+          return;
+        }
+      });
+    } else {
+      let checksIfSeriesExceedsFiveYears: boolean =
+        dateTimeHandlingFunctions.makeSureSeriesDoesNotExceedFiveYears(
+          lessonStartDate,
+          seriesEndDate
+        );
+      if (checksIfSeriesExceedsFiveYears) {
+        let batchedLessonsForSql: any[] = [
+          [
+            lessonInfo.coaches_UID,
+            lessonInfo.wrestlerId,
+            lessonInfo.dateOfLesson,
+            lessonInfo.startTime,
+            lessonInfo.duration,
+            lessonInfo.notes,
+            lessonInfo.seriesName,
+          ],
+        ];
+        for (let i = true; i === true; ) {
           let seriesIncrementResult: IDateIncResult | boolean =
             dateTimeHandlingFunctions.seriesWeeklyIncrementFunc(
               lessonDateForIncrement,
               seriesEndDateEntire
             );
+          // console.log(seriesIncrementResult);
           if (seriesIncrementResult) {
+            let newObjToPush = [
+              lessonInfo.coaches_UID,
+              lessonInfo.wrestlerId,
+              seriesIncrementResult.dateForDB,
+              lessonInfo.startTime,
+              lessonInfo.duration,
+              lessonInfo.notes,
+              lessonInfo.seriesName,
+            ];
+
             lessonInfo.dateOfLesson = seriesIncrementResult.dateForDB;
-            insertIntoDatabaseFunc(
-              lessonInfo,
-              true,
-              seriesIncrementResult.dateForFuncLoop,
-              seriesEndDateEntire
-            );
+            lessonDateForIncrement = seriesIncrementResult.dateForFuncLoop;
+            batchedLessonsForSql.push(newObjToPush);
           } else {
-            alert("Private lesson series has been added");
-            funcFromStartPageToRenderComp();
+            i = false;
+            submitBatch(batchedLessonsForSql, funcFromStartPageToRenderComp);
           }
         }
       } else {
-        alert(
-          //no that i validate the date it is musch less likey this code is hit and is now possibly not needed
-          "Somthing went wrong! Make sure all of the information is correct."
-        );
+        alert("Series cannot exceed five years");
       }
-    });
+    }
   };
   submitPrivateLessonInnerFunc();
+};
+let submitBatch = (batch: IPrivateLessonInfo[], reRenderFun: Function) => {
+  if (batch.length > 0) {
+    fetch(`/api/schedulingLessons/scheduleNewPrivateLessonSeriesBatch`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(batch),
+    }).then((res) => {
+      if (res.ok) {
+        alert("Private lesson series has been added");
+        reRenderFun();
+        return;
+      } else {
+        alert(
+          "Something went wrong when tryin to submit your lesson plan series"
+        );
+        reRenderFun();
+        return;
+      }
+    });
+  } else {
+    alert("Private lesson series has been added");
+    reRenderFun();
+  }
 };
 
 export { submitPrivateLessonFunc };

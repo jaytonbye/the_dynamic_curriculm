@@ -127,6 +127,17 @@ router.post("/scheduleNewPrivateLesson", async (req, res) => {
   }
 });
 
+router.post("/scheduleNewPrivateLessonSeriesBatch", async (req, res) => {
+  try {
+    let batch = req.body;
+    await schedulingLessons.postNewPrivateLessonSeriesBatch(batch);
+    res.sendStatus(200)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 //    DELETE     //
 router.delete(
   "/deleteTimeSlotAvailabilityForCoachByAvailId/:availabilityId",

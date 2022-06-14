@@ -155,6 +155,20 @@ const postNewPrivateLesson = async (
   );
 };
 
+const postNewPrivateLessonSeriesBatch = async (values: any) => {
+  return await Query(
+    `insert into private_lesson_bookings(coaches_user_id, wrestler_user_id,
+    date_of_lesson, start_time, duration, notes, series_name)
+    values ?`,
+    [values]
+  );
+};
+
+//  PUT              //
+const putPhoneNumber = async (phoneNumber: string) => {
+  return await Query(``, [phoneNumber]);
+};
+
 //  DELETE          //
 const deleteTimeSlotAvailabilityForCoach = async (
   timeSlotId: number | string
@@ -195,6 +209,8 @@ export default {
   //  POST
   postNewAvailability,
   postNewPrivateLesson,
+  postNewPrivateLessonSeriesBatch,
+  //  PUT
   //  DELETE
   deleteTimeSlotAvailabilityForCoach,
   deleteIndividualPrivateLesson,
