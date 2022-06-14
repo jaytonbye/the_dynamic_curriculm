@@ -5,6 +5,7 @@ import CoachesPrivateLessonScheduleWeeklyCalendarHeader from "./SchedulingCompon
 import CoachAvailabilityForm from "./SchedulingComponents/CoachAvailabilityForm";
 import ScheduleNewPrivateLessonForm from "./SchedulingComponents/ScheduleNewPrivateLessonForm";
 import ViewAllCoachesSchedules from "./SchedulingComponents/ViewAllCoachesSchedules";
+import PhoneNumberForm from "./SchedulingComponents/PhoneNumberForm";
 
 const LessonsSchedulingStartPage = () => {
   let token = localStorage.getItem("token");
@@ -14,6 +15,8 @@ const LessonsSchedulingStartPage = () => {
   let [showAvailabilityButton, setShowAvailabilityButton] =
     useState<boolean>(true);
   let [showscheduleLessonButton, setShowscheduleLessonButton] =
+    useState<boolean>(true);
+  let [showPhoneNumberFormButton, setShowPhoneNumberFormButton] =
     useState<boolean>(true);
   let [
     textForViewAllCoachesOrViewYourSched,
@@ -32,6 +35,8 @@ const LessonsSchedulingStartPage = () => {
   let [showOrHideViewAllCoaches, setShowOrHideViewAllCoaches] =
     useState<boolean>(false);
   let [showOrHideCalendar, setShowOrHideCalendar] = useState<boolean>(true);
+  let [showOrHidePhoneNumberForm, setShowOrHidePhoneNumberForm] =
+    useState<boolean>(false);
 
   useEffect(() => {
     fetch(`/api/schedulingLessons/validateToketInputAvailability`, {
@@ -59,12 +64,22 @@ const LessonsSchedulingStartPage = () => {
     setShowOrHideScheduleNewLessonComponent(false);
     setShowOrHideViewAllCoaches(false);
     setShowOrHideCalendar(true);
+    setShowOrHidePhoneNumberForm(false);
   };
 
   let showScheduleNewLessonComponentFunc = () => {
     setShowOrHideScheduleNewLessonComponent(
       !showOrHideScheduleNewLessonComponent
     );
+    setShowOrHideCochesAvailabilityComponent(false);
+    setShowOrHideViewAllCoaches(false);
+    setShowOrHideCalendar(true);
+    setShowOrHidePhoneNumberForm(false);
+  };
+
+  let showPhoneNumberForm = () => {
+    setShowOrHidePhoneNumberForm(!showOrHidePhoneNumberForm);
+    setShowOrHideScheduleNewLessonComponent(false);
     setShowOrHideCochesAvailabilityComponent(false);
     setShowOrHideViewAllCoaches(false);
     setShowOrHideCalendar(true);
@@ -79,14 +94,17 @@ const LessonsSchedulingStartPage = () => {
       setShowOrHideCalendar(false);
       setShowAvailabilityButton(false);
       setShowscheduleLessonButton(false);
+      setShowPhoneNumberFormButton(false);
     } else {
       setTextForViewAllCoachesOrViewYourSched("All coaches");
       setShowOrHideViewAllCoaches(false);
       setShowOrHideScheduleNewLessonComponent(false);
       setShowOrHideCochesAvailabilityComponent(false);
+      setShowOrHidePhoneNumberForm(false);
       setShowOrHideCalendar(true);
       setShowAvailabilityButton(true);
       setShowscheduleLessonButton(true);
+      setShowPhoneNumberFormButton(true);
     }
   };
 
@@ -111,6 +129,14 @@ const LessonsSchedulingStartPage = () => {
                 className="btn btn-success mr-2"
               >
                 Schedule lesson
+              </button>
+            )}
+            {showPhoneNumberFormButton && (
+              <button
+                onClick={showPhoneNumberForm}
+                className="btn btn-warning mr-2"
+              >
+                Edit phone number
               </button>
             )}
             <button
@@ -141,6 +167,7 @@ const LessonsSchedulingStartPage = () => {
               }
             />
           )}
+          {showOrHidePhoneNumberForm && <PhoneNumberForm userId={UID}/>}
           <div>
             {role === "admin" || role === "coach"
               ? showOrHideCalendar && (

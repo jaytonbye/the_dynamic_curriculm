@@ -7,7 +7,8 @@ const ViewAllCoachesSchedules = (props: IProps) => {
   let [listOfAllByTenantCoaches, setListOfAllByTenantCoaches] =
     useState<Array<IAllCoachesAndAdminsByTenant>>();
   let [selectedCoachUID, setSelectedCoachUID] = useState<number>();
-  let [selectedCoachName, setSelectedCoachName] = useState<string>("Select a coach");
+  let [selectedCoachName, setSelectedCoachName] =
+    useState<string>("Select a coach");
 
   useEffect(() => {
     fetch(
@@ -20,16 +21,18 @@ const ViewAllCoachesSchedules = (props: IProps) => {
   return (
     <div>
       <div className="mt-3 mb-3 d-flex justify-content-center">
-        <div className="text-center card col-12 col-md-6">
+        <div className="text-center card col-12 col-md-11">
           <div>
             <h5>
               <u>All coaches for {props.tenant}</u>
             </h5>
           </div>
-          <div>
+          <div className="d-flex justify-content-center flex-wrap">
             {listOfAllByTenantCoaches?.map((coach) => {
               return (
-                <div key={coach.user_id}>
+                <div
+                className="col-md-3 col-12 pr-0 pl-0"
+                 key={coach.user_id}>
                   <button
                     onClick={() => {
                       setSelectedCoachName(
@@ -37,9 +40,12 @@ const ViewAllCoachesSchedules = (props: IProps) => {
                       );
                       setSelectedCoachUID(coach.user_id);
                     }}
-                    className="btn btn-link"
+                    style={{border:"solid", borderColor: "black" ,borderWidth: "1px"}}
+                    className="btn btn-link mt-1 mb-1"
                   >
                     {coach.first_name} {coach.last_name}
+                    <br />
+                    phone: {coach.phone_number}
                   </button>
                 </div>
               );

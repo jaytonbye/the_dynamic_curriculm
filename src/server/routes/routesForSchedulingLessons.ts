@@ -82,6 +82,17 @@ router.get(
   }
 );
 
+router.get("/getPhoneNumberByUserId/:userId",async (req, res) => {
+  try {
+    let userId = req.params.userId
+    let phoneNumber = await schedulingLessons.getPhoneNumberByUserId(userId)
+    res.json(phoneNumber)
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
+})
+
 //  POST    //
 router.post("/postNewAvailability", async (req, res) => {
   try {
@@ -131,7 +142,21 @@ router.post("/scheduleNewPrivateLessonSeriesBatch", async (req, res) => {
   try {
     let batch = req.body;
     await schedulingLessons.postNewPrivateLessonSeriesBatch(batch);
-    res.sendStatus(200)
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+
+//    PUT       //
+router.put("/addPhoneNumber/:phoneNumber/:coachId", async (req, res) => {
+  try {
+    let phoneNumber = req.params.phoneNumber;
+    let coachId = req.params.coachId;
+    await schedulingLessons.putPhoneNumber(phoneNumber, coachId);
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
