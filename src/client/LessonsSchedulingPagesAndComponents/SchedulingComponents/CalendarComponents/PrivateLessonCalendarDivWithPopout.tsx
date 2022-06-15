@@ -6,12 +6,14 @@ import { IFullPrivateLessonsSchedule } from "../../ServicesForPrivateLessonSched
 import moment from "moment";
 
 const PrivateLessonCalendarDivWithPopout = (props: IProps) => {
-  let [privateLessonsSlotBgColor, setPrivateLessonsSlotBgColor] =
-    useState<string>("limegreen");
+  let [
+    privateLessonsSlotBgColor,
+    setPrivateLessonsSlotBgColor,
+  ] = useState<string>("limegreen");
   let [divTextColor, setDivTextColor] = useState<string>("black");
   let [seriesBGColor, setSeriesBGColor] = useState<string>("coral");
   let [popupDivDisplay, setPopupDivDisplay] = useState<string>("none");
-  let [zIndexForPopus, setZIndexForPopus] = useState<string>("0");
+  let [zIndexForPopus, setZIndexForPopus] = useState<any>("0");
 
   let mouseEnteredDiv = () => {
     handlePopupDiv(true);
