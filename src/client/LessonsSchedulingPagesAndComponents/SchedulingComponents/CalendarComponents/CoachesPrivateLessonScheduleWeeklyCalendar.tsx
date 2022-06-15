@@ -140,7 +140,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
   return (
     <div className="calendar-container">
       <div className="header">
-        <ul className="weekdays" style={{ margin: "0px" }}>
+        <ul className="weekdays" style={{ margin: "0px", fontSize: "70%" }}>
           <li>Sunday</li>
           <li>Monday</li>
           <li>Tuesday</li>

@@ -10,7 +10,8 @@ const getAllCoachesAndAdminsByTenant = async (tenant: string) => {
       u.role,
       u.tenant,
       pi.first_name,
-      pi.last_name
+      pi.last_name,
+      pi.phone_number
       from users u 
       join personal_info pi on u.id = pi.user_id
       where u.tenant = ? and (u.role = "admin" or u.role= "coach");
@@ -124,6 +125,12 @@ WHERE
   );
 };
 
+const getPhoneNumberByUserId = async (userId: string) => {
+  return await Query(`select phone_number from personal_info where user_id = ?;`, [
+    userId,
+  ]);
+};
+
 //      POST        //
 const postNewAvailability = async (
   coachesUid: number,
@@ -152,6 +159,26 @@ const postNewPrivateLesson = async (
     date_of_lesson, start_time, duration, notes, series_name)
     values(?, ?, ?, ?, ?, ?, ?);`,
     [coachId, wrestlerId, dateOfLesson, startTime, duration, notes, seriesName]
+  );
+};
+
+const postNewPrivateLessonSeriesBatch = async (values: any) => {
+  return await Query(
+    `insert into private_lesson_bookings(coaches_user_id, wrestler_user_id,
+    date_of_lesson, start_time, duration, notes, series_name)
+    values ?`,
+    [values]
+  );
+};
+
+//  PUT              //
+const putPhoneNumber = async (phoneNumber: string, coachId: string) => {
+  return await Query(
+    `
+      UPDATE personal_info
+      SET phone_number = ?
+      where user_id = ?;`,
+    [phoneNumber, coachId]
   );
 };
 
@@ -192,9 +219,13 @@ export default {
   getCoachesWeeklyAvailibityByCoachesId,
   getCoachesFullPrivateLessonsSchedule,
   getCoachesFullPrivateLessonsScheduleByWeek,
+  getPhoneNumberByUserId,
   //  POST
   postNewAvailability,
   postNewPrivateLesson,
+  postNewPrivateLessonSeriesBatch,
+  //  PUT
+  putPhoneNumber,
   //  DELETE
   deleteTimeSlotAvailabilityForCoach,
   deleteIndividualPrivateLesson,
