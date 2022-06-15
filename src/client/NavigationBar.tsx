@@ -79,20 +79,16 @@ export default function NavigationBar() {
           >
             Home
           </button>
-<<<<<<< HEAD
-          {userRole === "admin" && <Link to={`/coachesview`} className="btn btn-outline-primary">
-            I'm a coach...
-          </Link>}
-          {userRole === "coach" && <Link to={`/coachesview`} className="btn btn-outline-primary">
-            I'm a coach...
-          </Link>}
-=======
           {userRole === "admin" && (
             <Link to={`/coachesview`} className="btn btn-outline-primary">
               I'm a coach...
             </Link>
           )}
->>>>>>> schedulingComponent
+          {userRole === "coach" && (
+            <Link to={`/coachesview`} className="btn btn-outline-primary">
+              I'm a coach...
+            </Link>
+          )}
           <button
             className="btn btn-outline-primary"
             onClick={goToUnitVideosPage}
