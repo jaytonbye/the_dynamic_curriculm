@@ -11,7 +11,7 @@ import GradingKey from "./GradingKey";
 import classNames from "classnames";
 
 const CoachesView = (props: CoachesViewProps) => {
-  const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState([]);
+  const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState<any>([]);
   const [personal_info, setPersonalInfo] = React.useState([]);
   const [wrestler1Id, setWrestler1Id] = React.useState<number>();
   const [wrestler2Id, setWrestler2Id] = React.useState<number>();
@@ -153,7 +153,7 @@ const CoachesView = (props: CoachesViewProps) => {
     } else {
       try {
         fetch(
-          `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}&${UID}`,
+          `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}/${wrestler2Id}/${level}/${UID}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -171,7 +171,7 @@ const CoachesView = (props: CoachesViewProps) => {
   React.useEffect(() => {
     if (uselessState3 > 0) {
       fetch(
-        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}&${wrestler2Id}&${level}&${UID}`,
+        `/api/grades/gradesForTwoWresltersOnASpecificLevel/${wrestler1Id}/${wrestler2Id}/${level}/${UID}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

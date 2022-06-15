@@ -8,7 +8,7 @@ function GradesOfX() {
   const onGradeChange = (event: any) => {
     let grade = event.target.value;
     fetch(
-      `/api/grades/allSpecificCurrentGradesForASingleWrestler/${UID}&${grade}`,
+      `/api/grades/allSpecificCurrentGradesForASingleWrestler/${UID}/${grade}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -32,7 +32,7 @@ function GradesOfX() {
       <div className="container">
         <div className="col-12">
           <div>
-            {movesAndGrades.map((move) => {
+            {movesAndGrades.map((move: any) => {
               return (
                 <div key={move.id}>
                   <hr />

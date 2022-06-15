@@ -104,7 +104,7 @@ export default function AllGradesAllLevels(props: any) {
 
   React.useEffect(() => {
     fetch(
-      `/api/grades/gradesForTwoWresltersOnAllLevels/${props.wrestler1Id}&${props.wrestler2Id}&${UID}`,
+      `/api/grades/gradesForTwoWresltersOnAllLevels/${props.wrestler1Id}/${props.wrestler2Id}/${UID}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -150,7 +150,7 @@ export default function AllGradesAllLevels(props: any) {
         </thead>
 
         <tbody>
-          {grades.map((video) => {
+          {grades.map((video: any) => {
             return (
               <tr key={`${video.id}`}>
                 <td>{video.curriculum_level}</td>

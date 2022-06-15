@@ -15,7 +15,7 @@ function SingleLevel() {
   //gets us all of the moves and grades for specific wrestler on specific level (currently user 3 level 1)
   React.useEffect(() => {
     fetch(
-      `/api/grades/gradesForSingleWreslterOnSpecificLevel/${UID}&${level}`,
+      `/api/grades/gradesForSingleWreslterOnSpecificLevel/${UID}/${level}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

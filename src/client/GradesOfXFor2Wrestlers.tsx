@@ -22,7 +22,7 @@ function GradesOfXFor2Wrestlers(props: any) {
     setGradeSelectedForSearch(grade);
     fetch(
       //wrong url
-      `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
+      `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}/${props.wrestler2Id}/${grade}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -38,7 +38,7 @@ function GradesOfXFor2Wrestlers(props: any) {
     //the purpose of the if statement is to delay this from running until the 3 things exist
     if (props.wrestler1Id && props.wrestler2Id && grade) {
       fetch(
-        `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}&${grade}`,
+        `/api/grades/allSpecificCurrentGradesForTwoWrestlers/${props.wrestler1Id}/${props.wrestler2Id}/${grade}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -150,7 +150,7 @@ function GradesOfXFor2Wrestlers(props: any) {
       />
       <p>(Limit 10 results)</p>
       <div className="divForLevel">
-        {movesAndGrades.map((move) => {
+        {movesAndGrades.map((move: any) => {
           return (
             <>
               <div key={move.id}>
