@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { IGradesForSingleWreslterOnSpecificLevel } from "../types/index";
 import classNames from "classnames";
-import GradingDashboard2pointO from "./GradingDashboard2pointO";
+import GradingDashboardMadeByLuke from "./GradingDashboardMadeByLuke";
 
 //why am I not using typing here?
 
@@ -29,7 +29,7 @@ function SingleLevel() {
   return (
     <>
       <Link to={`/wrestlersview`}> Go back to homepage</Link>
-      <GradingDashboard2pointO />
+      <GradingDashboardMadeByLuke UID={Number(UID)} />
       <h1 className="text text-center mb-3">
         You are currently viewing level {level} of the Dynamic Wrestling
         Curriculum!

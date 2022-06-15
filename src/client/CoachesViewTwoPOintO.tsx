@@ -129,13 +129,13 @@ const CoachesView = (props: CoachesViewProps) => {
     ) {
       laughInWrestlersFace();
     } else {
-      personal_info.map((person) => {
+      personal_info.map((person: any) => {
         if (person.user_id === wrestler1Id) {
           setWrestler1FullName(person.first_name + " " + person.last_name);
         }
       });
 
-      personal_info.map((person2) => {
+      personal_info.map((person2: any) => {
         if (person2.user_id === wrestler2Id) {
           setWrestler2FullName(person2.first_name + " " + person2.last_name);
         }
@@ -284,7 +284,7 @@ const CoachesView = (props: CoachesViewProps) => {
             onChange={onWrestler1Change}
           />
           <datalist id="wrestler1List">
-            {personal_info.map((wrestler) => {
+            {personal_info.map((wrestler: any) => {
               return (
                 <option
                   key={wrestler.user_id}
@@ -304,7 +304,7 @@ const CoachesView = (props: CoachesViewProps) => {
         <label className="h4">Wrestler 2: </label>
         <input type="text" list="wrestler2List" onChange={onWrestler2Change} />
         <datalist id="wrestler2List">
-          {personal_info.map((wrestler) => {
+          {personal_info.map((wrestler: any) => {
             return (
               <option
                 key={wrestler.user_id}
@@ -349,7 +349,7 @@ const CoachesView = (props: CoachesViewProps) => {
           </>
         )}
         <div className="divForLevel">
-          {gradesForBothWrestlersOnCurrentLevel.map((move) => {
+          {gradesForBothWrestlersOnCurrentLevel.map((move: any) => {
             return (
               <div key={`${move.id} ${move.wrestler_1_grade}`}>
                 <div className="" style={{ width: "100vw" }}>
@@ -426,7 +426,7 @@ const CoachesView = (props: CoachesViewProps) => {
                       onClick={() => {
                         submitGrade(
                           move.id,
-                          wrestler1Id,
+                          Number(wrestler1Id),
                           Number(wrestler1NewGrade[move.id]),
                           wrestler1NewNote[move.id],
                           move.maximum_grade
@@ -484,7 +484,7 @@ const CoachesView = (props: CoachesViewProps) => {
                       onClick={() => {
                         submitGrade(
                           move.id,
-                          wrestler2Id,
+                          Number(wrestler2Id),
                           Number(wrestler2NewGrade[move.id]),
                           wrestler2NewNote[move.id],
                           move.maximum_grade

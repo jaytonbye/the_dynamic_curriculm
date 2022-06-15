@@ -88,6 +88,7 @@ router.post(
   }
 );
 
+// We should not just leave request.body here we should always asign each part to a variable an duse it for the sql query
 router.put("/", hasValidAdminToken, async (req, res) => {
   try {
     res.json(await db.users.updateUser(req.body));
@@ -118,6 +119,16 @@ router.put("/passwordReset", async (req, res) => {
   let newPassword = req.body.newPassword;
   try {
     res.json(await db.users.resetPassword(user_id, newPassword));
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+router.put("/updateRole", async (req, res) => {
+  let user_id = req.body.id;
+  let newRole = req.body.role;
+  try {
+    res.json(await db.users.updateRoleOnly(user_id, newRole));
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

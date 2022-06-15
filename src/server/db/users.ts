@@ -20,7 +20,6 @@ const singleUser = async (id: number) => {
 
 const createUser = async (user: IUser) => {
   let hashedPassword = generateHash(user.password);
-  console.log(user.role);
   return <Promise<any>>(
     Query(
       `INSERT INTO users (email, password, role, real_email, tenant) VALUES (?,?,?,?,?)`,
@@ -33,6 +32,14 @@ const updateUser = async (user: IUser) => {
   return Query(
     `UPDATE users SET email=?, password=?, role=?, real_email=? WHERE id=?`,
     [user.email, user.password, user.role, user.real_email, user.id]
+  );
+};
+
+// TODO This is used to update the role only in the admin component, but I think we should add an if statement here that only allows the update to happen if the tenant of the admin matches the tenant of the user.
+const updateRoleOnly = async (id: number, role: string) => {
+  return Query(
+    `UPDATE users SET role=? WHERE id=?`,
+    [role, id]
   );
 };
 
@@ -78,4 +85,5 @@ export default {
   deleteCorrespondingPersonal_info,
   resetPassword,
   getAllUserIDsForPasswordReset,
+  updateRoleOnly
 };

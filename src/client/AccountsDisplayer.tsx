@@ -2,18 +2,30 @@ import React, { useEffect } from 'react'
 
 export default function AccountsDisplayer(props: any) {
 
-    const [roles, setRoles] = React.useState([]);
 
-    React.useEffect(() => {
-        fetch('./Objects.json')
-            .then((res) => res.json())
-            .then((roles) => setRoles(roles))
-            .catch((err) => {
-                console.log(err);
-            });
+    const changeRole = (role: string, id: number) => {
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer token`,
+            },
+            body: JSON.stringify({
+                role: role,
+                id: id,
+            }),
+        };
 
-    }, [])
+        fetch(`/api/users/updateRole`, requestOptions).then((res) => {
+            if (res.ok) {
+                alert("The role was changed to " + role + "!");
+            } else {
+                alert("it didn't work! Coach Wayne Apologizes try again later and let him know what happened.");
+            }
+        });
 
+
+    }
 
     const onDeleteItem = (id: number) => {
         if (confirm("Are you sure you want to delete this item? This cannot be undone. And will remove all grades and data associated with the user.")) {
@@ -55,23 +67,15 @@ export default function AccountsDisplayer(props: any) {
                                 <td>{account.email}</td>
                                 <td>{account.real_email}</td>
                                 <td>
-                                    <td>{account.role}</td>
-                                    <datalist id="roles">
-                                        {roles.map((wrestler) => {
-                                            return (
-                                                <option
-                                                    key={wrestler.user_id}
-                                                    value={
-                                                        wrestler.first_name +
-                                                        " " +
-                                                        wrestler.last_name +
-                                                        " -+- " +
-                                                        String(wrestler.user_id)
-                                                    }
-                                                ></option>
-                                            );
-                                        })}
-                                    </datalist>
+                                    <label >Role:</label>
+                                    <select name="languages" id="role" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                                        changeRole(e.target.value, account.id);
+                                    }}>
+                                        <option value={account.role}>{account.role}</option>
+                                        <option value="wrestler">wrestler</option>
+                                        <option value="coach">coach</option>
+                                        <option value="admin">admin</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <button
