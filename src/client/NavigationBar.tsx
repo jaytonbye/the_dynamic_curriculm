@@ -21,7 +21,6 @@ export default function NavigationBar() {
       });
   });
 
-  console.log({ userRole, userTenant });
 
   let history = useHistory();
   let logout = () => {
