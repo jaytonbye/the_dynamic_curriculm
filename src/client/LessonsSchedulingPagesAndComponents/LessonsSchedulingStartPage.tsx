@@ -92,6 +92,7 @@ const LessonsSchedulingStartPage = () => {
       setShowOrHideScheduleNewLessonComponent(false);
       setShowOrHideCochesAvailabilityComponent(false);
       setShowOrHideCalendar(false);
+      setShowOrHidePhoneNumberForm(false)
       setShowAvailabilityButton(false);
       setShowscheduleLessonButton(false);
       setShowPhoneNumberFormButton(false);

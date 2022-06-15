@@ -178,7 +178,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                   style={{ fontSize: "10px" }}
                   onClick={goToTodaysDate}
                 >
-                  <button><u>todays date</u></button>
+                  <button><u>Go to today</u></button>
                 </div>
               </div>
             </div>

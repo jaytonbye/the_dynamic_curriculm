@@ -155,7 +155,7 @@ const ScheduleNewPrivateLessonForm = (props: IProps) => {
                 series end date <small> (optional)</small>:
                 <br />
                <small style={{fontSize: "10px"}}>select an end date if you would like lesson<br />
-               to occur weekly on the same day & time</small>
+               to reccur weekly on the same day & time</small>
               </h5>
               <input
                 onChange={(e: any) => setSeriesEndDate(e.target.value)}
