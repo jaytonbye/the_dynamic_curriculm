@@ -19,6 +19,7 @@ import CreateAndEditPlan from "./ForPracticePlaylistComponents/CreateAndEditPlan
 import EditLessonPlan from "./ForPracticePlaylistComponents/EditLessonPlan";
 import ViewPlans from "./ForPracticePlaylistComponents/components/ViewPlans";
 import PlayLessonPlanStartPage from "./ForPracticePlaylistComponents/PlayLessonPlanStartPage";
+import LessonsSchedulingStartPage from "./LessonsSchedulingPagesAndComponents/LessonsSchedulingStartPage";
 
 const App = (props: AppProps) => {
   return (
@@ -59,6 +60,10 @@ const App = (props: AppProps) => {
             <AllGradesAllLevels />
           </Route>
 
+          <Route exact path="/LessonsScheduling">
+            <LessonsSchedulingStartPage />
+          </Route>
+          
           <Route exact path="/CreateALessonPlan">
             <CreateAndEditPlan />
           </Route>

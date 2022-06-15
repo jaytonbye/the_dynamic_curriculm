@@ -9,6 +9,7 @@ import Contact from "./routes/Contact";
 import routesForNotesFromCoachesForWrestlers from "./routes/routesForNotesFromCoachesForWrestlers";
 import routesForEarnableItems from "./routes/EarnableItemsRoute";
 import routesForLessonPlans from "./routes/routesForLessonPlans";
+import routesForSchedulingLessons from "./routes/routesForSchedulingLessons";
 
 const router = express.Router();
 
@@ -28,5 +29,6 @@ router.use(
 );
 router.use("/earnableItems", routesForEarnableItems);
 router.use("/lessonplans", routesForLessonPlans);
+router.use("/schedulingLessons", routesForSchedulingLessons);
 
 export default router;

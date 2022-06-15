@@ -1,0 +1,260 @@
+li {
+    list-style: none;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.calendar-container {
+    min-width: 330px;
+    display: grid;
+    grid-template-columns: 50px auto;
+    grid-template-rows: auto;
+    gap: 1px 1px;
+    grid-template-areas:
+        ". header"
+        "timeslots-container main"
+}
+
+.weekdays,
+.daynumbers {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.daynumbers {
+    min-height: 2em;
+}
+
+.weekdays {
+    // top: 0;
+    // position: sticky;
+    background: lightblue;
+    top: 0;
+    // align-self: ;
+}
+
+.header {
+    overflow: auto;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    background: gray;
+    grid-area: header;
+    margin-left: 10px;
+    // position: sticky;
+}
+
+.timeslots-container {
+    background: lightgray;
+    grid-area: timeslots-container;
+    justify-content: left;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.timeslots {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timeslots li {
+    min-height: 60px;
+}
+
+.timeslots li::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    z-index: 1;
+}
+
+.event-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(288, 1fr);
+    grid-area: main;
+    position: relative;
+    margin-left: 10px;
+}
+
+.slot {
+    opacity: 95%;
+    position: absolute;
+    // background: gold;
+    border-radius: 5px;
+    border-width: 2px;
+    z-index: 5;
+    color: black;
+    font-size: 12px;
+}
+
+.seperator-sun-mon,
+.seperator-mon-tue,
+.seperator-tue-wed,
+.seperator-wed-thurs,
+.seperator-thurs-fri,
+.seperator-fri-sat {
+    position: absolute;
+    height: 180rem;
+    width: 2px;
+    background: lightgray;
+    z-index: -2;
+}
+
+.seperator-sun-mon {
+    grid-column: 2;
+}
+
+.seperator-mon-tue {
+    grid-column: 3;
+}
+
+.seperator-tue-wed {
+    grid-column: 4;
+}
+
+.seperator-wed-thurs {
+    grid-column: 5;
+}
+
+.seperator-thurs-fri {
+    grid-column: 6;
+}
+
+.seperator-fri-sat {
+    grid-column: 7;
+}
+
+// .seperator-sat-end {
+//     grid-column: 8;
+// }
+
+.test-slot {
+    //if lesson is like 5 min the words overflow
+    // how long, wich day, what time
+    // 60 px = 30 min
+    //important time start at 1 (+6 = 30 min)
+    height: 120px; //length of time (min * 2 = #ofpx)
+    grid-row: 144; //strat time
+    grid-column: 2; //day of week
+    // width: 16.78%;
+    border-style: solid;
+    //for start time hour*12 + 1
+    // when its like 3:30... still * 12 + 1 however, 3:30 would first = 3.5 instead
+}
+
+//availability slots 
+
+.all-availability-slots {
+    overflow: hidden;
+    background: lightgray;
+    border-style: solid;
+    border-color: red;
+    border-width: 2px;
+}
+
+.lesson-slot {
+    // background: lightgreen;
+    border-style: solid;
+    border-width: 2px;
+}
+
+
+.sunday,
+.weekday6 {
+    grid-column: 1;
+    width: 14.4%;
+}
+
+.monday,
+.weekday0 {
+    grid-column: 2;
+    width: 16.78%;
+}
+
+.tuesday,
+.weekday1 {
+    grid-column: 3;
+    width: 20.1%;
+}
+
+.wednesday,
+.weekday2 {
+    grid-column: 4;
+    width: 25.1%;
+}
+
+.thursday,
+.weekday3 {
+    grid-column: 5;
+    width: 33.5%;
+}
+
+.friday,
+.weekday4 {
+    grid-column: 6;
+    width: 50.2%;
+}
+
+.saturday,
+.weekday5 {
+    grid-column: 7;
+    width: 110%;
+}
+
+.pirvate-lesson-wd-6 {
+    margin-left: 5px;
+    margin-right: 1%;
+}
+
+.pirvate-lesson-wd-0 {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.pirvate-lesson-wd-1 {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.pirvate-lesson-wd-2 {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.pirvate-lesson-wd-3 {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.pirvate-lesson-wd-4 {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.pirvate-lesson-wd-5 {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.series-slot{
+    border-color: aqua;
+}
+
+.popup-div {
+    right: 3px;
+    bottom: 60px;
+    padding: 3px;
+    position: absolute;
+    z-index: 2;
+    background-color: orange;
+    color: black;
+    width: 100px;
+}
