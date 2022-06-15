@@ -4,6 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 export default function NavigationBar() {
   const [counter, setCounter] = React.useState(0);
   const [userRole, setUserRole] = React.useState("");
+  const [userTenant, setUserTenant] = React.useState("");
+  const [dynamicCoach, setDynamicCoach] = React.useState(false);
 
   let UID = Number(localStorage.getItem("UID"));
 
@@ -12,8 +14,14 @@ export default function NavigationBar() {
       .then((res) => res.json())
       .then((results) => {
         setUserRole(results[0].role);
+        setUserTenant(results[0].tenant);
+        if (results[0].role === "coach" || results[0].role === "admin" && results[0].tenant === "dynamic") {
+          setDynamicCoach(true);
+        }
       });
   });
+
+  console.log({ userRole, userTenant });
 
   let history = useHistory();
   let logout = () => {
@@ -69,6 +77,7 @@ export default function NavigationBar() {
     if (counter < 5) setCounter(counter + 1);
   };
 
+
   return (
     <>
       <nav className="navbar navbar-light bg-light">
@@ -114,6 +123,11 @@ export default function NavigationBar() {
             <button className="btn btn-outline-danger" onClick={goToAdminPage}>
               Admin Panel
             </button>
+          )}
+          {dynamicCoach && (
+            <a href="https://war-zone-groupings-and-texting.herokuapp.com/" target="_blank" className="btn btn-outline-danger" >
+              Find Partners
+            </a>
           )}
           <button className="btn btn-outline-info">
             <a
