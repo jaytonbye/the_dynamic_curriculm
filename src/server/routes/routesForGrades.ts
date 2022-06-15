@@ -19,7 +19,7 @@ router.get("/allCurrentGradesForASingleWrestler/:user_id", async (req, res) => {
 
 // This is what a get request would look like for user_id=3, user_id=6 and grade=1: http://localhost:3000/api/grades/allSpecificCurrentGradesForTwoWrestlers/3&6&1
 router.get(
-  "/allSpecificCurrentGradesForTwoWrestlers/:wrestler1Id&:wrestler2Id&:grade",
+  "/allSpecificCurrentGradesForTwoWrestlers/:wrestler1Id/:wrestler2Id/:grade",
   hasValidCoachToken,
   async (req, res) => {
     let wrestler1Id = Number(req.params.wrestler1Id);
@@ -43,7 +43,7 @@ router.get(
 
 // This is what a get request would look like for user_id=3 and grade=1: http://localhost:3000/api/grades/allSpecificCurrentGradesForASingleWrestler/3&1
 router.get(
-  "/allSpecificCurrentGradesForASingleWrestler/:user_id&:grade",
+  "/allSpecificCurrentGradesForASingleWrestler/:user_id/:grade",
   async (req, res) => {
     //@ts-ignore
     let user_id = Number(req.params.user_id);
@@ -65,7 +65,7 @@ router.get(
 
 // This is what a get request would look like for user_id=3 and level=1: http://localhost:3000/api/grades/gradesForSingleWreslterOnSpecificLevel/3&1
 router.get(
-  "/gradesForSingleWreslterOnSpecificLevel/:user_id&:level",
+  "/gradesForSingleWreslterOnSpecificLevel/:user_id/:level",
   async (req, res) => {
     //@ts-ignore
     let user_id = Number(req.params.user_id);
@@ -84,7 +84,7 @@ router.get(
 
 // This is what a get request would look like for user_id=3, user_id=6 and level=1: http://localhost:3000/api/grades/gradesForTwoWresltersOnASpecificLevel/3&6&1
 router.get(
-  "/gradesForTwoWresltersOnASpecificLevel/:wrestler1&:wrestler2&:level&:coachID",
+  "/gradesForTwoWresltersOnASpecificLevel/:wrestler1/:wrestler2/:level/:coachID",
   hasValidCoachToken,
   async (req, res) => {
     let wrestler1 = Number(req.params.wrestler1);
@@ -108,7 +108,7 @@ router.get(
 );
 
 router.get(
-  "/gradesForTwoWresltersOnAllLevels/:wrestler1&:wrestler2&:coachUID",
+  "/gradesForTwoWresltersOnAllLevels/:wrestler1/:wrestler2/:coachUID",
   hasValidCoachToken,
   async (req, res) => {
     let wrestler1 = Number(req.params.wrestler1);
