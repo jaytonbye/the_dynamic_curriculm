@@ -2,9 +2,16 @@ import { json } from "express";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { ContextExclusionPlugin } from "webpack";
 import NavigationBar from "../NavigationBar";
 
 let EditLessonPlan = () => {
+  ///for j's rookie dropdown
+  let [display, setDisplay] = React.useState(false);
+  let [searchInputFieldValView, setSearchInputFieldValView] =
+    React.useState("");
+  let wrapperRef = React.useRef(null);
+  ///
   let [lessonPlanName, setLessonPlanName] = React.useState<string>();
   let [lessonPlanNewName, setLessonPlanNewName] = React.useState<string>();
   let [videosByTenant, setVideosByTenant] = React.useState([]);
@@ -86,13 +93,15 @@ let EditLessonPlan = () => {
   };
 
   let onMoveChange = (event: any) => {
+    // console.log("yp")
+    console.log(event.target);
     let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
     let moveIdAfterSlice = event.target.value.slice(
       whereToSliceFrom,
       event.target.value.length
     );
 
-    setSearchedMoveId(moveIdAfterSlice);
+    setSearchedMoveId(event.target.value);
   };
 
   React.useEffect(() => {
@@ -109,7 +118,7 @@ let EditLessonPlan = () => {
       );
   }, []);
 
-  React.useEffect(() => {
+  React.useEffect(() => {   // closes dropdown when clicked off of div
     for (let x = 0; x < videosByTenant.length; x++) {
       if (videosByTenant[x].id === Number(searchedMoveId)) {
         setSearchedMoveObject(videosByTenant[x]);
@@ -117,9 +126,82 @@ let EditLessonPlan = () => {
     }
   }, [searchedMoveId]);
 
+  //for j dropdown
+  React.useEffect(() => {
+    document.addEventListener("mousedown", handleClickedOutsideDropdown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickedOutsideDropdown);
+    };
+  }, []);
+
+  let handleClickedOutsideDropdown = (e: any) => {
+    let { current: wrap } = wrapperRef;
+    if (wrap && !wrap.contains(e.target)) {
+      setDisplay(false);
+    }
+  };
+
   return (
     <>
       <NavigationBar />
+
+      {/* ///for j's rookie dropdown */}
+      <div ref={wrapperRef}>
+        <input
+          style={{ maxWidth: "200px" }}
+          type="text"
+          onClick={() => {
+            (!searchInputFieldValView)?setDisplay(true):
+            setDisplay(false)
+
+          }}
+          value={searchInputFieldValView}
+          onChange={(event: any) => {
+            setSearchInputFieldValView(event.target.value);
+            setDisplay(true);
+          }}
+        />
+        {display && (
+          <div
+            className="auto-container"
+            style={{
+              whiteSpace: "nowrap",
+              backgroundColor: "white",
+              maxWidth: "200px",
+              maxHeight: "190px",
+              overflow: "scroll",
+              position: "absolute",
+              zIndex: "1",
+            }}
+          >
+            {videosByTenant
+              .filter(
+                ({ name_of_video }) =>
+                  name_of_video
+                    .toLowerCase()
+                    .indexOf(searchInputFieldValView.toLowerCase()) > -1
+              )
+              .map((move) => {
+                return (
+                  <div
+                    onClick={() => {
+                      setSearchInputFieldValView(move.name_of_video);
+                      setSearchedMoveId(move.id);
+                      setDisplay(false);
+                    }}
+                    key={move.id}
+                    tabIndex={0}
+                    >
+                    <span>{move.name_of_video}</span>
+                  </div>
+                );
+              })}
+          </div>
+        )}
+      </div>
+      {/*  */}
+
       <div className="m-3" style={{ paddingBottom: "10rem" }}>
         <div>
           <Link to={"/CreateALessonPlan"} className="btn btn-primary">
@@ -144,7 +226,7 @@ let EditLessonPlan = () => {
           </h3>
         </div>
         <hr />
-        <div className="text-center">
+        {/* <div className="text-center">
           <label className="h4 mt-5 mb-5 mr-2">Select a move:</label>
           <input type="text" list="moveList" onChange={onMoveChange} />
           <datalist id="moveList">
@@ -152,12 +234,16 @@ let EditLessonPlan = () => {
               return (
                 <option
                   key={move.id}
-                  value={move.name_of_video + " -+- " + String(move.id)}
-                ></option>
+                  id={move.id}
+                  // defaultValue={move.name_of_video}
+                  value={move.id}
+                >
+                  {move.name_of_video}
+                </option>
               );
             })}
           </datalist>
-        </div>
+        </div> */}
 
         <div className="container">
           <h5>{searchedMoveObject.name_of_video}</h5>
