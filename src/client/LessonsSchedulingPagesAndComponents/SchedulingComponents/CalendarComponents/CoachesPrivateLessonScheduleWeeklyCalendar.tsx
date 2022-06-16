@@ -15,12 +15,10 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
   let [coachesAvailability, setCoachesAvailability] = useState<
     Array<IAvailabilityForCoachesId>
   >([]);
-  let [
-    coachesWeeklyScheduleForTheWeek,
-    setCoachesWeeklyScheduleForTheWeek,
-  ] = useState<Array<IFullPrivateLessonsSchedule>>(
-    props.weeklyPrivateLessonsSchedule
-  );
+  let [coachesWeeklyScheduleForTheWeek, setCoachesWeeklyScheduleForTheWeek] =
+    useState<Array<IFullPrivateLessonsSchedule>>(
+      props.weeklyPrivateLessonsSchedule
+    );
   let marginLeftMultiplyNumber = 0;
   let privateLessonDate: string;
   let privateLessonTime: string;
@@ -113,17 +111,19 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
         marginLeftMultiplyNumber = 0;
         privateLessonDate = privLessonDateFuncParam;
         privateLessonTime = privLessonTimeFuncParam;
-        let widthPercentageForWeekdayConfigured: any = returnsPercentageForLessonSlotWidth(
-          dayOfWeekAsNum,
-          amountOfTimesLessonOccurs
-        );
+        let widthPercentageForWeekdayConfigured: any =
+          returnsPercentageForLessonSlotWidth(
+            dayOfWeekAsNum,
+            amountOfTimesLessonOccurs
+          );
         return widthPercentageForWeekdayConfigured * marginLeftMultiplyNumber;
       } else {
         marginLeftMultiplyNumber++;
-        let widthPercentageForWeekdayConfigured: any = returnsPercentageForLessonSlotWidth(
-          dayOfWeekAsNum,
-          amountOfTimesLessonOccurs
-        );
+        let widthPercentageForWeekdayConfigured: any =
+          returnsPercentageForLessonSlotWidth(
+            dayOfWeekAsNum,
+            amountOfTimesLessonOccurs
+          );
         return widthPercentageForWeekdayConfigured * marginLeftMultiplyNumber;
       }
     }
@@ -139,7 +139,51 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
 
   return (
     <div className="calendar-container">
-      <div className="header">
+      <div className="header viewingdates-scroll-arrows">
+        <div
+          className="d-flex align-items-center justify-content-center text-center"
+          style={{ backgroundColor: "white" }}
+        >
+          <div className="d-flex flex-wrap justify-content-center">
+            <div className="col-12 p-0 d-flex flex-wrap">
+              <div className="col-2 p-0">
+                <button
+                  className="m-0 btn btn-outline-dark left-arrow"
+                  onClick={props.handleLeftArrowWeekCycle}
+                >
+                  {" "}
+                  &larr;
+                </button>
+              </div>
+              <div className="col-8 p-0 d-flex flex-wrap justify-content-center">
+                <div
+                  className="mt-1 col-10"
+                  style={{ fontSize: "10px" }}
+                  onClick={props.goToTodaysDate}
+                >
+                  <button>
+                    <u>Go to today</u>
+                  </button>
+                </div>
+                <div>
+                  <p className="p-0 m-0" style={{ fontSize: "12px" }}>
+                    {props.weekStartDate} - {props.weekEndDate}
+                  </p>
+                </div>
+              </div>
+              <div className="col-2 p-0">
+                <button
+                  className="btn btn-outline-dark right-arrow"
+                  onClick={props.handleRightArrowWeekCycle}
+                >
+                  {" "}
+                  &#8594;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <ul className="weekdays" style={{ margin: "0px", fontSize: "70%" }}>
           <li>Sunday</li>
           <li>Monday</li>
@@ -327,9 +371,10 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
               <div
                 className={`slot all-availability-slots ${availableDay.day_of_week}`}
                 style={{
-                  gridRow: dateTimeHandlingFunctions.startTimeValueForStyleSheet(
-                    availableDay.start_time
-                  ),
+                  gridRow:
+                    dateTimeHandlingFunctions.startTimeValueForStyleSheet(
+                      availableDay.start_time
+                    ),
                   height: `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
                     availableDay.start_time,
                     availableDay.stop_time,
@@ -368,9 +413,10 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
                 style={{
                   position: "absolute",
 
-                  gridRow: dateTimeHandlingFunctions.startTimeValueForStyleSheet(
-                    privateLesson.start_time
-                  ),
+                  gridRow:
+                    dateTimeHandlingFunctions.startTimeValueForStyleSheet(
+                      privateLesson.start_time
+                    ),
                   height: `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
                     privateLesson.start_time,
                     privateLesson.duration,
@@ -401,6 +447,19 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
             );
           })
         )}
+        <div
+          className="timeline blueline-marks-time"
+          style={{
+            gridRow: dateTimeHandlingFunctions.startTimeValueForStyleSheet(
+              props.currentTimeForCalendarBlueLine
+            ),
+            height: "3px",
+            backgroundColor: "aqua",
+            width: "100%",
+            zIndex: "1003",
+            position: "absolute",
+          }}
+        ></div>
       </div>
     </div>
   );
@@ -412,7 +471,13 @@ interface IProps {
   coachesId: number;
   weeklyPrivateLessonsSchedule: IFullPrivateLessonsSchedule[] | any;
   daysOfWeek: string[] | any;
+  currentTimeForCalendarBlueLine: any;
   propUsedOnlyForReRender?: boolean;
   boolFuncForReRender: any;
   isAdminBoolFromHeader: boolean;
+  weekStartDate: string;
+  weekEndDate: string;
+  handleLeftArrowWeekCycle: Function | any;
+  handleRightArrowWeekCycle: Function | any;
+  goToTodaysDate: Function | any;
 }
