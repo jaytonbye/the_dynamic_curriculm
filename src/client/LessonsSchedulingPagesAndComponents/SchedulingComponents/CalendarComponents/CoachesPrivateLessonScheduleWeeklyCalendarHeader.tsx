@@ -221,8 +221,8 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
             <div
               className="coaches-availability-legend ml-3 mr-3"
               style={{
-                height: "30px",
-                width: "70px",
+                height: "80px",
+                width: "75px",
                 backgroundColor: "lightgray",
                 borderColor: "red",
                 borderStyle: "solid",
@@ -230,13 +230,13 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 borderRadius: "5px",
               }}
             >
-              <small>Availability</small>
+              <small>Coach is available for lessons</small>
             </div>
             <div
               className="lesson-series-legend ml-3 mr-3"
               style={{
-                height: "30px",
-                width: "70px",
+                height: "80px",
+                width: "75px",
                 backgroundColor: "limegreen",
                 borderColor: "black",
                 borderStyle: "solid",
@@ -244,13 +244,13 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 borderRadius: "5px",
               }}
             >
-              <small>Lesson</small>
+              <small>Single lesson</small>
             </div>
             <div
               className="private-lesson-legend ml-3 mr-3"
               style={{
-                height: "30px",
-                width: "70px",
+                height: "80px",
+                width: "75px",
                 backgroundColor: "coral",
                 borderColor: "aqua",
                 borderStyle: "solid",
@@ -258,7 +258,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 borderRadius: "5px",
               }}
             >
-              <small>Series</small>
+              <small>Weekly lesson</small>
             </div>
           </div>
         </div>
