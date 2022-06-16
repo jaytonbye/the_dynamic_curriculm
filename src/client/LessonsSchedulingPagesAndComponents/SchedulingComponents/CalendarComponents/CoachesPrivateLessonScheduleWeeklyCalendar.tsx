@@ -15,10 +15,12 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
   let [coachesAvailability, setCoachesAvailability] = useState<
     Array<IAvailabilityForCoachesId>
   >([]);
-  let [coachesWeeklyScheduleForTheWeek, setCoachesWeeklyScheduleForTheWeek] =
-    useState<Array<IFullPrivateLessonsSchedule>>(
-      props.weeklyPrivateLessonsSchedule
-    );
+  let [
+    coachesWeeklyScheduleForTheWeek,
+    setCoachesWeeklyScheduleForTheWeek,
+  ] = useState<Array<IFullPrivateLessonsSchedule>>(
+    props.weeklyPrivateLessonsSchedule
+  );
   let marginLeftMultiplyNumber = 0;
   let privateLessonDate: string;
   let privateLessonTime: string;
@@ -111,19 +113,17 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
         marginLeftMultiplyNumber = 0;
         privateLessonDate = privLessonDateFuncParam;
         privateLessonTime = privLessonTimeFuncParam;
-        let widthPercentageForWeekdayConfigured: any =
-          returnsPercentageForLessonSlotWidth(
-            dayOfWeekAsNum,
-            amountOfTimesLessonOccurs
-          );
+        let widthPercentageForWeekdayConfigured: any = returnsPercentageForLessonSlotWidth(
+          dayOfWeekAsNum,
+          amountOfTimesLessonOccurs
+        );
         return widthPercentageForWeekdayConfigured * marginLeftMultiplyNumber;
       } else {
         marginLeftMultiplyNumber++;
-        let widthPercentageForWeekdayConfigured: any =
-          returnsPercentageForLessonSlotWidth(
-            dayOfWeekAsNum,
-            amountOfTimesLessonOccurs
-          );
+        let widthPercentageForWeekdayConfigured: any = returnsPercentageForLessonSlotWidth(
+          dayOfWeekAsNum,
+          amountOfTimesLessonOccurs
+        );
         return widthPercentageForWeekdayConfigured * marginLeftMultiplyNumber;
       }
     }
@@ -371,10 +371,9 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
               <div
                 className={`slot all-availability-slots ${availableDay.day_of_week}`}
                 style={{
-                  gridRow:
-                    dateTimeHandlingFunctions.startTimeValueForStyleSheet(
-                      availableDay.start_time
-                    ),
+                  gridRow: dateTimeHandlingFunctions.startTimeValueForStyleSheet(
+                    availableDay.start_time
+                  ),
                   height: `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
                     availableDay.start_time,
                     availableDay.stop_time,
@@ -413,10 +412,9 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
                 style={{
                   position: "absolute",
 
-                  gridRow:
-                    dateTimeHandlingFunctions.startTimeValueForStyleSheet(
-                      privateLesson.start_time
-                    ),
+                  gridRow: dateTimeHandlingFunctions.startTimeValueForStyleSheet(
+                    privateLesson.start_time
+                  ),
                   height: `${dateTimeHandlingFunctions.amountOfTimeInPixelsForStyleSheetHeightCoachesAvailability(
                     privateLesson.start_time,
                     privateLesson.duration,
@@ -456,7 +454,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendar = (props: IProps) => {
             height: "3px",
             backgroundColor: "aqua",
             width: "100%",
-            zIndex: "1003",
+            zIndex: 1003,
             position: "absolute",
           }}
         ></div>
