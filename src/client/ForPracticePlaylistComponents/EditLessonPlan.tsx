@@ -118,7 +118,8 @@ let EditLessonPlan = () => {
       );
   }, []);
 
-  React.useEffect(() => {   // closes dropdown when clicked off of div
+  React.useEffect(() => {
+    // closes dropdown when clicked off of div
     for (let x = 0; x < videosByTenant.length; x++) {
       if (videosByTenant[x].id === Number(searchedMoveId)) {
         setSearchedMoveObject(videosByTenant[x]);
@@ -146,62 +147,6 @@ let EditLessonPlan = () => {
     <>
       <NavigationBar />
 
-      {/* ///for j's rookie dropdown */}
-      <div ref={wrapperRef}>
-        <input
-          style={{ maxWidth: "200px" }}
-          type="text"
-          onClick={() => {
-            (!searchInputFieldValView)?setDisplay(true):
-            setDisplay(false)
-
-          }}
-          value={searchInputFieldValView}
-          onChange={(event: any) => {
-            setSearchInputFieldValView(event.target.value);
-            setDisplay(true);
-          }}
-        />
-        {display && (
-          <div
-            className="auto-container"
-            style={{
-              whiteSpace: "nowrap",
-              backgroundColor: "white",
-              maxWidth: "200px",
-              maxHeight: "190px",
-              overflow: "scroll",
-              position: "absolute",
-              zIndex: "1",
-            }}
-          >
-            {videosByTenant
-              .filter(
-                ({ name_of_video }) =>
-                  name_of_video
-                    .toLowerCase()
-                    .indexOf(searchInputFieldValView.toLowerCase()) > -1
-              )
-              .map((move) => {
-                return (
-                  <div
-                    onClick={() => {
-                      setSearchInputFieldValView(move.name_of_video);
-                      setSearchedMoveId(move.id);
-                      setDisplay(false);
-                    }}
-                    key={move.id}
-                    tabIndex={0}
-                    >
-                    <span>{move.name_of_video}</span>
-                  </div>
-                );
-              })}
-          </div>
-        )}
-      </div>
-      {/*  */}
-
       <div className="m-3" style={{ paddingBottom: "10rem" }}>
         <div>
           <Link to={"/CreateALessonPlan"} className="btn btn-primary">
@@ -226,6 +171,70 @@ let EditLessonPlan = () => {
           </h3>
         </div>
         <hr />
+        {/* ///for j's rookie dropdown */}
+        <div className="d-flex flex wrap justify-content-center">
+          <div
+            ref={wrapperRef}
+            style={{ width: "400px" }}
+            className="d-flex flex wrap justify-content-center align-items-center"
+          >
+            <label className="h4 ">Select a move:</label>
+            <div>
+              <input
+                style={{ maxWidth: "200px" }}
+                type="text"
+                onClick={() => {
+                  !searchInputFieldValView
+                    ? setDisplay(true)
+                    : setDisplay(false);
+                }}
+                value={searchInputFieldValView}
+                onChange={(event: any) => {
+                  setSearchInputFieldValView(event.target.value);
+                  setDisplay(true);
+                }}
+              />
+              {display && (
+                <div
+                  className="auto-container"
+                  style={{
+                    whiteSpace: "nowrap",
+                    backgroundColor: "white",
+                    maxWidth: "200px",
+                    maxHeight: "190px",
+                    overflow: "scroll",
+                    position: "absolute",
+                    zIndex: "1",
+                  }}
+                >
+                  {videosByTenant
+                    .filter(
+                      ({ name_of_video }) =>
+                        name_of_video
+                          .toLowerCase()
+                          .indexOf(searchInputFieldValView.toLowerCase()) > -1
+                    )
+                    .map((move) => {
+                      return (
+                        <div
+                          onClick={() => {
+                            setSearchInputFieldValView(move.name_of_video);
+                            setSearchedMoveId(move.id);
+                            setDisplay(false);
+                          }}
+                          key={move.id}
+                          tabIndex={0}
+                        >
+                          <span>{move.name_of_video}</span>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        {/*  */}
         {/* <div className="text-center">
           <label className="h4 mt-5 mb-5 mr-2">Select a move:</label>
           <input type="text" list="moveList" onChange={onMoveChange} />
