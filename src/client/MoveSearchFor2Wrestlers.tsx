@@ -21,8 +21,6 @@ function MoveSearchFor2Wrestlers(props: any) {
   // Upon further examination I see that we probably don't need to us theTrick for the state to be updated.
   // There is only one object for each wrestler so I dont see how the state could linger here?
 
-
-
   let token = localStorage.getItem("token");
   let UID = localStorage.getItem("UID");
 
@@ -39,7 +37,7 @@ function MoveSearchFor2Wrestlers(props: any) {
   React.useEffect(() => {
     if (uselessState4 > 0) {
       fetch(
-        `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}`,
+        `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}/${props.wrestler2Id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -78,7 +76,7 @@ function MoveSearchFor2Wrestlers(props: any) {
       console.log("running");
       try {
         fetch(
-          `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}`,
+          `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}/${props.wrestler2Id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
