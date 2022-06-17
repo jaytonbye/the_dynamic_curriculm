@@ -108,7 +108,7 @@ router.get(
 );
 
 router.get(
-  "/gradesForTwoWresltersOnAllLevels/:wrestler1&:wrestler2&:coachUID",
+  "/gradesForTwoWresltersOnAllLevels/:wrestler1/:wrestler2/:coachUID",
   hasValidCoachToken,
   async (req, res) => {
     let wrestler1 = Number(req.params.wrestler1);
