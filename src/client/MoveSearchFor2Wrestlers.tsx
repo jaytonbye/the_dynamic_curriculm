@@ -1,8 +1,14 @@
 import React from "react";
 import Moment from "react-moment";
 import classNames from "classnames";
+import DropDownForMovesAndWrestlers from "./DropDownForMovesAndWrestlers";
 
 function MoveSearchFor2Wrestlers(props: any) {
+  ///DROPDOWN START 1/3
+  let [displayDropDown, setDisplayDropDown] = React.useState(false);
+  let [dropDownInputValue, setDropDownInputValue] = React.useState("");
+  let wrapperRef = React.useRef(null); //this closes autocomplete list when mouse clicks off of it
+  ///DROP END
   let [searchedMoveId, setSearchedMoveId] = React.useState();
   const [allGrades, setAllGrades] = React.useState([]);
   const [wrestler1NewGrade, setWrestler1NewGrade] = React.useState();
@@ -21,25 +27,48 @@ function MoveSearchFor2Wrestlers(props: any) {
   // Upon further examination I see that we probably don't need to us theTrick for the state to be updated.
   // There is only one object for each wrestler so I dont see how the state could linger here?
 
-
-
   let token = localStorage.getItem("token");
   let UID = localStorage.getItem("UID");
 
-  let onMoveChange = (event: any) => {
-    let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
-    let moveIdAfterSlice = event.target.value.slice(
-      whereToSliceFrom,
-      event.target.value.length
-    );
+  // let onMoveChange = (event: any) => {
+  //   let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
+  //   let moveIdAfterSlice = event.target.value.slice(
+  //     whereToSliceFrom,
+  //     event.target.value.length
+  //   );
 
-    setSearchedMoveId(moveIdAfterSlice);
+  //   setSearchedMoveId(moveIdAfterSlice);
+  // };
+  //DROPDOWN START 2/3
+  React.useEffect(() => {
+    for (let x = 0; x < allMoves.length; x++) {
+      if (allMoves[x].id === Number(searchedMoveId)) {
+        setSearchedMoveObject(allMoves[x]);
+      }
+    }
+  }, [searchedMoveId]);
+
+  React.useEffect(() => {
+    document.addEventListener("mousedown", handleClickedOutsideDropdown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickedOutsideDropdown);
+    };
+  }, []);
+
+  let handleClickedOutsideDropdown = (e: any) => {
+    let { current: wrap } = wrapperRef;
+    if (wrap && !wrap.contains(e.target)) {
+      setDisplayDropDown(false);
+    }
   };
+  //DROPDOWN END
 
   React.useEffect(() => {
     if (uselessState4 > 0) {
+      console.log("**");
       fetch(
-        `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}`,
+        `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}/${props.wrestler2Id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -78,7 +107,7 @@ function MoveSearchFor2Wrestlers(props: any) {
       console.log("running");
       try {
         fetch(
-          `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}&${props.wrestler2Id}`,
+          `/api/grades/allGradesForTwoWrestlers/${props.wrestler1Id}/${props.wrestler2Id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -161,7 +190,35 @@ function MoveSearchFor2Wrestlers(props: any) {
 
   return (
     <>
-      <label className="h4">Search by move: </label>
+      {/* ///DROPDOWN START 3/3*/}
+      <div className="d-flex flex wrap justify-content-start col-11 p-0">
+        <div
+          style={{ width: "400px" }}
+          className="d-flex flex-wrap justify-content-start align-items-center col-11 p-0"
+        >
+          <label className="h4 p-0 text-center">Search by move:</label>
+          <div ref={wrapperRef}>
+            <DropDownForMovesAndWrestlers
+              // first select if drop is for moves or people
+              isMovesList={true}
+              isPersonList={false}
+              // fill in proper values for dropdown
+              dropDownInputValue={dropDownInputValue}
+              setDropDownInputValue={setDropDownInputValue}
+              displayDropDown={displayDropDown}
+              setDisplayDropDown={setDisplayDropDown}
+              // If for moves fill proper values. else make these null
+              videosByTenant={allMoves}
+              setSearchedMoveId={setSearchedMoveId}
+              // If for people fill proper values. else make these null
+              personal_info={null} //list of people
+              setWrestlerId={null}
+            />
+          </div>
+        </div>
+      </div>
+      {/* DROPDOWN END  */}
+      {/* <label className="h4">Search by move: </label>
       <input type="text" list="moveList" onChange={onMoveChange} />
       <datalist id="moveList">
         {allMoves.map((move) => {
@@ -172,7 +229,7 @@ function MoveSearchFor2Wrestlers(props: any) {
             ></option>
           );
         })}
-      </datalist>
+      </datalist> */}
 
       <div className="divForLevel" key={`${allGrades}`}>
         <div key={searchedMoveObject.id}>

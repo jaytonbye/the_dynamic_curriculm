@@ -3,10 +3,11 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ContextExclusionPlugin } from "webpack";
+import DropDownForMovesAndWrestlers from "../DropDownForMovesAndWrestlers";
 import NavigationBar from "../NavigationBar";
 
 let EditLessonPlan = () => {
-  ///DROPDOWN START
+  ///DROPDOWN START 1/3
   let [displayDropDown, setDisplayDropDown] = React.useState(false);
   let [dropDownInputValue, setDropDownInputValue] = React.useState("");
   let wrapperRef = React.useRef(null); //this closes autocomplete list when mouse clicks off of it
@@ -118,7 +119,7 @@ let EditLessonPlan = () => {
       );
   }, []);
 
-  //DROPDOWN START
+  //DROPDOWN START 2/3
   React.useEffect(() => {
     for (let x = 0; x < videosByTenant.length; x++) {
       if (videosByTenant[x].id === Number(searchedMoveId)) {
@@ -171,7 +172,7 @@ let EditLessonPlan = () => {
           </h3>
         </div>
         <hr />
-        {/* ///DROPDOWN START */}
+        {/* ///DROPDOWN START 3/3 */}
         <div className="d-flex flex wrap justify-content-center">
           <div
             style={{ width: "400px" }}
@@ -179,62 +180,27 @@ let EditLessonPlan = () => {
           >
             <label className="h4 ">Select a move:</label>
             <div ref={wrapperRef}>
-              <input
-                style={{ maxWidth: "200px" }}
-                type="text"
-                onClick={() => {
-                  !dropDownInputValue
-                    ? setDisplayDropDown(true)
-                    : setDisplayDropDown(false);
-                }}
-                value={dropDownInputValue}
-                onChange={(event: any) => {
-                  setDropDownInputValue(event.target.value);
-                  setDisplayDropDown(true);
-                }}
+              <DropDownForMovesAndWrestlers
+                // first select if drop is for moves or people
+                isMovesList={true}
+                isPersonList={false}
+                // fill in proper values for dropdown
+                dropDownInputValue={dropDownInputValue}
+                setDropDownInputValue={setDropDownInputValue}
+                displayDropDown={displayDropDown}
+                setDisplayDropDown={setDisplayDropDown}
+                // If for moves fill proper values. else make these null
+                videosByTenant={videosByTenant}
+                setSearchedMoveId={setSearchedMoveId}
+                // If for people fill proper values. else make these null
+                personal_info={null}
+                setWrestlerId={null}
               />
-              {displayDropDown && (
-                <div
-                  className="auto-container"
-                  style={{
-                    whiteSpace: "nowrap",
-                    backgroundColor: "white",
-                    maxWidth: "200px",
-                    maxHeight: "190px",
-                    overflow: "scroll",
-                    position: "absolute",
-                    zIndex: 1,
-                  }}
-                >
-                  {videosByTenant
-                    .filter(
-                      ({ name_of_video }) =>
-                        name_of_video
-                          .toLowerCase()
-                          .indexOf(dropDownInputValue.toLowerCase()) > -1
-                    )
-                    .map((move) => {
-                      return (
-                        <div
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setDropDownInputValue(move.name_of_video);
-                            setSearchedMoveId(move.id);
-                            setDisplayDropDown(false);
-                          }}
-                          key={move.id}
-                          tabIndex={0}
-                        >
-                          <span>{move.name_of_video}</span>
-                        </div>
-                      );
-                    })}
-                </div>
-              )}
             </div>
           </div>
         </div>
         {/* DROPDOWN END  */}
+
         {/* <div className="text-center">
           <label className="h4 mt-5 mb-5 mr-2">Select a move:</label>
           <input type="text" list="moveList" onChange={onMoveChange} />

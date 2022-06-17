@@ -219,7 +219,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
           </div> */}
           <div className="d-flex mt-3 mb-3 justify-content-center text-center">
             <div
-              className="coaches-availability-legend ml-3 mr-3"
+              className="coaches-availability-legend ml-3 mr-3 d-flex align-items-center"
               style={{
                 height: "80px",
                 width: "75px",
@@ -233,7 +233,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
               <small>Coach is available for lessons</small>
             </div>
             <div
-              className="lesson-series-legend ml-3 mr-3"
+              className="lesson-series-legend ml-3 mr-3 d-flex align-items-center"
               style={{
                 height: "80px",
                 width: "75px",
@@ -247,7 +247,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
               <small>Single lesson</small>
             </div>
             <div
-              className="private-lesson-legend ml-3 mr-3"
+              className="private-lesson-legend ml-3 mr-3 d-flex align-items-center"
               style={{
                 height: "80px",
                 width: "75px",
