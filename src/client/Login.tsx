@@ -65,8 +65,9 @@ function Login() {
         <section className="mt-4 row justify-content-center">
           <form className="p-4 border rounded shadown form-group">
             <label>
-              Username (If you followed the instructions, it should be your full
-              name in all lowercase letters with no spaces. Example: johndoe):{" "}
+              Username (If you followed the instructions, your username will be
+              your full name in all lowercase letters with no spaces. Example:
+              johndoe):{" "}
             </label>
             <input
               className="mb-2 form-control"
