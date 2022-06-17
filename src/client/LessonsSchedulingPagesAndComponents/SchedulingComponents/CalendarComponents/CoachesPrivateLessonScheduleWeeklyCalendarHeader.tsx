@@ -10,14 +10,16 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
   let dateFormatToProcess: string = "YYYY-MM-DD";
   let dateFormatToView: string = "MMMM, DD, YYYY";
 
+  let [currentTimeForCalendarBlueLine, setCurrentTimeForCalendarBlueLine] =
+    useState<any>(moment().format("HH:mm:00"));
   let [todaysDateForViewOnly, setTodaysDateForViewOnly] = useState(
     moment().format(dateFormatToView)
   );
   let [todaysDateToBeManipulated, setTodaysDateToBeManipulated] = useState(
     moment().format(dateFormatToProcess)
   );
-  let [weekStartDate, setWeekStartDate] = useState<string>();
-  let [weekEndDate, setWeekEndDate] = useState<string>();
+  let [weekStartDate, setWeekStartDate] = useState<string>("");
+  let [weekEndDate, setWeekEndDate] = useState<string>("");
   let [selectedDate, setSelectedDate] = useState<string>();
   let [arrayOfNumbersEqualToDayOfWeek, setArrayOfNumbersEqualToDayOfWeek] =
     useState<string[]>();
@@ -178,13 +180,17 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                   style={{ fontSize: "10px" }}
                   onClick={goToTodaysDate}
                 >
-                  <button><u>Go to today</u></button>
+                  <button>
+                    <u>Go to today</u>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="d-flex align-items-center justify-content-center text-center">
+          {/* <div
+            className="d-flex align-items-center justify-content-center text-center"
+          >
             <div className="col-1">
               <button
                 className="btn btn-outline-dark left-arrow"
@@ -210,13 +216,13 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 &#8594;
               </button>
             </div>
-          </div>
+          </div> */}
           <div className="d-flex mt-3 mb-3 justify-content-center text-center">
             <div
               className="coaches-availability-legend ml-3 mr-3"
               style={{
-                height: "30px",
-                width: "70px",
+                height: "80px",
+                width: "75px",
                 backgroundColor: "lightgray",
                 borderColor: "red",
                 borderStyle: "solid",
@@ -224,13 +230,13 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 borderRadius: "5px",
               }}
             >
-              <small>Availability</small>
+              <small>Coach is available for lessons</small>
             </div>
             <div
               className="lesson-series-legend ml-3 mr-3"
               style={{
-                height: "30px",
-                width: "70px",
+                height: "80px",
+                width: "75px",
                 backgroundColor: "limegreen",
                 borderColor: "black",
                 borderStyle: "solid",
@@ -238,13 +244,13 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 borderRadius: "5px",
               }}
             >
-              <small>Lesson</small>
+              <small>Single lesson</small>
             </div>
             <div
               className="private-lesson-legend ml-3 mr-3"
               style={{
-                height: "30px",
-                width: "70px",
+                height: "80px",
+                width: "75px",
                 backgroundColor: "coral",
                 borderColor: "aqua",
                 borderStyle: "solid",
@@ -252,7 +258,7 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
                 borderRadius: "5px",
               }}
             >
-              <small>Series</small>
+              <small>Weekly lesson</small>
             </div>
           </div>
         </div>
@@ -264,8 +270,14 @@ const CoachesPrivateLessonScheduleWeeklyCalendarHeader = (props: IProps) => {
             coachesId={props.coachesId}
             daysOfWeek={arrayOfNumbersEqualToDayOfWeek}
             weeklyPrivateLessonsSchedule={weeklySchedule}
+            currentTimeForCalendarBlueLine={currentTimeForCalendarBlueLine}
             boolFuncForReRender={funcUsedForReRender}
             isAdminBoolFromHeader={props.isAdminBool}
+            weekStartDate={weekStartDate}
+            weekEndDate={weekEndDate}
+            handleLeftArrowWeekCycle={handleLeftArrowWeekCycle}
+            handleRightArrowWeekCycle={handleRightArrowWeekCycle}
+            goToTodaysDate={goToTodaysDate}
           />
         )}
 
