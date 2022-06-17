@@ -34,7 +34,7 @@ export default function NavigationBar() {
   };
 
   let goToPrivateLessonsScheduling = () => {
-    history.push("LessonsScheduling");
+    history.push("/LessonsScheduling");
   };
 
   let goToTestPage = () => {

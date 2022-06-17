@@ -2,6 +2,7 @@ import * as React from "react";
 import GradesOfXFor2Wrestlers from "./GradesOfXFor2Wrestlers";
 import Moment from "react-moment";
 import { Link, useHistory, Route, BrowserRouter } from "react-router-dom";
+import DropDownForMovesAndWrestlers from "./DropDownForMovesAndWrestlers";
 import MoveSearchFor2Wrestlers from "./MoveSearchFor2Wrestlers";
 
 import GradingDashboardFor2WrestlersTwoPointO from "./GradingDashBoardForTwoWrestlersTwoPointO";
@@ -11,7 +12,21 @@ import GradingKey from "./GradingKey";
 import classNames from "classnames";
 
 const CoachesView = (props: CoachesViewProps) => {
-  const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState<any>([]);
+  ///DROPDOWN START 1/3
+  let [displayDropDownWrestler1, setDisplayDropDownWrestler1] =
+    React.useState(false);
+  let [dropDownInputValueWrestler1, setDropDownInputValueWrestler1] =
+    React.useState("");
+  let [displayDropDownWrestler2, setDisplayDropDownWrestler2] =
+    React.useState(false);
+  let [dropDownInputValueWrestler2, setDropDownInputValueWrestler2] =
+    React.useState("");
+  let wrapperRef = React.useRef(null); //this closes autocomplete list when mouse clicks off of it
+  let wrapperRef2 = React.useRef(null); //this closes autocomplete list when mouse clicks off of it
+  ///DROP END
+  const [userThatIsOnThisPage, setUserThatIsOnThisPage] = React.useState<any>(
+    []
+  );
   const [personal_info, setPersonalInfo] = React.useState([]);
   const [wrestler1Id, setWrestler1Id] = React.useState<number>();
   const [wrestler2Id, setWrestler2Id] = React.useState<number>();
@@ -36,6 +51,41 @@ const CoachesView = (props: CoachesViewProps) => {
 
   let token = localStorage.getItem("token");
   let UID = localStorage.getItem("UID");
+
+  //DROPDOWN START 2/3
+  // React.useEffect(() => {
+  //   for (let x = 0; x < personal_info.length; x++) {
+  //     if (personal_info[x].id === Number(wrestlerId)) {
+  //       setSearchedMoveObject(personal_info[x]);
+  //     }
+  //   }
+  // }, [wrestlerId]);
+
+  React.useEffect(() => {
+    document.addEventListener("mousedown", handleClickedOutsideDropdown);
+    document.addEventListener("mousedown", handleClickedOutsideDropdown2);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickedOutsideDropdown);
+      document.removeEventListener("mousedown", handleClickedOutsideDropdown2);
+    };
+  }, []);
+
+  let handleClickedOutsideDropdown = (e: any) => {
+    let { current: wrap }: any = wrapperRef;
+    if (wrap && !wrap.contains(e.target)) {
+      setDisplayDropDownWrestler1(false);
+      // setDisplayDropDownWrestler2(false);
+    }
+  };
+  let handleClickedOutsideDropdown2 = (e: any) => {
+    let { current: wrap }: any = wrapperRef2;
+    if (wrap && !wrap.contains(e.target)) {
+      // setDisplayDropDownWrestler1(false);
+      setDisplayDropDownWrestler2(false);
+    }
+  };
+  //DROPDOWN END
 
   //for autocomplete of wrestler names
   // Bull shit hack that needs to be fixed
@@ -277,7 +327,35 @@ const CoachesView = (props: CoachesViewProps) => {
         <div className="card"></div>
         <div className="" style={{ width: "100%" }}></div>
         <div className="mt-1">
-          <label className="h4 ">Wrestler 1: </label>
+          {/* ///DROPDOWN START 3/3*/}
+          <div className="d-flex flex wrap justify-content-start col-11 p-0">
+            <div
+              style={{ width: "400px" }}
+              className="d-flex flex-wrap justify-content-start align-items-center col-11 p-0"
+            >
+              <label className="h4 p-0 text-center">Wrestler 1:</label>
+              <div ref={wrapperRef}>
+                <DropDownForMovesAndWrestlers
+                  // first select if drop is for moves or people
+                  isMovesList={false}
+                  isPersonList={true}
+                  // fill in proper values for dropdown
+                  dropDownInputValue={dropDownInputValueWrestler1}
+                  setDropDownInputValue={setDropDownInputValueWrestler1}
+                  displayDropDown={displayDropDownWrestler1}
+                  setDisplayDropDown={setDisplayDropDownWrestler1}
+                  // If for moves fill proper values. else make these null
+                  videosByTenant={null}
+                  setSearchedMoveId={null}
+                  // If for people fill proper values. else make these null
+                  personal_info={personal_info} //list of people
+                  setWrestlerId={setWrestler1Id}
+                />
+              </div>
+            </div>
+          </div>
+          {/* DROPDOWN END  */}
+          {/* <label className="h4 ">Wrestler 1: </label>
           <input
             type="text"
             list="wrestler1List"
@@ -298,10 +376,38 @@ const CoachesView = (props: CoachesViewProps) => {
                 ></option>
               );
             })}
-          </datalist>
+          </datalist> */}
         </div>
         <div className="" style={{ width: "100%" }}></div>
-        <label className="h4">Wrestler 2: </label>
+        {/* ///DROPDOWN START 3/3*/}
+        <div className="d-flex flex wrap justify-content-start col-11 p-0">
+          <div
+            style={{ width: "400px" }}
+            className="d-flex flex-wrap justify-content-start align-items-center col-11 p-0"
+          >
+            <label className="h4 p-0 text-center">Wrestler 2:</label>
+            <div ref={wrapperRef2}>
+              <DropDownForMovesAndWrestlers
+                // first select if drop is for moves or people
+                isMovesList={false}
+                isPersonList={true}
+                // fill in proper values for dropdown
+                dropDownInputValue={dropDownInputValueWrestler2}
+                setDropDownInputValue={setDropDownInputValueWrestler2}
+                displayDropDown={displayDropDownWrestler2}
+                setDisplayDropDown={setDisplayDropDownWrestler2}
+                // If for moves fill proper values. else make these null
+                videosByTenant={null}
+                setSearchedMoveId={null}
+                // If for people fill proper values. else make these null
+                personal_info={personal_info} //list of people
+                setWrestlerId={setWrestler2Id}
+              />
+            </div>
+          </div>
+        </div>
+        {/* DROPDOWN END  */}
+        {/* <label className="h4">Wrestler 2: </label>
         <input type="text" list="wrestler2List" onChange={onWrestler2Change} />
         <datalist id="wrestler2List">
           {personal_info.map((wrestler: any) => {
@@ -318,7 +424,7 @@ const CoachesView = (props: CoachesViewProps) => {
               ></option>
             );
           })}
-        </datalist>
+        </datalist> */}
         <div className="" style={{ width: "100%" }}></div>
         <label className="h4">Select Level: </label>
         <input type="number" onChange={onLevelChange} />
@@ -519,6 +625,6 @@ const CoachesView = (props: CoachesViewProps) => {
   );
 };
 
-interface CoachesViewProps { }
+interface CoachesViewProps {}
 
 export default CoachesView;
