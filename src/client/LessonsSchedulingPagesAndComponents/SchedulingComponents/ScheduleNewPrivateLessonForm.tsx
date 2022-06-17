@@ -61,7 +61,7 @@ const ScheduleNewPrivateLessonForm = (props: IProps) => {
   }, []);
 
   let handleClickedOutsideDropdown = (e: any) => {
-    let { current: wrap } = wrapperRef;
+    let { current: wrap }: any = wrapperRef;
     if (wrap && !wrap.contains(e.target)) {
       setDisplayDropDown(false);
     }

@@ -72,14 +72,14 @@ const CoachesView = (props: CoachesViewProps) => {
   }, []);
 
   let handleClickedOutsideDropdown = (e: any) => {
-    let { current: wrap } = wrapperRef;
+    let { current: wrap }: any = wrapperRef;
     if (wrap && !wrap.contains(e.target)) {
       setDisplayDropDownWrestler1(false);
       // setDisplayDropDownWrestler2(false);
     }
   };
   let handleClickedOutsideDropdown2 = (e: any) => {
-    let { current: wrap } = wrapperRef2;
+    let { current: wrap }: any = wrapperRef2;
     if (wrap && !wrap.contains(e.target)) {
       // setDisplayDropDownWrestler1(false);
       setDisplayDropDownWrestler2(false);

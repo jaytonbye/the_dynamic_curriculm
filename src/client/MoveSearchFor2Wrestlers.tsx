@@ -57,7 +57,7 @@ function MoveSearchFor2Wrestlers(props: any) {
   }, []);
 
   let handleClickedOutsideDropdown = (e: any) => {
-    let { current: wrap } = wrapperRef;
+    let { current: wrap }: any = wrapperRef;
     if (wrap && !wrap.contains(e.target)) {
       setDisplayDropDown(false);
     }
