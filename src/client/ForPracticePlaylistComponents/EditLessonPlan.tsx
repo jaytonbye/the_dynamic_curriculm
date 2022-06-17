@@ -6,12 +6,12 @@ import { ContextExclusionPlugin } from "webpack";
 import NavigationBar from "../NavigationBar";
 
 let EditLessonPlan = () => {
-  ///for j's rookie dropdown
-  let [display, setDisplay] = React.useState(false);
-  let [searchInputFieldValView, setSearchInputFieldValView] =
-    React.useState("");
-  let wrapperRef = React.useRef(null);
-  ///
+  ///DROPDOWN START
+  let [displayDropDown, setDisplayDropDown] = React.useState(false);
+  let [dropDownInputValue, setDropDownInputValue] = React.useState("");
+  let wrapperRef = React.useRef(null); //this closes autocomplete list when mouse clicks off of it
+  ///DROP END
+
   let [lessonPlanName, setLessonPlanName] = React.useState<string>();
   let [lessonPlanNewName, setLessonPlanNewName] = React.useState<string>();
   let [videosByTenant, setVideosByTenant] = React.useState([]);
@@ -92,17 +92,17 @@ let EditLessonPlan = () => {
       .then(() => getPlanInfo());
   };
 
-  let onMoveChange = (event: any) => {
-    // console.log("yp")
-    console.log(event.target);
-    let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
-    let moveIdAfterSlice = event.target.value.slice(
-      whereToSliceFrom,
-      event.target.value.length
-    );
+  // let onMoveChange = (event: any) => {
+  //   // console.log("yp")
+  //   console.log(event.target);
+  //   let whereToSliceFrom = event.target.value.lastIndexOf("-+-") + 3;
+  //   let moveIdAfterSlice = event.target.value.slice(
+  //     whereToSliceFrom,
+  //     event.target.value.length
+  //   );
 
-    setSearchedMoveId(event.target.value);
-  };
+  //   setSearchedMoveId(event.target.value);
+  // };
 
   React.useEffect(() => {
     fetch(`/api/lessonplans/validateToketLessonPlanCreate`, {
@@ -118,8 +118,8 @@ let EditLessonPlan = () => {
       );
   }, []);
 
+  //DROPDOWN START
   React.useEffect(() => {
-    // closes dropdown when clicked off of div
     for (let x = 0; x < videosByTenant.length; x++) {
       if (videosByTenant[x].id === Number(searchedMoveId)) {
         setSearchedMoveObject(videosByTenant[x]);
@@ -127,7 +127,6 @@ let EditLessonPlan = () => {
     }
   }, [searchedMoveId]);
 
-  //for j dropdown
   React.useEffect(() => {
     document.addEventListener("mousedown", handleClickedOutsideDropdown);
 
@@ -139,9 +138,10 @@ let EditLessonPlan = () => {
   let handleClickedOutsideDropdown = (e: any) => {
     let { current: wrap } = wrapperRef;
     if (wrap && !wrap.contains(e.target)) {
-      setDisplay(false);
+      setDisplayDropDown(false);
     }
   };
+  //DROPDOWN END
 
   return (
     <>
@@ -171,30 +171,29 @@ let EditLessonPlan = () => {
           </h3>
         </div>
         <hr />
-        {/* ///for j's rookie dropdown */}
+        {/* ///DROPDOWN START */}
         <div className="d-flex flex wrap justify-content-center">
           <div
-            ref={wrapperRef}
             style={{ width: "400px" }}
             className="d-flex flex wrap justify-content-center align-items-center"
           >
             <label className="h4 ">Select a move:</label>
-            <div>
+            <div ref={wrapperRef}>
               <input
                 style={{ maxWidth: "200px" }}
                 type="text"
                 onClick={() => {
-                  !searchInputFieldValView
-                    ? setDisplay(true)
-                    : setDisplay(false);
+                  !dropDownInputValue
+                    ? setDisplayDropDown(true)
+                    : setDisplayDropDown(false);
                 }}
-                value={searchInputFieldValView}
+                value={dropDownInputValue}
                 onChange={(event: any) => {
-                  setSearchInputFieldValView(event.target.value);
-                  setDisplay(true);
+                  setDropDownInputValue(event.target.value);
+                  setDisplayDropDown(true);
                 }}
               />
-              {display && (
+              {displayDropDown && (
                 <div
                   className="auto-container"
                   style={{
@@ -204,7 +203,7 @@ let EditLessonPlan = () => {
                     maxHeight: "190px",
                     overflow: "scroll",
                     position: "absolute",
-                    zIndex: "1",
+                    zIndex: 1,
                   }}
                 >
                   {videosByTenant
@@ -212,15 +211,16 @@ let EditLessonPlan = () => {
                       ({ name_of_video }) =>
                         name_of_video
                           .toLowerCase()
-                          .indexOf(searchInputFieldValView.toLowerCase()) > -1
+                          .indexOf(dropDownInputValue.toLowerCase()) > -1
                     )
                     .map((move) => {
                       return (
                         <div
+                          style={{ cursor: "pointer" }}
                           onClick={() => {
-                            setSearchInputFieldValView(move.name_of_video);
+                            setDropDownInputValue(move.name_of_video);
                             setSearchedMoveId(move.id);
-                            setDisplay(false);
+                            setDisplayDropDown(false);
                           }}
                           key={move.id}
                           tabIndex={0}
@@ -234,7 +234,7 @@ let EditLessonPlan = () => {
             </div>
           </div>
         </div>
-        {/*  */}
+        {/* DROPDOWN END  */}
         {/* <div className="text-center">
           <label className="h4 mt-5 mb-5 mr-2">Select a move:</label>
           <input type="text" list="moveList" onChange={onMoveChange} />
