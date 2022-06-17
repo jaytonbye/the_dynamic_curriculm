@@ -175,7 +175,7 @@ let EditLessonPlan = () => {
         <div className="d-flex flex wrap justify-content-center">
           <div
             style={{ width: "400px" }}
-            className="d-flex flex wrap justify-content-center align-items-center"
+            className="d-flex flex-wrap justify-content-center align-items-center"
           >
             <label className="h4 ">Select a move:</label>
             <div ref={wrapperRef}>
