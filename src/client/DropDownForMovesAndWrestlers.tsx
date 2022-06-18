@@ -3,7 +3,7 @@ import * as React from "react";
 const DropDownForMovesAndWrestlers = (props: IProps) => {
   if (props.isMovesList) {
     return (
-      <div>
+      <div className="d-flex justify-content-center">
         <input
           style={{ maxWidth: "200px" }}
           type="text"
@@ -22,10 +22,13 @@ const DropDownForMovesAndWrestlers = (props: IProps) => {
           <div
             className="auto-container"
             style={{
+              marginTop:"40px",
+              padding:"5px",
               whiteSpace: "nowrap",
               backgroundColor: "white",
-              maxWidth: "200px",
-              maxHeight: "190px",
+              width: "80%",
+              maxWidth: "500px",
+              maxHeight: "300px",
               overflow: "scroll",
               position: "absolute",
               zIndex: 1,
