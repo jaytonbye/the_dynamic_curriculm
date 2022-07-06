@@ -62,59 +62,14 @@ interface CalcArguments {
   Utility function meant to obtain the current earned item
 */
 
-function calcCurrentItem({
-  earnableItems,
-  totalPointsAvailable,
-  totalPointsEarnedByWrestler,
-}: CalcArguments) {
-  let pointsRequiredToEarnThisItem = 0;
-  let itemIndex = 0;
-  if (earnableItems.length === 0) {
-    alert("No items to earn");
-    return "";
-  }
-  for (let x = 0; x < earnableItems.length; x++) {
-    pointsRequiredToEarnThisItem =
-      (earnableItems[x].percentage_of_total_points_needed *
-        totalPointsAvailable) /
-      100;
 
-    if (totalPointsEarnedByWrestler >= pointsRequiredToEarnThisItem) {
-      itemIndex = x;
-    }
-  }
-  return `${earnableItems[itemIndex].item_color} ${earnableItems[itemIndex].item_name}`;
-}
-
-/*
-  Utility function meant to obtain the next earnable item
-*/
-
-function calcNextItem({
-  earnableItems,
-  totalPointsAvailable,
-  totalPointsEarnedByWrestler,
-}: CalcArguments) {
-  let pointsRequiredToEarnThisItem = 0;
-  let itemIndex = 0;
-  if (earnableItems.length === 0) {
-    return;
-  }
-  for (let x = 0; x < earnableItems.length; x++) {
-    pointsRequiredToEarnThisItem =
-      (earnableItems[x].percentage_of_total_points_needed *
-        totalPointsAvailable) /
-      100;
-    if (totalPointsEarnedByWrestler < pointsRequiredToEarnThisItem) {
-      itemIndex = x;
-      break;
-    }
-  }
-  return `${earnableItems[itemIndex].item_color} ${earnableItems[itemIndex].item_name}`;
-}
 
 export default function TestCard(props: { UID: number }) {
   let token = localStorage.getItem("token");
+
+  // We use these two pieces of state to calculate points till next Item
+  const [pointsEarned, setPointsEarned] = useState(0);
+  const [pointsAvailableForNextItem, setPointsAvailableForNextItem] = useState(0);
 
   // one batched state to control unecessary re-renders
   // added a loading property to guarentee useEffect labeled "2"
@@ -132,6 +87,59 @@ export default function TestCard(props: { UID: number }) {
     loading: true,
   });
 
+  function calcCurrentItem({
+    earnableItems,
+    totalPointsAvailable,
+    totalPointsEarnedByWrestler,
+  }: CalcArguments) {
+    let pointsRequiredToEarnThisItem = 0;
+    let itemIndex = 0;
+    if (earnableItems.length === 0) {
+      alert("No items to earn");
+      return "";
+    }
+    for (let x = 0; x < earnableItems.length; x++) {
+      pointsRequiredToEarnThisItem =
+        (earnableItems[x].percentage_of_total_points_needed *
+          totalPointsAvailable) /
+        100;
+
+      if (totalPointsEarnedByWrestler >= pointsRequiredToEarnThisItem) {
+        itemIndex = x;
+      }
+    }
+    setPointsEarned(totalPointsEarnedByWrestler);
+    return `${earnableItems[itemIndex].item_color} ${earnableItems[itemIndex].item_name}`;
+  }
+
+  /*
+    Utility function meant to obtain the next earnable item
+  */
+
+  function calcNextItem({
+    earnableItems,
+    totalPointsAvailable,
+    totalPointsEarnedByWrestler,
+  }: CalcArguments) {
+    let pointsRequiredToEarnThisItem = 0;
+    let itemIndex = 0;
+    if (earnableItems.length === 0) {
+      return;
+    }
+    for (let x = 0; x < earnableItems.length; x++) {
+      pointsRequiredToEarnThisItem =
+        (earnableItems[x].percentage_of_total_points_needed *
+          totalPointsAvailable) /
+        100;
+      if (totalPointsEarnedByWrestler < pointsRequiredToEarnThisItem) {
+        itemIndex = x;
+        break;
+      }
+    }
+    const nextItemsPointsRequired = Math.ceil((earnableItems[itemIndex].percentage_of_total_points_needed / 100) * totalPointsAvailable);
+    setPointsAvailableForNextItem(nextItemsPointsRequired);
+    return `${earnableItems[itemIndex].item_color} ${earnableItems[itemIndex].item_name}`;
+  }
   // useEffect 1
   // batched fetch of all info
   // Promise.all allows us to run all the fetch requests in parallel
@@ -157,15 +165,15 @@ export default function TestCard(props: { UID: number }) {
           resArray.map((res) => {
             if (res.status === 500) {
               alert("Internal Server Error");
-              console.log("it workeddddd");
             } else {
               return res.json();
             }
           })
         )
       )
-      .then(([personalInfo, earnableItems, wrestlerGrades, videos]) => {
+      .then(([personalInfo, earnableItems, wrestlerGrades, videos]: any) => {
         // get total points earned
+        console.log({ personalInfo, earnableItems, wrestlerGrades, videos });
         const totalPoints = wrestlerGrades.reduce(
           (total: number, currentWrestler: AllCurrentGradesForWrestler) =>
             (total += currentWrestler.grade),
@@ -214,7 +222,7 @@ export default function TestCard(props: { UID: number }) {
       totalPointsEarnedByWrestler,
     });
 
-    setState((prev) => ({
+    setState((prev: any) => ({
       ...prev,
       currentItemEarned,
       nextItemToBeEarned,
@@ -282,9 +290,8 @@ export default function TestCard(props: { UID: number }) {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-          <small className="text-muted">next item</small>{" "}
           <span className="fst-italic text-dark">
-            {state.nextItemToBeEarned}
+            {pointsAvailableForNextItem - pointsEarned} stars till your <strong>{state.nextItemToBeEarned}</strong>
           </span>
         </Card.Footer>
       </Card>
