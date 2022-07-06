@@ -4,6 +4,7 @@ import Moment from "react-moment";
 import classNames from "classnames";
 import NavigationBar from "./NavigationBar";
 import GradingDashboard2pointO from "./GradingDashboard2pointO";
+import GradingDashboardMadeByLuke from "./GradingDashboardMadeByLuke";
 
 export default function AllGradesAllLevels() {
   const [grades, setGrades] = React.useState([]);
@@ -27,7 +28,7 @@ export default function AllGradesAllLevels() {
     <>
       <NavigationBar />
 
-      <GradingDashboard2pointO />
+      <GradingDashboardMadeByLuke UID={Number(UID)} />
 
       <table className="table table-striped">
         <thead className="sticky-top">
@@ -42,7 +43,7 @@ export default function AllGradesAllLevels() {
           </tr>
         </thead>
         <tbody>
-          {grades.map((video) => {
+          {grades.map((video: any) => {
             return (
               <tr key={`${video.id}`}>
                 <td>{video.curriculum_level}</td>

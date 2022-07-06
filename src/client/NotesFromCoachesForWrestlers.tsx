@@ -18,7 +18,6 @@ export default function NotesFromCoachesForWrestlers(props: any) {
 
   return (
     <div>
-      <h3>Recent coaching notes</h3>
       <table className="table " style={{ tableLayout: "fixed" }}>
         <thead className="sticky-top">
           <tr className="bg-light">
@@ -28,7 +27,7 @@ export default function NotesFromCoachesForWrestlers(props: any) {
           </tr>
         </thead>
         <tbody >
-          {notes.map((note) => {
+          {notes.map((note: any) => {
             return (
               <tr key={note.id}>
                 <td>

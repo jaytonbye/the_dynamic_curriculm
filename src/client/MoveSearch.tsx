@@ -76,7 +76,7 @@ function MoveSearch() {
           style={{ width: "400px" }}
           className="d-flex flex-wrap justify-content-center align-items-center"
         >
-          <label className="h4 ">Select a move:</label>
+          <label className="h4 ">Search a move:</label>
           <div ref={wrapperRef}>
             <DropDownForMovesAndWrestlers
               // first select if drop is for moves or people
@@ -138,12 +138,12 @@ function MoveSearch() {
           {searchedMoveObject.grade === 3
             ? "★★★"
             : searchedMoveObject.grade === 2
-            ? "★★"
-            : searchedMoveObject.grade === 1
-            ? "★"
-            : searchedMoveObject.grade === 0
-            ? "0"
-            : "Not Graded"}
+              ? "★★"
+              : searchedMoveObject.grade === 1
+                ? "★"
+                : searchedMoveObject.grade === 0
+                  ? "0"
+                  : "Not Graded"}
         </h5>
         <h5>
           <strong>Coach's notes:</strong>
