@@ -62,14 +62,14 @@ interface CalcArguments {
   Utility function meant to obtain the current earned item
 */
 
-
-
 export default function TestCard(props: { UID: number }) {
   let token = localStorage.getItem("token");
 
   // We use these two pieces of state to calculate points till next Item
   const [pointsEarned, setPointsEarned] = useState(0);
-  const [pointsAvailableForNextItem, setPointsAvailableForNextItem] = useState(0);
+  const [pointsAvailableForNextItem, setPointsAvailableForNextItem] = useState(
+    0
+  );
 
   // one batched state to control unecessary re-renders
   // added a loading property to guarentee useEffect labeled "2"
@@ -136,7 +136,10 @@ export default function TestCard(props: { UID: number }) {
         break;
       }
     }
-    const nextItemsPointsRequired = Math.ceil((earnableItems[itemIndex].percentage_of_total_points_needed / 100) * totalPointsAvailable);
+    const nextItemsPointsRequired = Math.ceil(
+      (earnableItems[itemIndex].percentage_of_total_points_needed / 100) *
+        totalPointsAvailable
+    );
     setPointsAvailableForNextItem(nextItemsPointsRequired);
     return `${earnableItems[itemIndex].item_color} ${earnableItems[itemIndex].item_name}`;
   }
@@ -208,8 +211,11 @@ export default function TestCard(props: { UID: number }) {
     if (state.loading) return;
 
     //is the object destructuring
-    const { earnableItems, totalPointsAvailable, totalPointsEarnedByWrestler } =
-      state;
+    const {
+      earnableItems,
+      totalPointsAvailable,
+      totalPointsEarnedByWrestler,
+    } = state;
 
     const currentItemEarned = calcCurrentItem({
       earnableItems,
@@ -251,7 +257,7 @@ export default function TestCard(props: { UID: number }) {
                 {Math.ceil(
                   (item.percentage_of_total_points_needed *
                     state.totalPointsAvailable) /
-                  100
+                    100
                 )}{" "}
                 <small className="text-muted">stars required</small>
               </span>
@@ -259,8 +265,8 @@ export default function TestCard(props: { UID: number }) {
           ))}
         </ListGroup>
       );
-    };
-  }
+    }
+  };
 
   return (
     <>
@@ -279,9 +285,8 @@ export default function TestCard(props: { UID: number }) {
           )}
 
           <Card.Text>
-            {state.personalInfo.first_name} has earned{" "}
-            <strong>{state.totalPointsEarnedByWrestler}</strong> of{" "}
-            <strong>{state.totalPointsAvailable}</strong> total available
+            You have earned <strong>{state.totalPointsEarnedByWrestler}</strong>{" "}
+            of <strong>{state.totalPointsAvailable}</strong> total available
             stars.
           </Card.Text>
           <Card.Text>
@@ -291,11 +296,12 @@ export default function TestCard(props: { UID: number }) {
         </Card.Body>
         <Card.Footer>
           <span className="fst-italic text-dark">
-            {pointsAvailableForNextItem - pointsEarned} stars till your <strong>{state.nextItemToBeEarned}</strong>
+            Only <strong>{pointsAvailableForNextItem - pointsEarned}</strong>{" "}
+            more stars until you earn your{" "}
+            <strong>{state.nextItemToBeEarned}!</strong>
           </span>
         </Card.Footer>
       </Card>
     </>
   );
 }
-
