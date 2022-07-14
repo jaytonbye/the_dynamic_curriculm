@@ -63,7 +63,7 @@ const App = (props: AppProps) => {
           <Route exact path="/LessonsScheduling">
             <LessonsSchedulingStartPage />
           </Route>
-          
+
           <Route exact path="/CreateALessonPlan">
             <CreateAndEditPlan />
           </Route>
@@ -97,6 +97,6 @@ const App = (props: AppProps) => {
   );
 };
 
-interface AppProps {}
+interface AppProps { }
 
 export default App;

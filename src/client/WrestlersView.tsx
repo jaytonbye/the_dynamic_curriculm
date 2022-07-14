@@ -53,7 +53,7 @@ function WrestlersView() {
             </tr>
           </thead>
           {levelsDropDown && <>
-            <h3>Click on a level to view the moves, grades, and coaches' notes</h3>
+            <h3 style={{ margin: "0" }}>Click on a level to view the moves, grades, and coaches' notes</h3>
             <tbody>
               {levels.map((level: any) => {
                 return (

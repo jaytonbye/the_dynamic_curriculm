@@ -128,6 +128,11 @@ export default function NavigationBar() {
               Find Partners
             </a>
           )}
+          {dynamicCoach && (
+            <a href="https://docs.google.com/document/d/1uI2pQhtL3oBWOMGjx0Odxt19t6Vfnvg4aGf99lO2A04/edit?usp=sharing" target="_blank" className="btn btn-outline-danger" >
+              Resources for Coaches
+            </a>
+          )}
           <button className="btn btn-outline-info">
             <a
               href="https://www.youtube.com/watch?v=J6oUYvNDn2Q"
