@@ -40,21 +40,21 @@ let LessonPlanOverview = () => {
 
                   <td>
                     <iframe
-                      width="95%"
+                      width="200px"
                       height="95%"
                       src={`https://www.youtube.com/embed/${video.videoURL}`}
                       title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                     ></iframe>
                   </td>
 
                   <td>
                     <iframe
-                      width="95%"
+                      width="200px"
                       height="95%"
                       src={`https://www.youtube.com/embed/${video.loopedVideoURL}`}
                       title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
                     ></iframe>
                   </td>
                   <td>{video.lengthToDisplay} seconds</td>
